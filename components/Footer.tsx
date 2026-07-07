@@ -1,0 +1,166 @@
+import Logo from "./Logo";
+import { popularCars, nav, company } from "@/lib/data";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  Facebook,
+  Instagram,
+  Twitter,
+  LinkedIn,
+  YouTube,
+} from "./icons";
+
+const quickLinks = [
+  { label: "Home", href: "#home" },
+  { label: "About Us", href: "#home" },
+  { label: "Cars", href: "#cars" },
+  { label: "Service", href: "#service" },
+  { label: "Book a Test Drive", href: "#test-drive" },
+  { label: "Blogs", href: "#blogs" },
+  { label: "Contact Us", href: "#locations" },
+];
+
+const socials = [
+  { Icon: Facebook, label: "Facebook" },
+  { Icon: Instagram, label: "Instagram" },
+  { Icon: Twitter, label: "Twitter" },
+  { Icon: YouTube, label: "YouTube" },
+  { Icon: LinkedIn, label: "LinkedIn" },
+];
+
+export default function Footer() {
+  return (
+    <footer className="bg-brand-deep">
+      {/* Main footer grid */}
+      <div className="container-px mx-auto max-w-[1400px] pb-10 pt-14">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 border-b border-white/10 pb-10 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1.4fr]">
+          {/* Brand column */}
+          <div className="col-span-2 lg:col-span-1">
+            <Logo dark />
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
+              Modi Hyundai is an authorised Hyundai dealership offering new car
+              sales, servicing and genuine Hyundai parts across Mumbai, Kalyan,
+              Ambernath, Shahapur and Pune.
+            </p>
+            <div className="mt-6 flex gap-2.5">
+              {socials.map(({ Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={`Follow Modi Hyundai on ${label}`}
+                  className="grid h-9 w-9 place-items-center rounded border border-white/15 text-white/60 transition-all hover:border-white/40 hover:text-white"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Quick links */}
+          <div>
+            <h4 className="text-sm font-semibold text-white">Quick Links</h4>
+            <ul className="mt-4 space-y-3">
+              {quickLinks.map((l) => (
+                <li key={l.label}>
+                  <a
+                    href={l.href}
+                    className="text-sm text-white/60 transition-colors hover:text-white"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Popular cars */}
+          <div>
+            <h4 className="text-sm font-semibold text-white">Popular Cars</h4>
+            <ul className="mt-4 space-y-3">
+              {popularCars.map((c) => (
+                <li key={c.name}>
+                  <a
+                    href="#cars"
+                    className="text-sm text-white/60 transition-colors hover:text-white"
+                  >
+                    Hyundai {c.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Service links */}
+          <div>
+            <h4 className="text-sm font-semibold text-white">Service</h4>
+            <ul className="mt-4 space-y-3">
+              {[
+                "Book a Service",
+                "Service Packages",
+                "Genuine Parts",
+                "Roadside Assistance",
+                "Extended Warranty",
+              ].map((s) => (
+                <li key={s}>
+                  <a
+                    href="#service"
+                    className="text-sm text-white/60 transition-colors hover:text-white"
+                  >
+                    {s}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div className="col-span-2 lg:col-span-1">
+            <h4 className="text-sm font-semibold text-white">Contact Us</h4>
+            <ul className="mt-4 space-y-4 text-sm text-white/60">
+              <li className="flex gap-3">
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
+                <span>
+                  Modi Hyundai, New Link Road, Malad West, Mumbai, Maharashtra
+                  400064
+                </span>
+              </li>
+              <li className="flex gap-3">
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
+                <a
+                  href={`tel:${nav.phone.replace(/\s/g, "")}`}
+                  className="transition-colors hover:text-white"
+                >
+                  {nav.phone}
+                </a>
+              </li>
+              <li className="flex gap-3">
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
+                <a
+                  href={`mailto:${company.email}`}
+                  className="transition-colors hover:text-white"
+                >
+                  {company.email}
+                </a>
+              </li>
+              <li className="flex gap-3">
+                <Clock className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
+                <span>{company.hours}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="flex flex-col items-center justify-between gap-3 pt-8 text-xs text-white/40 sm:flex-row">
+          <p>© {new Date().getFullYear()} Modi Hyundai. All Rights Reserved.</p>
+          <div className="flex gap-6">
+            <a href="#" className="transition-colors hover:text-white">Privacy Policy</a>
+            <a href="#" className="transition-colors hover:text-white">Terms &amp; Conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
