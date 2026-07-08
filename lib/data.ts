@@ -181,6 +181,34 @@ export const hyundaiIndiaFacts = {
   ],
 };
 
+export const aboutFaqData = [
+  {
+    question: "Who owns Modi Hyundai?",
+    answer:
+      "Modi Hyundai is owned and operated by the Gautam Modi Group, an automotive business group that also represents Audi, Mahindra, Kia and MG in India.",
+  },
+  {
+    question: "Is Modi Hyundai an authorised Hyundai dealership?",
+    answer:
+      "Yes. Modi Hyundai is an authorised Hyundai Motor India dealership, with showrooms and service centres across Mumbai, Kalyan, Ambernath, Shahapur and Pune.",
+  },
+  {
+    question: "How many cars has Modi Hyundai sold?",
+    answer:
+      "Modi Hyundai has sold over 250,000 new cars and 200,000 used cars, and completed more than 550,000 vehicle services, with a 98% customer satisfaction score.",
+  },
+  {
+    question: "Which cities does Modi Hyundai serve?",
+    answer:
+      "Modi Hyundai serves Mumbai, Kalyan, Ambernath, Shahapur and Pune, with dedicated showrooms and service centres in each location.",
+  },
+  {
+    question: "When was Hyundai Motor India founded?",
+    answer:
+      "Hyundai Motor India was founded in 1996. It now operates over 1,366 sales points and 1,550 service points across the country, marking 30 years in India.",
+  },
+];
+
 export type Slide = {
   model: string;
   badge: string;

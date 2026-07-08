@@ -10,7 +10,7 @@
    ============================================================ */
 import { SITE_URL, company, cars, faqData, locations } from "./data";
 
-const DEALER_ID = `${SITE_URL}/#dealer`;
+export const DEALER_ID = `${SITE_URL}/#dealer`;
 
 export function buildJsonLd() {
   const dealer = {

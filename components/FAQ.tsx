@@ -1,12 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { faqData } from "@/lib/data";
+import { faqData as defaultFaqData } from "@/lib/data";
 import { ChevronDown } from "./icons";
 import SectionHeading from "./SectionHeading";
 import Reveal from "./Reveal";
 
-export default function FAQ() {
+export default function FAQ({
+  id = "faq",
+  data = defaultFaqData,
+  title = "Frequently Asked Questions",
+  subtitle = "Everything you need to know about purchasing and servicing your Hyundai.",
+}: {
+  id?: string;
+  data?: { question: string; answer: string }[];
+  title?: string;
+  subtitle?: string;
+}) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggle = (i: number) => {
@@ -14,16 +24,12 @@ export default function FAQ() {
   };
 
   return (
-    <section id="faq" className="scroll-mt-24 bg-bg-2 py-14 lg:py-20">
+    <section id={id} className="scroll-mt-24 bg-bg-2 py-14 lg:py-20">
       <div className="container-px mx-auto max-w-[800px]">
-        <SectionHeading
-          title="Frequently Asked Questions"
-          subtitle="Everything you need to know about purchasing and servicing your Hyundai."
-          align="center"
-        />
+        <SectionHeading title={title} subtitle={subtitle} align="center" />
 
         <div className="mt-12 space-y-4">
-          {faqData.map((faq, i) => {
+          {data.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
               <Reveal key={i} delay={i * 80} variant="fade-up">

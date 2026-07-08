@@ -5,20 +5,74 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 import Reveal from "@/components/Reveal";
+import FAQ from "@/components/FAQ";
 import { ArrowRight, Check } from "@/components/icons";
 import {
   company,
   groupInfo,
   hyundaiIndiaFacts,
+  aboutFaqData,
   aboutHeroImage,
   aboutCultureImage,
+  SITE_URL,
 } from "@/lib/data";
+import { DEALER_ID } from "@/lib/schema";
+
+const title = "About Modi Hyundai: Our Story, Values and Group";
+const description =
+  "Modi Hyundai is an authorised Hyundai dealership owned by the Gautam Modi Group, serving Mumbai and Pune with 250,000+ cars sold and 98% customer satisfaction.";
 
 export const metadata: Metadata = {
-  title: "About Us",
-  description:
-    "Modi Hyundai is part of the Gautam Modi Group, an authorised Hyundai dealership serving Mumbai and Pune with 250,000+ cars sold and 98% customer satisfaction.",
+  title,
+  description,
   alternates: { canonical: "/about" },
+  openGraph: {
+    type: "website",
+    title,
+    description,
+    url: `${SITE_URL}/about`,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
+};
+
+const aboutPageSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "AboutPage",
+      "@id": `${SITE_URL}/about#webpage`,
+      url: `${SITE_URL}/about`,
+      name: title,
+      description,
+      isPartOf: { "@id": `${SITE_URL}/#website` },
+      about: { "@id": DEALER_ID },
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "About Us",
+          item: `${SITE_URL}/about`,
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE_URL}/about#faq`,
+      mainEntity: aboutFaqData.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    },
+  ],
 };
 
 const stats = [
@@ -28,9 +82,18 @@ const stats = [
   { value: company.stats.satisfaction, label: "Customer Satisfaction" },
 ];
 
+function joinWithAnd(items: string[]) {
+  if (items.length <= 1) return items.join("");
+  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
+
 export default function AboutPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema) }}
+      />
       <Navbar />
       <FloatingActions />
       <main style={{ marginTop: "96px" }}>
@@ -74,19 +137,17 @@ export default function AboutPage() {
               </h2>
               <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
                 <p>
-                  Modi Hyundai is an authorised Hyundai dealership operating
-                  showrooms and service centres across Malad, Kanjurmarg,
-                  Kalyan, Ambernath, Shahapur and Pune. We&apos;ve sold{" "}
-                  {company.stats.carsSold} new cars and completed{" "}
-                  {company.stats.servicesDone} services, backed by a{" "}
+                  Modi Hyundai is an authorised Hyundai dealership, owned and
+                  operated by the {groupInfo.name}. We run showrooms and
+                  service centres across Malad, Kanjurmarg, Kalyan, Ambernath,
+                  Shahapur and Pune, and we have sold over{" "}
+                  {company.stats.carsSold} new cars with a{" "}
                   {company.stats.satisfaction} customer satisfaction score.
                 </p>
                 <p>
-                  We&apos;re part of the {groupInfo.name}, an automotive
-                  business group representing {groupInfo.brands.join(", ")} —
-                  and running {groupInfo.ventures.map((v) => v.name).join(" and ")}{" "}
-                  alongside them. {groupInfo.founded}{" "}
-                  {groupInfo.growth}
+                  The {groupInfo.name} represents {joinWithAnd(groupInfo.brands)}{" "}
+                  in India, alongside {joinWithAnd(groupInfo.ventures.map((v) => v.name))}.{" "}
+                  {groupInfo.founded} {groupInfo.growth}
                 </p>
               </div>
             </Reveal>
@@ -164,7 +225,7 @@ export default function AboutPage() {
                 Backed By
               </p>
               <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl">
-                Hyundai Motor India — &ldquo;{hyundaiIndiaFacts.tagline}&rdquo;
+                Hyundai Motor India: &ldquo;{hyundaiIndiaFacts.tagline}&rdquo;
               </h2>
               <p className="mt-3 text-sm text-white/70 sm:text-base">
                 Founded in {hyundaiIndiaFacts.founded}, Hyundai Motor India is
@@ -196,6 +257,13 @@ export default function AboutPage() {
             </div>
           </div>
         </section>
+
+        <FAQ
+          id="about-faq"
+          data={aboutFaqData}
+          title="About Modi Hyundai: Frequently Asked Questions"
+          subtitle="Quick answers about our ownership, group and track record."
+        />
 
         {/* CTA */}
         <section className="bg-white py-14 lg:py-16">
