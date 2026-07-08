@@ -4,9 +4,11 @@
    trademark (PD-textlogo; trademark rights remain with Hyundai). Used
    here in its standard nominative sense to identify an authorised
    Hyundai dealership, the same way every real dealer site displays it. */
+import Link from "next/link";
+
 export default function Logo({ className = "", dark = false }: { className?: string; dark?: boolean }) {
   return (
-    <a href="#home" className={`group flex items-center gap-2.5 ${className}`}>
+    <Link href="/#home" className={`group flex items-center gap-2.5 ${className}`}>
       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white ring-1 ring-border transition-shadow group-hover:shadow-md">
         <svg
           width="22"
@@ -32,6 +34,6 @@ export default function Logo({ className = "", dark = false }: { className?: str
           Customer First
         </span>
       </span>
-    </a>
+    </Link>
   );
 }

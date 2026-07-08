@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import Image from "next/image";
 import { carModels, cityOptions, testDriveImage } from "@/lib/data";
 import { Calendar, Check, ChevronDown } from "./icons";
@@ -9,21 +9,34 @@ import Reveal from "./Reveal";
 const fieldBase =
   "w-full rounded border border-border bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
 
+const timeSlots = [
+  { label: "Morning (9–12)", start: 9, end: 12 },
+  { label: "Afternoon (12–4)", start: 12, end: 16 },
+  { label: "Evening (4–8)", start: 16, end: 20 },
+];
+
 function SelectField({
   label,
   options,
   placeholder,
+  value,
+  onChange,
 }: {
   label: string;
   options: string[];
   placeholder: string;
+  value?: string;
+  onChange?: (v: string) => void;
 }) {
+  const controlled = value !== undefined;
   return (
     <label className="block">
       <span className="mb-1.5 block text-xs font-semibold text-muted">{label}</span>
       <div className="relative">
         <select
-          defaultValue=""
+          {...(controlled
+            ? { value, onChange: (e: ChangeEvent<HTMLSelectElement>) => onChange?.(e.target.value) }
+            : { defaultValue: "" })}
           required
           className={`${fieldBase} appearance-none pr-10`}
         >
@@ -45,6 +58,19 @@ function SelectField({
 export default function TestDrive() {
   const [submitted, setSubmitted] = useState(false);
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const minDate = new Date().toISOString().slice(0, 10);
+
+  const availableTimeSlots = useMemo(() => {
+    if (!date || date !== minDate) return timeSlots;
+    const now = new Date();
+    const currentHour = now.getHours() + now.getMinutes() / 60;
+    return timeSlots.filter((s) => s.end > currentHour);
+  }, [date, minDate]);
+
+  const effectiveTime = availableTimeSlots.some((s) => s.label === time)
+    ? time
+    : "";
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -134,8 +160,10 @@ export default function TestDrive() {
                     <input
                       type="date"
                       required
+                      min={minDate}
                       value={date}
                       onChange={(e) => setDate(e.target.value)}
+                      suppressHydrationWarning
                       className={`${fieldBase} pr-10 ${date ? "" : "text-transparent"}`}
                     />
                     <Calendar className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
@@ -144,8 +172,14 @@ export default function TestDrive() {
 
                 <SelectField
                   label="Preferred Time"
-                  placeholder="Select time"
-                  options={["Morning (9–12)", "Afternoon (12–4)", "Evening (4–8)"]}
+                  placeholder={
+                    date && availableTimeSlots.length === 0
+                      ? "No slots left today"
+                      : "Select time"
+                  }
+                  options={availableTimeSlots.map((s) => s.label)}
+                  value={effectiveTime}
+                  onChange={setTime}
                 />
 
                 <button

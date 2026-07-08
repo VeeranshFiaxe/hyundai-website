@@ -44,7 +44,7 @@ const officialShot = {
   nios: "/content/dam/hyundai/in/en/data/home/homemodel-nios.png",
   i20: "/content/dam/hyundai/in/en/data/home/homemodel-i20.png",
   i20Nline: "/content/dam/hyundai/in/en/data/home/homemodel-i20-nline.png",
-  ioniq5: "/content/dam/hyundai/in/en/data/home/homemodel-ioniq5.jpg",
+  ioniq5: "/content/dam/hyundai/in/en/data/home/homemodel-ioniq5.png",
   cretaElectric: "/content/dam/hyundai/in/en/data/home/homemodel-creta-electric.png",
 };
 
@@ -111,12 +111,73 @@ export const nav = {
   phone: company.phone,
   location: "Mumbai",
   links: [
-    { label: "Home", href: "#home" },
-    { label: "Cars", href: "#cars" },
-    { label: "Offers", href: "#offers" },
-    { label: "Service", href: "#service" },
-    { label: "Stories", href: "#blogs" },
-    { label: "Showrooms", href: "#locations" },
+    { label: "Home", href: "/#home" },
+    { label: "Cars", href: "/#cars" },
+    { label: "Offers", href: "/#offers" },
+    { label: "Service", href: "/#service" },
+    { label: "Stories", href: "/#blogs" },
+    { label: "Showrooms", href: "/#locations" },
+    { label: "About Us", href: "/about" },
+  ],
+};
+
+/* ---- About Us page content ----
+   Dealership facts sourced from modihyundai.co.in. Parent group facts
+   (values, brand portfolio, workforce/sales growth) sourced from
+   gautammodigroup.com. Hyundai Motor India brand facts sourced from
+   hyundai.com/in/en's own "About Us" / brand-story pages. */
+export const aboutHeroImage = stock("photo-1560179707-f14e90ef3623", 1600);
+export const aboutCultureImage = stock("photo-1522071820081-009f0129c71c", 1200);
+
+export const groupInfo = {
+  name: "Gautam Modi Group",
+  url: "https://gautammodigroup.com",
+  founded:
+    "Grown over decades from a 100-member team to a 3,500+ strong organisation.",
+  growth:
+    "Monthly sales have scaled from over 500 to more than 1,500 units, reflecting sustained market leadership and customer trust.",
+  brands: ["Hyundai", "Audi", "Mahindra", "Kia", "MG"],
+  ventures: [
+    { name: "Krishiv Insurance", text: "Insurance solutions for vehicle owners." },
+    { name: "ThinkKarz", text: "The group's premium pre-owned vehicle brand." },
+  ],
+  values: [
+    {
+      title: "Exploring New Horizons",
+      text: "Embracing new opportunities for growth and innovation.",
+    },
+    {
+      title: "Nurturing Talents",
+      text: "Empowering and developing our people to help them excel.",
+    },
+    {
+      title: "Process with Tenacity",
+      text: "Converting strategy into consistent, effective action.",
+    },
+    {
+      title: "Grandiose Experience",
+      text: "Creating meaningful experiences through recognition and service.",
+    },
+  ],
+  headquarters:
+    "Neo Vikram Building, Andheri Link Rd, Sahakar Nagar, Azad Nagar, Andheri West, Mumbai, Maharashtra 400053",
+};
+
+export const hyundaiIndiaFacts = {
+  tagline: "Progress for Humanity",
+  founded: 1996,
+  plant: "Manufacturing plant near Chennai, Kancheepuram District, Tamil Nadu, with a new facility under commissioning in Pune, Maharashtra.",
+  network: "1,366 sales points and 1,550 service points across India.",
+  milestone: "Celebrating 30 years of Hyundai in India, with 9 million+ customer journeys and counting.",
+  csr: [
+    {
+      title: "Samarth by Hyundai",
+      text: "Supports para-athletes and skill-development programmes across India.",
+    },
+    {
+      title: "Hyundai Motor India Foundation",
+      text: "Backs community projects and record-breaking expeditions nationwide.",
+    },
   ],
 };
 
@@ -175,6 +236,10 @@ export type Car = {
   fuel: string;
   image: string;
   alt: string;
+  seating: string;
+  mileage: string;
+  bootSpace: string;
+  highlights: string[];
 };
 
 const lakh = (inr: number) => (inr / 100000).toFixed(2);
@@ -199,6 +264,15 @@ export const cars: Car[] = [
     cta: "Explore the Exter",
     image: official(officialShot.exter),
     alt: "Hyundai Exter compact SUV, official product shot",
+    seating: "5",
+    mileage: "Up to 21.1 kmpl (petrol), 27.1 km/kg (CNG)",
+    bootSpace: "391 litres",
+    highlights: [
+      "Segment-first rear disc brakes",
+      "Bluelink connected-car tech",
+      "6 airbags standard across variants",
+      "Sporty pixel LED lighting front & rear",
+    ],
   },
   {
     name: "VENUE",
@@ -213,6 +287,15 @@ export const cars: Car[] = [
     cta: "Explore the Venue",
     image: official(officialShot.venue),
     alt: "Hyundai Venue compact SUV, official product shot",
+    seating: "5",
+    mileage: "Up to 18.4 kmpl (petrol), 23.7 kmpl (diesel)",
+    bootSpace: "350 litres",
+    highlights: [
+      "Turbo-petrol, naturally-aspirated and diesel engine choices",
+      "Bluelink connected SUV technology",
+      "Wireless Android Auto & Apple CarPlay",
+      "6 airbags standard across variants",
+    ],
   },
   {
     name: "VENUE N LINE",
@@ -227,6 +310,15 @@ export const cars: Car[] = [
     cta: "Explore the Venue N Line",
     image: official(officialShot.venueNline),
     alt: "Hyundai Venue N Line compact SUV, official product shot",
+    seating: "5",
+    mileage: "Up to 18.2 kmpl",
+    bootSpace: "350 litres",
+    highlights: [
+      "N Line sporty body kit with red accents",
+      "Turbo-petrol engine with paddle shifters",
+      "Sportier suspension and steering tune",
+      "N Line exclusive interior trim",
+    ],
   },
   {
     name: "CRETA",
@@ -241,6 +333,15 @@ export const cars: Car[] = [
     cta: "Explore the Creta",
     image: official(officialShot.creta),
     alt: "Hyundai Creta mid-size SUV, official product shot",
+    seating: "5",
+    mileage: "Up to 21 kmpl (diesel), 18.4 kmpl (petrol)",
+    bootSpace: "433 litres",
+    highlights: [
+      "Panoramic sunroof and ventilated front seats",
+      "Level 2 ADAS on turbo variants",
+      "Dual 10.25\" screens with Bose sound system",
+      "India's best-selling SUV nameplate",
+    ],
   },
   {
     name: "CRETA N LINE",
@@ -255,6 +356,15 @@ export const cars: Car[] = [
     cta: "Explore the Creta N Line",
     image: official(officialShot.cretaNline),
     alt: "Hyundai Creta N Line performance SUV, official product shot",
+    seating: "5",
+    mileage: "Up to 18.7 kmpl",
+    bootSpace: "433 litres",
+    highlights: [
+      "N Line exclusive styling inside and out",
+      "Sportier suspension and steering feel",
+      "Turbo-petrol only powertrain lineup",
+      "N-branded seats, pedals and instrument cluster",
+    ],
   },
   {
     name: "ALCAZAR",
@@ -269,6 +379,15 @@ export const cars: Car[] = [
     cta: "Explore the Alcazar",
     image: official(officialShot.alcazar),
     alt: "Hyundai Alcazar 7-seater SUV, official product shot",
+    seating: "6 / 7",
+    mileage: "Up to 20.4 kmpl (diesel), 16.2 kmpl (petrol)",
+    bootSpace: "180 litres (3rd row up), expandable",
+    highlights: [
+      "6-seat captain's chair or 7-seat bench layouts",
+      "Panoramic sunroof and ventilated front seats",
+      "ADAS suite available on top variants",
+      "Three full rows of genuine adult space",
+    ],
   },
   {
     name: "VERNA",
@@ -283,6 +402,15 @@ export const cars: Car[] = [
     cta: "Explore the Verna",
     image: official(officialShot.verna),
     alt: "Hyundai Verna sedan, official product shot",
+    seating: "5",
+    mileage: "Up to 20.4 kmpl (petrol)",
+    bootSpace: "528 litres",
+    highlights: [
+      "Level 2 ADAS with 10 airbags",
+      "Ventilated front seats and Bose premium sound",
+      "Digital key and remote engine start",
+      "Turbo-petrol option for sportier performance",
+    ],
   },
   {
     name: "AURA",
@@ -297,6 +425,15 @@ export const cars: Car[] = [
     cta: "Explore the Aura",
     image: official(officialShot.aura),
     alt: "Hyundai Aura sedan, official product shot",
+    seating: "5",
+    mileage: "Up to 20.1 kmpl (petrol), 26.4 km/kg (CNG)",
+    bootSpace: "402 litres, segment-leading",
+    highlights: [
+      "Largest boot space in the compact sedan segment",
+      "Rear AC vents and wireless phone charger",
+      "Available factory-fitted CNG option",
+      "Sunroof and projector headlamps",
+    ],
   },
   {
     name: "GRAND I10 NIOS",
@@ -311,6 +448,15 @@ export const cars: Car[] = [
     cta: "Explore the Grand i10 Nios",
     image: official(officialShot.nios),
     alt: "Hyundai Grand i10 Nios hatchback, official product shot",
+    seating: "5",
+    mileage: "Up to 20.3 kmpl (petrol), 25.4 km/kg (CNG)",
+    bootSpace: "260 litres",
+    highlights: [
+      "Segment-first rear AC vents",
+      "Wireless Android Auto & Apple CarPlay",
+      "6 airbags available across the range",
+      "Available factory-fitted CNG option",
+    ],
   },
   {
     name: "I20",
@@ -325,6 +471,15 @@ export const cars: Car[] = [
     cta: "Explore the i20",
     image: official(officialShot.i20),
     alt: "Hyundai i20 premium hatchback, official product shot",
+    seating: "5",
+    mileage: "Up to 20.35 kmpl",
+    bootSpace: "311 litres",
+    highlights: [
+      "Bose premium sound system",
+      "Sunroof and 10.25\" digital driver's cluster",
+      "Wireless smartphone charger",
+      "Segment-leading feature list",
+    ],
   },
   {
     name: "I20 N LINE",
@@ -339,6 +494,15 @@ export const cars: Car[] = [
     cta: "Explore the i20 N Line",
     image: official(officialShot.i20Nline),
     alt: "Hyundai i20 N Line performance hatchback, official product shot",
+    seating: "5",
+    mileage: "Up to 18.2 kmpl",
+    bootSpace: "311 litres",
+    highlights: [
+      "1.0L turbo-petrol with paddle-shift DCT",
+      "N Line sport body kit and red stitching",
+      "Sportier suspension tuning",
+      "Bose sound system and sunroof",
+    ],
   },
   {
     name: "IONIQ 5",
@@ -353,6 +517,15 @@ export const cars: Car[] = [
     cta: "Explore the Ioniq 5",
     image: official(officialShot.ioniq5),
     alt: "Hyundai Ioniq 5 electric SUV, official product shot",
+    seating: "5",
+    mileage: "Up to 631 km range per charge (claimed, long-range)",
+    bootSpace: "527 litres + 57 litre front trunk",
+    highlights: [
+      "Vehicle-to-Load (V2L): power devices from the car",
+      "Ultra-fast charging, 10–80% in about 18 minutes",
+      "Dual 12.3\" curved displays and flat cabin floor",
+      "Retro-futuristic, pixel-inspired design language",
+    ],
   },
   {
     name: "CRETA ELECTRIC",
@@ -367,6 +540,15 @@ export const cars: Car[] = [
     cta: "Explore the Creta Electric",
     image: official(officialShot.cretaElectric),
     alt: "Hyundai Creta Electric SUV, official product shot",
+    seating: "5",
+    mileage: "Up to 473 km range per charge (claimed, long-range)",
+    bootSpace: "433 litres",
+    highlights: [
+      "Vehicle-to-Load (V2L) charging support",
+      "Level 2 ADAS suite",
+      "Fast charging, 10–80% in about 58 minutes",
+      "Same spacious cabin as the ICE Creta",
+    ],
   },
   {
     name: "PRIME HB",
@@ -381,6 +563,15 @@ export const cars: Car[] = [
     cta: "Explore the Prime HB",
     image: official(officialShot.nios),
     alt: "Hyundai Prime HB taxi hatchback, official product shot",
+    seating: "5",
+    mileage: "Up to 25.4 km/kg (CNG)",
+    bootSpace: "260 litres",
+    highlights: [
+      "Factory-fitted CNG for low running costs",
+      "Built for high-mileage fleet and taxi duty",
+      "Backed by Hyundai's dealer service network",
+      "Durable, low-maintenance cabin trim",
+    ],
   },
   {
     name: "PRIME SD",
@@ -395,6 +586,15 @@ export const cars: Car[] = [
     cta: "Explore the Prime SD",
     image: official(officialShot.aura),
     alt: "Hyundai Prime SD taxi sedan, official product shot",
+    seating: "5",
+    mileage: "Up to 26.4 km/kg (CNG)",
+    bootSpace: "402 litres",
+    highlights: [
+      "Factory-fitted CNG for low running costs",
+      "Segment-leading boot space for luggage/fares",
+      "Built for high-mileage fleet and taxi duty",
+      "Backed by Hyundai's dealer service network",
+    ],
   },
 ];
 

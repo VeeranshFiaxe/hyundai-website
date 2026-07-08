@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { cars, formatINR, type CarCategory } from "@/lib/data";
 import { ChevronLeft, ChevronRight } from "./icons";
 import Reveal from "./Reveal";
+import CarModal from "./CarModal";
 
 const categories: ("All" | CarCategory)[] = [
   "All",
@@ -18,14 +19,19 @@ const categories: ("All" | CarCategory)[] = [
 export default function FeaturedVehicles() {
   const [category, setCategory] = useState<"All" | CarCategory>("All");
   const [index, setIndex] = useState(0);
+  const [showDetails, setShowDetails] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
   const [stageWidth, setStageWidth] = useState(1000);
+  const [prevCategory, setPrevCategory] = useState(category);
 
   const filtered =
     category === "All" ? cars : cars.filter((c) => c.category === category);
   const active = filtered[index] ?? filtered[0];
 
-  useEffect(() => setIndex(0), [category]);
+  if (category !== prevCategory) {
+    setPrevCategory(category);
+    setIndex(0);
+  }
 
   useEffect(() => {
     const el = stageRef.current;
@@ -37,8 +43,8 @@ export default function FeaturedVehicles() {
     return () => ro.disconnect();
   }, []);
 
-  const go = (dir: number) =>
-    setIndex((i) => Math.max(0, Math.min(filtered.length - 1, i + dir)));
+  const len = filtered.length;
+  const go = (dir: number) => setIndex((i) => (i + dir + len) % len);
 
   // Step distance and scale/opacity falloff are proportional to the stage's
   // own measured width, so the "coverflow" spacing stays consistent across
@@ -48,7 +54,7 @@ export default function FeaturedVehicles() {
   return (
     <section
       id="cars"
-      className="scroll-mt-24 overflow-hidden bg-white py-14 lg:py-20"
+      className="scroll-mt-24 overflow-hidden bg-white py-8 lg:py-10"
     >
       <div className="container-px mx-auto max-w-[1400px]">
         {/* Category tabs */}
@@ -73,19 +79,20 @@ export default function FeaturedVehicles() {
         {/* Coverflow stage */}
         <div
           ref={stageRef}
-          className="relative mt-4 h-[260px] select-none sm:h-[320px] lg:h-[400px]"
+          className="relative mt-2 h-[180px] select-none sm:h-[220px] lg:h-[260px]"
         >
           <button
             aria-label="Previous car"
             onClick={() => go(-1)}
-            disabled={index === 0}
-            className="absolute left-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center text-text transition-opacity disabled:opacity-20 sm:h-12 sm:w-12"
+            className="absolute left-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center text-text transition-opacity sm:h-12 sm:w-12"
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
 
           {filtered.map((car, i) => {
-            const offset = i - index;
+            let offset = i - index;
+            if (offset > len / 2) offset -= len;
+            if (offset < -len / 2) offset += len;
             if (Math.abs(offset) > 3) return null;
             const abs = Math.abs(offset);
             const scale = offset === 0 ? 1 : Math.max(0.42, 0.72 - abs * 0.14);
@@ -119,8 +126,7 @@ export default function FeaturedVehicles() {
           <button
             aria-label="Next car"
             onClick={() => go(1)}
-            disabled={index === filtered.length - 1}
-            className="absolute right-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center text-text transition-opacity disabled:opacity-20 sm:h-12 sm:w-12"
+            className="absolute right-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center text-text transition-opacity sm:h-12 sm:w-12"
           >
             <ChevronRight className="h-6 w-6" />
           </button>
@@ -129,17 +135,18 @@ export default function FeaturedVehicles() {
         {/* Info row, keyed so it fades between models */}
         <div
           key={active.name}
-          className="mx-auto mt-2 max-w-2xl text-center animate-[fade-up_.35s_ease-out_both]"
+          className="mx-auto mt-1 max-w-2xl text-center animate-[fade-up_.35s_ease-out_both]"
         >
-          <a
-            href="#test-drive"
-            className="group inline-flex items-center gap-1 text-xl font-bold text-brand transition-colors hover:text-brand-light sm:text-2xl"
+          <button
+            type="button"
+            onClick={() => setShowDetails(true)}
+            className="group mx-auto inline-flex items-center gap-1 text-xl font-bold text-brand transition-colors hover:text-brand-light sm:text-2xl"
           >
             Hyundai {active.name.charAt(0) + active.name.slice(1).toLowerCase()}
             <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          </button>
 
-          <div className="mt-4 grid grid-cols-1 gap-4 border-t border-border pt-4 sm:grid-cols-3">
+          <div className="mt-2 grid grid-cols-1 gap-2 border-t border-border pt-2 sm:grid-cols-3">
             <div>
               <p className="text-xs font-medium text-muted">Starting at</p>
               <p className="mt-0.5 text-base font-semibold text-text">
@@ -158,6 +165,10 @@ export default function FeaturedVehicles() {
           </div>
         </div>
       </div>
+
+      {showDetails && (
+        <CarModal car={active} onClose={() => setShowDetails(false)} />
+      )}
     </section>
   );
 }

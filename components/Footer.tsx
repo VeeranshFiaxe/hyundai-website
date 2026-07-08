@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Logo from "./Logo";
 import { popularCars, nav, company } from "@/lib/data";
 import {
@@ -13,13 +14,13 @@ import {
 } from "./icons";
 
 const quickLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About Us", href: "#home" },
-  { label: "Cars", href: "#cars" },
-  { label: "Service", href: "#service" },
-  { label: "Book a Test Drive", href: "#test-drive" },
-  { label: "Blogs", href: "#blogs" },
-  { label: "Contact Us", href: "#locations" },
+  { label: "Home", href: "/#home" },
+  { label: "About Us", href: "/about" },
+  { label: "Cars", href: "/#cars" },
+  { label: "Service", href: "/#service" },
+  { label: "Book a Test Drive", href: "/#test-drive" },
+  { label: "Blogs", href: "/#blogs" },
+  { label: "Contact Us", href: "/#locations" },
 ];
 
 const socials = [
@@ -64,12 +65,12 @@ export default function Footer() {
             <ul className="mt-4 space-y-3">
               {quickLinks.map((l) => (
                 <li key={l.label}>
-                  <a
+                  <Link
                     href={l.href}
                     className="text-sm text-white/60 transition-colors hover:text-white"
                   >
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -81,12 +82,12 @@ export default function Footer() {
             <ul className="mt-4 space-y-3">
               {popularCars.map((c) => (
                 <li key={c.name}>
-                  <a
-                    href="#cars"
+                  <Link
+                    href="/#cars"
                     className="text-sm text-white/60 transition-colors hover:text-white"
                   >
                     Hyundai {c.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -104,12 +105,12 @@ export default function Footer() {
                 "Extended Warranty",
               ].map((s) => (
                 <li key={s}>
-                  <a
-                    href="#service"
+                  <Link
+                    href="/#service"
                     className="text-sm text-white/60 transition-colors hover:text-white"
                   >
                     {s}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

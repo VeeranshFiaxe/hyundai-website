@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import Logo from "./Logo";
 import { nav } from "@/lib/data";
 import { Phone, Menu, X } from "./icons";
@@ -48,24 +49,24 @@ export default function Navbar() {
         <ul className="hidden items-center gap-0.5 lg:flex">
           {nav.links.map((l) => (
             <li key={l.href}>
-              <a
+              <Link
                 href={l.href}
                 className="relative rounded px-4 py-2 text-sm font-medium text-muted transition-colors hover:bg-bg-2 hover:text-brand"
               >
                 {l.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
 
         {/* Right cluster */}
         <div className="flex items-center gap-2">
-          <a
-            href="#test-drive"
+          <Link
+            href="/#test-drive"
             className="hidden rounded bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-brand-light sm:inline-block"
           >
             Book a Test Drive
-          </a>
+          </Link>
           <button
             aria-label="Open menu"
             onClick={() => setOpen(true)}
@@ -104,23 +105,23 @@ export default function Navbar() {
           </div>
 
           {nav.links.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
               className="rounded px-4 py-3 text-base font-medium text-text transition-colors hover:bg-bg-2 hover:text-brand"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
 
-          <a
-            href="#test-drive"
+          <Link
+            href="/#test-drive"
             onClick={() => setOpen(false)}
             className="mt-4 rounded bg-brand px-5 py-3.5 text-center text-sm font-semibold text-white"
           >
             Book a Test Drive
-          </a>
+          </Link>
           <a
             href={`tel:${nav.phone.replace(/\s/g, "")}`}
             className="mt-2 flex items-center justify-center gap-2 rounded border border-border px-5 py-3.5 text-sm font-semibold text-brand"
