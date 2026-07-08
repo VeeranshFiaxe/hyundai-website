@@ -44,6 +44,7 @@ function SelectField({
 
 export default function TestDrive() {
   const [submitted, setSubmitted] = useState(false);
+  const [date, setDate] = useState("");
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -130,7 +131,13 @@ export default function TestDrive() {
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Preferred Date</span>
                   <div className="relative">
-                    <input type="date" required className={`${fieldBase} pr-10`} />
+                    <input
+                      type="date"
+                      required
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className={`${fieldBase} pr-10 ${date ? "" : "text-transparent"}`}
+                    />
                     <Calendar className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   </div>
                 </label>

@@ -33,23 +33,20 @@ export default function Services() {
             const Icon = iconMap[s.icon as IconName];
             const accent = accentCycle[i % accentCycle.length];
             return (
-              <Reveal
-                key={s.title}
-                delay={i * 70}
-                variant="scale-up"
-                className="group flex flex-col items-center gap-3 rounded-lg border border-border bg-white p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_0_rgba(0,44,95,0.12)]"
-              >
-                <span
-                  className="flex h-14 w-14 items-center justify-center rounded-full transition-colors"
-                  style={{
-                    backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`,
-                    color: accent,
-                  }}
-                >
-                  <Icon className="h-6 w-6" />
-                </span>
-                <h3 className="text-sm font-semibold leading-snug text-text">{s.title}</h3>
-                <p className="text-xs leading-relaxed text-muted">{s.text}</p>
+              <Reveal key={s.title} delay={i * 110} variant="scale-up">
+                <div className="group flex h-full flex-col items-center gap-3 rounded-lg border border-border bg-white p-6 text-center transition-[transform,box-shadow] duration-700 ease-out will-change-transform hover:-translate-y-1 hover:shadow-[0_8px_30px_0_rgba(0,44,95,0.12)]">
+                  <span
+                    className="flex h-14 w-14 items-center justify-center rounded-full transition-colors duration-700"
+                    style={{
+                      backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`,
+                      color: accent,
+                    }}
+                  >
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <h3 className="text-sm font-semibold leading-snug text-text">{s.title}</h3>
+                  <p className="text-xs leading-relaxed text-muted">{s.text}</p>
+                </div>
               </Reveal>
             );
           })}

@@ -71,6 +71,8 @@ export function buildJsonLd() {
     brand: { "@type": "Brand", name: "Hyundai" },
     vehicleConfiguration: car.type,
     fuelType: car.fuel.replace(/\s·\s/g, ", "),
+    vehicleEngine: { "@type": "EngineSpecification", name: car.engine },
+    vehicleTransmission: car.transmission,
     offers: {
       "@type": "Offer",
       priceCurrency: "INR",

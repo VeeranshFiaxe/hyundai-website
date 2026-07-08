@@ -1,109 +1,161 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
-import { cars } from "@/lib/data";
-import { ArrowRight, ChevronLeft, ChevronRight } from "./icons";
+import { useEffect, useRef, useState } from "react";
+import { cars, formatINR, type CarCategory } from "@/lib/data";
+import { ChevronLeft, ChevronRight } from "./icons";
 import Reveal from "./Reveal";
 
-export default function FeaturedVehicles() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+const categories: ("All" | CarCategory)[] = [
+  "All",
+  "SUV",
+  "Sedan",
+  "Hatchback",
+  "Electric",
+  "Taxi",
+];
 
-  const scroll = (dir: "left" | "right") => {
-    if (scrollRef.current) {
-      const scrollAmount = 260; // Card width + gap
-      scrollRef.current.scrollBy({ left: dir === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
-    }
-  };
+export default function FeaturedVehicles() {
+  const [category, setCategory] = useState<"All" | CarCategory>("All");
+  const [index, setIndex] = useState(0);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [stageWidth, setStageWidth] = useState(1000);
+
+  const filtered =
+    category === "All" ? cars : cars.filter((c) => c.category === category);
+  const active = filtered[index] ?? filtered[0];
+
+  useEffect(() => setIndex(0), [category]);
+
+  useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const measure = () => setStageWidth(el.clientWidth);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const go = (dir: number) =>
+    setIndex((i) => Math.max(0, Math.min(filtered.length - 1, i + dir)));
+
+  // Step distance and scale/opacity falloff are proportional to the stage's
+  // own measured width, so the "coverflow" spacing stays consistent across
+  // breakpoints without a hardcoded pixel value.
+  const step = Math.min(stageWidth * 0.34, 360);
 
   return (
-    <section id="cars" className="scroll-mt-24 bg-bg-2 py-14 lg:py-20">
+    <section
+      id="cars"
+      className="scroll-mt-24 overflow-hidden bg-white py-14 lg:py-20"
+    >
       <div className="container-px mx-auto max-w-[1400px]">
-        {/* Header */}
-        <Reveal className="mb-10 flex items-end justify-between gap-4">
-          <div>
-            <h2 className="font-display text-2xl font-bold text-text sm:text-3xl">
-              Explore the Hyundai Range
-            </h2>
-            <a
-              href="#cars"
-              className="group/link mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-brand-light"
-            >
-              View All Cars
-              <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5" />
-            </a>
-          </div>
-          <div className="flex gap-2">
-            <button
-              aria-label="Previous car"
-              onClick={() => scroll("left")}
-              className="grid h-10 w-10 place-items-center rounded border border-border bg-white text-text transition-colors hover:bg-bg-3 hover:text-brand"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              aria-label="Next car"
-              onClick={() => scroll("right")}
-              className="grid h-10 w-10 place-items-center rounded border border-border bg-white text-text transition-colors hover:bg-bg-3 hover:text-brand"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
+        {/* Category tabs */}
+        <Reveal className="flex justify-center">
+          <div className="flex gap-1 overflow-x-auto sm:gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={`shrink-0 border-b-2 px-3 py-2 text-sm font-semibold transition-colors sm:px-4 ${
+                  category === cat
+                    ? "border-brand text-brand"
+                    : "border-transparent text-muted hover:text-text"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </Reveal>
 
-        {/* Scrollable car row */}
-        <div 
-          ref={scrollRef}
-          className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        {/* Coverflow stage */}
+        <div
+          ref={stageRef}
+          className="relative mt-4 h-[260px] select-none sm:h-[320px] lg:h-[400px]"
         >
-          {cars.map((car, i) => (
-            <Reveal
-              key={car.name}
-              delay={i * 70}
-              variant="slide-left"
-              className="w-[220px] shrink-0 snap-start sm:w-[240px]"
-            >
-              <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-white shadow-[0_2px_12px_0_rgba(0,44,95,0.07)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_30px_0_rgba(0,44,95,0.14)]">
-                {/* Car image — light studio plate */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-b from-[#eef1f6] to-[#c9d1dc]">
-                  <Image
-                    src={car.image}
-                    alt={car.alt}
-                    fill
-                    sizes="240px"
-                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                  />
-                </div>
+          <button
+            aria-label="Previous car"
+            onClick={() => go(-1)}
+            disabled={index === 0}
+            className="absolute left-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center text-text transition-opacity disabled:opacity-20 sm:h-12 sm:w-12"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
 
-                {/* Info */}
-                <div className="flex flex-1 flex-col p-4">
-                  <p className="text-[11px] font-medium uppercase tracking-wide text-muted">
-                    {car.type}
-                  </p>
-                  <h3 className="mt-0.5 font-display text-base font-bold text-text">
-                    Hyundai {car.name}
-                  </h3>
-                  <p className="mt-1 text-xs text-muted">
-                    Starts from{" "}
-                    <span className="font-semibold text-brand">
-                      ₹{car.price} Lakh
-                    </span>{" "}
-                    <span className="text-faint">(ex-showroom)</span>
-                  </p>
-                  <p className="mt-2 flex-1 text-xs leading-relaxed text-muted">
-                    {car.blurb}
-                  </p>
-                  <a
-                    href="#test-drive"
-                    className="group/link mt-4 inline-flex items-center gap-1 text-sm font-semibold text-brand transition-colors hover:text-brand-light"
-                  >
-                    {car.cta}
-                    <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
-                  </a>
-                </div>
-              </article>
-            </Reveal>
-          ))}
+          {filtered.map((car, i) => {
+            const offset = i - index;
+            if (Math.abs(offset) > 3) return null;
+            const abs = Math.abs(offset);
+            const scale = offset === 0 ? 1 : Math.max(0.42, 0.72 - abs * 0.14);
+            const opacity = abs > 2 ? 0 : 1 - abs * 0.32;
+            const translateX = offset * step;
+            return (
+              <div
+                key={car.name}
+                onClick={() => offset !== 0 && setIndex(i)}
+                className="absolute left-1/2 top-1/2 flex h-full w-[70%] items-center justify-center transition-all duration-500 ease-out sm:w-[55%] lg:w-[46%]"
+                style={{
+                  transform: `translate(-50%, -50%) translateX(${translateX}px) scale(${scale})`,
+                  opacity,
+                  zIndex: 20 - abs,
+                  cursor: offset !== 0 ? "pointer" : "default",
+                  pointerEvents: abs > 2 ? "none" : "auto",
+                }}
+              >
+                <Image
+                  src={car.image}
+                  alt={car.alt}
+                  width={800}
+                  height={295}
+                  priority={offset === 0}
+                  className="h-auto w-full object-contain drop-shadow-xl"
+                />
+              </div>
+            );
+          })}
+
+          <button
+            aria-label="Next car"
+            onClick={() => go(1)}
+            disabled={index === filtered.length - 1}
+            className="absolute right-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center text-text transition-opacity disabled:opacity-20 sm:h-12 sm:w-12"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+        </div>
+
+        {/* Info row, keyed so it fades between models */}
+        <div
+          key={active.name}
+          className="mx-auto mt-2 max-w-2xl text-center animate-[fade-up_.35s_ease-out_both]"
+        >
+          <a
+            href="#test-drive"
+            className="group inline-flex items-center gap-1 text-xl font-bold text-brand transition-colors hover:text-brand-light sm:text-2xl"
+          >
+            Hyundai {active.name.charAt(0) + active.name.slice(1).toLowerCase()}
+            <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+          </a>
+
+          <div className="mt-4 grid grid-cols-1 gap-4 border-t border-border pt-4 sm:grid-cols-3">
+            <div>
+              <p className="text-xs font-medium text-muted">Starting at</p>
+              <p className="mt-0.5 text-base font-semibold text-text">
+                {formatINR(active.priceINR)}
+              </p>
+              <p className="text-xs text-faint">*Ex Showroom Price</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-muted">Engine</p>
+              <p className="mt-0.5 text-sm text-text">{active.engine}</p>
+            </div>
+            <div>
+              <p className="text-xs font-medium text-muted">Transmission available</p>
+              <p className="mt-0.5 text-sm text-text">{active.transmission}</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

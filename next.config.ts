@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "bunny-wp-pullzone-cghvklkcns.b-cdn.net",
       },
+      {
+        protocol: "https",
+        hostname: "www.hyundai.com",
+      },
     ],
   },
 };

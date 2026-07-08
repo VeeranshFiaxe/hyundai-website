@@ -1,20 +1,26 @@
 /* ============================================================
    Content model for the Modi Hyundai landing page.
-   All business facts (NAP, pricing, locations, stats) are sourced
-   from the live dealership site modihyundai.co.in so the page is
-   accurate and safe for local SEO / NAP consistency.
-   Vehicle photography uses genuine Hyundai India product images
-   served from a public automotive CDN; portraits/showroom photos
-   use stock stand-ins (replace with real branch photos for launch).
+   Car lineup, images, pricing, engine and transmission specs are
+   sourced directly from the official Hyundai India site
+   (hyundai.com/in/en) so the dealership page matches the parent
+   brand's own data. NAP/location facts come from modihyundai.co.in.
+   Portrait/showroom photos use stock stand-ins where noted.
    ============================================================ */
 
-/* Genuine Hyundai India product shots (public automotive CDN). */
+/* Genuine Hyundai India product shot (used for the test-drive interior
+   panel; sourced from a public automotive CDN, not the corporate site). */
 const hy = (path: string, w = 1280, h = 720) =>
   `https://imgd.aeplcdn.com/${w}x${h}/n/cw/ec/${path}?isig=0&q=80`;
+
+/* Official Hyundai India transparent product cutouts, from hyundai.com/in/en. */
+const official = (path: string) => `https://www.hyundai.com${path}`;
 
 /* Stock stand-ins for people and showroom buildings. */
 const stock = (id: string, w = 800) =>
   `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+
+/* Indian numbering (lakh/crore) grouping, e.g. 1090700 -> "10,90,700". */
+export const formatINR = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 /* Rotating accent colours (CSS var names) applied to card/icon groups
    for visual variety, matching the parent group's per-card colour bars. */
@@ -25,22 +31,43 @@ export const accentCycle = [
   "var(--accent-violet)",
 ];
 
+/* Official hyundai.com transparent product cutouts, 1600x590. */
+const officialShot = {
+  exter: "/content/dam/hyundai/in/en/data/find-a-car/Exter/booking-open/homemodel-exter.png",
+  venue: "/content/dam/hyundai/in/en/data/home/homemodel-venue.png",
+  venueNline: "/content/dam/hyundai/in/en/data/home/homemodel-venue-nline.png",
+  creta: "/content/dam/hyundai/in/en/data/home/homemodel-creta.png",
+  alcazar: "/content/dam/hyundai/in/en/data/home/homemodel-alcazar.png",
+  cretaNline: "/content/dam/hyundai/in/en/data/home/homemodel-creta-nline.png",
+  verna: "/content/dam/hyundai/in/en/data/home/home-model-verna.png",
+  aura: "/content/dam/hyundai/in/en/data/home/homemodel-aura.png",
+  nios: "/content/dam/hyundai/in/en/data/home/homemodel-nios.png",
+  i20: "/content/dam/hyundai/in/en/data/home/homemodel-i20.png",
+  i20Nline: "/content/dam/hyundai/in/en/data/home/homemodel-i20-nline.png",
+  ioniq5: "/content/dam/hyundai/in/en/data/home/homemodel-ioniq5.jpg",
+  cretaElectric: "/content/dam/hyundai/in/en/data/home/homemodel-creta-electric.png",
+};
+
+/* Full-background photography (not transparent cutouts) for contexts that
+   need a real photo rather than a floating product shot: the test-drive
+   interior panel and blog thumbnails, which render with object-cover and
+   would show through as blank/white behind a transparent PNG. */
 const shot = {
-  nios: "136183/grand-i10-nios-exterior-right-front-three-quarter-17.png",
-  i20: "150603/i20-exterior-right-front-three-quarter-13.png",
-  i20nline: "158139/i20-n-line-exterior-right-front-three-quarter-16.png",
-  aura: "139133/aura-exterior-right-front-three-quarter-9.png",
-  exter: "216807/exter-exterior-right-front-three-quarter.png",
-  venue: "197163/venue-exterior-right-front-three-quarter-38.png",
-  venueNline: "210466/new-venue-n-line-exterior-right-front-three-quarter-11.png",
-  creta: "106815/creta-exterior-right-front-three-quarter-2.jpeg",
-  cretaNline: "168697/creta-n-line-exterior-right-front-three-quarter-26.png",
-  cretaElectric: "167017/creta-electric-exterior-right-front-three-quarter-15.png",
-  verna: "204398/verna-exterior-right-front-three-quarter.png",
-  alcazar: "157825/alcazar-facelift-exterior-right-front-three-quarter-22.jpeg",
-  tucson: "106821/tucson-exterior-right-front-three-quarter-8.png",
-  ioniq5: "201627/ioniq-5-exterior-right-front-three-quarter-2.jpeg",
   cretaInterior: "106815/creta-interior-dashboard.jpeg",
+  creta: "106815/creta-exterior-right-front-three-quarter-2.jpeg",
+  alcazar: "157825/alcazar-facelift-exterior-right-front-three-quarter-22.jpeg",
+  venue: "197163/venue-exterior-right-front-three-quarter-38.png",
+  verna: "204398/verna-exterior-right-front-three-quarter.png",
+};
+
+/* Official hyundai.com cinematic hero banners (1860x540), pulled from the
+   homepage carousel and individual model pages. These already have the
+   marketing headline baked into the photo itself, matching the real
+   site's hero treatment exactly. */
+const officialHeroBanner = {
+  creta: "/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/home/cretakingknightinnerkv-pc.jpg",
+  alcazar: "/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvpc2.jpg",
+  ioniq5: "/content/dam/hyundai/in/en/images/home/banner/ioniq-des-banner.jpg",
 };
 
 /* ---- Canonical business identity (NAP), used everywhere + in schema ---- */
@@ -109,35 +136,40 @@ export const heroSlides: Slide[] = [
     badge: "India's favourite SUV",
     headline: "Command the road.",
     sub: "Level 2 ADAS, a panoramic sunroof and a presence that speaks before you do.",
-    price: "10.73",
-    image: hy(shot.creta, 1600, 900),
-    alt: "Hyundai Creta mid-size SUV, front three-quarter exterior view",
+    price: "10.91",
+    image: official(officialHeroBanner.creta),
+    alt: "Hyundai Creta Summer Edition, official campaign banner",
   },
   {
     model: "Hyundai ALCAZAR",
     badge: "6 & 7 Seater",
     headline: "Room for the whole family.",
     sub: "Three spacious rows and boss-mode comfort, built for grand journeys.",
-    price: "14.47",
-    image: hy(shot.alcazar, 1600, 900),
-    alt: "Hyundai Alcazar 7-seater SUV, front three-quarter exterior view",
+    price: "14.51",
+    image: official(officialHeroBanner.alcazar),
+    alt: "The bold new Hyundai Alcazar, official campaign banner",
   },
   {
-    model: "Hyundai TUCSON",
-    badge: "The Flagship SUV",
-    headline: "Design that turns heads.",
-    sub: "Parametric styling, a curved panoramic display and intelligent all-wheel drive.",
-    price: "27.32",
-    image: hy(shot.tucson, 1600, 900),
-    alt: "Hyundai Tucson flagship SUV, front three-quarter exterior view",
+    model: "Hyundai IONIQ 5",
+    badge: "All-Electric",
+    headline: "The future, arrived.",
+    sub: "Hyundai's flagship electric SUV, with futuristic design and a 500km+ range.",
+    price: "55.71",
+    image: official(officialHeroBanner.ioniq5),
+    alt: "The new Hyundai Ioniq 5, official campaign banner",
   },
 ];
+
+export type CarCategory = "SUV" | "Sedan" | "Hatchback" | "Electric" | "Taxi";
 
 export type Car = {
   name: string;
   type: string;
+  category: CarCategory;
   price: string;
   priceINR: number;
+  engine: string;
+  transmission: string;
   blurb: string;
   cta: string;
   fuel: string;
@@ -145,161 +177,224 @@ export type Car = {
   alt: string;
 };
 
-/* Full lineup and prices sourced from modihyundai.co.in. */
+const lakh = (inr: number) => (inr / 100000).toFixed(2);
+
+/* Full lineup, pricing, engine and transmission specs sourced directly
+   from the official hyundai.com/in/en homepage and model pages. Tucson
+   has been discontinued in India (its price page 404s on hyundai.com as
+   of this build) even though it is still listed on modihyundai.co.in;
+   removed here to keep the lineup accurate. Prime HB/SD are Hyundai's
+   commercial taxi variants of the Nios/Aura, images reused accordingly. */
 export const cars: Car[] = [
-  {
-    name: "GRAND I10 NIOS",
-    type: "Hatchback",
-    price: "5.47",
-    priceINR: 547278,
-    fuel: "Petrol · CNG",
-    blurb: "A spacious, feature-rich hatchback built for effortless city driving.",
-    cta: "Explore the Grand i10 Nios",
-    image: hy(shot.nios),
-    alt: "Hyundai Grand i10 Nios hatchback exterior",
-  },
-  {
-    name: "I20",
-    type: "Premium Hatchback",
-    price: "6.87",
-    priceINR: 686865,
-    fuel: "Petrol",
-    blurb: "A premium hatchback with segment-leading style, tech and safety.",
-    cta: "Explore the i20",
-    image: hy(shot.i20),
-    alt: "Hyundai i20 premium hatchback exterior",
-  },
-  {
-    name: "I20 N LINE",
-    type: "Performance Hatchback",
-    price: "9.14",
-    priceINR: 914265,
-    fuel: "Petrol",
-    blurb: "The sporty, turbocharged N Line take on Hyundai's popular hatchback.",
-    cta: "Explore the i20 N Line",
-    image: hy(shot.i20nline),
-    alt: "Hyundai i20 N Line performance hatchback exterior",
-  },
-  {
-    name: "AURA",
-    type: "Sedan",
-    price: "5.98",
-    priceINR: 598320,
-    fuel: "Petrol · CNG",
-    blurb: "A compact sedan that packs genuine comfort and value into a small footprint.",
-    cta: "Explore the Aura",
-    image: hy(shot.aura),
-    alt: "Hyundai Aura sedan exterior",
-  },
-  {
-    name: "VERNA",
-    type: "Sedan",
-    price: "10.69",
-    priceINR: 1069210,
-    fuel: "Petrol",
-    blurb: "A sedan built for comfort, performance and everyday practicality.",
-    cta: "Explore the Verna",
-    image: hy(shot.verna),
-    alt: "Hyundai Verna sedan exterior",
-  },
   {
     name: "EXTER",
     type: "Compact SUV",
-    price: "5.69",
-    priceINR: 568803,
+    category: "SUV",
+    price: lakh(580600),
+    priceINR: 580600,
+    engine: "1.2L Kappa Petrol, 1.2L Bi-Fuel Kappa CNG",
+    transmission: "5-Speed Manual, Smart Auto AMT",
     fuel: "Petrol · CNG",
     blurb: "Hyundai's boldest compact SUV, built for the city and beyond.",
     cta: "Explore the Exter",
-    image: hy(shot.exter),
-    alt: "Hyundai Exter compact SUV exterior",
+    image: official(officialShot.exter),
+    alt: "Hyundai Exter compact SUV, official product shot",
   },
   {
     name: "VENUE",
     type: "Compact SUV",
-    price: "7.90",
-    priceINR: 789900,
+    category: "SUV",
+    price: lakh(799900),
+    priceINR: 799900,
+    engine: "1.2L Kappa Petrol, 1.0L Turbo GDi Petrol, 1.5L CRDi Diesel",
+    transmission: "Manual, Automatic & DCT",
     fuel: "Petrol · Diesel",
     blurb: "A confident compact SUV with genuinely big-car features.",
     cta: "Explore the Venue",
-    image: hy(shot.venue),
-    alt: "Hyundai Venue compact SUV exterior",
+    image: official(officialShot.venue),
+    alt: "Hyundai Venue compact SUV, official product shot",
   },
   {
     name: "VENUE N LINE",
     type: "Performance Compact SUV",
-    price: "10.55",
-    priceINR: 1055400,
+    category: "SUV",
+    price: lakh(1066100),
+    priceINR: 1066100,
+    engine: "1.0L Turbo GDi Petrol",
+    transmission: "6-Speed Manual, 7-Speed DCT",
     fuel: "Petrol",
     blurb: "The Venue, sharpened: a turbo-punchy N Line trim with sportier styling.",
     cta: "Explore the Venue N Line",
-    image: hy(shot.venueNline),
-    alt: "Hyundai Venue N Line compact SUV exterior",
+    image: official(officialShot.venueNline),
+    alt: "Hyundai Venue N Line compact SUV, official product shot",
   },
   {
     name: "CRETA",
     type: "Mid-size SUV",
-    price: "10.73",
-    priceINR: 1072589,
+    category: "SUV",
+    price: lakh(1090700),
+    priceINR: 1090700,
+    engine: "1.5L Turbo GDi Petrol, 1.5L MPi Petrol, 1.5L CRDi Diesel",
+    transmission: "6-Speed Manual & 7-Speed DCT, 6-Speed Manual & IVT",
     fuel: "Petrol · Diesel",
     blurb: "India's best-selling SUV, now sharper on style and tech.",
     cta: "Explore the Creta",
-    image: hy(shot.creta),
-    alt: "Hyundai Creta mid-size SUV exterior",
+    image: official(officialShot.creta),
+    alt: "Hyundai Creta mid-size SUV, official product shot",
   },
   {
     name: "CRETA N LINE",
     type: "Performance SUV",
-    price: "17.83",
-    priceINR: 1782628,
+    category: "SUV",
+    price: lakh(1903300),
+    priceINR: 1903300,
+    engine: "1.5L Turbo GDi Petrol",
+    transmission: "6-Speed Manual, 7-Speed DCT",
     fuel: "Petrol",
     blurb: "The Creta's sportiest form yet, with N Line styling and turbo performance.",
     cta: "Explore the Creta N Line",
-    image: hy(shot.cretaNline),
-    alt: "Hyundai Creta N Line performance SUV exterior",
+    image: official(officialShot.cretaNline),
+    alt: "Hyundai Creta N Line performance SUV, official product shot",
   },
   {
     name: "ALCAZAR",
     type: "7-Seater SUV",
-    price: "14.47",
-    priceINR: 1447305,
+    category: "SUV",
+    price: lakh(1450700),
+    priceINR: 1450700,
+    engine: "1.5L CRDi Diesel, 1.5L Turbo GDi Petrol",
+    transmission: "6-Speed Manual, 7-Speed DCT, 6-Speed Automatic",
     fuel: "Petrol · Diesel",
     blurb: "Three rows of real space, Hyundai's SUV for growing families.",
     cta: "Explore the Alcazar",
-    image: hy(shot.alcazar),
-    alt: "Hyundai Alcazar 7-seater SUV exterior",
+    image: official(officialShot.alcazar),
+    alt: "Hyundai Alcazar 7-seater SUV, official product shot",
   },
   {
-    name: "TUCSON",
-    type: "Flagship SUV",
-    price: "27.32",
-    priceINR: 2731661,
-    fuel: "Petrol · Diesel",
-    blurb: "The flagship SUV with parametric design, ADAS and all-wheel drive.",
-    cta: "Explore the Tucson",
-    image: hy(shot.tucson),
-    alt: "Hyundai Tucson flagship SUV exterior",
+    name: "VERNA",
+    type: "Sedan",
+    category: "Sedan",
+    price: lakh(1099200),
+    priceINR: 1099200,
+    engine: "1.5L Turbo GDi Petrol, 1.5L MPi Petrol",
+    transmission: "6-Speed Manual, iVT & 7-Speed DCT",
+    fuel: "Petrol",
+    blurb: "A sedan built for comfort, performance and everyday practicality.",
+    cta: "Explore the Verna",
+    image: official(officialShot.verna),
+    alt: "Hyundai Verna sedan, official product shot",
+  },
+  {
+    name: "AURA",
+    type: "Sedan",
+    category: "Sedan",
+    price: lakh(599990),
+    priceINR: 599990,
+    engine: "1.2L Kappa Petrol, 1.2L Bi-Fuel CNG",
+    transmission: "5-Speed Manual, Smart Auto AMT",
+    fuel: "Petrol · CNG",
+    blurb: "A compact sedan that packs genuine comfort and value into a small footprint.",
+    cta: "Explore the Aura",
+    image: official(officialShot.aura),
+    alt: "Hyundai Aura sedan, official product shot",
+  },
+  {
+    name: "GRAND I10 NIOS",
+    type: "Hatchback",
+    category: "Hatchback",
+    price: lakh(559700),
+    priceINR: 559700,
+    engine: "1.2L Kappa Petrol, 1.2L Bi-Fuel CNG",
+    transmission: "5-Speed Manual, Smart Auto AMT",
+    fuel: "Petrol · CNG",
+    blurb: "A spacious, feature-rich hatchback built for effortless city driving.",
+    cta: "Explore the Grand i10 Nios",
+    image: official(officialShot.nios),
+    alt: "Hyundai Grand i10 Nios hatchback, official product shot",
+  },
+  {
+    name: "I20",
+    type: "Premium Hatchback",
+    category: "Hatchback",
+    price: lakh(599700),
+    priceINR: 599700,
+    engine: "1.2L Kappa Petrol",
+    transmission: "5-Speed Manual, IVT",
+    fuel: "Petrol",
+    blurb: "A premium hatchback with segment-leading style, tech and safety.",
+    cta: "Explore the i20",
+    image: official(officialShot.i20),
+    alt: "Hyundai i20 premium hatchback, official product shot",
+  },
+  {
+    name: "I20 N LINE",
+    type: "Performance Hatchback",
+    category: "Hatchback",
+    price: lakh(927200),
+    priceINR: 927200,
+    engine: "1.0L Turbo GDi Petrol",
+    transmission: "7-Speed DCT, 6-Speed Manual",
+    fuel: "Petrol",
+    blurb: "The sporty, turbocharged N Line take on Hyundai's popular hatchback.",
+    cta: "Explore the i20 N Line",
+    image: official(officialShot.i20Nline),
+    alt: "Hyundai i20 N Line performance hatchback, official product shot",
   },
   {
     name: "IONIQ 5",
     type: "Electric SUV",
-    price: "46.30",
-    priceINR: 4630000,
+    category: "Electric",
+    price: lakh(5570600),
+    priceINR: 5570600,
+    engine: "Permanent Magnet Synchronous Motor",
+    transmission: "Single-Speed Reduction Gear",
     fuel: "Electric",
-    blurb: "Hyundai's flagship electric SUV, with futuristic design and 500km+ range.",
+    blurb: "Hyundai's flagship electric SUV, with futuristic design and a 500km+ range.",
     cta: "Explore the Ioniq 5",
-    image: hy(shot.ioniq5),
-    alt: "Hyundai Ioniq 5 electric SUV exterior",
+    image: official(officialShot.ioniq5),
+    alt: "Hyundai Ioniq 5 electric SUV, official product shot",
   },
   {
     name: "CRETA ELECTRIC",
     type: "Electric SUV",
-    price: "18.02",
-    priceINR: 1802200,
+    category: "Electric",
+    price: lakh(1802800),
+    priceINR: 1802800,
+    engine: "Interior Permanent Magnet Synchronous Motor",
+    transmission: "Single-Speed Reduction Gear",
     fuel: "Electric",
     blurb: "India's favourite SUV, reimagined as a zero-emission electric vehicle.",
     cta: "Explore the Creta Electric",
-    image: hy(shot.cretaElectric),
-    alt: "Hyundai Creta Electric SUV exterior",
+    image: official(officialShot.cretaElectric),
+    alt: "Hyundai Creta Electric SUV, official product shot",
+  },
+  {
+    name: "PRIME HB",
+    type: "Taxi Hatchback",
+    category: "Taxi",
+    price: lakh(640600),
+    priceINR: 640600,
+    engine: "1.2L Bi-Fuel Petrol with CNG",
+    transmission: "5-Speed Manual",
+    fuel: "Petrol · CNG",
+    blurb: "Hyundai's purpose-built hatchback for taxi and fleet operators.",
+    cta: "Explore the Prime HB",
+    image: official(officialShot.nios),
+    alt: "Hyundai Prime HB taxi hatchback, official product shot",
+  },
+  {
+    name: "PRIME SD",
+    type: "Taxi Sedan",
+    category: "Taxi",
+    price: lakh(695600),
+    priceINR: 695600,
+    engine: "1.2L Bi-Fuel Petrol with CNG",
+    transmission: "5-Speed Manual",
+    fuel: "Petrol · CNG",
+    blurb: "Hyundai's purpose-built sedan for taxi and fleet operators.",
+    cta: "Explore the Prime SD",
+    image: official(officialShot.aura),
+    alt: "Hyundai Prime SD taxi sedan, official product shot",
   },
 ];
 
@@ -429,9 +524,9 @@ export const testimonials: Testimonial[] = [
   },
   {
     name: "Karan Malhotra",
-    role: "Tucson owner, Mumbai",
+    role: "Creta N Line owner, Mumbai",
     rating: 5,
-    text: "The Tucson handover was flawless. Great attention to detail and no last-minute surprises on the on-road price.",
+    text: "The Creta N Line handover was flawless. Great attention to detail and no last-minute surprises on the on-road price.",
     avatar: stock("photo-1506794778202-cad84cf45f1d", 200),
   },
   {
@@ -522,8 +617,8 @@ export const blogs: Blog[] = [
     date: "09 Jun 2026",
     category: "Service",
     title: "5 Monsoon Car-Care Tips Every Hyundai Owner Should Know",
-    image: hy(shot.tucson, 900, 600),
-    alt: "Hyundai SUV in the monsoon, car-care tips",
+    image: hy(shot.venue, 900, 600),
+    alt: "Hyundai Venue SUV in the monsoon, car-care tips",
   },
   {
     date: "02 Jun 2026",
@@ -546,20 +641,12 @@ export type Location = {
 /* Real Modi Hyundai outlets (source: modihyundai.co.in). */
 export const locations: Location[] = [
   {
-    name: "Hyundai Santacruz",
-    type: "Showroom",
-    city: "Mumbai",
-    address: "Hyundai Santacruz Showroom",
-    phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/03/Untitled-design-24-300x150.png",
-  },
-  {
     name: "Hyundai Vasai",
     type: "Showroom",
     city: "Vasai",
     address: "Prime House Main Rd, Sativali Rd, Opp Shailesh Industries Estate, Waliv Phata, Vasai East, Maharashtra 401208",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/02/Hyundai-Vasai-Showroom-scaled.png",
+    image: "/locations/vasai-showroom.webp",
   },
   {
     name: "Hyundai Virar",
@@ -567,7 +654,7 @@ export const locations: Location[] = [
     city: "Virar",
     address: "HDL Residency Park, Shop 1/2 E Wing, Global City, Opp Yazoo Park, Virar West, Mumbai, Maharashtra 401305",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/02/Hyundai-Virar-Showroom-scaled.png",
+    image: "/locations/virar-showroom.webp",
   },
   {
     name: "Hyundai Thane",
@@ -575,7 +662,7 @@ export const locations: Location[] = [
     city: "Thane",
     address: "Modi House 1 Eastern Express Highway opp LIC Bldg., Naupada, Louis Wadi, Thane West, Maharashtra 400602",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/02/Hyundai-Thane-Showroom-scaled.png",
+    image: "/locations/thane-showroom.webp",
   },
   {
     name: "Hyundai H Promise Thane",
@@ -583,7 +670,7 @@ export const locations: Location[] = [
     city: "Thane",
     address: "Wadekar Compound, Modi Hyundai H Promise Showroom, near Viddyapith Bus Stop, Service Rd, Thane West - 400601",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/03/Untitled-design-30.png",
+    image: "/locations/h-promise-thane-showroom.webp",
   },
   {
     name: "Hyundai Wada",
@@ -591,15 +678,7 @@ export const locations: Location[] = [
     city: "Wada",
     address: "HDL Residency Park , Shop No. 1/2, E Wing Global City , Opp Yazoo Park Virar, Virar West, Maharashtra 401305",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/02/Hyundai-Service-and-sales-Wada-scaled.png",
-  },
-  {
-    name: "Hyundai Service Centre Wada",
-    type: "Service Centre",
-    city: "Wada",
-    address: "Hyundai Service Centre Wada",
-    phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/03/Untitled-design-24-300x150.png",
+    image: "/locations/wada-showroom.webp",
   },
   {
     name: "Hyundai Service Centre Chunabhatti",
@@ -607,7 +686,7 @@ export const locations: Location[] = [
     city: "Mumbai",
     address: "Jogani Industrial Estate, VN Purav Marg, Panchsheel Nagar, Chunabhatti, Sion, Mumbai, Maharashtra 400022",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/02/Hyundai-Service-Chunnabhatti-scaled.png",
+    image: "/locations/chunabhatti-service.webp",
   },
   {
     name: "Hyundai Service Centre Thane",
@@ -615,7 +694,7 @@ export const locations: Location[] = [
     city: "Thane",
     address: "Navjeevan Compound, 2, Pokhran Rd, opp. Oswal Park, Subhash Nagar, Majiwada, Thane, Maharashtra 400601",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/02/Hyundai-Thane-Service-scaled.png",
+    image: "/locations/thane-service.webp",
   },
   {
     name: "Hyundai Service Centre Vasai",
@@ -623,7 +702,7 @@ export const locations: Location[] = [
     city: "Vasai",
     address: "Gala No 8, Richa Industrial Estate, Sativali Rd, Waliv Phata, Golani Naka, Vasai East, Maharashtra 401208",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/02/Hyundai-Vasai-Service-scaled.png",
+    image: "/locations/vasai-service.webp",
   },
   {
     name: "Hyundai Service Centre Virar",
@@ -631,7 +710,7 @@ export const locations: Location[] = [
     city: "Virar",
     address: "Sanjog Industrial Estate, Gala no 18,19, near Ran Pada Ground, Virar West, Virar, Maharashtra 401303",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/02/Hyundai-Virar-Service-scaled.png",
+    image: "/locations/virar-service.webp",
   },
   {
     name: "Hyundai Service Centre Thane (Raghunath Nagar)",
@@ -639,13 +718,32 @@ export const locations: Location[] = [
     city: "Thane",
     address: "ICEM Engineering Compound Mohanji, Road, opposite Valencia Park, Raghunath Nagar, Sunderji, Thane, Maharashtra 400604",
     phone: "98877 33000",
-    image: "https://bunny-wp-pullzone-cghvklkcns.b-cdn.net/wp-content/uploads/2026/02/Hyundai-raghunath-nagar-service-scaled.png",
+    image: "/locations/thane-raghunath-service.webp",
+  },
+  /* No verifiable branch photo found online for these two outlets after
+     checking the dealer site, Justdial, Sulekha, CarDekho, Mappls and
+     Carz4Sale — placed last rather than shown with a placeholder image. */
+  {
+    name: "Hyundai Santacruz",
+    type: "Showroom",
+    city: "Mumbai",
+    address: "Vikas Centre, G/02, Next to Santacruz Bus Depot, S.V. Road, Santacruz West, Mumbai, Maharashtra 400054",
+    phone: "98877 33000",
+    image: "/locations/santacruz-showroom.webp",
+  },
+  {
+    name: "Hyundai Service Centre Wada",
+    type: "Service Centre",
+    city: "Wada",
+    address: "Hyundai Service Centre Wada",
+    phone: "98877 33000",
+    image: "/locations/wada-service.webp",
   },
 ];
 
 /* Curated subset for the footer's "Popular Cars" column, so it doesn't
    list all 14 models. */
-const popularNames = ["CRETA", "VENUE", "EXTER", "ALCAZAR", "TUCSON", "I20"];
+const popularNames = ["CRETA", "VENUE", "EXTER", "ALCAZAR", "VERNA", "I20"];
 export const popularCars = popularNames
   .map((n) => cars.find((c) => c.name === n))
   .filter((c): c is Car => Boolean(c));

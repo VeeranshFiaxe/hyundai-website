@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Logo from "./Logo";
 import { nav } from "@/lib/data";
-import { Phone, MapPin, Menu, X, ChevronDown } from "./icons";
+import { Phone, Menu, X } from "./icons";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -37,11 +37,6 @@ export default function Navbar() {
             <Phone className="h-3.5 w-3.5 text-brand" />
             <span className="font-medium">Call Us: {nav.phone}</span>
           </a>
-          <div className="flex items-center gap-1.5 text-muted">
-            <MapPin className="h-3.5 w-3.5 text-brand" />
-            <span className="font-medium text-text">Select Location: {nav.location}</span>
-            <ChevronDown className="h-3 w-3" />
-          </div>
         </div>
       </div>
 
