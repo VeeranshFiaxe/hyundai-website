@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { heroSlides } from "@/lib/data";
+import { cars, heroSlides } from "@/lib/data";
 import { ArrowRight, ChevronLeft, ChevronRight } from "./icons";
 
 const AUTOPLAY = 6500;
@@ -21,11 +22,14 @@ export default function Hero() {
   }, [count]);
 
   const active = heroSlides[index];
+  const activeCar = cars.find((c) =>
+    active.model.toUpperCase().includes(c.name),
+  );
 
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-brand-deep"
+      className="relative scroll-mt-24 overflow-hidden bg-brand-deep"
       style={{ marginTop: "96px" }} /* offset for 2-row nav */
     >
       {/* Cinematic banner, matching hyundai.com's own hero treatment:
@@ -70,19 +74,19 @@ export default function Hero() {
               <span className="text-xs text-white/50">(ex-showroom)</span>
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-3">
-              <a
-                href="#test-drive"
+              <Link
+                href="/book-a-test-drive"
                 className="group inline-flex items-center gap-2 rounded bg-white px-6 py-3 text-sm font-semibold text-brand transition-all hover:bg-white/90"
               >
                 Book a Test Drive
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </a>
-              <a
-                href="#cars"
+              </Link>
+              <Link
+                href={activeCar ? `/cars/${activeCar.slug}` : "/cars"}
                 className="inline-flex items-center gap-2 rounded border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/20"
               >
                 Explore the {active.model.replace("Hyundai ", "")}
-              </a>
+              </Link>
             </div>
           </div>
         </div>

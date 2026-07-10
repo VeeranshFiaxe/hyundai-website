@@ -16,11 +16,19 @@ import {
 const quickLinks = [
   { label: "Home", href: "/#home" },
   { label: "About Us", href: "/about" },
-  { label: "Cars", href: "/#cars" },
-  { label: "Service", href: "/#service" },
-  { label: "Book a Test Drive", href: "/#test-drive" },
+  { label: "Cars", href: "/cars" },
+  { label: "Service", href: "/locate-service-centre" },
+  { label: "Book a Test Drive", href: "/book-a-test-drive" },
   { label: "Blogs", href: "/#blogs" },
-  { label: "Contact Us", href: "/#locations" },
+  { label: "Contact Us", href: "/contact-us" },
+];
+
+const serviceLinks = [
+  { label: "Book a Service", href: "/locate-service-centre#book-service" },
+  { label: "Service Packages", href: "/locate-service-centre" },
+  { label: "Genuine Parts", href: "/locate-service-centre" },
+  { label: "Roadside Assistance", href: "/locate-service-centre" },
+  { label: "Extended Warranty", href: "/locate-service-centre" },
 ];
 
 const socials = [
@@ -83,7 +91,7 @@ export default function Footer() {
               {popularCars.map((c) => (
                 <li key={c.name}>
                   <Link
-                    href="/#cars"
+                    href={`/cars/${c.slug}`}
                     className="text-sm text-white/60 transition-colors hover:text-white"
                   >
                     Hyundai {c.name}
@@ -97,19 +105,13 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white">Service</h4>
             <ul className="mt-4 space-y-3">
-              {[
-                "Book a Service",
-                "Service Packages",
-                "Genuine Parts",
-                "Roadside Assistance",
-                "Extended Warranty",
-              ].map((s) => (
-                <li key={s}>
+              {serviceLinks.map((s) => (
+                <li key={s.label}>
                   <Link
-                    href="/#service"
+                    href={s.href}
                     className="text-sm text-white/60 transition-colors hover:text-white"
                   >
-                    {s}
+                    {s.label}
                   </Link>
                 </li>
               ))}

@@ -1,4 +1,4 @@
-import { trust, accentCycle } from "@/lib/data";
+import { trust } from "@/lib/data";
 import { iconMap, type IconName } from "./icons";
 import Reveal from "./Reveal";
 
@@ -9,7 +9,6 @@ export default function TrustStrip() {
         <div className="grid grid-cols-2 divide-x divide-border md:grid-cols-3 lg:grid-cols-5">
           {trust.map((item, i) => {
             const Icon = iconMap[item.icon as IconName];
-            const accent = accentCycle[i % accentCycle.length];
             return (
               <Reveal
                 key={item.title}
@@ -17,13 +16,7 @@ export default function TrustStrip() {
                 variant="scale-up"
                 className="flex flex-col items-center gap-2 px-4 py-7 text-center transition-colors hover:bg-bg-2"
               >
-                <span
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full"
-                  style={{
-                    backgroundColor: `color-mix(in srgb, ${accent} 12%, transparent)`,
-                    color: accent,
-                  }}
-                >
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
                   <Icon className="h-5 w-5" />
                 </span>
                 <h3 className="text-sm font-semibold text-text">{item.title}</h3>

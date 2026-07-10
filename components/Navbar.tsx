@@ -62,7 +62,7 @@ export default function Navbar() {
         {/* Right cluster */}
         <div className="flex items-center gap-2">
           <Link
-            href="/#test-drive"
+            href="/book-a-test-drive"
             className="hidden rounded bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-brand-light sm:inline-block"
           >
             Book a Test Drive
@@ -116,7 +116,7 @@ export default function Navbar() {
           ))}
 
           <Link
-            href="/#test-drive"
+            href="/book-a-test-drive"
             onClick={() => setOpen(false)}
             className="mt-4 rounded bg-brand px-5 py-3.5 text-center text-sm font-semibold text-white"
           >

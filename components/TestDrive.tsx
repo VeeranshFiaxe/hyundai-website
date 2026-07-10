@@ -155,6 +155,39 @@ export default function TestDrive() {
                 </label>
 
                 <label className="block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Email</span>
+                  <input
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    className={fieldBase}
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Pincode</span>
+                  <input
+                    type="text"
+                    required
+                    inputMode="numeric"
+                    pattern="[0-9]{6}"
+                    placeholder="6-digit pincode"
+                    className={fieldBase}
+                  />
+                </label>
+
+                <label className="col-span-full block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">
+                    Address <span className="font-normal text-faint">(optional)</span>
+                  </span>
+                  <input
+                    type="text"
+                    placeholder="House no., street, area"
+                    className={fieldBase}
+                  />
+                </label>
+
+                <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Preferred Date</span>
                   <div className="relative">
                     <input

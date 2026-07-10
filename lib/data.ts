@@ -22,15 +22,6 @@ const stock = (id: string, w = 800) =>
 /* Indian numbering (lakh/crore) grouping, e.g. 1090700 -> "10,90,700". */
 export const formatINR = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
-/* Rotating accent colours (CSS var names) applied to card/icon groups
-   for visual variety, matching the parent group's per-card colour bars. */
-export const accentCycle = [
-  "var(--accent-blue)",
-  "var(--accent-red)",
-  "var(--accent-orange)",
-  "var(--accent-violet)",
-];
-
 /* Official hyundai.com transparent product cutouts, 1600x590. */
 const officialShot = {
   exter: "/content/dam/hyundai/in/en/data/find-a-car/Exter/booking-open/homemodel-exter.png",
@@ -112,12 +103,10 @@ export const nav = {
   location: "Mumbai",
   links: [
     { label: "Home", href: "/#home" },
-    { label: "Cars", href: "/#cars" },
-    { label: "Offers", href: "/#offers" },
-    { label: "Service", href: "/#service" },
-    { label: "Stories", href: "/#blogs" },
-    { label: "Showrooms", href: "/#locations" },
+    { label: "Cars", href: "/cars" },
+    { label: "Service", href: "/locate-service-centre" },
     { label: "About Us", href: "/about" },
+    { label: "Contact Us", href: "/contact-us" },
   ],
 };
 
@@ -251,8 +240,11 @@ export const heroSlides: Slide[] = [
 
 export type CarCategory = "SUV" | "Sedan" | "Hatchback" | "Electric" | "Taxi";
 
+export type CarColor = { name: string; hex: string; image: string };
+
 export type Car = {
   name: string;
+  slug: string;
   type: string;
   category: CarCategory;
   price: string;
@@ -268,9 +260,28 @@ export type Car = {
   mileage: string;
   bootSpace: string;
   highlights: string[];
+  colors: CarColor[];
 };
 
 const lakh = (inr: number) => (inr / 100000).toFixed(2);
+
+const slugify = (n: string) => n.toLowerCase().replace(/\s+/g, "-");
+
+/* Real per-colour product photography, sourced directly from each
+   model's official "Colours" page on hyundai.com/in/en (Adobe AEM
+   `/content/dam/.../find-a-car/{Model}/360/{colour-slug}/pc/{slug}_0.png`
+   turntable-frame renders — one distinct image per colour, not a single
+   cutout with a CSS filter guessing the paint). Every URL below was
+   fetched and confirmed live. Hex values are visual approximations of
+   the named paint for the swatch dot; the photo itself carries the
+   real colour. */
+const findACar = (model: string, slug: string) =>
+  `https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/${model}/360/${slug}/pc/${slug}_0.png`;
+
+const colours = (
+  model: string,
+  defs: [name: string, hex: string, slug: string][],
+): CarColor[] => defs.map(([name, hex, slug]) => ({ name, hex, image: findACar(model, slug) }));
 
 /* Full lineup, pricing, engine and transmission specs sourced directly
    from the official hyundai.com/in/en homepage and model pages. Tucson
@@ -281,6 +292,7 @@ const lakh = (inr: number) => (inr / 100000).toFixed(2);
 export const cars: Car[] = [
   {
     name: "EXTER",
+    slug: slugify("EXTER"),
     type: "Compact SUV",
     category: "SUV",
     price: lakh(580600),
@@ -292,6 +304,16 @@ export const cars: Car[] = [
     cta: "Explore the Exter",
     image: official(officialShot.exter),
     alt: "Hyundai Exter compact SUV, official product shot",
+    colors: colours("Exter", [
+      ["Titanium Black", "#16181A", "abyss-black"],
+      ["Titanium Black Matte", "#101112", "abyss-black-matte"],
+      ["Atlas White", "#F2F1EC", "atlas-white"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Starry Night", "#1C2331", "starry-night-blue"],
+      ["Ranger Khaki", "#9C8752", "khaki"],
+      ["Khaki Dual Tone", "#9C8752", "khaki-dual-tone"],
+      ["Golden Bronze", "#9C7A44", "golden-bronze"],
+    ]),
     seating: "5",
     mileage: "Up to 21.1 kmpl (petrol), 27.1 km/kg (CNG)",
     bootSpace: "391 litres",
@@ -304,6 +326,7 @@ export const cars: Car[] = [
   },
   {
     name: "VENUE",
+    slug: slugify("VENUE"),
     type: "Compact SUV",
     category: "SUV",
     price: lakh(799900),
@@ -315,6 +338,19 @@ export const cars: Car[] = [
     cta: "Explore the Venue",
     image: official(officialShot.venue),
     alt: "Hyundai Venue compact SUV, official product shot",
+    colors: colours("Venue", [
+      ["Titanium Black", "#16181A", "abyss-black"],
+      ["Titanium Black Knight Matte", "#101112", "black-knight"],
+      ["Atlas White", "#F2F1EC", "atlas-white"],
+      ["Atlas White Dual Tone", "#F2F1EC", "altas-white-dual-tone"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Dragon Red", "#B33A2E", "dragon-red"],
+      ["Hazel Blue", "#33546E", "hazel-blue"],
+      ["Hazel Blue Matte", "#33546E", "hazel-blue-matte"],
+      ["Hazel Blue Dual Tone", "#33546E", "hazel-blue-dual-tone"],
+      ["Mystic Sapphire", "#1C2331", "mystic-sapphire"],
+      ["Mystic Sapphire Matte", "#1C2331", "mystic-sapphire-matte"],
+    ]),
     seating: "5",
     mileage: "Up to 18.4 kmpl (petrol), 23.7 kmpl (diesel)",
     bootSpace: "350 litres",
@@ -327,6 +363,7 @@ export const cars: Car[] = [
   },
   {
     name: "VENUE N LINE",
+    slug: slugify("VENUE N LINE"),
     type: "Performance Compact SUV",
     category: "SUV",
     price: lakh(1066100),
@@ -338,6 +375,16 @@ export const cars: Car[] = [
     cta: "Explore the Venue N Line",
     image: official(officialShot.venueNline),
     alt: "Hyundai Venue N Line compact SUV, official product shot",
+    colors: colours("venue-n-line", [
+      ["Titanium Black", "#16181A", "abyss-black"],
+      ["Atlas White", "#F2F1EC", "atlas-white"],
+      ["Atlas White Dual Tone", "#F2F1EC", "atlas-white-dual-tone"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Dragon Red", "#B33A2E", "dragon-red"],
+      ["Dragon Red Dual Tone", "#B33A2E", "dragon-red-dual-tone"],
+      ["Hazel Blue", "#33546E", "hazel-blue"],
+      ["Hazel Blue Dual Tone", "#33546E", "hazel-blue-dual-tone"],
+    ]),
     seating: "5",
     mileage: "Up to 18.2 kmpl",
     bootSpace: "350 litres",
@@ -350,6 +397,7 @@ export const cars: Car[] = [
   },
   {
     name: "CRETA",
+    slug: slugify("CRETA"),
     type: "Mid-size SUV",
     category: "SUV",
     price: lakh(1090700),
@@ -361,6 +409,17 @@ export const cars: Car[] = [
     cta: "Explore the Creta",
     image: official(officialShot.creta),
     alt: "Hyundai Creta mid-size SUV, official product shot",
+    colors: colours("Creta", [
+      ["Abyss Black", "#16181A", "abyss-black"],
+      ["Atlas White", "#F2F1EC", "atlas-white"],
+      ["Atlas White Dual Tone", "#F2F1EC", "altas-white-dual-tone"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Fiery Red", "#B33A2E", "fiery-red"],
+      ["Robust Emerald Pearl", "#1E4A3B", "robust-emerald-pearl"],
+      ["Starry Night", "#1C2331", "starry-night"],
+      ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
+      ["Ranger Khaki", "#9C8752", "khaki"],
+    ]),
     seating: "5",
     mileage: "Up to 21 kmpl (diesel), 18.4 kmpl (petrol)",
     bootSpace: "433 litres",
@@ -373,6 +432,7 @@ export const cars: Car[] = [
   },
   {
     name: "CRETA N LINE",
+    slug: slugify("CRETA N LINE"),
     type: "Performance SUV",
     category: "SUV",
     price: lakh(1903300),
@@ -384,6 +444,14 @@ export const cars: Car[] = [
     cta: "Explore the Creta N Line",
     image: official(officialShot.cretaNline),
     alt: "Hyundai Creta N Line performance SUV, official product shot",
+    colors: colours("creta-n-line", [
+      ["Abyss Black", "#16181A", "abyss-black"],
+      ["Abyss Black Matte", "#101112", "abyss-black-matte"],
+      ["Atlas White", "#F2F1EC", "atlas-white"],
+      ["Atlas White Dual Tone", "#F2F1EC", "altas-white-dual-tone"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Thunder Blue", "#2B3A55", "thunder-blue"],
+    ]),
     seating: "5",
     mileage: "Up to 18.7 kmpl",
     bootSpace: "433 litres",
@@ -396,6 +464,7 @@ export const cars: Car[] = [
   },
   {
     name: "ALCAZAR",
+    slug: slugify("ALCAZAR"),
     type: "7-Seater SUV",
     category: "SUV",
     price: lakh(1450700),
@@ -407,6 +476,14 @@ export const cars: Car[] = [
     cta: "Explore the Alcazar",
     image: official(officialShot.alcazar),
     alt: "Hyundai Alcazar 7-seater SUV, official product shot",
+    colors: colours("Alcazar", [
+      ["Abyss Black", "#16181A", "abyss-black"],
+      ["Titanium Black Matte", "#16181A", "abyss-black-matte"],
+      ["Atlas White", "#F2F1EC", "atlas-white"],
+      ["Atlas White Dual Tone", "#F2F1EC", "altas-white-dual-tone"],
+      ["Robust Emerald Pearl", "#1E4A3B", "robust-emerald-pearl"],
+      ["Starry Night", "#1C2331", "starry-night"],
+    ]),
     seating: "6 / 7",
     mileage: "Up to 20.4 kmpl (diesel), 16.2 kmpl (petrol)",
     bootSpace: "180 litres (3rd row up), expandable",
@@ -419,6 +496,7 @@ export const cars: Car[] = [
   },
   {
     name: "VERNA",
+    slug: slugify("VERNA"),
     type: "Sedan",
     category: "Sedan",
     price: lakh(1099200),
@@ -430,6 +508,15 @@ export const cars: Car[] = [
     cta: "Explore the Verna",
     image: official(officialShot.verna),
     alt: "Hyundai Verna sedan, official product shot",
+    colors: colours("Verna", [
+      ["Abyss Black", "#16181A", "abyss-black"],
+      ["Atlas White", "#F2F1EC", "atlas-white"],
+      ["Atlas White Dual Tone", "#F2F1EC", "altas-white-dual-tone"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Titan Grey Matte", "#5B5E61", "titan-grey-matte"],
+      ["Classy Blue", "#33546E", "classy-blue"],
+      ["Starry Night", "#1C2331", "starry-night"],
+    ]),
     seating: "5",
     mileage: "Up to 20.4 kmpl (petrol)",
     bootSpace: "528 litres",
@@ -442,6 +529,7 @@ export const cars: Car[] = [
   },
   {
     name: "AURA",
+    slug: slugify("AURA"),
     type: "Sedan",
     category: "Sedan",
     price: lakh(599990),
@@ -453,6 +541,12 @@ export const cars: Car[] = [
     cta: "Explore the Aura",
     image: official(officialShot.aura),
     alt: "Hyundai Aura sedan, official product shot",
+    colors: colours("Aura", [
+      ["Polar White", "#F4F4F2", "polar-white"],
+      ["Starry Night", "#1C2331", "starry-night"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
+    ]),
     seating: "5",
     mileage: "Up to 20.1 kmpl (petrol), 26.4 km/kg (CNG)",
     bootSpace: "402 litres, segment-leading",
@@ -465,6 +559,7 @@ export const cars: Car[] = [
   },
   {
     name: "GRAND I10 NIOS",
+    slug: slugify("GRAND I10 NIOS"),
     type: "Hatchback",
     category: "Hatchback",
     price: lakh(559700),
@@ -476,6 +571,13 @@ export const cars: Car[] = [
     cta: "Explore the Grand i10 Nios",
     image: official(officialShot.nios),
     alt: "Hyundai Grand i10 Nios hatchback, official product shot",
+    colors: colours("Grand-i10-Nios", [
+      ["Polar White", "#F4F4F2", "polar-white"],
+      ["Fiery Red", "#B33A2E", "fiery-red"],
+      ["Titan Grey Matte", "#5B5E61", "titan-grey-matte"],
+      ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
+      ["Aqua Teal", "#2E6E6B", "aqua-teal"],
+    ]),
     seating: "5",
     mileage: "Up to 20.3 kmpl (petrol), 25.4 km/kg (CNG)",
     bootSpace: "260 litres",
@@ -488,6 +590,7 @@ export const cars: Car[] = [
   },
   {
     name: "I20",
+    slug: slugify("I20"),
     type: "Premium Hatchback",
     category: "Hatchback",
     price: lakh(599700),
@@ -499,6 +602,15 @@ export const cars: Car[] = [
     cta: "Explore the i20",
     image: official(officialShot.i20),
     alt: "Hyundai i20 premium hatchback, official product shot",
+    colors: colours("i20", [
+      ["Knight Black", "#16181A", "knight-black"],
+      ["Polar White", "#F4F4F2", "polar-white"],
+      ["Polar White Black Roof", "#F4F4F2", "polar-white-black-roof"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Titan Grey Matte", "#5B5E61", "titan-grey-matte"],
+      ["Fiery Red", "#B33A2E", "fiery-red"],
+      ["Starry Night", "#1C2331", "starry-night"],
+    ]),
     seating: "5",
     mileage: "Up to 20.35 kmpl",
     bootSpace: "311 litres",
@@ -511,6 +623,7 @@ export const cars: Car[] = [
   },
   {
     name: "I20 N LINE",
+    slug: slugify("I20 N LINE"),
     type: "Performance Hatchback",
     category: "Hatchback",
     price: lakh(927200),
@@ -522,6 +635,14 @@ export const cars: Car[] = [
     cta: "Explore the i20 N Line",
     image: official(officialShot.i20Nline),
     alt: "Hyundai i20 N Line performance hatchback, official product shot",
+    colors: colours("i20-n-line", [
+      ["Abyss Black", "#16181A", "abyss-black"],
+      ["Polar White", "#F4F4F2", "polar-white"],
+      ["Polar White Dual Tone", "#F4F4F2", "polar-white-dual-tone"],
+      ["Blue Black Dual Tone", "#33546E", "blue-black-dual-tone"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Starry Night", "#1C2331", "starry-night"],
+    ]),
     seating: "5",
     mileage: "Up to 18.2 kmpl",
     bootSpace: "311 litres",
@@ -534,6 +655,7 @@ export const cars: Car[] = [
   },
   {
     name: "IONIQ 5",
+    slug: slugify("IONIQ 5"),
     type: "Electric SUV",
     category: "Electric",
     price: lakh(5570600),
@@ -545,6 +667,12 @@ export const cars: Car[] = [
     cta: "Explore the Ioniq 5",
     image: official(officialShot.ioniq5),
     alt: "Hyundai Ioniq 5 electric SUV, official product shot",
+    colors: colours("ioniq-5", [
+      ["Midnight Black Pearl", "#16181A", "midnight-black-pearl"],
+      ["Optic White", "#F2F1EC", "optic-white"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Gravity Gold Matte", "#8A7D5C", "gravity-gold-matte"],
+    ]),
     seating: "5",
     mileage: "Up to 631 km range per charge (claimed, long-range)",
     bootSpace: "527 litres + 57 litre front trunk",
@@ -557,6 +685,7 @@ export const cars: Car[] = [
   },
   {
     name: "CRETA ELECTRIC",
+    slug: slugify("CRETA ELECTRIC"),
     type: "Electric SUV",
     category: "Electric",
     price: lakh(1802800),
@@ -568,6 +697,19 @@ export const cars: Car[] = [
     cta: "Explore the Creta Electric",
     image: official(officialShot.cretaElectric),
     alt: "Hyundai Creta Electric SUV, official product shot",
+    colors: colours("creta-electric", [
+      ["Abyss Black", "#16181A", "abyss-black"],
+      ["Atlas White", "#F2F1EC", "atlas-white"],
+      ["Atlas White Dual Tone", "#F2F1EC", "altas-white-dual-tone"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+      ["Fiery Red", "#B33A2E", "fiery-red"],
+      ["Knight Black Matte", "#101112", "knight-black-matte"],
+      ["Ocean Blue", "#33546E", "ocean-blue"],
+      ["Ocean Blue Matte", "#33546E", "ocean-blue-matte"],
+      ["Ocean Blue Dual Tone", "#33546E", "ocean-blue-dual-tone"],
+      ["Robust Emerald Matte", "#1E4A3B", "robust-emerald-matte"],
+      ["Starry Night", "#1C2331", "starry-night"],
+    ]),
     seating: "5",
     mileage: "Up to 473 km range per charge (claimed, long-range)",
     bootSpace: "433 litres",
@@ -580,6 +722,7 @@ export const cars: Car[] = [
   },
   {
     name: "PRIME HB",
+    slug: slugify("PRIME HB"),
     type: "Taxi Hatchback",
     category: "Taxi",
     price: lakh(640600),
@@ -591,6 +734,11 @@ export const cars: Car[] = [
     cta: "Explore the Prime HB",
     image: official(officialShot.nios),
     alt: "Hyundai Prime HB taxi hatchback, official product shot",
+    colors: colours("Grand-i10-Nios", [
+      ["Polar White", "#F4F4F2", "polar-white"],
+      ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
+      ["Titan Grey Matte", "#5B5E61", "titan-grey-matte"],
+    ]),
     seating: "5",
     mileage: "Up to 25.4 km/kg (CNG)",
     bootSpace: "260 litres",
@@ -603,6 +751,7 @@ export const cars: Car[] = [
   },
   {
     name: "PRIME SD",
+    slug: slugify("PRIME SD"),
     type: "Taxi Sedan",
     category: "Taxi",
     price: lakh(695600),
@@ -614,6 +763,11 @@ export const cars: Car[] = [
     cta: "Explore the Prime SD",
     image: official(officialShot.aura),
     alt: "Hyundai Prime SD taxi sedan, official product shot",
+    colors: colours("Aura", [
+      ["Polar White", "#F4F4F2", "polar-white"],
+      ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
+      ["Titan Grey", "#5B5E61", "titan-grey"],
+    ]),
     seating: "5",
     mileage: "Up to 26.4 km/kg (CNG)",
     bootSpace: "402 litres",
@@ -977,5 +1131,7 @@ export const popularCars = popularNames
   .filter((c): c is Car => Boolean(c));
 
 export const testDriveImage = hy(shot.cretaInterior, 1000, 1200);
+export const serviceHeroImage = stock("photo-1486262715619-67b85e0b08d3", 1600);
 export const carModels = cars.map((c) => c.name);
 export const cityOptions = ["Mumbai", "Thane", "Vasai", "Virar", "Wada"];
+export const serviceCentres = locations.filter((l) => l.type === "Service Centre");

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { offers } from "@/lib/data";
 import { iconMap, ArrowRight, type IconName } from "./icons";
 import Reveal from "./Reveal";
@@ -19,13 +20,13 @@ export default function Offers() {
               Hyundai models.
             </h2>
           </div>
-          <a
-            href="#test-drive"
+          <Link
+            href="/cars"
             className="group inline-flex shrink-0 items-center gap-2 rounded border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur transition-all hover:bg-white/20"
           >
             View All Offers
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </a>
+          </Link>
         </Reveal>
 
         {/* Offer cards */}

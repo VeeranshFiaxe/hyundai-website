@@ -50,6 +50,11 @@ export default function FeaturedVehicles() {
   // own measured width, so the "coverflow" spacing stays consistent across
   // breakpoints without a hardcoded pixel value.
   const step = Math.min(stageWidth * 0.34, 360);
+  // The centre card renders larger than its neighbours, so a purely linear
+  // step makes the main-to-neighbour gap look tighter than the gaps further
+  // out. A small constant push on every non-zero offset widens just that
+  // first gap, without changing the spacing between the side cards.
+  const centreGapBoost = 14;
 
   return (
     <section
@@ -97,7 +102,10 @@ export default function FeaturedVehicles() {
             const abs = Math.abs(offset);
             const scale = offset === 0 ? 1 : Math.max(0.42, 0.72 - abs * 0.14);
             const opacity = abs > 2 ? 0 : 1 - abs * 0.32;
-            const translateX = offset * step;
+            const translateX =
+              offset === 0
+                ? 0
+                : Math.sign(offset) * (abs * step + centreGapBoost);
             return (
               <div
                 key={car.name}
