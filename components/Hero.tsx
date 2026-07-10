@@ -58,7 +58,7 @@ export default function Hero() {
             the campaign headline, the price/CTA row, and the floating
             action rail. */}
         <h1 className="absolute bottom-4 right-4 z-10 max-w-[150px] rounded bg-black/30 px-2 py-1 text-right text-[9px] font-medium uppercase tracking-wide text-white/80 backdrop-blur-sm sm:bottom-6 sm:right-6">
-          New Hyundai Cars, Test Drives &amp; Service in Mumbai &amp; Pune
+          New Hyundai Cars, Test Drives &amp; Service Across Mumbai Region
         </h1>
 
         {/* Dealer price + CTA row, bottom-left */}

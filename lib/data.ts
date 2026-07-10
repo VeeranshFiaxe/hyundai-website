@@ -82,7 +82,7 @@ export const company = {
   // NOTE: confirm exact opening hours with the dealership before launch.
   hours: "Mon to Sun, 9:00 AM to 8:00 PM",
   hoursSpec: { days: "Mo-Su", opens: "09:00", closes: "20:00" },
-  areasServed: ["Mumbai", "Kalyan", "Ambernath", "Shahapur", "Pune"],
+  areasServed: ["Mumbai", "Thane", "Vasai", "Virar", "Wada"],
   stats: {
     carsSold: "250,000+",
     usedCarsSold: "200,000+",
@@ -104,7 +104,9 @@ export const nav = {
   links: [
     { label: "Home", href: "/#home" },
     { label: "Cars", href: "/cars" },
+    { label: "Hyundai Promise", href: "/hyundai-promise" },
     { label: "Service", href: "/locate-service-centre" },
+    { label: "Locate Us", href: "/locate-us" },
     { label: "About Us", href: "/about" },
     { label: "Contact Us", href: "/contact-us" },
   ],
@@ -179,7 +181,7 @@ export const aboutFaqData = [
   {
     question: "Is Modi Hyundai an authorised Hyundai dealership?",
     answer:
-      "Yes. Modi Hyundai is an authorised Hyundai Motor India dealership, with showrooms and service centres across Mumbai, Kalyan, Ambernath, Shahapur and Pune.",
+      "Yes. Modi Hyundai is an authorised Hyundai Motor India dealership, with showrooms and service centres across Mumbai, Thane, Vasai, Virar and Wada.",
   },
   {
     question: "How many cars has Modi Hyundai sold?",
@@ -189,7 +191,7 @@ export const aboutFaqData = [
   {
     question: "Which cities does Modi Hyundai serve?",
     answer:
-      "Modi Hyundai serves Mumbai, Kalyan, Ambernath, Shahapur and Pune, with dedicated showrooms and service centres in each location.",
+      "Modi Hyundai serves Mumbai, Thane, Vasai, Virar and Wada, with dedicated showrooms and service centres across the Mumbai region.",
   },
   {
     question: "When was Hyundai Motor India founded?",
@@ -794,7 +796,7 @@ export const trust = [
   {
     icon: "network",
     title: "Wide Sales & Service Network",
-    text: "Showrooms and service centres across Mumbai, Kalyan, Ambernath, Shahapur and Pune.",
+    text: "Showrooms and service centres across Mumbai, Thane, Vasai, Virar and Wada.",
   },
   {
     icon: "rupee",
@@ -913,9 +915,9 @@ export const testimonials: Testimonial[] = [
   },
   {
     name: "Deepa Rao",
-    role: "Verna owner, Pune",
+    role: "Verna owner, Thane",
     rating: 5,
-    text: "Serviced my Verna at the Pune centre. Quick, courteous, and the free pickup and drop saved me a whole day.",
+    text: "Serviced my Verna at the Thane centre. Quick, courteous, and the free pickup and drop saved me a whole day.",
     avatar: stock("photo-1544005313-94ddf0286df2", 200),
   },
   {
@@ -927,7 +929,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     name: "Anjali Desai",
-    role: "Exter owner, Kalyan",
+    role: "Exter owner, Virar",
     rating: 5,
     text: "Loved how patient they were with a first-time buyer. The finance options were explained clearly, no jargon.",
     avatar: stock("photo-1580489944761-15a19d654956", 200),
@@ -963,7 +965,7 @@ export const faqData = [
   {
     question: "Which areas does Modi Hyundai serve?",
     answer:
-      "We have Hyundai showrooms and service centres across Mumbai, Kalyan, Ambernath, Shahapur and Pune, so sales and service are always close by.",
+      "We have Hyundai showrooms and service centres across Mumbai, Thane, Vasai, Virar and Wada, so sales and service are always close by.",
   },
   {
     question: "What documents do I need to buy a car from Modi Hyundai?",
@@ -1018,6 +1020,7 @@ export type Location = {
   address: string;
   phone: string;
   image: string;
+  mapsUrl: string;
 };
 
 /* Real Modi Hyundai outlets (source: modihyundai.co.in). */
@@ -1029,6 +1032,8 @@ export const locations: Location[] = [
     address: "Prime House Main Rd, Sativali Rd, Opp Shailesh Industries Estate, Waliv Phata, Vasai East, Maharashtra 401208",
     phone: "98877 33000",
     image: "/locations/vasai-showroom.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Prime%20House%20Main%20Rd%2C%20Sativali%20Rd%2C%20Opp%20Shailesh%20Industries%20Estate%2C%20Waliv%20Phata%2C%20Vasai%20East%2C%20Maharashtra%20401208&travelmode=driving",
   },
   {
     name: "Hyundai Virar",
@@ -1037,6 +1042,8 @@ export const locations: Location[] = [
     address: "HDL Residency Park, Shop 1/2 E Wing, Global City, Opp Yazoo Park, Virar West, Mumbai, Maharashtra 401305",
     phone: "98877 33000",
     image: "/locations/virar-showroom.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=HDL%20Residency%20Park%2C%20Shop%201%2F2%20E%20Wing%2C%20Global%20City%2C%20Opp%20Yazoo%20Park%2C%20Virar%20West%2C%20Mumbai%2C%20Maharashtra%20401305&travelmode=driving",
   },
   {
     name: "Hyundai Thane",
@@ -1045,6 +1052,8 @@ export const locations: Location[] = [
     address: "Modi House 1 Eastern Express Highway opp LIC Bldg., Naupada, Louis Wadi, Thane West, Maharashtra 400602",
     phone: "98877 33000",
     image: "/locations/thane-showroom.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Modi%20House%201%20Eastern%20Express%20Highway%20opp%20LIC%20Bldg.%2C%20Naupada%2C%20Louis%20Wadi%2C%20Thane%20West%2C%20Maharashtra%20400602&travelmode=driving",
   },
   {
     name: "Hyundai H Promise Thane",
@@ -1053,6 +1062,8 @@ export const locations: Location[] = [
     address: "Wadekar Compound, Modi Hyundai H Promise Showroom, near Viddyapith Bus Stop, Service Rd, Thane West - 400601",
     phone: "98877 33000",
     image: "/locations/h-promise-thane-showroom.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Wadekar%20Compound%2C%20Modi%20Hyundai%20H%20Promise%20Showroom%2C%20near%20Viddyapith%20Bus%20Stop%2C%20Service%20Rd%2C%20Thane%20West%20400601&travelmode=driving",
   },
   {
     name: "Hyundai Wada",
@@ -1061,6 +1072,8 @@ export const locations: Location[] = [
     address: "HDL Residency Park , Shop No. 1/2, E Wing Global City , Opp Yazoo Park Virar, Virar West, Maharashtra 401305",
     phone: "98877 33000",
     image: "/locations/wada-showroom.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=HDL%20Residency%20Park%2C%20Shop%20No.%201%2F2%2C%20E%20Wing%20Global%20City%2C%20Opp%20Yazoo%20Park%20Virar%2C%20Virar%20West%2C%20Maharashtra%20401305&travelmode=driving",
   },
   {
     name: "Hyundai Service Centre Chunabhatti",
@@ -1069,6 +1082,8 @@ export const locations: Location[] = [
     address: "Jogani Industrial Estate, VN Purav Marg, Panchsheel Nagar, Chunabhatti, Sion, Mumbai, Maharashtra 400022",
     phone: "98877 33000",
     image: "/locations/chunabhatti-service.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Jogani%20Industrial%20Estate%2C%20VN%20Purav%20Marg%2C%20Panchsheel%20Nagar%2C%20Chunabhatti%2C%20Sion%2C%20Mumbai%2C%20Maharashtra%20400022&travelmode=driving",
   },
   {
     name: "Hyundai Service Centre Thane",
@@ -1077,6 +1092,8 @@ export const locations: Location[] = [
     address: "Navjeevan Compound, 2, Pokhran Rd, opp. Oswal Park, Subhash Nagar, Majiwada, Thane, Maharashtra 400601",
     phone: "98877 33000",
     image: "/locations/thane-service.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Navjeevan%20Compound%2C%202%2C%20Pokhran%20Rd%2C%20opp.%20Oswal%20Park%2C%20Subhash%20Nagar%2C%20Majiwada%2C%20Thane%2C%20Maharashtra%20400601&travelmode=driving",
   },
   {
     name: "Hyundai Service Centre Vasai",
@@ -1085,6 +1102,8 @@ export const locations: Location[] = [
     address: "Gala No 8, Richa Industrial Estate, Sativali Rd, Waliv Phata, Golani Naka, Vasai East, Maharashtra 401208",
     phone: "98877 33000",
     image: "/locations/vasai-service.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Gala%20No%208%2C%20Richa%20Industrial%20Estate%2C%20Sativali%20Rd%2C%20Waliv%20Phata%2C%20Golani%20Naka%2C%20Vasai%20East%2C%20Maharashtra%20401208&travelmode=driving",
   },
   {
     name: "Hyundai Service Centre Virar",
@@ -1093,6 +1112,8 @@ export const locations: Location[] = [
     address: "Sanjog Industrial Estate, Gala no 18,19, near Ran Pada Ground, Virar West, Virar, Maharashtra 401303",
     phone: "98877 33000",
     image: "/locations/virar-service.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Sanjog%20Industrial%20Estate%2C%20Gala%20no%2018%2C19%2C%20near%20Ran%20Pada%20Ground%2C%20Virar%20West%2C%20Virar%2C%20Maharashtra%20401303&travelmode=driving",
   },
   {
     name: "Hyundai Service Centre Thane (Raghunath Nagar)",
@@ -1101,6 +1122,8 @@ export const locations: Location[] = [
     address: "ICEM Engineering Compound Mohanji, Road, opposite Valencia Park, Raghunath Nagar, Sunderji, Thane, Maharashtra 400604",
     phone: "98877 33000",
     image: "/locations/thane-raghunath-service.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=ICEM%20Engineering%20Compound%20Mohanji%20Road%2C%20opposite%20Valencia%20Park%2C%20Raghunath%20Nagar%2C%20Sunderji%2C%20Thane%2C%20Maharashtra%20400604&travelmode=driving",
   },
   /* No verifiable branch photo found online for these two outlets after
      checking the dealer site, Justdial, Sulekha, CarDekho, Mappls and
@@ -1112,6 +1135,8 @@ export const locations: Location[] = [
     address: "Vikas Centre, G/02, Next to Santacruz Bus Depot, S.V. Road, Santacruz West, Mumbai, Maharashtra 400054",
     phone: "98877 33000",
     image: "/locations/santacruz-showroom.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Vikas%20Centre%2C%20G%2F02%2C%20Next%20to%20Santacruz%20Bus%20Depot%2C%20S.V.%20Road%2C%20Santacruz%20West%2C%20Mumbai%2C%20Maharashtra%20400054&travelmode=driving",
   },
   {
     name: "Hyundai Service Centre Wada",
@@ -1120,6 +1145,8 @@ export const locations: Location[] = [
     address: "Hyundai Service Centre Wada",
     phone: "98877 33000",
     image: "/locations/wada-service.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Hyundai%20Service%20Centre%20Wada&travelmode=driving",
   },
 ];
 

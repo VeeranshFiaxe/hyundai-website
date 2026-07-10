@@ -20,7 +20,7 @@ import { DEALER_ID } from "@/lib/schema";
 
 const title = "About Modi Hyundai: Our Story, Values and Group";
 const description =
-  "Modi Hyundai is an authorised Hyundai dealership owned by the Gautam Modi Group, serving Mumbai and Pune with 250,000+ cars sold and 98% customer satisfaction.";
+  "Modi Hyundai is an authorised Hyundai dealership owned by the Gautam Modi Group, serving Mumbai, Thane, Vasai, Virar and Wada with 250,000+ cars sold and 98% customer satisfaction.";
 
 export const metadata: Metadata = {
   title,
@@ -118,7 +118,7 @@ export default function AboutPage() {
               </h1>
               <p className="mt-3 max-w-xl text-sm text-white/80 sm:text-base">
                 An authorised Hyundai dealership from the Gautam Modi Group,
-                serving Mumbai and Pune with genuine cars, honest service and
+                serving the Mumbai region with genuine cars, honest service and
                 a customer-first promise.
               </p>
             </Reveal>
@@ -139,14 +139,15 @@ export default function AboutPage() {
                 <p>
                   Modi Hyundai is an authorised Hyundai dealership, owned and
                   operated by the {groupInfo.name}. We run showrooms and
-                  service centres across Malad, Kanjurmarg, Kalyan, Ambernath,
-                  Shahapur and Pune, and we have sold over{" "}
+                  service centres across Mumbai, Thane, Vasai, Virar and Wada,
+                  and we have sold over{" "}
                   {company.stats.carsSold} new cars with a{" "}
                   {company.stats.satisfaction} customer satisfaction score.
                 </p>
                 <p>
                   The {groupInfo.name} represents {joinWithAnd(groupInfo.brands)}{" "}
-                  in India, alongside {joinWithAnd(groupInfo.ventures.map((v) => v.name))}.{" "}
+                  across multiple automotive businesses, alongside{" "}
+                  {joinWithAnd(groupInfo.ventures.map((v) => v.name))}.{" "}
                   {groupInfo.founded} {groupInfo.growth}
                 </p>
               </div>

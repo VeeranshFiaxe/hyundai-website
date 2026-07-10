@@ -45,7 +45,7 @@ export default function Locations() {
           </div>
           <div className="flex shrink-0 items-center gap-3">
             <Link
-              href="/contact-us"
+              href="/locate-us"
               className="group hidden items-center gap-2 rounded border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur transition-all hover:bg-white/20 sm:inline-flex"
             >
               View All Locations
@@ -136,7 +136,7 @@ export default function Locations() {
 
         {/* Mobile CTA */}
         <Link
-          href="/contact-us"
+          href="/locate-us"
           className="group mt-6 inline-flex items-center gap-2 rounded border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur transition-all hover:bg-white/20 sm:hidden"
         >
           View All Locations

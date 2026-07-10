@@ -76,7 +76,7 @@ export default function TestDriveWizard() {
     attempted && step === 1 && !carSlug
       ? "Please select a car to continue."
       : attempted && step === 2 && !city
-        ? "Please select a city to continue."
+        ? "Please select a location to continue."
         : attempted && step === 2 && city && !date
           ? "Please choose a preferred date."
           : attempted && step === 2 && city && date && !time
@@ -211,7 +211,7 @@ export default function TestDriveWizard() {
               <h3 className="font-display text-lg font-bold text-text">When &amp; Where</h3>
               <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <label className="col-span-full block">
-                  <span className="mb-1.5 block text-xs font-semibold text-muted">City</span>
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Location</span>
                   <div className="relative">
                     <select
                       value={city}
@@ -219,7 +219,7 @@ export default function TestDriveWizard() {
                       className={`${fieldBase} appearance-none pr-10`}
                     >
                       <option value="" disabled>
-                        Select your city
+                        Select your location
                       </option>
                       {cityOptions.map((c) => (
                         <option key={c} value={c}>
@@ -438,7 +438,7 @@ export default function TestDriveWizard() {
               Thank you, {name}. A Modi Hyundai representative will call you at{" "}
               {mobile} shortly to confirm your{" "}
               {selectedCar ? `Hyundai ${selectedCar.name}` : ""} test drive on{" "}
-              {date} ({time}) in {city}.
+              {date} ({time}) at {city}.
             </p>
             <button
               onClick={resetAll}

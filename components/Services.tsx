@@ -16,7 +16,7 @@ export default function Services() {
             <p className="mt-2 max-w-xl text-sm text-muted">
               From routine maintenance to roadside help, our factory-trained team
               keeps your Hyundai running the way it should, with genuine parts,
-              transparent pricing, and service centres across Mumbai and Pune.
+              transparent pricing, and service centres across the Mumbai region.
             </p>
           </div>
           <Link

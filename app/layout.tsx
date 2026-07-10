@@ -19,7 +19,7 @@ const sora = Sora({
 
 const title = "Modi Hyundai: New Cars, Test Drives & Service in Mumbai";
 const description =
-  "Book a free test drive or service at Modi Hyundai, an authorised Hyundai dealership in Mumbai and Pune. Compare Creta, Venue, Alcazar and more. 250,000+ cars sold.";
+  "Book a free test drive or service at Modi Hyundai, an authorised Hyundai dealership serving Mumbai, Thane, Vasai, Virar and Wada. Compare Creta, Venue, Alcazar and more. 250,000+ cars sold.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     "Hyundai Venue",
     "Hyundai Alcazar",
     "Hyundai Exter",
-    "authorised Hyundai dealer Pune",
+    "authorised Hyundai dealer Thane",
   ],
   alternates: { canonical: "/" },
   robots: {

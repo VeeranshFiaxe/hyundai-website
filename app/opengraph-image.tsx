@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "Modi Hyundai, authorised Hyundai dealer in Mumbai and Pune";
+  "Modi Hyundai, authorised Hyundai dealer across the Mumbai region";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -61,7 +61,7 @@ export default function OpengraphImage() {
             New Hyundai Cars, Test Drives &amp; Service
           </span>
           <span style={{ fontSize: 34, color: "#bcd4f5", marginTop: 12 }}>
-            Authorised Hyundai dealer in Mumbai &amp; Pune
+            Authorised Hyundai dealer across Mumbai region
           </span>
         </div>
 

@@ -3,24 +3,24 @@ import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
-import ContactUs from "@/components/ContactUs";
+import LocateUs from "@/components/LocateUs";
 import Reveal from "@/components/Reveal";
 import { aboutHeroImage, company, SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
-const title = "Contact Us | Modi Hyundai";
+const title = "Locate Us | Modi Hyundai Showrooms & Service Centres";
 const description =
-  "Get in touch with Modi Hyundai. Call, WhatsApp, email us, or send a message to our team.";
+  "Find Modi Hyundai showrooms and service centres across Mumbai, Thane, Vasai, Virar and Wada. View each branch on the map and open Google Maps directions.";
 
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: "/contact-us" },
+  alternates: { canonical: "/locate-us" },
   openGraph: {
     type: "website",
     title,
     description,
-    url: `${SITE_URL}/contact-us`,
+    url: `${SITE_URL}/locate-us`,
   },
   twitter: {
     card: "summary_large_image",
@@ -29,13 +29,13 @@ export const metadata: Metadata = {
   },
 };
 
-const contactPageSchema = {
+const locateUsSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "ContactPage",
-      "@id": `${SITE_URL}/contact-us#webpage`,
-      url: `${SITE_URL}/contact-us`,
+      "@type": "CollectionPage",
+      "@id": `${SITE_URL}/locate-us#webpage`,
+      url: `${SITE_URL}/locate-us`,
       name: title,
       description,
       isPartOf: { "@id": `${SITE_URL}/#website` },
@@ -45,26 +45,26 @@ const contactPageSchema = {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-        { "@type": "ListItem", position: 2, name: "Contact Us", item: `${SITE_URL}/contact-us` },
+        { "@type": "ListItem", position: 2, name: "Locate Us", item: `${SITE_URL}/locate-us` },
       ],
     },
   ],
 };
 
-export default function ContactUsPage() {
+export default function LocateUsPage() {
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(locateUsSchema) }}
       />
       <Navbar />
       <FloatingActions />
       <main style={{ marginTop: "96px" }}>
-        <section className="relative h-[240px] w-full overflow-hidden bg-brand-deep sm:h-[300px]">
+        <section className="relative h-[260px] w-full overflow-hidden bg-brand-deep sm:h-[320px]">
           <Image
             src={aboutHeroImage}
-            alt="Modi Hyundai showroom"
+            alt="Modi Hyundai locations"
             fill
             priority
             sizes="100vw"
@@ -74,20 +74,20 @@ export default function ContactUsPage() {
           <div className="container-px absolute inset-x-0 bottom-10 mx-auto max-w-[1400px]">
             <Reveal>
               <p className="text-sm font-semibold uppercase tracking-wider text-white/70">
-                Contact
+                Locate Us
               </p>
               <h1 className="mt-2 font-display text-3xl font-bold text-white sm:text-4xl">
-                Get in Touch
+                Find Your Nearest Modi Hyundai Location
               </h1>
-              <p className="mt-3 max-w-xl text-sm text-white/80 sm:text-base">
-                Call {company.phone}, WhatsApp us, email us, or send a message and
-                our team will get back to you.
+              <p className="mt-3 max-w-2xl text-sm text-white/80 sm:text-base">
+                Explore every Modi Hyundai showroom and service centre, preview the
+                branch on the map, and get live navigation in Google Maps.
               </p>
             </Reveal>
           </div>
         </section>
 
-        <ContactUs />
+        <LocateUs />
       </main>
       <Footer />
     </>
