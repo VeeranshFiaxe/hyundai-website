@@ -538,24 +538,116 @@ export function getCarDetail(car: Car): CarDetail {
 
 const galleryLabels = [
   "Front three-quarter",
-  "Front view",
   "Side profile",
+  "Exterior angle",
+  "Exterior angle",
   "Rear three-quarter",
-  "Rear view",
-  "Driver-side profile",
+  "Rear profile",
 ];
+
+const officialAsset = (path: string) => `https://www.hyundai.com${path}`;
+
+/* Curated manufacturer images from each Hyundai India model page. These add
+   cabin, technology, boot and feature detail to the separate 360° gallery. */
+const modelFeatureGallery: Record<string, GalleryImage[]> = {
+  exter: [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Exter/booking-open/interior-banner.jpg"), alt: "Hyundai Exter interior and dashboard", label: "Interior" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Exter/booking-open/spacious-boot.jpg"), alt: "Hyundai Exter boot space", label: "Boot space" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Exter/booking-open/dashcam.jpg"), alt: "Hyundai Exter dual-camera dashcam feature", label: "Dashcam" },
+  ],
+  venue: [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/pre-booking/venueinteriorimg-pc.jpg"), alt: "Hyundai Venue dashboard and front cabin", label: "Dashboard" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/pre-booking/venue_2nd-row-spacious-cabin.jpg"), alt: "Hyundai Venue rear-seat cabin", label: "Rear seats" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/pre-booking/dual-curved-panoramic-displays.jpg"), alt: "Hyundai Venue connected displays", label: "Displays" },
+  ],
+  "venue-n-line": [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/venue-n-line/pre-booking/interior-banner.jpg"), alt: "Hyundai Venue N Line sports interior", label: "N Line interior" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/venue-n-line/pre-booking/steering-wheel.jpg"), alt: "Hyundai Venue N Line steering wheel", label: "Steering wheel" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/venue-n-line/pre-booking/interior-gear-hift-knob.jpg"), alt: "Hyundai Venue N Line gear selector", label: "Gear selector" },
+  ],
+  creta: [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/knightking/cretakingdashboard.jpg"), alt: "Hyundai Creta dashboard", label: "Dashboard" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/Hyundai-creta-suv-highlight-small-800x530-2-infotainment%20&%20Cluster%20screen.jpg"), alt: "Hyundai Creta infotainment and driver display", label: "Infotainment" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/Hyundai-creta-suv-highlight-small-800x530-3-leather%20seats.jpg"), alt: "Hyundai Creta leather seat upholstery", label: "Seats" },
+  ],
+  "creta-n-line": [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/creta-n-line/creta-n-line-interior.jpg"), alt: "Hyundai Creta N Line sports cabin", label: "N Line interior" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/creta-n-line/highlights/knight/cretanlinescoopseats.jpg"), alt: "Hyundai Creta N Line seats", label: "N Line seats" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/creta-n-line/highlights/pc/cretanlineinterior.jpg"), alt: "Hyundai Creta N Line dashboard", label: "Dashboard" },
+  ],
+  alcazar: [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Gallery/alcazargallerybig1.jpg"), alt: "Hyundai Alcazar cabin", label: "Cabin" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Alcazar/booking-open/tech-passenger-seat-walk-in.jpg"), alt: "Hyundai Alcazar passenger seat walk-in feature", label: "Seat walk-in" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Gallery/alcazargallerybig5.jpg"), alt: "Hyundai Alcazar lifestyle detail", label: "Lifestyle" },
+  ],
+  verna: [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Verna/Interior/dashboard.jpg"), alt: "Hyundai Verna dashboard", label: "Dashboard" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Verna/Interior/leatherette-seat-upholstery.jpg"), alt: "Hyundai Verna leatherette seats", label: "Seats" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Verna/Interior/d_cut-steering-wheel.jpg"), alt: "Hyundai Verna steering wheel", label: "Steering wheel" },
+  ],
+  aura: [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Aura/gallery/pc/auragallerypc_1.jpg"), alt: "Hyundai Aura exterior and cabin showcase", label: "Showcase" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Aura/gallery/pc/auragallerypc_2.jpg"), alt: "Hyundai Aura interior feature", label: "Interior" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Aura/gallery/pc/auragallerypc_3.jpg"), alt: "Hyundai Aura feature detail", label: "Feature detail" },
+  ],
+  "grand-i10-nios": [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Grand-i10-Nios/Gallery%20Section/big/pc/niosgallery_1.jpg"), alt: "Hyundai Grand i10 Nios exterior and cabin", label: "Showcase" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Grand-i10-Nios/Gallery%20Section/big/pc/niosgallery_2.jpg"), alt: "Hyundai Grand i10 Nios interior", label: "Interior" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/Grand-i10-Nios/Highlights/Grandi10niosnew/nios-vibe-interior.jpg"), alt: "Hyundai Grand i10 Nios cabin", label: "Cabin" },
+  ],
+  i20: [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/i20/Highlights/knight/i20interiordashbig1.jpg"), alt: "Hyundai i20 dashboard", label: "Dashboard" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/i20/Highlights/knight/i20knightallblackseats.jpg"), alt: "Hyundai i20 black seat upholstery", label: "Seats" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/i20/Highlights/pc/i20galleryb_1.jpg"), alt: "Hyundai i20 feature showcase", label: "Feature detail" },
+  ],
+  "i20-n-line": [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/i20-n-line/Highlights/knight/i20nlinegallery7.jpg"), alt: "Hyundai i20 N Line feature showcase", label: "N Line detail" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/i20-n-line/Highlights/pc/i20-n-linesmallgallery_1.jpg"), alt: "Hyundai i20 N Line cabin", label: "Cabin" },
+  ],
+  "ioniq-5": [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/ioniq-5/highlights/feature-collage-1.jpg"), alt: "Hyundai Ioniq 5 cabin and technology", label: "Cabin & tech" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/ioniq-5/highlights/feature-collage-2.jpg"), alt: "Hyundai Ioniq 5 interior feature showcase", label: "Interior features" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/ioniq-5/highlights/vehicle-to-load.jpg"), alt: "Hyundai Ioniq 5 Vehicle-to-Load feature", label: "Vehicle-to-Load" },
+  ],
+  "creta-electric": [
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/creta-electric/highlights/gallery/1120x600_040-058-Overall-Interior-Layout-1st-Row-Dashboard_FR03.jpg"), alt: "Hyundai Creta Electric dashboard and front cabin", label: "Dashboard" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/creta-electric/highlights/gallery/1120x600_044B-222-Connected-Screens-Angle_FR01.jpg"), alt: "Hyundai Creta Electric connected screens", label: "Connected screens" },
+    { src: officialAsset("/content/dam/hyundai/in/en/data/find-a-car/creta-electric/highlights/gallery/1120x600_128-164-6-Airbags_FR05.jpg"), alt: "Hyundai Creta Electric six-airbag safety feature", label: "Safety feature" },
+  ],
+};
+
+const brochurePathBySlug: Record<string, string> = {
+  exter: "/content/dam/hyundai/in/en/data/brochure/exter.pdf",
+  venue: "/content/dam/hyundai/in/en/data/brochure/venue.pdf",
+  "venue-n-line": "/content/dam/hyundai/in/en/data/brochure/venue-n-line.pdf",
+  creta: "/content/dam/hyundai/in/en/data/brochure/creta.pdf",
+  "creta-n-line": "/content/dam/hyundai/in/en/data/brochure/creta-n-line.pdf",
+  alcazar: "/content/dam/hyundai/in/en/data/brochure/alcazar.pdf",
+  verna: "/content/dam/hyundai/in/en/data/brochure/verna.pdf",
+  aura: "/content/dam/hyundai/in/en/data/brochure/aura.pdf",
+  "grand-i10-nios": "/content/dam/hyundai/in/en/data/brochure/grand-i10-nios.pdf",
+  i20: "/content/dam/hyundai/in/en/data/brochure/i20.pdf",
+  "i20-n-line": "/content/dam/hyundai/in/en/data/brochure/i20-n-line.pdf",
+  "ioniq-5": "/content/dam/hyundai/in/en/data/brochure/ioniq-5.pdf",
+  "creta-electric": "/content/dam/hyundai/in/en/data/brochure/creta-ev.pdf",
+};
+
+export function getCarBrochure(car: Car) {
+  const path = brochurePathBySlug[car.slug];
+  return path ? officialAsset(path) : undefined;
+}
 
 /* Genuine Hyundai 360-degree exterior frames. This gallery has independent
    state in the page component, so it never changes the selected paint. */
 export function getCarGallery(car: Car): GalleryImage[] {
   const source = car.colors[0]?.image;
-  if (!source || !source.includes("_0.png")) {
-    return [{ src: car.image, alt: car.alt, label: "Exterior" }];
-  }
-
-  return [0, 6, 12, 18, 24, 30].map((frame, index) => ({
-    src: source.replace("_0.png", `_${frame}.png`),
+  const exterior = !source || !/_\d+\.png$/.test(source)
+    ? [{ src: car.image, alt: car.alt, label: "Exterior" }]
+    : [6, 0, 12, 18, 24, 30].map((frame, index) => ({
+    src: source.replace(/_\d+\.png$/, `_${frame}.png`),
     alt: `${car.alt}, ${galleryLabels[index].toLowerCase()} view`,
     label: galleryLabels[index],
   }));
+
+  return [...exterior, ...(modelFeatureGallery[car.slug] ?? [])];
 }

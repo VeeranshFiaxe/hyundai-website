@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Car } from "@/lib/data";
 import { formatINR } from "@/lib/data";
-import { getCarDetail, getCarGallery } from "@/lib/car-details";
+import { getCarBrochure, getCarDetail, getCarGallery } from "@/lib/car-details";
 import { ArrowRight, Check } from "./icons";
 import Reveal from "./Reveal";
 
@@ -42,6 +42,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
   const [galleryIndex, setGalleryIndex] = useState(0);
   const color = car.colors[colorIndex];
   const detail = getCarDetail(car);
+  const brochureUrl = getCarBrochure(car);
   const displayName = `Hyundai ${car.name.charAt(0)}${car.name.slice(1).toLowerCase()}`;
   const transmissions = car.transmission.split(",").map((t) => t.trim());
   const engines = car.engine.split(",").map((t) => t.trim());
@@ -53,6 +54,20 @@ export default function CarDetailClient({ car }: { car: Car }) {
     ["specifications", "Specifications"],
     ["variants", "Variants"],
   ];
+
+  useEffect(() => {
+    // Warm the browser cache for every paint option after the first detail
+    // view renders. The primary image remains the only colour-controlled UI.
+    const preload = () => {
+      car.colors.forEach((paint) => {
+        const image = new window.Image();
+        image.src = paint.image;
+      });
+    };
+
+    const timeoutId = window.setTimeout(preload, 250);
+    return () => window.clearTimeout(timeoutId);
+  }, [car.colors]);
 
   return (
     <>
@@ -174,8 +189,8 @@ export default function CarDetailClient({ car }: { car: Car }) {
       <section id="gallery" className="scroll-mt-28 bg-white py-12 lg:py-16">
         <div className="container-px mx-auto max-w-[1400px]">
           <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
-            <div><p className="text-xs font-semibold uppercase tracking-wider text-brand">Exterior gallery</p><h2 className="mt-2 font-display text-2xl font-bold text-text sm:text-3xl">See the {displayName} from every angle.</h2></div>
-            <p className="max-w-md text-sm text-muted">Official Hyundai 360-degree views. This gallery is separate from the colour selector above.</p>
+            <div><p className="text-xs font-semibold uppercase tracking-wider text-brand">Official image gallery</p><h2 className="mt-2 font-display text-2xl font-bold text-text sm:text-3xl">Explore the {displayName} inside and out.</h2></div>
+            <p className="max-w-md text-sm text-muted">Official 360-degree exterior, cabin and feature images. This gallery is separate from the colour selector above.</p>
           </div>
           <div className="mt-7 grid gap-4 lg:grid-cols-[1.6fr_0.9fr]">
             <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden rounded-lg bg-bg-2 p-6 sm:min-h-[420px]">
@@ -222,7 +237,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
       <section id="variants" className="scroll-mt-28 bg-white py-12 lg:py-16">
         <div className="container-px mx-auto grid max-w-[1400px] gap-5 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-lg border border-border bg-bg-2 p-6 sm:p-8"><p className="text-xs font-semibold uppercase tracking-wider text-brand">Variants and colours</p><h2 className="mt-2 font-display text-2xl font-bold text-text">Choose the right specification, not just the right price.</h2><ul className="mt-5 space-y-3">{detail.variants.map((variant) => <li key={variant} className="flex gap-2 text-sm leading-relaxed text-text"><Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />{variant}</li>)}</ul><p className="mt-6 text-xs leading-relaxed text-muted">Available colours: {car.colors.map((item) => item.name).join(", ")}. Paint availability is subject to the selected variant and current stock.</p></div>
-          <aside className="rounded-lg bg-brand p-6 text-white sm:p-8"><p className="text-xs font-semibold uppercase tracking-wider text-white/60">Ownership confidence</p><h2 className="mt-2 font-display text-2xl font-bold">Warranty and next steps</h2><p className="mt-4 text-sm leading-relaxed text-white/75">{detail.warranty}</p><a href={detail.sourceUrl} target="_blank" rel="noreferrer" className="mt-5 inline-flex text-sm font-semibold text-white underline underline-offset-4 hover:text-white/80">View Hyundai&apos;s current model information</a><div className="mt-7 space-y-3"><Link href="/book-a-test-drive" className="group flex items-center justify-center gap-2 rounded bg-white px-5 py-3 text-sm font-semibold text-brand transition-colors hover:bg-white/90">Book a Test Drive <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></Link><Link href="/locate-service-centre#book-service" className="flex items-center justify-center rounded border border-white/35 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Already own one? Book service</Link></div></aside>
+          <aside className="rounded-lg bg-brand p-6 text-white sm:p-8"><p className="text-xs font-semibold uppercase tracking-wider text-white/60">Ownership confidence</p><h2 className="mt-2 font-display text-2xl font-bold">Warranty and next steps</h2><p className="mt-4 text-sm leading-relaxed text-white/75">{detail.warranty}</p><div className="mt-5 flex flex-col items-start gap-3"><a href={detail.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-semibold text-white underline underline-offset-4 hover:text-white/80">View Hyundai&apos;s current model information</a>{brochureUrl && <a href={brochureUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-semibold text-white underline underline-offset-4 hover:text-white/80">Download official brochure (PDF)</a>}</div><div className="mt-7 space-y-3"><Link href="/book-a-test-drive" className="group flex items-center justify-center gap-2 rounded bg-white px-5 py-3 text-sm font-semibold text-brand transition-colors hover:bg-white/90">Book a Test Drive <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></Link><Link href="/locate-service-centre#book-service" className="flex items-center justify-center rounded border border-white/35 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Already own one? Book service</Link></div></aside>
         </div>
       </section>
     </>

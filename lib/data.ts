@@ -238,6 +238,42 @@ export const heroSlides: Slide[] = [
     image: official(officialHeroBanner.ioniq5),
     alt: "The new Hyundai Ioniq 5, official campaign banner",
   },
+  {
+    model: "Hyundai EXTER",
+    badge: "Compact SUV",
+    headline: "Drive to shine.",
+    sub: "Confident city size, an SUV stance and a practical factory CNG choice.",
+    price: "5.81",
+    image: official("/content/dam/hyundai/in/en/images/home/banner/exter-home-newpc-banner.jpg"),
+    alt: "Hyundai Exter compact SUV on the official Hyundai India home banner",
+  },
+  {
+    model: "Hyundai VENUE",
+    badge: "Compact SUV",
+    headline: "Made for your every day.",
+    sub: "Turbo-petrol, diesel and connected technology in a city-friendly SUV.",
+    price: "8.00",
+    image: official("/content/dam/hyundai/in/en/images/home/banner/venue-homepage-des-banner.jpg"),
+    alt: "Hyundai Venue compact SUV on the official Hyundai India home banner",
+  },
+  {
+    model: "Hyundai VERNA",
+    badge: "Dynamic Sedan",
+    headline: "Futuristic by design.",
+    sub: "A spacious sedan with a responsive turbo-petrol option and advanced driver assistance.",
+    price: "10.99",
+    image: official("/content/dam/hyundai/in/en/images/home/banner/verna-homepage-des-banner.jpg"),
+    alt: "Hyundai Verna sedan on the official Hyundai India home banner",
+  },
+  {
+    model: "Hyundai CRETA ELECTRIC",
+    badge: "All-Electric SUV",
+    headline: "Undisputed. Ultimate. Now electric.",
+    sub: "Choose the battery range that fits your week, with V2L and Level 2 ADAS on selected variants.",
+    price: "18.03",
+    image: official("/content/dam/hyundai/in/en/images/home/baas-creta-electricpc.jpg"),
+    alt: "Hyundai Creta Electric SUV on the official Hyundai India home banner",
+  },
 ];
 
 export type CarCategory = "SUV" | "Sedan" | "Hatchback" | "Electric" | "Taxi";
@@ -298,7 +334,7 @@ const slugify = (n: string) => n.toLowerCase().replace(/\s+/g, "-");
    the named paint for the swatch dot; the photo itself carries the
    real colour. */
 const findACar = (model: string, slug: string) =>
-  `https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/${model}/360/${slug}/pc/${slug}_0.png`;
+  `https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/${model}/360/${slug}/pc/${slug}_6.png`;
 
 const colours = (
   model: string,
