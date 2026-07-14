@@ -59,7 +59,7 @@ export default function HyundaiPromisePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(promisePageSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(promisePageSchema).replace(/</g, "\\u003c") }}
       />
       <Navbar />
       <FloatingActions />

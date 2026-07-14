@@ -7,7 +7,7 @@ export default function JsonLd() {
     <script
       type="application/ld+json"
       // Schema is built from trusted, in-repo data (no user input).
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd()).replace(/</g, "\\u003c") }}
     />
   );
 }

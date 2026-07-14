@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 import CarDetailClient from "@/components/CarDetailClient";
 import { cars, formatINR, SITE_URL } from "@/lib/data";
+import { getCarDetail, getCarGallery } from "@/lib/car-details";
 import { DEALER_ID } from "@/lib/schema";
 
 export function generateStaticParams() {
@@ -23,11 +24,12 @@ export async function generateMetadata({
   const { slug } = await params;
   const car = getCar(slug);
   if (!car) return {};
+  const detail = getCarDetail(car);
 
   const displayName =
     "Hyundai " + car.name.charAt(0) + car.name.slice(1).toLowerCase();
   const title = `${displayName}: Price, Specs, Colours & Test Drive | Modi Hyundai`;
-  const description = `${car.blurb} Starting at ${formatINR(car.priceINR)}* ex-showroom. Explore colours, specs and book a test drive at Modi Hyundai.`;
+  const description = `${detail.overview} Starting at ${formatINR(car.priceINR)}* ex-showroom. Compare variants, colours, features and specifications, then book a Hyundai test drive with Modi Hyundai.`;
 
   return {
     title,
@@ -59,17 +61,29 @@ export default async function CarDetailPage({
 
   const displayName =
     "Hyundai " + car.name.charAt(0) + car.name.slice(1).toLowerCase();
+  const detail = getCarDetail(car);
+  const gallery = getCarGallery(car);
 
   const carPageSchema = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Product",
+        "@type": "Car",
         "@id": `${SITE_URL}/cars/${car.slug}#product`,
         name: displayName,
-        description: car.blurb,
-        image: car.image,
+        description: detail.overview,
+        image: [car.image, ...gallery.map((image) => image.src)],
         brand: { "@type": "Brand", name: "Hyundai" },
+        vehicleConfiguration: car.type,
+        fuelType: car.fuel.replace(/\s·\s/g, ", "),
+        vehicleEngine: { "@type": "EngineSpecification", name: car.engine },
+        vehicleTransmission: car.transmission,
+        numberOfSeats: car.seating,
+        additionalProperty: detail.specifications.map((spec) => ({
+          "@type": "PropertyValue",
+          name: spec.label,
+          value: spec.value,
+        })),
         offers: {
           "@type": "Offer",
           price: car.priceINR,
@@ -98,7 +112,7 @@ export default async function CarDetailPage({
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(carPageSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(carPageSchema).replace(/</g, "\\u003c") }}
       />
       <Navbar />
       <FloatingActions />

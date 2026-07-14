@@ -238,6 +238,42 @@ export const heroSlides: Slide[] = [
     image: official(officialHeroBanner.ioniq5),
     alt: "The new Hyundai Ioniq 5, official campaign banner",
   },
+  {
+    model: "Hyundai EXTER",
+    badge: "Compact SUV",
+    headline: "Drive to shine.",
+    sub: "Confident city size, an SUV stance and a practical factory CNG choice.",
+    price: "5.81",
+    image: official("/content/dam/hyundai/in/en/images/home/banner/exter-home-newpc-banner.jpg"),
+    alt: "Hyundai Exter compact SUV on the official Hyundai India home banner",
+  },
+  {
+    model: "Hyundai VENUE",
+    badge: "Compact SUV",
+    headline: "Made for your every day.",
+    sub: "Turbo-petrol, diesel and connected technology in a city-friendly SUV.",
+    price: "8.00",
+    image: official("/content/dam/hyundai/in/en/images/home/banner/venue-homepage-des-banner.jpg"),
+    alt: "Hyundai Venue compact SUV on the official Hyundai India home banner",
+  },
+  {
+    model: "Hyundai VERNA",
+    badge: "Dynamic Sedan",
+    headline: "Futuristic by design.",
+    sub: "A spacious sedan with a responsive turbo-petrol option and advanced driver assistance.",
+    price: "10.99",
+    image: official("/content/dam/hyundai/in/en/images/home/banner/verna-homepage-des-banner.jpg"),
+    alt: "Hyundai Verna sedan on the official Hyundai India home banner",
+  },
+  {
+    model: "Hyundai CRETA ELECTRIC",
+    badge: "All-Electric SUV",
+    headline: "Undisputed. Ultimate. Now electric.",
+    sub: "Choose the battery range that fits your week, with V2L and Level 2 ADAS on selected variants.",
+    price: "18.03",
+    image: official("/content/dam/hyundai/in/en/images/home/baas-creta-electricpc.jpg"),
+    alt: "Hyundai Creta Electric SUV on the official Hyundai India home banner",
+  },
 ];
 
 export type CarCategory = "SUV" | "Sedan" | "Hatchback" | "Electric" | "Taxi";
@@ -265,6 +301,26 @@ export type Car = {
   colors: CarColor[];
 };
 
+export type DetailSpec = { label: string; value: string };
+
+export type CarDetail = {
+  overview: string;
+  idealFor: string;
+  performance: string[];
+  safety: string[];
+  adas?: string[];
+  interior: string[];
+  exterior: string[];
+  infotainment: string[];
+  comfort: string[];
+  variants: string[];
+  specifications: DetailSpec[];
+  warranty: string;
+  sourceUrl: string;
+};
+
+export type GalleryImage = { src: string; alt: string; label: string };
+
 const lakh = (inr: number) => (inr / 100000).toFixed(2);
 
 const slugify = (n: string) => n.toLowerCase().replace(/\s+/g, "-");
@@ -278,7 +334,7 @@ const slugify = (n: string) => n.toLowerCase().replace(/\s+/g, "-");
    the named paint for the swatch dot; the photo itself carries the
    real colour. */
 const findACar = (model: string, slug: string) =>
-  `https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/${model}/360/${slug}/pc/${slug}_0.png`;
+  `https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/${model}/360/${slug}/pc/${slug}_6.png`;
 
 const colours = (
   model: string,
@@ -676,7 +732,7 @@ export const cars: Car[] = [
       ["Gravity Gold Matte", "#8A7D5C", "gravity-gold-matte"],
     ]),
     seating: "5",
-    mileage: "Up to 631 km range per charge (claimed, long-range)",
+    mileage: "Up to 690 km range per charge (ARAI, 84 kWh)",
     bootSpace: "527 litres + 57 litre front trunk",
     highlights: [
       "Vehicle-to-Load (V2L): power devices from the car",
@@ -713,8 +769,8 @@ export const cars: Car[] = [
       ["Starry Night", "#1C2331", "starry-night"],
     ]),
     seating: "5",
-    mileage: "Up to 473 km range per charge (claimed, long-range)",
-    bootSpace: "433 litres",
+    mileage: "Up to 510 km range per charge (MIDC, 51.4 kWh)",
+    bootSpace: "433 litres + 22 litre frunk",
     highlights: [
       "Vehicle-to-Load (V2L) charging support",
       "Level 2 ADAS suite",

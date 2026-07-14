@@ -19,6 +19,7 @@ const categories: ("All" | CarCategory)[] = [
 export default function FeaturedVehicles() {
   const [category, setCategory] = useState<"All" | CarCategory>("All");
   const [index, setIndex] = useState(0);
+  const [hasNavigated, setHasNavigated] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
   const [stageWidth, setStageWidth] = useState(1000);
@@ -31,6 +32,7 @@ export default function FeaturedVehicles() {
   if (category !== prevCategory) {
     setPrevCategory(category);
     setIndex(0);
+    setHasNavigated(false);
   }
 
   useEffect(() => {
@@ -44,7 +46,13 @@ export default function FeaturedVehicles() {
   }, []);
 
   const len = filtered.length;
-  const go = (dir: number) => setIndex((i) => (i + dir + len) % len);
+  const canGoBack = hasNavigated && len > 1;
+  const canGoForward = len > 1;
+  const go = (dir: number) => {
+    if (len < 2 || (dir < 0 && !hasNavigated)) return;
+    setHasNavigated(true);
+    setIndex((i) => (i + dir + len) % len);
+  };
 
   // Step distance and scale/opacity falloff are proportional to the stage's
   // own measured width, so the "coverflow" spacing stays consistent across
@@ -54,7 +62,7 @@ export default function FeaturedVehicles() {
   // step makes the main-to-neighbour gap look tighter than the gaps further
   // out. A small constant push on every non-zero offset widens just that
   // first gap, without changing the spacing between the side cards.
-  const centreGapBoost = 14;
+  const centreGapBoost = 18;
 
   return (
     <section
@@ -89,18 +97,25 @@ export default function FeaturedVehicles() {
           <button
             aria-label="Previous car"
             onClick={() => go(-1)}
-            className="absolute left-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center text-text transition-opacity sm:h-12 sm:w-12"
+            disabled={!canGoBack}
+            aria-disabled={!canGoBack}
+            className={`absolute left-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center transition-colors sm:h-12 sm:w-12 ${
+              canGoBack ? "text-text hover:text-brand" : "cursor-not-allowed text-faint/45"
+            }`}
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
 
           {filtered.map((car, i) => {
             let offset = i - index;
-            if (offset > len / 2) offset -= len;
-            if (offset < -len / 2) offset += len;
+            if (hasNavigated) {
+              if (offset > len / 2) offset -= len;
+              if (offset < -len / 2) offset += len;
+            }
+            if (!hasNavigated && offset < 0) return null;
             if (Math.abs(offset) > 3) return null;
             const abs = Math.abs(offset);
-            const scale = offset === 0 ? 1 : Math.max(0.42, 0.72 - abs * 0.14);
+            const scale = offset === 0 ? 1.12 : Math.max(0.42, 0.72 - abs * 0.14);
             const opacity = abs > 2 ? 0 : 1 - abs * 0.32;
             const translateX =
               offset === 0
@@ -109,7 +124,12 @@ export default function FeaturedVehicles() {
             return (
               <div
                 key={car.name}
-                onClick={() => offset !== 0 && setIndex(i)}
+                onClick={() => {
+                  if (offset !== 0) {
+                    setHasNavigated(true);
+                    setIndex(i);
+                  }
+                }}
                 className="absolute left-1/2 top-1/2 flex h-full w-[70%] items-center justify-center transition-all duration-500 ease-out sm:w-[55%] lg:w-[46%]"
                 style={{
                   transform: `translate(-50%, -50%) translateX(${translateX}px) scale(${scale})`,
@@ -134,7 +154,11 @@ export default function FeaturedVehicles() {
           <button
             aria-label="Next car"
             onClick={() => go(1)}
-            className="absolute right-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center text-text transition-opacity sm:h-12 sm:w-12"
+            disabled={!canGoForward}
+            aria-disabled={!canGoForward}
+            className={`absolute right-0 top-1/2 z-40 grid h-10 w-10 -translate-y-1/2 place-items-center transition-colors sm:h-12 sm:w-12 ${
+              canGoForward ? "text-text hover:text-brand" : "cursor-not-allowed text-faint/45"
+            }`}
           >
             <ChevronRight className="h-6 w-6" />
           </button>
