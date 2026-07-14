@@ -7,9 +7,9 @@ import Reveal from "@/components/Reveal";
 import { SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
-const title = "Book a Test Drive | Modi Hyundai";
+const title = "Book a Hyundai Test Drive in Mumbai | Modi Hyundai";
 const description =
-  "Book a free Hyundai test drive at your nearest Modi Hyundai showroom, or request one at your home. Pick your car, date and time online.";
+  "Book a no-obligation Hyundai test drive in Mumbai, Thane, Vasai, Virar or Wada. Choose your model, preferred time and showroom or doorstep location online.";
 
 export const metadata: Metadata = {
   title,
@@ -60,7 +60,7 @@ export default function BookTestDrivePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(testDrivePageSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(testDrivePageSchema).replace(/</g, "\\u003c") }}
       />
       <Navbar />
       <FloatingActions />
@@ -72,11 +72,12 @@ export default function BookTestDrivePage() {
                 Book a Test Drive
               </p>
               <h1 className="mt-2 font-display text-3xl font-bold text-text sm:text-4xl">
-                Take Your Favourite Hyundai for a Spin
+                Drive the Hyundai You&apos;re Comparing
               </h1>
               <p className="mt-3 text-sm text-muted sm:text-base">
-                Pick your car, choose a date and time, and we&apos;ll have it
-                ready, at our showroom or your home.
+                Choose your model, a convenient time and a showroom or doorstep
+                location. We&apos;ll confirm the car and help you compare the right
+                variant—without any pressure to buy.
               </p>
             </Reveal>
           </div>

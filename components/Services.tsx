@@ -14,9 +14,9 @@ export default function Services() {
               Service That Cares
             </h2>
             <p className="mt-2 max-w-xl text-sm text-muted">
-              From routine maintenance to roadside help, our factory-trained team
-              keeps your Hyundai running the way it should, with genuine parts,
-              transparent pricing, and service centres across the Mumbai region.
+              From routine maintenance to unexpected repairs, our factory-trained
+              team uses genuine Hyundai parts, explains the work clearly and keeps
+              you moving with convenient service centres across the Mumbai region.
             </p>
           </div>
           <Link

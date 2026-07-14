@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 import LocateUs from "@/components/LocateUs";
 import Reveal from "@/components/Reveal";
-import { aboutHeroImage, company, SITE_URL } from "@/lib/data";
+import { aboutHeroImage, SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
 const title = "Locate Us | Modi Hyundai Showrooms & Service Centres";
@@ -56,7 +56,7 @@ export default function LocateUsPage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(locateUsSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(locateUsSchema).replace(/</g, "\\u003c") }}
       />
       <Navbar />
       <FloatingActions />

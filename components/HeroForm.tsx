@@ -36,7 +36,7 @@ export default function HeroForm() {
           <Check className="h-6 w-6" />
         </span>
         <h3 className="mt-4 font-display text-lg font-bold text-text">Booking received!</h3>
-        <p className="mt-2 text-xs text-muted">We will call you shortly to confirm.</p>
+        <p className="mt-2 text-xs text-muted">We&apos;ll call shortly to confirm your preferred car, time and location.</p>
         <button
           onClick={() => {
             setSubmitted(false);
@@ -57,7 +57,7 @@ export default function HeroForm() {
     <div className="w-full max-w-[340px] rounded-lg bg-white p-6 shadow-2xl">
       <h3 className="font-display text-xl font-bold text-text">Book a Test Drive</h3>
       <p className="mt-1 text-xs text-muted">
-        {step === 1 ? "Step 1: Your Details" : "Step 2: Time & Location"}
+        {step === 1 ? "Step 1 of 2: Tell us what you want to drive" : "Step 2 of 2: Pick a time and location"}
       </p>
       
       <form onSubmit={onSubmit} className="mt-5 overflow-hidden">
@@ -114,7 +114,7 @@ export default function HeroForm() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </button>
             <p className="text-center text-[11px] text-faint">
-              Takes less than 30 seconds.
+              No obligation. Takes less than 30 seconds.
             </p>
           </div>
 

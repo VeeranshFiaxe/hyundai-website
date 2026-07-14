@@ -265,6 +265,26 @@ export type Car = {
   colors: CarColor[];
 };
 
+export type DetailSpec = { label: string; value: string };
+
+export type CarDetail = {
+  overview: string;
+  idealFor: string;
+  performance: string[];
+  safety: string[];
+  adas?: string[];
+  interior: string[];
+  exterior: string[];
+  infotainment: string[];
+  comfort: string[];
+  variants: string[];
+  specifications: DetailSpec[];
+  warranty: string;
+  sourceUrl: string;
+};
+
+export type GalleryImage = { src: string; alt: string; label: string };
+
 const lakh = (inr: number) => (inr / 100000).toFixed(2);
 
 const slugify = (n: string) => n.toLowerCase().replace(/\s+/g, "-");
@@ -676,7 +696,7 @@ export const cars: Car[] = [
       ["Gravity Gold Matte", "#8A7D5C", "gravity-gold-matte"],
     ]),
     seating: "5",
-    mileage: "Up to 631 km range per charge (claimed, long-range)",
+    mileage: "Up to 690 km range per charge (ARAI, 84 kWh)",
     bootSpace: "527 litres + 57 litre front trunk",
     highlights: [
       "Vehicle-to-Load (V2L): power devices from the car",
@@ -713,8 +733,8 @@ export const cars: Car[] = [
       ["Starry Night", "#1C2331", "starry-night"],
     ]),
     seating: "5",
-    mileage: "Up to 473 km range per charge (claimed, long-range)",
-    bootSpace: "433 litres",
+    mileage: "Up to 510 km range per charge (MIDC, 51.4 kWh)",
+    bootSpace: "433 litres + 22 litre frunk",
     highlights: [
       "Vehicle-to-Load (V2L) charging support",
       "Level 2 ADAS suite",

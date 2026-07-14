@@ -11,7 +11,7 @@ import { DEALER_ID } from "@/lib/schema";
 
 const title = "Locate a Service Centre & Book a Service Appointment | Modi Hyundai";
 const description =
-  "Find your nearest Modi Hyundai service centre across Mumbai, Thane, Vasai, Virar and Wada, and book a service appointment online.";
+  "Book authorised Hyundai service online across Mumbai, Thane, Vasai, Virar and Wada. Choose a convenient centre and slot for maintenance, repairs, genuine parts and pickup/drop support.";
 
 export const metadata: Metadata = {
   title,
@@ -75,7 +75,7 @@ export default function LocateServiceCentrePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicePageSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(servicePageSchema).replace(/</g, "\\u003c") }}
       />
       <Navbar />
       <FloatingActions />
@@ -100,8 +100,9 @@ export default function LocateServiceCentrePage() {
                 Locate a Service Centre & Book a Service
               </h1>
               <p className="mt-3 max-w-xl text-sm text-white/80 sm:text-base">
-                Genuine parts, factory-trained technicians, and transparent
-                pricing at every Modi Hyundai service centre.
+                Keep your Hyundai performing at its best with genuine parts,
+                factory-trained technicians, clear estimates and convenient
+                service booking.
               </p>
             </Reveal>
           </div>
