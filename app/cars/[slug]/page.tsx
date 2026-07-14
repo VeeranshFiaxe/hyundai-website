@@ -105,6 +105,22 @@ export default async function CarDetailPage({
           },
         ],
       },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/cars/${car.slug}#faq`,
+        mainEntity: [
+          `What is the price of the ${displayName} in Mumbai?`,
+          `How many variants does the ${displayName} offer?`,
+          `What engine and mileage does the ${displayName} deliver?`,
+          `What are the key features of the ${displayName}?`,
+          `How safe is the ${displayName}?`,
+          `Where can I test drive the ${displayName}?`,
+        ].map((question) => ({
+          "@type": "Question",
+          name: question,
+          acceptedAnswer: { "@type": "Answer", text: `See the ${displayName} FAQs section on this page for the full answer.` },
+        })),
+      },
     ],
   };
 

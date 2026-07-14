@@ -11,6 +11,7 @@ import FAQ from "@/components/FAQ";
 import Locations from "@/components/Locations";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
+import HomeSeoContent from "@/components/HomeSeoContent";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
         <TrustStrip />
         <FeaturedVehicles />
         <Offers />
+        <HomeSeoContent />
         <TestDrive />
         <Services />
         <Testimonials />

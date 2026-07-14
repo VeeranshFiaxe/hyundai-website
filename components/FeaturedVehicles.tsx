@@ -57,17 +57,17 @@ export default function FeaturedVehicles() {
   // Step distance and scale/opacity falloff are proportional to the stage's
   // own measured width, so the "coverflow" spacing stays consistent across
   // breakpoints without a hardcoded pixel value.
-  const step = Math.min(stageWidth * 0.34, 360);
+  const step = Math.min(stageWidth * 0.36, 380);
   // The centre card renders larger than its neighbours, so a purely linear
   // step makes the main-to-neighbour gap look tighter than the gaps further
   // out. A small constant push on every non-zero offset widens just that
   // first gap, without changing the spacing between the side cards.
-  const centreGapBoost = 18;
+  const centreGapBoost = 28;
 
   return (
     <section
       id="cars"
-      className="scroll-mt-24 overflow-hidden bg-white py-8 lg:py-10"
+      className="scroll-mt-24 overflow-hidden bg-white py-12 lg:py-16"
     >
       <div className="container-px mx-auto max-w-[1400px]">
         {/* Category tabs */}
@@ -92,7 +92,7 @@ export default function FeaturedVehicles() {
         {/* Coverflow stage */}
         <div
           ref={stageRef}
-          className="relative mt-2 h-[180px] select-none sm:h-[220px] lg:h-[260px]"
+          className="relative mt-4 h-[300px] select-none sm:h-[360px] lg:h-[400px]"
         >
           <button
             aria-label="Previous car"
@@ -115,8 +115,12 @@ export default function FeaturedVehicles() {
             if (!hasNavigated && offset < 0) return null;
             if (Math.abs(offset) > 3) return null;
             const abs = Math.abs(offset);
-            const scale = offset === 0 ? 1.12 : Math.max(0.42, 0.72 - abs * 0.14);
-            const opacity = abs > 2 ? 0 : 1 - abs * 0.32;
+            // The focused car is scaled up clearly so it dominates as the hero
+            // of the section; neighbours fall away more steeply so the centre
+            // reads as the clear focal point. Kept below 1.3 so the wider
+            // centre card doesn't push the side cards out of the stage.
+            const scale = offset === 0 ? 1.28 : Math.max(0.4, 0.62 - abs * 0.15);
+            const opacity = abs > 2 ? 0 : 1 - abs * 0.34;
             const translateX =
               offset === 0
                 ? 0
@@ -167,7 +171,7 @@ export default function FeaturedVehicles() {
         {/* Info row, keyed so it fades between models */}
         <div
           key={active.name}
-          className="mx-auto mt-1 max-w-2xl text-center animate-[fade-up_.35s_ease-out_both]"
+          className="mx-auto mt-4 max-w-2xl text-center animate-[fade-up_.35s_ease-out_both]"
         >
           <button
             type="button"

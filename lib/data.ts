@@ -55,11 +55,7 @@ const shot = {
    homepage carousel and individual model pages. These already have the
    marketing headline baked into the photo itself, matching the real
    site's hero treatment exactly. */
-const officialHeroBanner = {
-  creta: "/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/home/cretakingknightinnerkv-pc.jpg",
-  alcazar: "/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvpc2.jpg",
-  ioniq5: "/content/dam/hyundai/in/en/images/home/banner/ioniq-des-banner.jpg",
-};
+const banner = (path: string) => official(path);
 
 /* ---- Canonical business identity (NAP), used everywhere + in schema ---- */
 export const SITE_URL =
@@ -217,8 +213,8 @@ export const heroSlides: Slide[] = [
     headline: "Command the road.",
     sub: "Level 2 ADAS, a panoramic sunroof and a presence that speaks before you do.",
     price: "10.91",
-    image: official(officialHeroBanner.creta),
-    alt: "Hyundai Creta Summer Edition, official campaign banner",
+    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/home/cretakingknightinnerkv-pc.jpg"),
+    alt: "Hyundai Creta, official campaign banner",
   },
   {
     model: "Hyundai ALCAZAR",
@@ -226,7 +222,7 @@ export const heroSlides: Slide[] = [
     headline: "Room for the whole family.",
     sub: "Three spacious rows and boss-mode comfort, built for grand journeys.",
     price: "14.51",
-    image: official(officialHeroBanner.alcazar),
+    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvpc2.jpg"),
     alt: "The bold new Hyundai Alcazar, official campaign banner",
   },
   {
@@ -235,8 +231,8 @@ export const heroSlides: Slide[] = [
     headline: "The future, arrived.",
     sub: "Hyundai's flagship electric SUV, with futuristic design and a 500km+ range.",
     price: "55.71",
-    image: official(officialHeroBanner.ioniq5),
-    alt: "The new Hyundai Ioniq 5, official campaign banner",
+    image: banner("/content/dam/hyundai/in/en/images/home/banner/ioniq-des-banner.jpg"),
+    alt: "The Hyundai Ioniq 5 electric SUV, official campaign banner",
   },
   {
     model: "Hyundai EXTER",
@@ -244,8 +240,8 @@ export const heroSlides: Slide[] = [
     headline: "Drive to shine.",
     sub: "Confident city size, an SUV stance and a practical factory CNG choice.",
     price: "5.81",
-    image: official("/content/dam/hyundai/in/en/images/home/banner/exter-home-newpc-banner.jpg"),
-    alt: "Hyundai Exter compact SUV on the official Hyundai India home banner",
+    image: banner("/content/dam/hyundai/in/en/images/home/banner/exter-home-newpc-banner.jpg"),
+    alt: "Hyundai Exter compact SUV, official campaign banner",
   },
   {
     model: "Hyundai VENUE",
@@ -253,8 +249,8 @@ export const heroSlides: Slide[] = [
     headline: "Made for your every day.",
     sub: "Turbo-petrol, diesel and connected technology in a city-friendly SUV.",
     price: "8.00",
-    image: official("/content/dam/hyundai/in/en/images/home/banner/venue-homepage-des-banner.jpg"),
-    alt: "Hyundai Venue compact SUV on the official Hyundai India home banner",
+    image: banner("/content/dam/hyundai/in/en/images/home/banner/venue-homepage-des-banner.jpg"),
+    alt: "Hyundai Venue compact SUV, official campaign banner",
   },
   {
     model: "Hyundai VERNA",
@@ -262,8 +258,8 @@ export const heroSlides: Slide[] = [
     headline: "Futuristic by design.",
     sub: "A spacious sedan with a responsive turbo-petrol option and advanced driver assistance.",
     price: "10.99",
-    image: official("/content/dam/hyundai/in/en/images/home/banner/verna-homepage-des-banner.jpg"),
-    alt: "Hyundai Verna sedan on the official Hyundai India home banner",
+    image: banner("/content/dam/hyundai/in/en/images/home/banner/verna-homepage-des-banner.jpg"),
+    alt: "Hyundai Verna sedan, official campaign banner",
   },
   {
     model: "Hyundai CRETA ELECTRIC",
@@ -271,8 +267,107 @@ export const heroSlides: Slide[] = [
     headline: "Undisputed. Ultimate. Now electric.",
     sub: "Choose the battery range that fits your week, with V2L and Level 2 ADAS on selected variants.",
     price: "18.03",
-    image: official("/content/dam/hyundai/in/en/images/home/baas-creta-electricpc.jpg"),
-    alt: "Hyundai Creta Electric SUV on the official Hyundai India home banner",
+    image: banner("/content/dam/hyundai/in/en/images/home/baas-creta-electricpc.jpg"),
+    alt: "Hyundai Creta Electric SUV, official campaign banner",
+  },
+  {
+    model: "Hyundai VENUE N LINE",
+    badge: "Performance Compact SUV",
+    headline: "Sharper by design.",
+    sub: "The Venue, tuned for enthusiasts with a turbo-petrol heart and N Line detailing.",
+    price: "10.66",
+    image: banner("/content/dam/hyundai/in/en/images/home/banner/venue-n-line-inner-kv-desk-banner.jpg"),
+    alt: "Hyundai Venue N Line performance SUV, official campaign banner",
+  },
+  {
+    model: "Hyundai VENUE",
+    badge: "Knight Edition",
+    headline: "Born in the dark.",
+    sub: "Blacked-out Knight Edition styling for a bolder, more confident Venue presence.",
+    price: "8.00",
+    image: banner("/content/dam/hyundai/in/en/images/home/banner/home-knight-edition-des-banner.jpg"),
+    alt: "Hyundai Venue Knight Edition compact SUV, official campaign banner",
+  },
+  {
+    model: "Hyundai I20 N LINE",
+    badge: "Performance Hatchback",
+    headline: "Pocket-rocket energy.",
+    sub: "A turbocharged N Line hatchback with sport seats, paddle shifters and red accents.",
+    price: "9.27",
+    image: banner("/content/dam/hyundai/in/en/data/find-a-car/i20-n-line/Highlights/pc/i20nlineinnerkv-pc.jpg"),
+    alt: "Hyundai i20 N Line performance hatchback, official campaign banner",
+  },
+  {
+    model: "Hyundai I20",
+    badge: "Premium Hatchback",
+    headline: "Style, dialled up.",
+    sub: "A premium hatchback with Bose sound, a digital cluster and segment-leading features.",
+    price: "5.99",
+    image: banner("/content/dam/hyundai/in/en/data/find-a-car/i20/i20-des-banner.jpg"),
+    alt: "Hyundai i20 premium hatchback, official campaign banner",
+  },
+  {
+    model: "Hyundai GRAND I10 NIOS",
+    badge: "Feature Hatchback",
+    headline: "City-smart, every day.",
+    sub: "Rear AC vents, wireless charging and an available factory CNG option for low running costs.",
+    price: "5.59",
+    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Grand-i10-Nios/Highlights/Grandi10niosnew/innerkvnioscng-des.jpg"),
+    alt: "Hyundai Grand i10 Nios with factory CNG, official campaign banner",
+  },
+  {
+    model: "Hyundai VENUE",
+    badge: "Compact SUV",
+    headline: "Confidence, in every commute.",
+    sub: "Connected SUV technology and a grown-up stance in a city-friendly footprint.",
+    price: "8.00",
+    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Venue/Highlights/pc/venueinnerkv-pc.jpg"),
+    alt: "Hyundai Venue compact SUV, official key visual banner",
+  },
+  {
+    model: "Hyundai ALCAZAR",
+    badge: "Premium 7-Seater",
+    headline: "Travel in grand style.",
+    sub: "Captain-chair comfort, a panoramic sunroof and ADAS for relaxed long-distance family travel.",
+    price: "14.51",
+    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvpc.jpg"),
+    alt: "Hyundai Alcazar premium 7-seater SUV, official key visual banner",
+  },
+  {
+    model: "Hyundai Promise",
+    badge: "Certified Pre-Owned",
+    headline: "Promise, delivered.",
+    sub: "Hyundai-certified pre-owned cars with warranty-backed assurance from Modi Hyundai.",
+    price: "",
+    image: banner("/content/dam/hyundai/in/en/data/hyundai-story/hyundai-promise/h-promise-des-banner.jpg"),
+    alt: "Hyundai Promise certified pre-owned programme, official banner",
+  },
+  {
+    model: "30 Years of Hyundai",
+    badge: "Since 1996",
+    headline: "Three decades in India.",
+    sub: "Celebrating 30 years of Hyundai in India and 9 million customer journeys.",
+    price: "",
+    image: banner("/content/dam/hyundai/in/en/images/hyundai-story/hyundai-motor-india/30-years/30-years-memories-innerkv-pc1.jpg"),
+    alt: "30 years of Hyundai Motor India, official anniversary banner",
+  },
+  {
+    model: "Special Offers",
+    badge: "Click to Buy",
+    headline: "Season savings, now on.",
+    sub: "Cash discounts, exchange bonuses and corporate benefits on select Hyundai models this season.",
+    price: "",
+    image: banner("/content/dam/hyundai/in/en/images/ClicktoBuy/specialoffer/newspecialoffergst-pc.jpg"),
+    alt: "Hyundai India special seasonal offers, official banner",
+  },
+  {
+    model: "My Hyundai My Memories",
+    badge: "Customer Stories",
+    headline: "Driven by you.",
+    sub: "Real stories from Hyundai owners across India — share your journey with us.",
+    price: "",
+    image: banner("/content/dam/hyundai/in/en/data/hyundai-story/campaign/myhyundaimymemories/mymemories-bannerpc1.jpg"),
+    alt: "My Hyundai My Memories customer campaign, official banner",
   },
 ];
 
@@ -332,9 +427,10 @@ const slugify = (n: string) => n.toLowerCase().replace(/\s+/g, "-");
    cutout with a CSS filter guessing the paint). Every URL below was
    fetched and confirmed live. Hex values are visual approximations of
    the named paint for the swatch dot; the photo itself carries the
-   real colour. */
+   real colour. Frame 0 is the front three-quarter (≈45°) view, used as
+   the main hero image so both the front and side of the vehicle read. */
 const findACar = (model: string, slug: string) =>
-  `https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/${model}/360/${slug}/pc/${slug}_6.png`;
+  `https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/${model}/360/${slug}/pc/${slug}_0.png`;
 
 const colours = (
   model: string,
