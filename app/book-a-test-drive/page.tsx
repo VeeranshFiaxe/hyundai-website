@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FloatingActions from "@/components/FloatingActions";
 import TestDriveWizard from "@/components/TestDriveWizard";
 import Reveal from "@/components/Reveal";
 import { SITE_URL } from "@/lib/data";
@@ -62,8 +59,6 @@ export default function BookTestDrivePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(testDrivePageSchema).replace(/</g, "\\u003c") }}
       />
-      <Navbar />
-      <FloatingActions />
       <main style={{ marginTop: "96px" }}>
         <section className="bg-bg-2 py-10 lg:py-14">
           <div className="container-px mx-auto max-w-[1400px]">
@@ -77,7 +72,7 @@ export default function BookTestDrivePage() {
               <p className="mt-3 text-sm text-muted sm:text-base">
                 Choose your model, a convenient time and a showroom or doorstep
                 location. We&apos;ll confirm the car and help you compare the right
-                variant—without any pressure to buy.
+                variant, without any pressure to buy.
               </p>
             </Reveal>
           </div>
@@ -89,7 +84,6 @@ export default function BookTestDrivePage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

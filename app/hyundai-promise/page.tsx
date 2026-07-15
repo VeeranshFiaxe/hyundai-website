@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FloatingActions from "@/components/FloatingActions";
 import HyundaiPromise from "@/components/HyundaiPromise";
 import { SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
@@ -61,12 +58,9 @@ export default function HyundaiPromisePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(promisePageSchema).replace(/</g, "\\u003c") }}
       />
-      <Navbar />
-      <FloatingActions />
       <main style={{ marginTop: "96px" }}>
         <HyundaiPromise />
       </main>
-      <Footer />
     </>
   );
 }

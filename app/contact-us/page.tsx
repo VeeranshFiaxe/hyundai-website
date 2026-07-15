@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FloatingActions from "@/components/FloatingActions";
 import ContactUs from "@/components/ContactUs";
 import Reveal from "@/components/Reveal";
 import { aboutHeroImage, company, SITE_URL } from "@/lib/data";
@@ -58,8 +55,6 @@ export default function ContactUsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema).replace(/</g, "\\u003c") }}
       />
-      <Navbar />
-      <FloatingActions />
       <main style={{ marginTop: "96px" }}>
         <section className="relative h-[240px] w-full overflow-hidden bg-brand-deep sm:h-[300px]">
           <Image
@@ -89,7 +84,6 @@ export default function ContactUsPage() {
 
         <ContactUs />
       </main>
-      <Footer />
     </>
   );
 }

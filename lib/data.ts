@@ -66,7 +66,7 @@ export const company = {
   tagline: "Customer First",
   phone: "98877 33000",
   phoneE164: "+919887733000",
-  // NOTE: verify before launch — not published on the source site.
+  // NOTE: verify before launch - not published on the source site.
   email: "contact@modihyundai.co.in",
   primaryAddress: {
     street: "New Link Road, Malad West",
@@ -99,12 +99,13 @@ export const nav = {
   location: "Mumbai",
   links: [
     { label: "Home", href: "/#home" },
-    { label: "Cars", href: "/cars" },
-    { label: "Hyundai Promise", href: "/hyundai-promise" },
-    { label: "Service", href: "/locate-service-centre" },
-    { label: "Locate Us", href: "/locate-us" },
     { label: "About Us", href: "/about" },
+    { label: "Find A Car", href: "/cars" },
+    { label: "Service", href: "/locate-service-centre" },
+    { label: "Hyundai Promise", href: "/hyundai-promise" },
+    { label: "Locate Us", href: "/locate-us" },
     { label: "Contact Us", href: "/contact-us" },
+    { label: "Blogs", href: "/#blogs" },
   ],
 };
 
@@ -364,7 +365,7 @@ export const heroSlides: Slide[] = [
     model: "My Hyundai My Memories",
     badge: "Customer Stories",
     headline: "Driven by you.",
-    sub: "Real stories from Hyundai owners across India — share your journey with us.",
+    sub: "Real stories from Hyundai owners across India. Share your journey with us.",
     price: "",
     image: banner("/content/dam/hyundai/in/en/data/hyundai-story/campaign/myhyundaimymemories/mymemories-bannerpc1.jpg"),
     alt: "My Hyundai My Memories customer campaign, official banner",
@@ -423,7 +424,7 @@ const slugify = (n: string) => n.toLowerCase().replace(/\s+/g, "-");
 /* Real per-colour product photography, sourced directly from each
    model's official "Colours" page on hyundai.com/in/en (Adobe AEM
    `/content/dam/.../find-a-car/{Model}/360/{colour-slug}/pc/{slug}_0.png`
-   turntable-frame renders — one distinct image per colour, not a single
+   turntable-frame renders - one distinct image per colour, not a single
    cutout with a CSS filter guessing the paint). Every URL below was
    fetched and confirmed live. Hex values are visual approximations of
    the named paint for the swatch dot; the photo itself carries the
@@ -1279,7 +1280,7 @@ export const locations: Location[] = [
   },
   /* No verifiable branch photo found online for these two outlets after
      checking the dealer site, Justdial, Sulekha, CarDekho, Mappls and
-     Carz4Sale — placed last rather than shown with a placeholder image. */
+     Carz4Sale - placed last rather than shown with a placeholder image. */
   {
     name: "Hyundai Santacruz",
     type: "Showroom",

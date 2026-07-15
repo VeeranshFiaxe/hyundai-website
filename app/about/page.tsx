@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FloatingActions from "@/components/FloatingActions";
 import Reveal from "@/components/Reveal";
 import FAQ from "@/components/FAQ";
 import { ArrowRight, Check } from "@/components/icons";
@@ -12,30 +9,41 @@ import {
   groupInfo,
   hyundaiIndiaFacts,
   aboutFaqData,
-  aboutHeroImage,
-  aboutCultureImage,
   SITE_URL,
 } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
-const title = "About Modi Hyundai: Our Story, Values and Group";
+const title = "About Modi Hyundai | Authorised Hyundai Dealer in Mumbai";
 const description =
-  "Modi Hyundai is an authorised Hyundai dealership owned by the Gautam Modi Group, serving Mumbai, Thane, Vasai, Virar and Wada with 250,000+ cars sold and 98% customer satisfaction.";
+  "Meet Modi Hyundai, an authorised Hyundai dealer from the Gautam Modi Group. Explore our customer-first approach to new cars, test drives and service across Mumbai, Thane, Vasai, Virar and Wada.";
+
+const aboutHeroImage = "/images/about/modi-hyundai-showroom-evening.png";
+const aboutCultureImage = "/images/about/modi-hyundai-customer-team.png";
 
 export const metadata: Metadata = {
   title,
   description,
+  keywords: [
+    "Modi Hyundai",
+    "Hyundai dealer Mumbai",
+    "authorised Hyundai dealership",
+    "Hyundai showroom Mumbai",
+    "Hyundai service centre Mumbai",
+    "Gautam Modi Group",
+  ],
   alternates: { canonical: "/about" },
   openGraph: {
     type: "website",
     title,
     description,
     url: `${SITE_URL}/about`,
+    images: [{ url: aboutHeroImage, width: 1792, height: 1024, alt: "Modi Hyundai showroom experience" }],
   },
   twitter: {
     card: "summary_large_image",
     title,
     description,
+    images: [aboutHeroImage],
   },
 };
 
@@ -50,6 +58,7 @@ const aboutPageSchema = {
       description,
       isPartOf: { "@id": `${SITE_URL}/#website` },
       about: { "@id": DEALER_ID },
+      primaryImageOfPage: `${SITE_URL}${aboutHeroImage}`,
     },
     {
       "@type": "BreadcrumbList",
@@ -94,11 +103,9 @@ export default function AboutPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageSchema).replace(/</g, "\\u003c") }}
       />
-      <Navbar />
-      <FloatingActions />
       <main style={{ marginTop: "96px" }}>
         {/* Hero */}
-        <section className="relative h-[320px] w-full overflow-hidden bg-brand-deep sm:h-[380px]">
+        <section className="relative min-h-[430px] w-full overflow-hidden bg-brand-deep sm:min-h-[500px]">
           <Image
             src={aboutHeroImage}
             alt="Modi Hyundai showroom"
@@ -107,40 +114,46 @@ export default function AboutPage() {
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
-          <div className="container-px absolute inset-x-0 bottom-10 mx-auto max-w-[1400px]">
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-deep/95 via-brand-deep/70 to-black/15" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+          <div className="container-px absolute inset-x-0 bottom-12 mx-auto max-w-[1400px] sm:bottom-16">
             <Reveal>
-              <p className="text-sm font-semibold uppercase tracking-wider text-white/70">
-                Who We Are
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
+                Authorised Hyundai Dealer · Mumbai Region
               </p>
-              <h1 className="mt-2 font-display text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
-                About Modi Hyundai
+              <h1 className="mt-3 max-w-3xl font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
+                More than a dealership. Your Hyundai journey, made personal.
               </h1>
-              <p className="mt-3 max-w-xl text-sm text-white/80 sm:text-base">
-                An authorised Hyundai dealership from the Gautam Modi Group,
-                serving the Mumbai region with genuine cars, honest service and
-                a customer-first promise.
+              <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base lg:text-lg">
+                Modi Hyundai brings together genuine Hyundai cars, transparent
+                guidance and expert after-sales care for customers across Mumbai,
+                Thane, Vasai, Virar and Wada.
               </p>
+              <div className="mt-7 flex flex-wrap gap-3 text-xs font-semibold text-white sm:text-sm">
+                <span className="rounded-full border border-white/25 bg-white/10 px-4 py-2 backdrop-blur-sm">Customer-first promise</span>
+                <span className="rounded-full border border-white/25 bg-white/10 px-4 py-2 backdrop-blur-sm">Gautam Modi Group</span>
+              </div>
             </Reveal>
           </div>
         </section>
 
         {/* Our story */}
-        <section className="bg-white py-14 lg:py-20">
+        <section className="bg-white py-16 lg:py-24">
           <div className="container-px mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-2 lg:gap-16">
             <Reveal variant="slide-right">
               <p className="text-xs font-semibold uppercase tracking-wider text-brand">
                 Our Story
               </p>
               <h2 className="mt-2 font-display text-2xl font-bold text-text sm:text-3xl">
-                Part of the Gautam Modi Group
+                A trusted Hyundai dealership in Mumbai
               </h2>
               <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
                 <p>
-                  Modi Hyundai is an authorised Hyundai dealership, owned and
-                  operated by the {groupInfo.name}. We run showrooms and
-                  service centres across Mumbai, Thane, Vasai, Virar and Wada,
-                  and we have sold over{" "}
+                  Modi Hyundai is an authorised Hyundai dealership owned and
+                  operated by the {groupInfo.name}. From selecting a new Hyundai
+                  to booking a test drive and maintaining it for years, our teams
+                  make every step clear and comfortable. We serve Mumbai, Thane,
+                  Vasai, Virar and Wada, and have sold over{" "}
                   {company.stats.carsSold} new cars with a{" "}
                   {company.stats.satisfaction} customer satisfaction score.
                 </p>
@@ -155,11 +168,11 @@ export default function AboutPage() {
             <Reveal
               variant="slide-left"
               delay={150}
-              className="relative min-h-[260px] overflow-hidden rounded-lg lg:min-h-full"
+              className="relative min-h-[330px] overflow-hidden rounded-2xl lg:min-h-full"
             >
               <Image
                 src={aboutCultureImage}
-                alt="Modi Hyundai team culture"
+                alt="Modi Hyundai team welcoming customers at a showroom"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
                 className="object-cover"
@@ -169,14 +182,14 @@ export default function AboutPage() {
         </section>
 
         {/* Stats strip */}
-        <section className="bg-bg-2 py-10">
+        <section className="bg-bg-2 py-12">
           <div className="container-px mx-auto grid max-w-[1400px] grid-cols-2 gap-6 sm:grid-cols-4">
             {stats.map((s, i) => (
               <Reveal
                 key={s.label}
                 delay={i * 90}
                 variant="scale-up"
-                className="text-center"
+                className="rounded-xl bg-white px-4 py-5 text-center shadow-[0_4px_24px_rgba(0,44,95,0.06)]"
               >
                 <p className="font-display text-2xl font-bold text-brand sm:text-3xl">
                   {s.value}
@@ -186,6 +199,23 @@ export default function AboutPage() {
                 </p>
               </Reveal>
             ))}
+          </div>
+        </section>
+
+        <section className="bg-white py-16 lg:py-20">
+          <div className="container-px mx-auto grid max-w-[1400px] gap-8 rounded-2xl bg-brand-deep px-6 py-9 text-white sm:px-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-14 lg:py-12">
+            <Reveal>
+              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/60">Our local commitment</p>
+              <h2 className="mt-3 font-display text-2xl font-bold sm:text-3xl">Here for every milestone on the road.</h2>
+            </Reveal>
+            <Reveal delay={100} className="text-sm leading-relaxed text-white/75 sm:text-base">
+              Whether you are buying your first car, upgrading your family SUV or arranging routine service, our showroom and service teams provide practical help close to home. Visit Modi Hyundai across the Mumbai region for new Hyundai cars, test drives, genuine parts and expert service support.
+              <div className="mt-5 flex flex-wrap gap-2">
+                {["Mumbai", "Thane", "Vasai", "Virar", "Wada"].map((area) => (
+                  <span key={area} className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white/90">{area}</span>
+                ))}
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -294,7 +324,6 @@ export default function AboutPage() {
           </Reveal>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

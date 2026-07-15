@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FloatingActions from "@/components/FloatingActions";
 import ServiceBooking from "@/components/ServiceBooking";
 import ServiceCentres from "@/components/ServiceCentres";
 import Reveal from "@/components/Reveal";
@@ -77,8 +74,6 @@ export default function LocateServiceCentrePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(servicePageSchema).replace(/</g, "\\u003c") }}
       />
-      <Navbar />
-      <FloatingActions />
       <main style={{ marginTop: "96px" }}>
         {/* Hero */}
         <section className="relative h-[280px] w-full overflow-hidden bg-brand-deep sm:h-[340px]">
@@ -111,7 +106,6 @@ export default function LocateServiceCentrePage() {
         <ServiceBooking />
         <ServiceCentres />
       </main>
-      <Footer />
     </>
   );
 }

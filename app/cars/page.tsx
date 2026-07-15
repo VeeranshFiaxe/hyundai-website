@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FloatingActions from "@/components/FloatingActions";
 import Reveal from "@/components/Reveal";
 import { ArrowRight } from "@/components/icons";
 import { cars, SITE_URL } from "@/lib/data";
@@ -11,7 +8,7 @@ import CarsGrid from "@/components/CarsGrid";
 
 const title = "New Hyundai Cars, Prices, Variants & Specifications | Modi Hyundai";
 const description =
-  "Browse the full Hyundai lineup at Modi Hyundai — SUVs, sedans, hatchbacks and electric vehicles, with on-road prices, specs and colours for every model.";
+  "Browse the full Hyundai lineup at Modi Hyundai: SUVs, sedans, hatchbacks and electric vehicles, with on-road prices, specs and colours for every model.";
 
 export const metadata: Metadata = {
   title,
@@ -68,8 +65,6 @@ export default function CarsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(carsPageSchema).replace(/</g, "\\u003c") }}
       />
-      <Navbar />
-      <FloatingActions />
       <main style={{ marginTop: "96px" }}>
         <section className="bg-bg-2 py-10 lg:py-14">
           <div className="container-px mx-auto max-w-[1400px]">
@@ -112,7 +107,6 @@ export default function CarsPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

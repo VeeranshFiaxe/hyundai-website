@@ -87,15 +87,15 @@ export default function CarDetailClient({ car }: { car: Car }) {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
             {/* LEFT: colour-switchable hero + inline gallery + brochure */}
             <Reveal variant="slide-right">
-              <div className="relative flex h-[300px] items-center justify-center overflow-hidden rounded-lg bg-gradient-to-b from-bg-3 to-bg-2 sm:h-[380px] lg:h-[440px]">
+              <div className="relative flex h-[260px] items-center justify-center overflow-hidden rounded-lg bg-gradient-to-b from-bg-3 to-bg-2 sm:h-[330px] lg:h-[400px]">
                 <Image
                   key={heroImage}
                   src={heroImage}
                   alt={`${displayName} in ${color.name}, front three-quarter view`}
                   width={1000}
-                  height={440}
+                  height={520}
                   priority
-                  className="h-auto w-[92%] object-contain drop-shadow-2xl"
+                  className="h-auto w-[95%] scale-[1.4] object-contain drop-shadow-2xl"
                 />
                 {/* Colour name badge on the hero image */}
                 <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-text shadow-sm backdrop-blur">
@@ -103,7 +103,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
                 </span>
               </div>
 
-              {/* Colour switcher — controls ONLY the hero above */}
+              {/* Colour switcher - controls ONLY the hero above */}
               <div className="mt-4">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-semibold uppercase tracking-wider text-muted">
@@ -129,16 +129,13 @@ export default function CarDetailClient({ car }: { car: Car }) {
                 </div>
               </div>
 
-              {/* Inline thumbnail gallery — browse many images without scrolling far */}
+              {/* Inline thumbnail gallery - first 8 images + a view-all tile in a 3x3 grid */}
               <div className="mt-5 border-t border-border pt-5">
-                <div className="flex items-center justify-between">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-                    Image gallery · <span className="text-text">{gallery.length} images</span>
-                  </p>
-                  <a href="#gallery" className="text-xs font-semibold text-brand hover:text-brand-light">View all →</a>
-                </div>
-                <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {gallery.map((image, index) => (
+                <p className="text-xs font-semibold uppercase tracking-wider text-muted">
+                  Image gallery · <span className="text-text">{gallery.length} images</span>
+                </p>
+                <div className="mt-3 grid grid-cols-3 gap-3">
+                  {gallery.slice(0, 8).map((image, index) => (
                     <button
                       key={image.src}
                       type="button"
@@ -153,12 +150,20 @@ export default function CarDetailClient({ car }: { car: Car }) {
                         src={image.src}
                         alt={image.alt}
                         fill
-                        sizes="(max-width: 640px) 50vw, 33vw"
+                        sizes="33vw"
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                       <span className="absolute inset-x-0 bottom-0 bg-text/70 px-2 py-1 text-left text-[10px] font-medium text-white">{image.label}</span>
                     </button>
                   ))}
+                  {/* View-all tile - jumps to the full gallery section below */}
+                  <a
+                    href="#gallery"
+                    className="group flex aspect-video flex-col items-center justify-center gap-1 rounded-md border border-border bg-bg-2 text-muted transition-all hover:border-brand hover:bg-bg-3 hover:text-brand"
+                  >
+                    <span className="text-xs font-semibold">View All</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </a>
                 </div>
                 <p className="mt-2 text-xs text-muted">
                   Showing: <span className="font-medium text-text">{gallery[galleryIndex]?.label}</span>
@@ -211,7 +216,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
                 </ul>
               </div>
 
-              {/* CTAs — brochure up near the hero */}
+              {/* CTAs - brochure up near the hero */}
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link href="/book-a-test-drive" className="group inline-flex items-center gap-2 rounded bg-brand px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light">
                   Book a Test Drive <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -236,7 +241,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
         </div>
       </section>
 
-      <nav aria-label="Car detail sections" className="sticky top-[95px] z-20 border-y border-border bg-white/95 backdrop-blur">
+      <nav aria-label="Car detail sections" className="sticky top-[60px] z-20 border-y border-border bg-white/95 backdrop-blur">
         <div className="container-px mx-auto flex max-w-[1400px] gap-1 overflow-x-auto py-2">
           {navigation.map(([id, label]) => <a key={id} href={`#${id}`} className="shrink-0 rounded px-3 py-2 text-xs font-semibold text-muted transition-colors hover:bg-bg-2 hover:text-brand">{label}</a>)}
         </div>
@@ -266,7 +271,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
         <div className="container-px mx-auto max-w-[1400px]">
           <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div><p className="text-xs font-semibold uppercase tracking-wider text-brand">Official image gallery</p><h2 className="mt-2 font-display text-2xl font-bold text-text sm:text-3xl">{displayName} photos: exterior, interior &amp; features</h2></div>
-            <p className="max-w-md text-sm text-muted">Browse {gallery.length} official {displayName} images — 360-degree exterior angles, dashboard, seats, steering wheel, boot space, engine and feature close-ups. This gallery is separate from the colour selector above.</p>
+            <p className="max-w-md text-sm text-muted">Browse {gallery.length} official {displayName} images: 360-degree exterior angles, dashboard, seats, steering wheel, boot space, engine and feature close-ups. This gallery is separate from the colour selector above.</p>
           </div>
           <div className="mt-7 grid gap-4 lg:grid-cols-[1.6fr_0.9fr]">
             <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden rounded-lg bg-bg-2 p-6 sm:min-h-[440px]">
@@ -318,7 +323,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
         </div>
       </section>
 
-      {/* Model FAQ — AEO-friendly Q&A built from the researched data so
+      {/* Model FAQ - AEO-friendly Q&A built from the researched data so
           answer engines can extract price, mileage, seating and power facts. */}
       <CarFaq displayName={displayName} car={car} detail={detail} brochureUrl={brochureUrl} />
     </>
@@ -339,7 +344,7 @@ function CarFaq({
   const faqs = [
     {
       q: `What is the price of the ${displayName} in Mumbai?`,
-      a: `The ${displayName} starts at ${formatINR(car.priceINR)}* (ex-showroom). On-road pricing depends on the chosen variant, colour, insurance, accessories and RTO charges — request a quotation from Modi Hyundai for an exact, all-inclusive figure for Mumbai, Thane, Vasai, Virar or Wada.`,
+      a: `The ${displayName} starts at ${formatINR(car.priceINR)}* (ex-showroom). On-road pricing depends on the chosen variant, colour, insurance, accessories and RTO charges. Request a quotation from Modi Hyundai for an exact, all-inclusive figure for Mumbai, Thane, Vasai, Virar or Wada.`,
     },
     {
       q: `How many variants does the ${displayName} offer?`,

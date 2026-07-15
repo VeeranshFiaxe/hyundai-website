@@ -3,6 +3,9 @@ import { Inter, Sora } from "next/font/google";
 import "./globals.css";
 import { SITE_URL } from "@/lib/data";
 import JsonLd from "@/components/JsonLd";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import FloatingActions from "@/components/FloatingActions";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -80,7 +83,10 @@ export default function RootLayout({
     <html lang="en-IN" className={`${inter.variable} ${sora.variable}`}>
       <body className="min-h-screen antialiased">
         <JsonLd />
+        <Navbar />
+        <FloatingActions />
         {children}
+        <Footer />
       </body>
     </html>
   );

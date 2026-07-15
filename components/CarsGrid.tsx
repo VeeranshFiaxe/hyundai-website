@@ -46,7 +46,10 @@ export default function CarsGrid() {
               "Hyundai " + car.name.charAt(0) + car.name.slice(1).toLowerCase();
             return (
               <Reveal key={car.slug} delay={(i % 3) * 90} variant="fade-up">
-                <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-white shadow-[0_2px_12px_0_rgba(0,44,95,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_28px_0_rgba(0,44,95,0.12)]">
+                <Link
+                  href={`/cars/${car.slug}`}
+                  className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-white shadow-[0_2px_12px_0_rgba(0,44,95,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_28px_0_rgba(0,44,95,0.12)]"
+                >
                   <div className="relative flex h-44 items-center justify-center bg-bg-2 p-6">
                     <Image
                       src={car.image}
@@ -70,15 +73,12 @@ export default function CarsGrid() {
                       </span>
                     </p>
                     <p className="mt-1 text-xs text-faint">{car.fuel}</p>
-                    <Link
-                      href={`/cars/${car.slug}`}
-                      className="group/link mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors hover:text-brand-light"
-                    >
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand transition-colors group-hover:text-brand-light">
                       Explore
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5" />
-                    </Link>
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    </span>
                   </div>
-                </article>
+                </Link>
               </Reveal>
             );
           })}

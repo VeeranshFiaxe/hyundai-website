@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import FloatingActions from "@/components/FloatingActions";
 import CarDetailClient from "@/components/CarDetailClient";
 import { cars, formatINR, SITE_URL } from "@/lib/data";
 import { getCarDetail, getCarGallery } from "@/lib/car-details";
@@ -130,12 +127,9 @@ export default async function CarDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(carPageSchema).replace(/</g, "\\u003c") }}
       />
-      <Navbar />
-      <FloatingActions />
-      <main style={{ marginTop: "96px" }}>
+      <main style={{ marginTop: "60px" }}>
         <CarDetailClient car={car} />
       </main>
-      <Footer />
     </>
   );
 }

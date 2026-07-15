@@ -9,7 +9,7 @@ import Reveal from "./Reveal";
    it ranks for dealer-level and model-level queries (e.g. "Hyundai
    dealer in Mumbai", "Hyundai Creta price Thane"). Content is
    written to be useful to human buyers and extractable by answer
-   engines — short definitional sentences, clear lists and an FAQ
+   engines - short definitional sentences, clear lists and an FAQ
    close. Layout stays clean and on-brand: light surfaces, the
    navy accent and the existing card / eyebrow styling.
    ============================================================ */
@@ -18,7 +18,7 @@ const lineages = [
   {
     name: "SUVs",
     blurb:
-      "Compact, mid-size and three-row SUVs covering every budget — from the city-friendly Exter to the three-row Alcazar and the all-electric Creta Electric.",
+      "Compact, mid-size and three-row SUVs covering every budget, from the city-friendly Exter to the three-row Alcazar and the all-electric Creta Electric.",
     models: ["EXTER", "VENUE", "CRETA", "ALCAZAR", "CRETA ELECTRIC"],
     href: "/cars",
   },
@@ -54,7 +54,7 @@ const buyingSteps = [
   {
     step: "02",
     title: "Book a test drive",
-    text: "Pick a date and your nearest Modi Hyundai outlet across Mumbai, Thane, Vasai, Virar or Wada — or request a home test drive at no obligation.",
+    text: "Pick a date and your nearest Modi Hyundai outlet across Mumbai, Thane, Vasai, Virar or Wada, or request a home test drive at no obligation.",
   },
   {
     step: "03",
@@ -70,7 +70,7 @@ const buyingSteps = [
 
 const servicePoints = [
   "Periodic maintenance on the manufacturer-recommended schedule, done right the first time.",
-  "Only genuine, warranty-backed Hyundai parts — never aftermarket substitutes.",
+  "Only genuine, warranty-backed Hyundai parts, never aftermarket substitutes.",
   "Free pickup and drop for every service booking across the Mumbai region.",
   "24x7 roadside assistance and extendable warranty plans for total peace of mind.",
 ];
@@ -88,7 +88,7 @@ export default function HomeSeoContent() {
             </h2>
             <p className="mt-3 text-base text-muted">
               As an authorised Hyundai Motor India dealership, Modi Hyundai
-              stocks the complete Hyundai range — compact SUVs, mid-size SUVs,
+              stocks the complete Hyundai range: compact SUVs, mid-size SUVs,
               a three-row family SUV, sedans, hatchbacks and fully electric
               vehicles. Explore each category below or compare{" "}
               <Link
@@ -196,7 +196,7 @@ export default function HomeSeoContent() {
             </h2>
             <p className="mt-3 text-base text-muted">
               From shortlisting to delivery and aftercare, we make buying and
-              owning a Hyundai straightforward and transparent — no pressure,
+              owning a Hyundai straightforward and transparent: no pressure,
               no hidden charges.
             </p>
           </Reveal>
@@ -233,7 +233,7 @@ export default function HomeSeoContent() {
               Keep your Hyundai performing like new with factory-trained
               technicians, genuine parts and manufacturer-approved service
               schedules. Book online and we will collect your car for service
-              and drop it back — at no extra cost — anywhere in our service
+              and drop it back, at no extra cost, anywhere in our service
               area.
             </p>
             <div className="mt-6">
