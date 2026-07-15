@@ -27,6 +27,14 @@ export default function FeaturedVehicles() {
     category === "All" ? cars : cars.filter((c) => c.category === category);
   const active = filtered[index] ?? filtered[0];
 
+  const selectCategory = (nextCategory: "All" | CarCategory) => {
+    setCategory(nextCategory);
+    // Each filter starts at the first matching model. This keeps the active
+    // model and the visible filter in sync, including after carousel use.
+    setIndex(0);
+    setHasNavigated(false);
+  };
+
   useEffect(() => {
     const el = stageRef.current;
     if (!el) return;
@@ -62,17 +70,17 @@ export default function FeaturedVehicles() {
       className="scroll-mt-24 overflow-hidden bg-white py-12 lg:py-16"
     >
       <div className="container-px mx-auto max-w-[1400px]">
-        {/* Category tabs */}
-        <Reveal className="flex justify-center">
+        {/* Category tabs. relative z-30 keeps the tabs above the absolutely
+            positioned, scaled-up carousel cards (max z-20) that would
+            otherwise overflow upward and swallow tab clicks. */}
+        <Reveal className="relative z-30 flex justify-center">
           <div className="flex gap-1 overflow-x-auto sm:gap-2">
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => {
-                  setCategory(cat);
-                  setIndex(0);
-                  setHasNavigated(false);
-                }}
+                type="button"
+                onClick={() => selectCategory(cat)}
+                aria-pressed={category === cat}
                 className={`shrink-0 border-b-2 px-3 py-2 text-sm font-semibold transition-colors sm:px-4 ${
                   category === cat
                     ? "border-brand text-brand"
@@ -139,14 +147,31 @@ export default function FeaturedVehicles() {
                   pointerEvents: abs > 2 ? "none" : "auto",
                 }}
               >
-                <Image
-                  src={car.image}
-                  alt={car.alt}
-                  width={800}
-                  height={295}
-                  priority={offset === 0}
-                  className="h-auto w-full object-contain drop-shadow-xl"
-                />
+                {offset === 0 ? (
+                  <Link
+                    href={`/cars/${car.slug}`}
+                    aria-label={`View Hyundai ${car.name} details`}
+                    className="block w-full"
+                  >
+                    <Image
+                      src={car.image}
+                      alt={car.alt}
+                      width={800}
+                      height={295}
+                      priority
+                      className="h-auto w-full object-contain drop-shadow-xl"
+                    />
+                  </Link>
+                ) : (
+                  <Image
+                    src={car.image}
+                    alt={car.alt}
+                    width={800}
+                    height={295}
+                    priority={false}
+                    className="h-auto w-full object-contain drop-shadow-xl"
+                  />
+                )}
               </div>
             );
           })}
@@ -164,10 +189,12 @@ export default function FeaturedVehicles() {
           </button>
         </div>
 
-        {/* Info row, keyed so it fades between models */}
+        {/* Info row, keyed so it fades between models. relative z-30 lifts the
+            name link + spec grid above the overflowing carousel cards so the
+            car-name link is actually clickable. */}
         <div
           key={active.name}
-          className="mx-auto mt-4 max-w-2xl text-center animate-[fade-up_.35s_ease-out_both]"
+          className="relative z-30 mx-auto mt-4 max-w-2xl text-center animate-[fade-up_.35s_ease-out both]"
         >
           <Link
             href={`/cars/${active.slug}`}
