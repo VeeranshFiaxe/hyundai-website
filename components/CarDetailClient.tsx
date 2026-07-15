@@ -42,6 +42,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
   const gallery = getCarGallery(car);
   const [galleryIndex, setGalleryIndex] = useState(0);
   const color = car.colors[colorIndex];
+  const heroImage = color.image.replace(/_0\.png$/, "_6.png");
   const detail = getCarDetail(car);
   const brochureUrl = getCarBrochure(car);
   const displayName = `Hyundai ${car.name.charAt(0)}${car.name.slice(1).toLowerCase()}`;
@@ -88,8 +89,8 @@ export default function CarDetailClient({ car }: { car: Car }) {
             <Reveal variant="slide-right">
               <div className="relative flex h-[300px] items-center justify-center overflow-hidden rounded-lg bg-gradient-to-b from-bg-3 to-bg-2 sm:h-[380px] lg:h-[440px]">
                 <Image
-                  key={color.image}
-                  src={color.image}
+                  key={heroImage}
+                  src={heroImage}
                   alt={`${displayName} in ${color.name}, front three-quarter view`}
                   width={1000}
                   height={440}
@@ -136,15 +137,15 @@ export default function CarDetailClient({ car }: { car: Car }) {
                   </p>
                   <a href="#gallery" className="text-xs font-semibold text-brand hover:text-brand-light">View all →</a>
                 </div>
-                <div className="mt-3 grid grid-cols-4 gap-2 sm:grid-cols-5">
-                  {gallery.slice(0, 10).map((image, index) => (
+                <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {gallery.map((image, index) => (
                     <button
                       key={image.src}
                       type="button"
                       onClick={() => setGalleryIndex(index)}
                       aria-pressed={index === galleryIndex}
                       title={image.label}
-                      className={`group relative aspect-square overflow-hidden rounded-md border bg-bg-2 transition-all ${
+                      className={`group relative aspect-video overflow-hidden rounded-md border bg-bg-2 transition-all ${
                         index === galleryIndex ? "border-brand ring-2 ring-brand/15" : "border-border hover:border-brand"
                       }`}
                     >
@@ -152,9 +153,10 @@ export default function CarDetailClient({ car }: { car: Car }) {
                         src={image.src}
                         alt={image.alt}
                         fill
-                        sizes="(max-width: 640px) 20vw, 110px"
-                        className="object-contain p-1.5 transition-transform duration-300 group-hover:scale-105"
+                        sizes="(max-width: 640px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
+                      <span className="absolute inset-x-0 bottom-0 bg-text/70 px-2 py-1 text-left text-[10px] font-medium text-white">{image.label}</span>
                     </button>
                   ))}
                 </div>

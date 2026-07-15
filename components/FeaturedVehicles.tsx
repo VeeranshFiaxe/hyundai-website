@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { cars, formatINR, type CarCategory } from "@/lib/data";
 import { ChevronLeft, ChevronRight } from "./icons";
 import Reveal from "./Reveal";
-import CarModal from "./CarModal";
 
 const categories: ("All" | CarCategory)[] = [
   "All",
@@ -20,20 +20,12 @@ export default function FeaturedVehicles() {
   const [category, setCategory] = useState<"All" | CarCategory>("All");
   const [index, setIndex] = useState(0);
   const [hasNavigated, setHasNavigated] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
   const stageRef = useRef<HTMLDivElement>(null);
   const [stageWidth, setStageWidth] = useState(1000);
-  const [prevCategory, setPrevCategory] = useState(category);
 
   const filtered =
     category === "All" ? cars : cars.filter((c) => c.category === category);
   const active = filtered[index] ?? filtered[0];
-
-  if (category !== prevCategory) {
-    setPrevCategory(category);
-    setIndex(0);
-    setHasNavigated(false);
-  }
 
   useEffect(() => {
     const el = stageRef.current;
@@ -76,7 +68,11 @@ export default function FeaturedVehicles() {
             {categories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setCategory(cat)}
+                onClick={() => {
+                  setCategory(cat);
+                  setIndex(0);
+                  setHasNavigated(false);
+                }}
                 className={`shrink-0 border-b-2 px-3 py-2 text-sm font-semibold transition-colors sm:px-4 ${
                   category === cat
                     ? "border-brand text-brand"
@@ -173,14 +169,13 @@ export default function FeaturedVehicles() {
           key={active.name}
           className="mx-auto mt-4 max-w-2xl text-center animate-[fade-up_.35s_ease-out_both]"
         >
-          <button
-            type="button"
-            onClick={() => setShowDetails(true)}
+          <Link
+            href={`/cars/${active.slug}`}
             className="group mx-auto inline-flex items-center gap-1 text-xl font-bold text-brand transition-colors hover:text-brand-light sm:text-2xl"
           >
             Hyundai {active.name.charAt(0) + active.name.slice(1).toLowerCase()}
             <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
-          </button>
+          </Link>
 
           <div className="mt-2 grid grid-cols-1 gap-2 border-t border-border pt-2 sm:grid-cols-3">
             <div>
@@ -202,9 +197,6 @@ export default function FeaturedVehicles() {
         </div>
       </div>
 
-      {showDetails && (
-        <CarModal car={active} onClose={() => setShowDetails(false)} />
-      )}
     </section>
   );
 }
