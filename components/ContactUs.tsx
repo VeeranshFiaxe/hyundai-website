@@ -147,6 +147,10 @@ export default function ContactUs() {
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Subject</span>
                   <input type="text" required placeholder="How can we help?" className={fieldBase} />
                 </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Pincode</span>
+                  <input type="text" required pattern="[0-9]{6}" placeholder="Pincode" className={fieldBase} />
+                </label>
                 <label className="col-span-full block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Your Message</span>
                   <textarea

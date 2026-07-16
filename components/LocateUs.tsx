@@ -28,7 +28,7 @@ export default function LocateUs() {
   if (!selectedLocation) return null;
 
   return (
-    <section id="locate-us" className="scroll-mt-24 bg-white py-14 lg:py-20">
+    <section id="locate-us" className="scroll-mt-24 bg-white pt-3 pb-14 lg:pt-4 lg:pb-20">
       <div className="container-px mx-auto max-w-[1400px]">
         <Reveal className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-semibold uppercase tracking-wider text-brand">

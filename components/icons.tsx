@@ -163,10 +163,25 @@ export const Car = (p: IconProps) => (
   </svg>
 );
 
+export const Clipboard = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <rect x="8" y="3" width="8" height="4" rx="1" />
+    <path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2" />
+    <path d="M9 12h6M9 16h4" />
+  </svg>
+);
+
 export const Mail = (p: IconProps) => (
   <svg {...base} {...p}>
     <rect x="2" y="4" width="20" height="16" rx="2" />
     <path d="m22 6-10 7L2 6" />
+  </svg>
+);
+
+export const Search = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="m21 21-4.3-4.3" />
   </svg>
 );
 
@@ -235,6 +250,7 @@ export const iconMap = {
   badge: Badge,
   gift: Gift,
   car: Car,
+  clipboard: Clipboard,
 } as const;
 
 export type IconName = keyof typeof iconMap;

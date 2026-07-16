@@ -145,7 +145,7 @@ export default function AboutPage() {
                 Our Story
               </p>
               <h2 className="mt-2 font-display text-2xl font-bold text-text sm:text-3xl">
-                A trusted Hyundai dealership in Mumbai
+                A trusted Hyundai dealership in Mumbai and Thane
               </h2>
               <div className="mt-4 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
                 <p>

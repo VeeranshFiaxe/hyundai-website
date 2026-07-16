@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Car } from "@/lib/data";
@@ -9,6 +9,7 @@ import { getCarBrochure, getCarDetail, getCarGallery } from "@/lib/car-details";
 import type { CarDetail } from "@/lib/data";
 import { ArrowRight, Check, ChevronDown, Download } from "./icons";
 import Reveal from "./Reveal";
+import Car360Viewer from "./Car360Viewer";
 
 type DetailListProps = {
   id: string;
@@ -38,11 +39,8 @@ function DetailList({ id, title, eyebrow, items, tone = "white" }: DetailListPro
 }
 
 export default function CarDetailClient({ car }: { car: Car }) {
-  const [colorIndex, setColorIndex] = useState(0);
   const gallery = getCarGallery(car);
   const [galleryIndex, setGalleryIndex] = useState(0);
-  const color = car.colors[colorIndex];
-  const heroImage = color.image.replace(/_0\.png$/, "_6.png");
   const detail = getCarDetail(car);
   const brochureUrl = getCarBrochure(car);
   const displayName = `Hyundai ${car.name.charAt(0)}${car.name.slice(1).toLowerCase()}`;
@@ -56,20 +54,6 @@ export default function CarDetailClient({ car }: { car: Car }) {
     ["specifications", "Specifications"],
     ["variants", "Variants"],
   ];
-
-  useEffect(() => {
-    // Warm the browser cache for every paint option after the first detail
-    // view renders. The primary image remains the only colour-controlled UI.
-    const preload = () => {
-      car.colors.forEach((paint) => {
-        const image = new window.Image();
-        image.src = paint.image;
-      });
-    };
-
-    const timeoutId = window.setTimeout(preload, 250);
-    return () => window.clearTimeout(timeoutId);
-  }, [car.colors]);
 
   return (
     <>
@@ -85,49 +69,12 @@ export default function CarDetailClient({ car }: { car: Car }) {
           </nav>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-            {/* LEFT: colour-switchable hero + inline gallery + brochure */}
+            {/* LEFT: 360° spin viewer */}
             <Reveal variant="slide-right">
-              <div className="relative flex h-[260px] items-center justify-center overflow-hidden rounded-lg bg-gradient-to-b from-bg-3 to-bg-2 sm:h-[330px] lg:h-[400px]">
-                <Image
-                  key={heroImage}
-                  src={heroImage}
-                  alt={`${displayName} in ${color.name}, front three-quarter view`}
-                  width={1000}
-                  height={520}
-                  priority
-                  className="h-auto w-[95%] scale-[1.4] object-contain drop-shadow-2xl"
-                />
-                {/* Colour name badge on the hero image */}
-                <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1.5 text-xs font-semibold text-text shadow-sm backdrop-blur">
-                  {color.name}
-                </span>
-              </div>
-
-              {/* Colour switcher - controls ONLY the hero above */}
-              <div className="mt-4">
-                <div className="flex items-center justify-between">
-                  <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-                    Colours · <span className="text-text">{car.colors.length} options</span>
-                  </p>
-                  <p className="text-xs text-faint">Tap to preview on the car</p>
-                </div>
-                <div className="mt-3 flex flex-wrap gap-2.5">
-                  {car.colors.map((c, i) => (
-                    <button
-                      key={c.name}
-                      type="button"
-                      aria-label={`Show ${displayName} in ${c.name}`}
-                      aria-pressed={i === colorIndex}
-                      title={c.name}
-                      onClick={() => setColorIndex(i)}
-                      className={`h-9 w-9 shrink-0 rounded-full border-2 transition-all ${
-                        i === colorIndex ? "border-brand ring-2 ring-brand/20" : "border-border hover:border-muted"
-                      }`}
-                      style={{ backgroundColor: c.hex }}
-                    />
-                  ))}
-                </div>
-              </div>
+              <Car360Viewer
+                modelFolder={car.modelFolder}
+                colors={car.colors}
+              />
 
               {/* Inline thumbnail gallery - first 8 images + a view-all tile in a 3x3 grid */}
               <div className="mt-5 border-t border-border pt-5">
@@ -136,12 +83,17 @@ export default function CarDetailClient({ car }: { car: Car }) {
                 </p>
                 <div className="mt-3 grid grid-cols-3 gap-3">
                   {gallery.slice(0, 8).map((image, index) => (
-                    <button
+                      <button
                       key={image.src}
                       type="button"
-                      onClick={() => setGalleryIndex(index)}
+                      onClick={() => {
+                        setGalleryIndex(index);
+                        setTimeout(() => {
+                          document.getElementById("gallery")?.scrollIntoView({ behavior: "smooth" });
+                        }, 100);
+                      }}
                       aria-pressed={index === galleryIndex}
-                      title={image.label}
+                      title={`${image.label} — click to view full gallery`}
                       className={`group relative aspect-video overflow-hidden rounded-md border bg-bg-2 transition-all ${
                         index === galleryIndex ? "border-brand ring-2 ring-brand/15" : "border-border hover:border-brand"
                       }`}
@@ -156,13 +108,20 @@ export default function CarDetailClient({ car }: { car: Car }) {
                       <span className="absolute inset-x-0 bottom-0 bg-text/70 px-2 py-1 text-left text-[10px] font-medium text-white">{image.label}</span>
                     </button>
                   ))}
-                  {/* View-all tile - jumps to the full gallery section below */}
+                  {/* View-all tile - shows a faded gallery image underneath */}
                   <a
                     href="#gallery"
-                    className="group flex aspect-video flex-col items-center justify-center gap-1 rounded-md border border-border bg-bg-2 text-muted transition-all hover:border-brand hover:bg-bg-3 hover:text-brand"
+                    className="group relative flex aspect-video flex-col items-center justify-center gap-1 overflow-hidden rounded-md border border-border transition-all hover:border-brand"
                   >
-                    <span className="text-xs font-semibold">View All</span>
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    <Image
+                      src={gallery[gallery.length - 1].src}
+                      alt=""
+                      fill
+                      sizes="33vw"
+                      className="object-cover opacity-25 transition-opacity group-hover:opacity-35"
+                    />
+                    <span className="relative z-10 text-xs font-semibold text-text">View All</span>
+                    <ArrowRight className="relative z-10 h-4 w-4 text-text transition-transform group-hover:translate-x-0.5" />
                   </a>
                 </div>
                 <p className="mt-2 text-xs text-muted">

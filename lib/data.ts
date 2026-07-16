@@ -49,6 +49,9 @@ const shot = {
   alcazar: "157825/alcazar-facelift-exterior-right-front-three-quarter-22.jpeg",
   venue: "197163/venue-exterior-right-front-three-quarter-38.png",
   verna: "204398/verna-exterior-right-front-three-quarter.png",
+  exter: "216807/exter-exterior-right-front-three-quarter.png",
+  exterInterior: "216807/exter-interior-dashboard.jpeg",
+  ioniq5: "110289/ioniq-5-exterior-right-front-three-quarter-96.png",
 };
 
 /* Official hyundai.com cinematic hero banners (1860x540), pulled from the
@@ -105,7 +108,7 @@ export const nav = {
     { label: "Hyundai Promise", href: "/hyundai-promise" },
     { label: "Locate Us", href: "/locate-us" },
     { label: "Contact Us", href: "/contact-us" },
-    { label: "Blogs", href: "/#blogs" },
+    { label: "Blogs", href: "/blogs" },
   ],
 };
 
@@ -115,6 +118,13 @@ export const nav = {
    gautammodigroup.com. Hyundai Motor India brand facts sourced from
    hyundai.com/in/en's own "About Us" / brand-story pages. */
 export const aboutHeroImage = stock("photo-1560179707-f14e90ef3623", 1600);
+/* "My Hyundai My Memories" customer-campaign banner (verified live on
+   hyundai.com). Moved from the home hero slideshow to the /blogs hero,
+   where it fits the journal/customer-stories theme. Sits behind a dark
+   gradient overlay so the white hero copy stays legible. */
+export const blogHeroImage = official(
+  "/content/dam/hyundai/in/en/data/hyundai-story/campaign/myhyundaimymemories/mymemories-bannerpc1.jpg",
+);
 export const aboutCultureImage = stock("photo-1522071820081-009f0129c71c", 1200);
 
 export const groupInfo = {
@@ -361,20 +371,11 @@ export const heroSlides: Slide[] = [
     image: banner("/content/dam/hyundai/in/en/images/ClicktoBuy/specialoffer/newspecialoffergst-pc.jpg"),
     alt: "Hyundai India special seasonal offers, official banner",
   },
-  {
-    model: "My Hyundai My Memories",
-    badge: "Customer Stories",
-    headline: "Driven by you.",
-    sub: "Real stories from Hyundai owners across India. Share your journey with us.",
-    price: "",
-    image: banner("/content/dam/hyundai/in/en/data/hyundai-story/campaign/myhyundaimymemories/mymemories-bannerpc1.jpg"),
-    alt: "My Hyundai My Memories customer campaign, official banner",
-  },
 ];
 
 export type CarCategory = "SUV" | "Sedan" | "Hatchback" | "Electric" | "Taxi";
 
-export type CarColor = { name: string; hex: string; image: string };
+export type CarColor = { name: string; hex: string; image: string; colorSlug: string };
 
 export type Car = {
   name: string;
@@ -395,6 +396,8 @@ export type Car = {
   bootSpace: string;
   highlights: string[];
   colors: CarColor[];
+  /** CDN folder name for the 360° frame sequence, e.g. "Venue" or "creta-n-line" */
+  modelFolder: string;
 };
 
 export type DetailSpec = { label: string; value: string };
@@ -436,7 +439,8 @@ const findACar = (model: string, slug: string) =>
 const colours = (
   model: string,
   defs: [name: string, hex: string, slug: string][],
-): CarColor[] => defs.map(([name, hex, slug]) => ({ name, hex, image: findACar(model, slug) }));
+): CarColor[] =>
+  defs.map(([name, hex, slug]) => ({ name, hex, image: findACar(model, slug), colorSlug: slug }));
 
 /* Full lineup, pricing, engine and transmission specs sourced directly
    from the official hyundai.com/in/en homepage and model pages. Tucson
@@ -459,6 +463,7 @@ export const cars: Car[] = [
     cta: "Explore the Exter",
     image: official(officialShot.exter),
     alt: "Hyundai Exter compact SUV, official product shot",
+    modelFolder: "Exter",
     colors: colours("Exter", [
       ["Titanium Black", "#16181A", "abyss-black"],
       ["Titanium Black Matte", "#101112", "abyss-black-matte"],
@@ -493,6 +498,7 @@ export const cars: Car[] = [
     cta: "Explore the Venue",
     image: official(officialShot.venue),
     alt: "Hyundai Venue compact SUV, official product shot",
+    modelFolder: "Venue",
     colors: colours("Venue", [
       ["Titanium Black", "#16181A", "abyss-black"],
       ["Titanium Black Knight Matte", "#101112", "black-knight"],
@@ -530,6 +536,7 @@ export const cars: Car[] = [
     cta: "Explore the Venue N Line",
     image: official(officialShot.venueNline),
     alt: "Hyundai Venue N Line compact SUV, official product shot",
+    modelFolder: "venue-n-line",
     colors: colours("venue-n-line", [
       ["Titanium Black", "#16181A", "abyss-black"],
       ["Atlas White", "#F2F1EC", "atlas-white"],
@@ -564,6 +571,7 @@ export const cars: Car[] = [
     cta: "Explore the Creta",
     image: official(officialShot.creta),
     alt: "Hyundai Creta mid-size SUV, official product shot",
+    modelFolder: "Creta",
     colors: colours("Creta", [
       ["Abyss Black", "#16181A", "abyss-black"],
       ["Atlas White", "#F2F1EC", "atlas-white"],
@@ -599,6 +607,7 @@ export const cars: Car[] = [
     cta: "Explore the Creta N Line",
     image: official(officialShot.cretaNline),
     alt: "Hyundai Creta N Line performance SUV, official product shot",
+    modelFolder: "creta-n-line",
     colors: colours("creta-n-line", [
       ["Abyss Black", "#16181A", "abyss-black"],
       ["Abyss Black Matte", "#101112", "abyss-black-matte"],
@@ -631,6 +640,7 @@ export const cars: Car[] = [
     cta: "Explore the Alcazar",
     image: official(officialShot.alcazar),
     alt: "Hyundai Alcazar 7-seater SUV, official product shot",
+    modelFolder: "Alcazar",
     colors: colours("Alcazar", [
       ["Abyss Black", "#16181A", "abyss-black"],
       ["Titanium Black Matte", "#16181A", "abyss-black-matte"],
@@ -663,6 +673,7 @@ export const cars: Car[] = [
     cta: "Explore the Verna",
     image: official(officialShot.verna),
     alt: "Hyundai Verna sedan, official product shot",
+    modelFolder: "Verna",
     colors: colours("Verna", [
       ["Abyss Black", "#16181A", "abyss-black"],
       ["Atlas White", "#F2F1EC", "atlas-white"],
@@ -696,6 +707,7 @@ export const cars: Car[] = [
     cta: "Explore the Aura",
     image: official(officialShot.aura),
     alt: "Hyundai Aura sedan, official product shot",
+    modelFolder: "Aura",
     colors: colours("Aura", [
       ["Polar White", "#F4F4F2", "polar-white"],
       ["Starry Night", "#1C2331", "starry-night"],
@@ -726,6 +738,7 @@ export const cars: Car[] = [
     cta: "Explore the Grand i10 Nios",
     image: official(officialShot.nios),
     alt: "Hyundai Grand i10 Nios hatchback, official product shot",
+    modelFolder: "Grand-i10-Nios",
     colors: colours("Grand-i10-Nios", [
       ["Polar White", "#F4F4F2", "polar-white"],
       ["Fiery Red", "#B33A2E", "fiery-red"],
@@ -757,6 +770,7 @@ export const cars: Car[] = [
     cta: "Explore the i20",
     image: official(officialShot.i20),
     alt: "Hyundai i20 premium hatchback, official product shot",
+    modelFolder: "i20",
     colors: colours("i20", [
       ["Knight Black", "#16181A", "knight-black"],
       ["Polar White", "#F4F4F2", "polar-white"],
@@ -790,6 +804,7 @@ export const cars: Car[] = [
     cta: "Explore the i20 N Line",
     image: official(officialShot.i20Nline),
     alt: "Hyundai i20 N Line performance hatchback, official product shot",
+    modelFolder: "i20-n-line",
     colors: colours("i20-n-line", [
       ["Abyss Black", "#16181A", "abyss-black"],
       ["Polar White", "#F4F4F2", "polar-white"],
@@ -822,6 +837,7 @@ export const cars: Car[] = [
     cta: "Explore the Ioniq 5",
     image: official(officialShot.ioniq5),
     alt: "Hyundai Ioniq 5 electric SUV, official product shot",
+    modelFolder: "ioniq-5",
     colors: colours("ioniq-5", [
       ["Midnight Black Pearl", "#16181A", "midnight-black-pearl"],
       ["Optic White", "#F2F1EC", "optic-white"],
@@ -852,6 +868,7 @@ export const cars: Car[] = [
     cta: "Explore the Creta Electric",
     image: official(officialShot.cretaElectric),
     alt: "Hyundai Creta Electric SUV, official product shot",
+    modelFolder: "creta-electric",
     colors: colours("creta-electric", [
       ["Abyss Black", "#16181A", "abyss-black"],
       ["Atlas White", "#F2F1EC", "atlas-white"],
@@ -889,6 +906,7 @@ export const cars: Car[] = [
     cta: "Explore the Prime HB",
     image: official(officialShot.nios),
     alt: "Hyundai Prime HB taxi hatchback, official product shot",
+    modelFolder: "Grand-i10-Nios",
     colors: colours("Grand-i10-Nios", [
       ["Polar White", "#F4F4F2", "polar-white"],
       ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
@@ -918,6 +936,7 @@ export const cars: Car[] = [
     cta: "Explore the Prime SD",
     image: official(officialShot.aura),
     alt: "Hyundai Prime SD taxi sedan, official product shot",
+    modelFolder: "Aura",
     colors: colours("Aura", [
       ["Polar White", "#F4F4F2", "polar-white"],
       ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
@@ -1127,44 +1146,338 @@ export const faqData = [
   },
 ];
 
+export type BlogSection = { heading?: string; body: string[] };
+
 export type Blog = {
+  slug: string;
   date: string;
   title: string;
   category: string;
+  excerpt: string;
+  readingTime: string;
   image: string;
   alt: string;
+  /* Structured article body. Each section is an optional heading followed
+     by one or more paragraphs. Rendered directly as HTML on the post page,
+     so this is draft marketing copy for the dealer to refine before launch. */
+  content: BlogSection[];
 };
 
+/* NOTE: blog body copy is draft marketing content written for this build.
+   Facts (model features, pricing, service intervals) are drawn from the
+   same Hyundai India sources used elsewhere in this file, but the article
+   prose itself should be reviewed and edited before launch. */
 export const blogs: Blog[] = [
   {
+    slug: "creta-n-line-how-much-sportier",
     date: "24 Jun 2026",
     category: "Models",
     title: "The Creta N Line: how much sportier is it, really?",
+    excerpt:
+      "Beyond the red accents and N badges, the Creta N Line gets a sharper drive. Here is what actually changes versus the standard Creta.",
+    readingTime: "4 min read",
     image: hy(shot.creta, 900, 600),
     alt: "Hyundai Creta N Line exterior styling",
+    content: [
+      {
+        heading: "More than a sticker pack",
+        body: [
+          "The Creta N Line is the sportiest version of India's best-selling SUV, and the changes go deeper than the badges. You get an N Line-exclusive body kit, red accent stitching, sport seats, metal pedals and an N-branded steering wheel and instrument cluster.",
+          "Underneath, Hyundai has retuned the suspension and steering for a firmer, more connected feel. It is still comfortable enough for daily use, but the chassis feels keener when you push on.",
+        ],
+      },
+      {
+        heading: "Turbo-only performance",
+        body: [
+          "Every N Line is powered by the 1.5L turbo GDi petrol engine, available with a 6-speed manual or 7-speed DCT. The turbo gives it a punchy mid-range that the naturally-aspirated Creta can't match, and the DCT's paddle shifters make overtaking genuinely fun.",
+          "If you enjoy driving and want a Creta that feels special every time you get in, the N Line is the one to shortlist.",
+        ],
+      },
+      {
+        heading: "Should you pick it over the standard Creta?",
+        body: [
+          "The standard Creta remains the smarter all-rounder for most families, especially if you want diesel or IVT efficiency. The N Line is for buyers who prioritise the driving experience and want the sportier look as part of the deal.",
+          "Book a test drive of both back-to-back at Modi Hyundai and the difference is obvious within the first kilometre.",
+        ],
+      },
+    ],
   },
   {
+    slug: "alcazar-family-road-trip-suv",
     date: "18 Jun 2026",
     category: "Ownership",
     title: "Why the Alcazar is the family road-trip SUV to beat",
+    excerpt:
+      "Three real rows, captain-chair comfort and a panoramic sunroof make the Alcazar built for long journeys with the whole family.",
+    readingTime: "5 min read",
     image: hy(shot.alcazar, 900, 600),
     alt: "Hyundai Alcazar on a family road trip",
+    content: [
+      {
+        heading: "Three rows that adults actually fit in",
+        body: [
+          "Most three-row SUVs treat the third row as an afterthought. The Alcazar gives it genuine adult space, with easy tip-and-slide access through the second row. For weekend trips with grandparents or kids' friends along, that matters more than any spec sheet.",
+          "Choose the 6-seat captain's-chair layout for premium comfort, or the 7-seat bench when you need to carry more people more often.",
+        ],
+      },
+      {
+        heading: "Built for long distances",
+        body: [
+          "Ventilated front seats, a panoramic sunroof and a Bose premium sound system turn a long highway stretch into something the family looks forward to. ADAS on the top variants adds a layer of relaxed safety for tired drivers.",
+          "With both petrol and diesel engine options and manual, automatic and DCT transmissions, you can spec the Alcazar around how you actually drive.",
+        ],
+      },
+      {
+        heading: "The road-trip test",
+        body: [
+          "Our team has handed over hundreds of Alcazars to Mumbai families, and the feedback is consistent: it is the first car they have owned that nobody complains about getting the \"bad seat\".",
+          "Thinking of upgrading for a growing family? Drive the Alcazar at Modi Hyundai and see whether three rows fit your life.",
+        ],
+      },
+    ],
   },
   {
+    slug: "monsoon-car-care-tips",
     date: "09 Jun 2026",
     category: "Service",
     title: "5 Monsoon Car-Care Tips Every Hyundai Owner Should Know",
+    excerpt:
+      "Mumbai monsoons are hard on cars. These five checks keep your Hyundai safe, reliable and corrosion-free through the rains.",
+    readingTime: "4 min read",
     image: hy(shot.venue, 900, 600),
     alt: "Hyundai Venue SUV in the monsoon, car-care tips",
+    content: [
+      {
+        heading: "1. Tyres and tread depth come first",
+        body: [
+          "Worn tyres are the biggest monsoon risk. The legal minimum tread depth is 1.6 mm, but for wet-road safety you want noticeably more. Check for the tread-wear indicators built into the groove, and replace tyres that are near the limit before the rains set in.",
+          "Also check tyre pressure regularly — it drops faster in fluctuating temperatures and affects both grip and braking.",
+        ],
+      },
+      {
+        heading: "2. Make sure your wipers and lights work",
+        body: [
+          "Wiper blades harden and streak over a year. Replace them at the start of every monsoon, and top up the washer fluid with a mild detergent mix to cut through oily road film.",
+          "Check all lights — headlights, tail lamps, indicators and brake lights. In heavy rain, being seen is as important as seeing.",
+        ],
+      },
+      {
+        heading: "3. Protect the bodywork from corrosion",
+        body: [
+          "Road grime and salt in standing water accelerate rust, especially on the underbody and wheel arches. A pre-monsoon wash, underbody anti-rust treatment and prompt attention to any paint chips will keep your Hyundai looking new for longer.",
+        ],
+      },
+      {
+        heading: "4. Brakes and battery",
+        body: [
+          "Wet brakes take longer to bite. Have your brake pads and fluid checked before the season, and listen for any squealing or sponginess during the rains. Batteries also work harder in humid weather — a quick load test at service time avoids a no-start on a wet morning.",
+        ],
+      },
+      {
+        heading: "5. Keep an emergency kit",
+        body: [
+          "A small kit — torch, tow rope, first-aid, phone numbers for roadside assistance, and a dry cloth for the windows and mirrors — takes minutes to assemble and is invaluable if you are caught out.",
+          "Every new Hyundai includes 24x7 roadside assistance. Save the number in your phone before you need it. Need a pre-monsoon check? Book a service at any Modi Hyundai service centre across Mumbai, Thane, Vasai, Virar and Wada.",
+        ],
+      },
+    ],
   },
   {
+    slug: "car-loan-or-lease-2026",
     date: "02 Jun 2026",
     category: "Finance",
     title: "Car Loan or Lease in 2026: Which Actually Saves You More?",
+    excerpt:
+      "EMI ownership or lease-style usage? We break down the real costs, the trade-offs and which buyer each suits best.",
+    readingTime: "6 min read",
     image: hy(shot.verna, 900, 600),
     alt: "Hyundai Verna sedan parked outdoors",
+    content: [
+      {
+        heading: "Two ways to drive the same car",
+        body: [
+          "A car loan means you borrow, buy, and own the car outright once the EMIs end. A lease (or subscription) means you pay to use the car for a fixed term, then hand it back or buy it. Both put you behind the wheel — the question is which fits your money and your plans.",
+        ],
+      },
+      {
+        heading: "Where a loan wins",
+        body: [
+          "Loans build equity. Every EMI takes you closer to owning an asset you can later sell, exchange or keep payment-free. You can also customise the car, drive unlimited kilometres, and end the loan early with a prepayment whenever your finances allow.",
+          "For buyers who keep a car for 5-7+ years, ownership through a loan is almost always cheaper overall than continuous leasing.",
+        ],
+      },
+      {
+        heading: "Where a lease wins",
+        body: [
+          "Leases keep monthly outgoings lower and bundle maintenance, insurance and roadside assistance into one predictable payment. You always drive a newer car, and you avoid the hassle of eventually selling it.",
+          "For buyers who change cars every 2-3 years, drive predictable kilometres, and value simplicity over ownership, leasing is genuinely attractive.",
+        ],
+      },
+      {
+        heading: "How to decide",
+        body: [
+          "Ask three questions: How long do I want to keep this car? How much do I drive each year? Do I care about owning the asset at the end? If the answers lean long-distance, high-kilometre and ownership, a loan is your better bet.",
+          "Our finance desk at Modi Hyundai works with leading banks to build flexible EMI plans alongside exchange value for your current car. Tell us your budget and we will run both numbers for you, transparently, so you can compare.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "hyundai-exter-buying-guide",
+    date: "27 May 2026",
+    category: "Models",
+    title: "Hyundai Exter buying guide: which variant is right for you?",
+    excerpt:
+      "Compact-SUV size, factory CNG and segment-first features. We walk through the Exter line-up to help you pick the right variant.",
+    readingTime: "5 min read",
+    image: hy(shot.exter, 900, 600),
+    alt: "Hyundai Exter compact SUV, front three-quarter view",
+    content: [
+      {
+        heading: "A compact SUV that earns the badge",
+        body: [
+          "The Exter is Hyundai's boldest answer to city driving — confident SUV styling, a tall stance and a practical cabin in a footprint that is genuinely easy to park. It pairs a 1.2L Kappa petrol engine with either a 5-speed manual or a smart AMT.",
+          "There's also a factory-fitted 1.2L Bi-Fuel CNG option across selected variants, which makes the Exter one of the most affordable cars to run daily.",
+        ],
+      },
+      {
+        heading: "Features that punch above the segment",
+        body: [
+          "Even at this size, the Exter brings segment-first rear disc brakes, six airbags as standard across variants, Bluelink connected-car technology, and sporty pixel LED lighting front and rear.",
+          "You also get an 8-inch touchscreen with wireless Android Auto and Apple CarPlay, a digital cluster with voice commands, and a built-in dashcam option on the top variant.",
+        ],
+      },
+      {
+        heading: "Choosing your variant",
+        body: [
+          "Start with your powertrain. If running cost is your priority, the CNG variant is hard to beat at up to 27.1 km/kg. If convenience matters most, pick the AMT over the manual.",
+          "Then move up the feature ladder: the mid variants add the sunroof, wireless charger and rear wiper that most buyers actually use day-to-day; the top variant layers in the dashcam, premium interior and the full connected-car suite.",
+          "Not sure where your budget lands? Drive two Exter variants back-to-back at Modi Hyundai and our team will help you compare exactly what changes at each step.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "first-car-buying-checklist",
+    date: "20 May 2026",
+    category: "Ownership",
+    title: "Your first car: a practical checklist for first-time buyers",
+    excerpt:
+      "From setting a real budget to closing the paperwork, here is what first-time car buyers in Mumbai should know.",
+    readingTime: "6 min read",
+    image: hy(shot.exterInterior, 900, 600),
+    alt: "Hyundai Exter interior dashboard, first-car buyer guide",
+    content: [
+      {
+        heading: "Set a budget that includes everything",
+        body: [
+          "The on-road price is not the ex-showroom price. Budget for road tax, registration, insurance, accessories and your first year of fuel and service. A realistic number keeps the EMI comfortable and avoids surprises at delivery.",
+          "A good rule of thumb: keep your car EMI to a level you could still afford on a tighter month, and keep a small buffer for the first service and registration add-ons.",
+        ],
+      },
+      {
+        heading: "Pick the car around how you actually use it",
+        body: [
+          "Who travels with you, how far you drive each day, and where you park should drive the choice — not the badge. A compact hatchback or compact SUV is often the smartest first car for Mumbai's traffic and parking, with lower EMIs and easier running costs.",
+          "List your top three must-haves (say, an automatic, rear AC vents, and good mileage) before you visit a showroom. It makes shortlisting much faster.",
+        ],
+      },
+      {
+        heading: "Sort finance and exchange early",
+        body: [
+          "Get a pre-approved loan indication before you finalise the car, so you know your ceiling. If you have an old vehicle to exchange, have it evaluated first — the exchange value comes straight off your on-road price and can reduce the loan amount meaningfully.",
+        ],
+      },
+      {
+        heading: "Know your paperwork",
+        body: [
+          "You will typically need photo ID, address proof, passport-size photographs and PAN details. For a finance purchase, keep your latest salary slips and bank statements ready to speed up approval.",
+          "Our team at Modi Hyundai will walk you through every document and every charge before you sign — no last-minute surprises, no jargon.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "ioniq-5-electric-ownership-guide",
+    date: "13 May 2026",
+    category: "Electric",
+    title: "Going electric with the Hyundai IONIQ 5: an ownership guide",
+    excerpt:
+      "500km+ range, ultra-fast charging and Vehicle-to-Load tech. Here is what owning Hyundai's flagship electric SUV is actually like.",
+    readingTime: "5 min read",
+    image: hy(shot.ioniq5, 900, 600),
+    alt: "Hyundai IONIQ 5 electric SUV, front three-quarter view",
+    content: [
+      {
+        heading: "Range and charging in the real world",
+        body: [
+          "The IONIQ 5 delivers up to 690 km of ARAI-certified range on the 84 kWh battery pack, which comfortably covers a full week of Mumbai commuting on a single charge. On longer trips, ultra-fast DC charging takes the battery from 10% to 80% in about 18 minutes — quicker than a coffee break.",
+          "At home, a standard AC charger tops it up overnight. Plan a charging point in your parking, and daily running becomes as simple as plugging in your phone.",
+        ],
+      },
+      {
+        heading: "Vehicle-to-Load: power, in reverse",
+        body: [
+          "V2L turns the IONIQ 5 into a power bank on wheels. Using an adapter, you can run laptops, lights, speakers or even small appliances directly from the car's battery — invaluable for camping, outdoor events or a power cut at home.",
+        ],
+      },
+      {
+        heading: "A cabin from the future",
+        body: [
+          "The flat cabin floor, dual 12.3-inch curved displays and pixel-inspired design make the IONIQ 5 feel like nothing else on the road. There is genuine space for five, plus a large boot and a front trunk for charging cables.",
+          "Add Level 2 ADAS, a premium sound system and a clean, quiet ride, and it is as relaxing to drive in traffic as it is on the highway.",
+        ],
+      },
+      {
+        heading: "Is an EV right for you?",
+        body: [
+          "Electric suits buyers who can charge at home or at work, drive a predictable distance most days, and want the lowest possible running cost. If you frequently do very long intercity runs, plan your fast-charging stops in advance.",
+          "Curious? Book an IONIQ 5 test drive at Modi Hyundai and our team will walk you through charging, range and ownership step by step.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "hyundai-service-intervals-explained",
+    date: "06 May 2026",
+    category: "Service",
+    title: "Hyundai service intervals explained: what happens, and when",
+    excerpt:
+      "Understanding your service schedule keeps your Hyundai reliable and protects its resale value. Here is a plain-English guide.",
+    readingTime: "5 min read",
+    image: hy(shot.cretaInterior, 900, 600),
+    alt: "Hyundai interior dashboard, service intervals guide",
+    content: [
+      {
+        heading: "Why intervals matter",
+        body: [
+          "Regular servicing keeps your Hyundai safe, efficient and reliable, and it protects your warranty. More importantly, a car with a complete service history is worth noticeably more when you eventually sell or exchange it.",
+          "Hyundai's recommended schedule is based on either time or distance — whichever comes first. Following it is the single best thing you can do for long-term ownership.",
+        ],
+      },
+      {
+        heading: "The first service",
+        body: [
+          "Your first service is usually a check-up rather than a major job. It typically covers an oil and filter change, a full multipoint inspection, and a look at the brakes, tyres, battery and all fluids. It is also when small adjustments are made as the engine settles in.",
+        ],
+      },
+      {
+        heading: "Periodic maintenance",
+        body: [
+          "As kilometres build, services cycle through filter replacements, brake pad checks, fluid top-ups and, on automatics, transmission checks. Tyre rotation and wheel alignment are done on a schedule to keep wear even.",
+          "Always use genuine Hyundai parts — they are engineered for your car, carry warranty backing, and avoid the premature wear that aftermarket substitutes often cause.",
+        ],
+      },
+      {
+        heading: "Make it effortless",
+        body: [
+          "Modi Hyundai offers free pickup and drop for servicing across Mumbai, Thane, Vasai, Virar and Wada, so a service day no longer has to cost you a full one. Book online, choose your nearest service centre and a convenient slot, and our factory-trained technicians handle the rest.",
+        ],
+      },
+    ],
   },
 ];
+
 
 export type Location = {
   name: string;
@@ -1284,7 +1597,7 @@ export const locations: Location[] = [
   {
     name: "Hyundai Santacruz",
     type: "Showroom",
-    city: "Mumbai",
+    city: "Santacruz",
     address: "Vikas Centre, G/02, Next to Santacruz Bus Depot, S.V. Road, Santacruz West, Mumbai, Maharashtra 400054",
     phone: "98877 33000",
     image: "/locations/santacruz-showroom.webp",
@@ -1313,5 +1626,5 @@ export const popularCars = popularNames
 export const testDriveImage = hy(shot.cretaInterior, 1000, 1200);
 export const serviceHeroImage = stock("photo-1486262715619-67b85e0b08d3", 1600);
 export const carModels = cars.map((c) => c.name);
-export const cityOptions = ["Mumbai", "Thane", "Vasai", "Virar", "Wada"];
+export const cityOptions = ["Santacruz", "Thane", "Vasai", "Virar", "Wada"];
 export const serviceCentres = locations.filter((l) => l.type === "Service Centre");

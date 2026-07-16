@@ -1,0 +1,236 @@
+/* ── root ── */
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  user-select: none;
+}
+
+/* ── stage ── */
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 900 / 520;
+  background: linear-gradient(160deg, #f0f2f5 0%, #e4e8ee 100%);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.07),
+    0 20px 60px -10px rgba(0, 44, 95, 0.12);
+}
+
+/* ── canvas ── */
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: none;
+}
+.canvas:active {
+  cursor: grabbing;
+}
+
+/* ── loading overlay ── */
+.loadingOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(
+    160deg,
+    rgba(10, 18, 32, 0.82) 0%,
+    rgba(0, 44, 95, 0.75) 100%
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.loadingInner {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  inset: 0;
+  animation: spin 1.4s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinnerArc {
+  transition: stroke-dashoffset 0.2s ease;
+}
+
+.pct {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.loadingLabel {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.3px;
+}
+
+/* ── drag hint ── */
+.hint {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  animation: hintPulse 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes hintPulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.06);
+  }
+}
+
+.hintIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.hintText {
+  font-size: 11px;
+  font-weight: 600;
+  color: white;
+  background: rgba(0, 0, 0, 0.45);
+  padding: 3px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  letter-spacing: 0.4px;
+}
+
+/* ── badges ── */
+.colorBadge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 30px;
+  padding: 5px 13px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #1a1a2e;
+  letter-spacing: 0.2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.badge360 {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(0, 44, 95, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 30px;
+  padding: 5px 11px;
+  font-size: 11px;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* ── swatches ── */
+.swatchesWrap {
+  padding: 14px 2px 2px;
+}
+
+.swatchesHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.swatchesLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #6b7280;
+}
+
+.swatchesCount {
+  color: #1a1a2e;
+}
+
+.swatchesHint {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.swatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2.5px solid #e5e7eb;
+  cursor: pointer;
+  transition:
+    transform 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
+  flex-shrink: 0;
+}
+
+.swatch:hover {
+  transform: scale(1.12);
+  border-color: #9ca3af;
+}
+
+.swatchActive {
+  border-color: #002c5f;
+  box-shadow: 0 0 0 3px rgba(0, 44, 95, 0.18);
+  transform: scale(1.08);
+}

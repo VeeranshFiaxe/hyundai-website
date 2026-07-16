@@ -130,7 +130,7 @@ export default function HomeSeoContent() {
           <Reveal variant="slide-right">
             <span className="eyebrow mb-3 block">Why Modi Hyundai</span>
             <h2 className="font-display text-2xl font-bold leading-tight tracking-tight text-text sm:text-3xl lg:text-[2.25rem]">
-              Your authorised Hyundai dealer across the Mumbai region
+              Your authorised Hyundai dealer across the Mumbai and Thane region
             </h2>
             <div className="mt-5 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
               <p>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HyundaiPromise from "@/components/HyundaiPromise";
+import PromiseExperience from "@/components/PromiseExperience";
 import { SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
@@ -59,6 +60,7 @@ export default function HyundaiPromisePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(promisePageSchema).replace(/</g, "\\u003c") }}
       />
       <main style={{ marginTop: "96px" }}>
+        <PromiseExperience />
         <HyundaiPromise />
       </main>
     </>
