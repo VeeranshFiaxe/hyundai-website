@@ -65,7 +65,7 @@ export default function PromiseExperience() {
           <SectionHeading
             eyebrow="Watch It In Action"
             title="Selling your pre-owned car, made easy"
-            subtitle="See how Hyundai Promise takes the hassle out of selling your car — from online estimation to instant payment."
+            subtitle="See how Hyundai Promise takes the hassle out of selling your car, from online estimation to instant payment."
           />
 
           <Reveal
@@ -105,7 +105,7 @@ export default function PromiseExperience() {
               The six-step path to selling your car
             </h2>
             <p className="mt-3 text-sm text-white/70 sm:text-base">
-              From an online estimate to payment in your account — a clear,
+              From an online estimate to payment in your account. A clear,
               transparent journey at every step.
             </p>
           </Reveal>
@@ -149,7 +149,7 @@ export default function PromiseExperience() {
                 strokeDashoffset={curveDrawn ? "0" : "2400"}
                 style={{
                   transition:
-                    "stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1)",
+                    "stroke-dashoffset 0s ease",
                 }}
               />
             </svg>
@@ -160,7 +160,6 @@ export default function PromiseExperience() {
               const isBelow = i % 2 === 0;
               const nodeY = isBelow ? 250 : 110;
               const leftPct = 8 + i * 16.8;
-              const cardDelay = curveDrawn ? 2000 + i * 180 : 99999;
 
               return (
                 <div
@@ -177,7 +176,7 @@ export default function PromiseExperience() {
                     className="absolute z-10 flex h-[60px] w-[60px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white/15 bg-[rgba(0,44,95,0.55)] shadow-[0_6px_28px_rgba(0,0,0,0.35)] backdrop-blur-sm"
                     style={{ left: 0, top: `${nodeY}px` }}
                   >
-                    <Reveal delay={curveDrawn ? 1600 + i * 180 : 99999} variant="scale-up">
+                    <Reveal delay={curveDrawn ? 0 : 99999} variant="scale-up">
                       <Icon className="h-6 w-6 text-white" />
                     </Reveal>
                   </div>
@@ -187,7 +186,7 @@ export default function PromiseExperience() {
                     className={`absolute w-[210px] -translate-x-1/2 ${isBelow ? "top-[288px]" : "top-[-55px] h-[90px] flex items-end"}`}
                     style={{ left: 0 }}
                   >
-                    <Reveal delay={cardDelay} variant="fade-up">
+                    <Reveal delay={curveDrawn ? 0 : 99999} variant="fade-up">
                       <div className="flex items-baseline gap-3">
                         <span className="font-display text-4xl font-bold leading-none text-[#60a5fa]">
                           {String(i + 1).padStart(2, "0")}
@@ -254,7 +253,7 @@ export default function PromiseExperience() {
                     {/* Icon node on the wavy line */}
                     <div className="absolute -left-[62px] top-1 z-10 flex h-[52px] w-[52px] items-center justify-center rounded-full border-2 border-white/15 bg-[rgba(0,44,95,0.55)] shadow-[0_4px_20px_rgba(0,0,0,0.3)] backdrop-blur-sm">
                       <Reveal
-                        delay={curveDrawn ? 1600 + i * 180 : 99999}
+                        delay={curveDrawn ? 0 : 99999}
                         variant="scale-up"
                       >
                         <Icon className="h-5 w-5 text-white" />
@@ -262,7 +261,7 @@ export default function PromiseExperience() {
                     </div>
 
                     <Reveal
-                      delay={curveDrawn ? 2000 + i * 200 : 99999}
+                      delay={curveDrawn ? 0 : 99999}
                       variant="fade-up"
                     >
                       <div className="flex items-baseline gap-3">

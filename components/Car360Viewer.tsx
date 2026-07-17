@@ -194,7 +194,7 @@ export default function Car360Viewer({
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerLeave={handlePointerUp}
-          aria-label={`${activeColor.name} — drag to rotate`}
+          aria-label={`${activeColor.name}, drag to rotate`}
           role="img"
         />
 

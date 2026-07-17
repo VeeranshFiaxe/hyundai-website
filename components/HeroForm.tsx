@@ -2,31 +2,62 @@
 
 import { useState, type FormEvent } from "react";
 import { carModels, cityOptions } from "@/lib/data";
+import { isEmpty, isValidMobile, isValidName, type FormErrors } from "@/lib/validation";
 import { Check, ChevronDown, Calendar, ArrowRight, ArrowLeft } from "./icons";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-3 py-2.5 text-[13px] text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
 
+const errorBase =
+  "w-full rounded border border-red-400 bg-white px-3 py-2.5 text-[13px] text-text outline-none transition-colors placeholder:text-faint focus:border-red-500 focus:ring-2 focus:ring-red-400/20";
+
 export default function HeroForm() {
   const [submitted, setSubmitted] = useState(false);
   const [step, setStep] = useState(1);
-  
-  // Step 1 state
+  const [attempted, setAttempted] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [step2Errors, setStep2Errors] = useState<FormErrors>({});
+
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
   const [model, setModel] = useState("");
+  const [location, setLocation] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+
+  const fieldError = (key: string) =>
+    (attempted && errors[key]) || errors[key] ? errorBase : fieldBase;
+  const step2FieldError = (key: string) =>
+    step2Errors[key] ? errorBase : fieldBase;
+
+  const validateStep1 = (): FormErrors => {
+    const e: FormErrors = {};
+    if (isEmpty(name) || !isValidName(name)) e.name = "Enter your full name.";
+    if (!isValidMobile(mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
+    if (isEmpty(model)) e.model = "Please select a car model.";
+    return e;
+  };
+
+  const validateStep2 = (): FormErrors => {
+    const e: FormErrors = {};
+    if (isEmpty(location)) e.location = "Please select a location.";
+    if (isEmpty(date)) e.date = "Please select a date.";
+    if (isEmpty(time)) e.time = "Please select a time.";
+    return e;
+  };
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    const errs = validateStep2();
+    setStep2Errors(errs);
+    if (Object.keys(errs).length === 0) setSubmitted(true);
   };
 
   const handleNext = () => {
-    if (!name || !mobile || !model) {
-      alert("Please fill in all fields to continue.");
-      return;
-    }
-    setStep(2);
+    setAttempted(true);
+    const errs = validateStep1();
+    setErrors(errs);
+    if (Object.keys(errs).length === 0) setStep(2);
   };
 
   if (submitted) {
@@ -69,33 +100,35 @@ export default function HeroForm() {
           <div className="w-1/2 shrink-0 flex flex-col gap-3 pr-4">
             <label className="block">
               <span className="sr-only">Your Name</span>
-              <input 
-                type="text" 
-                required 
-                placeholder="Your Name" 
-                className={fieldBase}
+              <input
+                type="text"
+                placeholder="e.g. John Doe"
+                className={fieldError("name")}
                 value={name}
                 onChange={e => setName(e.target.value)}
               />
+              {attempted && errors.name && (
+                <p className="mt-0.5 text-[11px] font-medium text-red-600">{errors.name}</p>
+              )}
             </label>
             <label className="block">
               <span className="sr-only">Mobile Number</span>
-              <input 
-                type="tel" 
-                required 
-                pattern="[0-9]{10}" 
-                placeholder="Mobile Number" 
-                className={fieldBase}
+              <input
+                type="tel"
+                placeholder="e.g. 9876543210"
+                className={fieldError("mobile")}
                 value={mobile}
                 onChange={e => setMobile(e.target.value)}
               />
+              {attempted && errors.mobile && (
+                <p className="mt-0.5 text-[11px] font-medium text-red-600">{errors.mobile}</p>
+              )}
             </label>
             <label className="block">
               <span className="sr-only">Select Car Model</span>
               <div className="relative">
-                <select 
-                  required 
-                  className={`${fieldBase} appearance-none pr-8`}
+                <select
+                  className={`${fieldError("model")} appearance-none pr-8`}
                   value={model}
                   onChange={e => setModel(e.target.value)}
                 >
@@ -104,6 +137,9 @@ export default function HeroForm() {
                 </select>
                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
               </div>
+              {attempted && errors.model && (
+                <p className="mt-0.5 text-[11px] font-medium text-red-600">{errors.model}</p>
+              )}
             </label>
             <button
               type="button"
@@ -123,31 +159,53 @@ export default function HeroForm() {
             <label className="block">
               <span className="sr-only">Select Location</span>
               <div className="relative">
-                <select defaultValue="" required className={`${fieldBase} appearance-none pr-8`}>
+                <select
+                  value={location}
+                  onChange={e => setLocation(e.target.value)}
+                  className={`${step2FieldError("location")} appearance-none pr-8`}
+                >
                   <option value="" disabled className="text-faint">Select Location</option>
                   {cityOptions.map(c => <option key={c} value={c}>{c}</option>)}
                 </select>
                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
               </div>
+              {step2Errors.location && (
+                <p className="mt-0.5 text-[11px] font-medium text-red-600">{step2Errors.location}</p>
+              )}
             </label>
             <label className="block">
               <span className="sr-only">Preferred Date</span>
               <div className="relative">
-                <input type="date" required className={`${fieldBase} pr-8`} />
+                <input
+                  type="date"
+                  value={date}
+                  onChange={e => setDate(e.target.value)}
+                  className={`${step2FieldError("date")} pr-8`}
+                />
                 <Calendar className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
               </div>
+              {step2Errors.date && (
+                <p className="mt-0.5 text-[11px] font-medium text-red-600">{step2Errors.date}</p>
+              )}
             </label>
             <label className="block">
               <span className="sr-only">Preferred Time</span>
               <div className="relative">
-                <select defaultValue="" required className={`${fieldBase} appearance-none pr-8`}>
+                <select
+                  value={time}
+                  onChange={e => setTime(e.target.value)}
+                  className={`${step2FieldError("time")} appearance-none pr-8`}
+                >
                   <option value="" disabled className="text-faint">Select Time</option>
-                  <option value="Morning">Morning (9–12)</option>
-                  <option value="Afternoon">Afternoon (12–4)</option>
-                  <option value="Evening">Evening (4–8)</option>
+                  <option value="Morning">Morning (9-12)</option>
+                  <option value="Afternoon">Afternoon (12-4)</option>
+                  <option value="Evening">Evening (4-8)</option>
                 </select>
                 <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
               </div>
+              {step2Errors.time && (
+                <p className="mt-0.5 text-[11px] font-medium text-red-600">{step2Errors.time}</p>
+              )}
             </label>
             
             <div className="mt-2 flex gap-2">

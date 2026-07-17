@@ -2,18 +2,73 @@
 
 import { useState, type FormEvent } from "react";
 import { company } from "@/lib/data";
+import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidPincode, type FormErrors } from "@/lib/validation";
+import { submitLead } from "@/lib/submitLead";
 import { Check, Clock, Mail, Phone, WhatsApp } from "./icons";
 import Reveal from "./Reveal";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
 
+const errorBase =
+  "w-full rounded border border-red-400 bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-red-500 focus:ring-2 focus:ring-red-400/20";
+
 export default function ContactUs() {
   const [submitted, setSubmitted] = useState(false);
+  const [attempted, setAttempted] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    mobile: "",
+    email: "",
+    pincode: "",
+    subject: "",
+    message: "",
+  });
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const set = (key: string) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const fieldError = (key: string, fieldClass: string) =>
+    attempted && errors[key] ? errorBase : fieldBase;
+
+  const validate = (): FormErrors => {
+    const e: FormErrors = {};
+    if (isEmpty(form.name) || !isValidName(form.name)) e.name = "Enter your full name (at least 2 characters).";
+    if (!isValidMobile(form.mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
+    if (!isValidEmail(form.email)) e.email = "Enter a valid email with @ and a domain (e.g. you@example.com).";
+    if (!isValidPincode(form.pincode)) e.pincode = "Enter a valid 6-digit pincode.";
+    if (isEmpty(form.subject)) e.subject = "Please enter a subject.";
+    if (isEmpty(form.message)) e.message = "Please enter your message.";
+    return e;
+  };
+
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setAttempted(true);
+    const errs = validate();
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+
+    setSubmitting(true);
+    setSubmitError(false);
+    try {
+      await submitLead("contact", {
+        name: form.name.trim(),
+        mobile_number: form.mobile.trim(),
+        email: form.email.trim(),
+        pincode: form.pincode.trim(),
+        subject: form.subject.trim(),
+        message: form.message.trim(),
+      });
+      setSubmitted(true);
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -62,7 +117,7 @@ export default function ContactUs() {
                 <div>
                   <p className="text-xs font-medium text-muted">WhatsApp</p>
                   <a
-                    href={`https://wa.me/${company.phoneE164.replace("+", "")}`}
+                    href="https://wa.link/diys8m"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-sm font-semibold text-text transition-colors hover:text-brand"
@@ -124,48 +179,98 @@ export default function ContactUs() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <form onSubmit={onSubmit} className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Your Name</span>
-                  <input type="text" required placeholder="Your name" className={fieldBase} />
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={set("name")}
+                    placeholder="e.g. John Doe"
+                    className={fieldError("name", fieldBase)}
+                  />
+                  {attempted && errors.name && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.name}</p>
+                  )}
                 </label>
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
                   <input
                     type="tel"
-                    required
-                    pattern="[0-9]{10}"
-                    placeholder="Mobile number"
-                    className={fieldBase}
+                    value={form.mobile}
+                    onChange={set("mobile")}
+                    placeholder="e.g. 9876543210"
+                    className={fieldError("mobile", fieldBase)}
                   />
+                  {attempted && errors.mobile && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.mobile}</p>
+                  )}
                 </label>
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Your Email</span>
-                  <input type="email" required placeholder="you@example.com" className={fieldBase} />
-                </label>
-                <label className="block">
-                  <span className="mb-1.5 block text-xs font-semibold text-muted">Subject</span>
-                  <input type="text" required placeholder="How can we help?" className={fieldBase} />
+                  <input
+                    type="email"
+                    value={form.email}
+                    onChange={set("email")}
+                    placeholder="you@example.com"
+                    className={fieldError("email", fieldBase)}
+                  />
+                  {attempted && errors.email && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.email}</p>
+                  )}
                 </label>
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Pincode</span>
-                  <input type="text" required pattern="[0-9]{6}" placeholder="Pincode" className={fieldBase} />
+                  <input
+                    type="text"
+                    value={form.pincode}
+                    onChange={set("pincode")}
+                    inputMode="numeric"
+                    placeholder="e.g. 400001"
+                    className={fieldError("pincode", fieldBase)}
+                  />
+                  {attempted && errors.pincode && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.pincode}</p>
+                  )}
+                </label>
+                <label className="col-span-full block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Subject</span>
+                  <input
+                    type="text"
+                    value={form.subject}
+                    onChange={set("subject")}
+                    placeholder="How can we help?"
+                    className={fieldError("subject", fieldBase)}
+                  />
+                  {attempted && errors.subject && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.subject}</p>
+                  )}
                 </label>
                 <label className="col-span-full block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Your Message</span>
                   <textarea
-                    required
+                    value={form.message}
+                    onChange={set("message")}
                     rows={5}
                     placeholder="Tell us more..."
-                    className={`${fieldBase} resize-none`}
+                    className={`${fieldError("message", fieldBase)} resize-none`}
                   />
+                  {attempted && errors.message && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.message}</p>
+                  )}
                 </label>
                 <button
                   type="submit"
-                  className="col-span-full mt-1 rounded bg-brand py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light"
+                  disabled={submitting}
+                  className="col-span-full mt-1 rounded bg-brand py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Send Message
+                  {submitting ? "Sending..." : "Send Message"}
                 </button>
+                {submitError && (
+                  <p className="col-span-full mt-1 text-sm font-medium text-red-600">
+                    Something went wrong. Please try again or call us directly.
+                  </p>
+                )}
               </form>
             )}
           </Reveal>

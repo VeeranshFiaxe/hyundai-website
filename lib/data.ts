@@ -1251,14 +1251,14 @@ export const blogs: Blog[] = [
         heading: "1. Tyres and tread depth come first",
         body: [
           "Worn tyres are the biggest monsoon risk. The legal minimum tread depth is 1.6 mm, but for wet-road safety you want noticeably more. Check for the tread-wear indicators built into the groove, and replace tyres that are near the limit before the rains set in.",
-          "Also check tyre pressure regularly — it drops faster in fluctuating temperatures and affects both grip and braking.",
+          "Also check tyre pressure regularly. It drops faster in fluctuating temperatures and affects both grip and braking.",
         ],
       },
       {
         heading: "2. Make sure your wipers and lights work",
         body: [
           "Wiper blades harden and streak over a year. Replace them at the start of every monsoon, and top up the washer fluid with a mild detergent mix to cut through oily road film.",
-          "Check all lights — headlights, tail lamps, indicators and brake lights. In heavy rain, being seen is as important as seeing.",
+          "Check all lights, headlights, tail lamps, indicators and brake lights. In heavy rain, being seen is as important as seeing.",
         ],
       },
       {
@@ -1270,13 +1270,13 @@ export const blogs: Blog[] = [
       {
         heading: "4. Brakes and battery",
         body: [
-          "Wet brakes take longer to bite. Have your brake pads and fluid checked before the season, and listen for any squealing or sponginess during the rains. Batteries also work harder in humid weather — a quick load test at service time avoids a no-start on a wet morning.",
+          "Wet brakes take longer to bite. Have your brake pads and fluid checked before the season, and listen for any squealing or sponginess during the rains. Batteries also work harder in humid weather. A quick load test at service time avoids a no-start on a wet morning.",
         ],
       },
       {
         heading: "5. Keep an emergency kit",
         body: [
-          "A small kit — torch, tow rope, first-aid, phone numbers for roadside assistance, and a dry cloth for the windows and mirrors — takes minutes to assemble and is invaluable if you are caught out.",
+          "A small kit - torch, tow rope, first-aid, phone numbers for roadside assistance, and a dry cloth for the windows and mirrors - takes minutes to assemble and is invaluable if you are caught out.",
           "Every new Hyundai includes 24x7 roadside assistance. Save the number in your phone before you need it. Need a pre-monsoon check? Book a service at any Modi Hyundai service centre across Mumbai, Thane, Vasai, Virar and Wada.",
         ],
       },
@@ -1296,7 +1296,7 @@ export const blogs: Blog[] = [
       {
         heading: "Two ways to drive the same car",
         body: [
-          "A car loan means you borrow, buy, and own the car outright once the EMIs end. A lease (or subscription) means you pay to use the car for a fixed term, then hand it back or buy it. Both put you behind the wheel — the question is which fits your money and your plans.",
+          "A car loan means you borrow, buy, and own the car outright once the EMIs end. A lease (or subscription) means you pay to use the car for a fixed term, then hand it back or buy it. Both put you behind the wheel. The question is which fits your money and your plans.",
         ],
       },
       {
@@ -1336,7 +1336,7 @@ export const blogs: Blog[] = [
       {
         heading: "A compact SUV that earns the badge",
         body: [
-          "The Exter is Hyundai's boldest answer to city driving — confident SUV styling, a tall stance and a practical cabin in a footprint that is genuinely easy to park. It pairs a 1.2L Kappa petrol engine with either a 5-speed manual or a smart AMT.",
+          "The Exter is Hyundai's boldest answer to city driving, confident SUV styling, a tall stance and a practical cabin in a footprint that is genuinely easy to park. It pairs a 1.2L Kappa petrol engine with either a 5-speed manual or a smart AMT.",
           "There's also a factory-fitted 1.2L Bi-Fuel CNG option across selected variants, which makes the Exter one of the most affordable cars to run daily.",
         ],
       },
@@ -1378,21 +1378,21 @@ export const blogs: Blog[] = [
       {
         heading: "Pick the car around how you actually use it",
         body: [
-          "Who travels with you, how far you drive each day, and where you park should drive the choice — not the badge. A compact hatchback or compact SUV is often the smartest first car for Mumbai's traffic and parking, with lower EMIs and easier running costs.",
+          "Who travels with you, how far you drive each day, and where you park should drive the choice, not the badge. A compact hatchback or compact SUV is often the smartest first car for Mumbai's traffic and parking, with lower EMIs and easier running costs.",
           "List your top three must-haves (say, an automatic, rear AC vents, and good mileage) before you visit a showroom. It makes shortlisting much faster.",
         ],
       },
       {
         heading: "Sort finance and exchange early",
         body: [
-          "Get a pre-approved loan indication before you finalise the car, so you know your ceiling. If you have an old vehicle to exchange, have it evaluated first — the exchange value comes straight off your on-road price and can reduce the loan amount meaningfully.",
+          "Get a pre-approved loan indication before you finalise the car, so you know your ceiling. If you have an old vehicle to exchange, have it evaluated first. The exchange value comes straight off your on-road price and can reduce the loan amount meaningfully.",
         ],
       },
       {
         heading: "Know your paperwork",
         body: [
           "You will typically need photo ID, address proof, passport-size photographs and PAN details. For a finance purchase, keep your latest salary slips and bank statements ready to speed up approval.",
-          "Our team at Modi Hyundai will walk you through every document and every charge before you sign — no last-minute surprises, no jargon.",
+          "Our team at Modi Hyundai will walk you through every document and every charge before you sign. No last-minute surprises, no jargon.",
         ],
       },
     ],
@@ -1411,14 +1411,14 @@ export const blogs: Blog[] = [
       {
         heading: "Range and charging in the real world",
         body: [
-          "The IONIQ 5 delivers up to 690 km of ARAI-certified range on the 84 kWh battery pack, which comfortably covers a full week of Mumbai commuting on a single charge. On longer trips, ultra-fast DC charging takes the battery from 10% to 80% in about 18 minutes — quicker than a coffee break.",
+          "The IONIQ 5 delivers up to 690 km of ARAI-certified range on the 84 kWh battery pack, which comfortably covers a full week of Mumbai commuting on a single charge. On longer trips, ultra-fast DC charging takes the battery from 10% to 80% in about 18 minutes, quicker than a coffee break.",
           "At home, a standard AC charger tops it up overnight. Plan a charging point in your parking, and daily running becomes as simple as plugging in your phone.",
         ],
       },
       {
         heading: "Vehicle-to-Load: power, in reverse",
         body: [
-          "V2L turns the IONIQ 5 into a power bank on wheels. Using an adapter, you can run laptops, lights, speakers or even small appliances directly from the car's battery — invaluable for camping, outdoor events or a power cut at home.",
+          "V2L turns the IONIQ 5 into a power bank on wheels. Using an adapter, you can run laptops, lights, speakers or even small appliances directly from the car's battery, invaluable for camping, outdoor events or a power cut at home.",
         ],
       },
       {
@@ -1452,7 +1452,7 @@ export const blogs: Blog[] = [
         heading: "Why intervals matter",
         body: [
           "Regular servicing keeps your Hyundai safe, efficient and reliable, and it protects your warranty. More importantly, a car with a complete service history is worth noticeably more when you eventually sell or exchange it.",
-          "Hyundai's recommended schedule is based on either time or distance — whichever comes first. Following it is the single best thing you can do for long-term ownership.",
+          "Hyundai's recommended schedule is based on either time or distance, whichever comes first. Following it is the single best thing you can do for long-term ownership.",
         ],
       },
       {
@@ -1465,7 +1465,7 @@ export const blogs: Blog[] = [
         heading: "Periodic maintenance",
         body: [
           "As kilometres build, services cycle through filter replacements, brake pad checks, fluid top-ups and, on automatics, transmission checks. Tyre rotation and wheel alignment are done on a schedule to keep wear even.",
-          "Always use genuine Hyundai parts — they are engineered for your car, carry warranty backing, and avoid the premature wear that aftermarket substitutes often cause.",
+          "Always use genuine Hyundai parts. They are engineered for your car, carry warranty backing, and avoid the premature wear that aftermarket substitutes often cause.",
         ],
       },
       {

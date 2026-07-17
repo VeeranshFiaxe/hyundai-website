@@ -93,7 +93,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
                         }, 100);
                       }}
                       aria-pressed={index === galleryIndex}
-                      title={`${image.label} — click to view full gallery`}
+                      title={`${image.label}, click to view full gallery`}
                       className={`group relative aspect-video overflow-hidden rounded-md border bg-bg-2 transition-all ${
                         index === galleryIndex ? "border-brand ring-2 ring-brand/15" : "border-border hover:border-brand"
                       }`}

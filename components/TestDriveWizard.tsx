@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Image from "next/image";
 import { cars, cityOptions, locations, formatINR } from "@/lib/data";
+import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidPincode } from "@/lib/validation";
 import { Calendar, Check, ChevronDown, ChevronRight, X } from "./icons";
 import Reveal from "./Reveal";
 
@@ -45,31 +46,24 @@ export default function TestDriveWizard() {
     return timeSlots.filter((s) => s.end > currentHour);
   }, [date, minDate]);
 
-  const isValidEmail = /^\S+@\S+\.\S+$/.test(email);
-  const isValidMobile = /^[0-9]{10}$/.test(mobile);
-  const isValidPincode = /^[0-9]{6}$/.test(pincode);
-
   const canProceed = () => {
     if (step === 1) return Boolean(carSlug);
     if (step === 2) return Boolean(city && date && time);
     if (step === 3)
-      return Boolean(name.trim() && isValidMobile && isValidEmail && isValidPincode);
+      return Boolean(isValidName(name) && isValidMobile(mobile) && isValidEmail(email) && isValidPincode(pincode));
     return true;
   };
 
-  // Field-level messages, only surfaced once the user has tried to move on
-  // from an incomplete step, so the reason a disabled-looking action won't
-  // proceed is always spelled out rather than just greyed out.
   const fieldErrors = {
-    name: attempted && step === 3 && !name.trim() ? "Please enter your name." : "",
+    name: attempted && step === 3 && !isValidName(name) ? "Enter your full name (at least 2 characters)." : "",
     mobile:
-      attempted && step === 3 && !isValidMobile
+      attempted && step === 3 && !isValidMobile(mobile)
         ? "Enter a valid 10-digit mobile number."
         : "",
     email:
-      attempted && step === 3 && !isValidEmail ? "Enter a valid email address." : "",
+      attempted && step === 3 && !isValidEmail(email) ? "Enter a valid email with @ and a domain (e.g. you@example.com)." : "",
     pincode:
-      attempted && step === 3 && !isValidPincode ? "Enter a valid 6-digit pincode." : "",
+      attempted && step === 3 && !isValidPincode(pincode) ? "Enter a valid 6-digit pincode." : "",
   };
 
   const stepMessage =
@@ -308,7 +302,7 @@ export default function TestDriveWizard() {
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="Your name"
+                      placeholder="e.g. John Doe"
                     className={`${fieldBase} ${fieldErrors.name ? "border-red-400 focus:border-red-400" : ""}`}
                   />
                   {fieldErrors.name && (
@@ -323,7 +317,7 @@ export default function TestDriveWizard() {
                     pattern="[0-9]{10}"
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
-                    placeholder="Mobile number"
+                    placeholder="e.g. 9876543210"
                     className={`${fieldBase} ${fieldErrors.mobile ? "border-red-400 focus:border-red-400" : ""}`}
                   />
                   {fieldErrors.mobile && (
@@ -353,7 +347,7 @@ export default function TestDriveWizard() {
                     pattern="[0-9]{6}"
                     value={pincode}
                     onChange={(e) => setPincode(e.target.value)}
-                    placeholder="6-digit pincode"
+                    placeholder="e.g. 400001"
                     className={`${fieldBase} ${fieldErrors.pincode ? "border-red-400 focus:border-red-400" : ""}`}
                   />
                   {fieldErrors.pincode && (

@@ -3,11 +3,16 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import Image from "next/image";
 import { carModels, cityOptions, testDriveImage } from "@/lib/data";
+import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidPincode, type FormErrors } from "@/lib/validation";
+import { submitLead } from "@/lib/submitLead";
 import { Calendar, Check, ChevronDown } from "./icons";
 import Reveal from "./Reveal";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
+
+const errorBase =
+  "w-full rounded border border-red-400 bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-red-500 focus:ring-2 focus:ring-red-400/20";
 
 const timeSlots = [
   { label: "Morning (9–12)", start: 9, end: 12 },
@@ -57,24 +62,80 @@ function SelectField({
 
 export default function TestDrive() {
   const [submitted, setSubmitted] = useState(false);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [attempted, setAttempted] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+  const [form, setForm] = useState({
+    carModel: "",
+    location: "",
+    name: "",
+    mobile: "",
+    email: "",
+    pincode: "",
+    address: "",
+    date: "",
+    time: "",
+  });
   const minDate = new Date().toISOString().slice(0, 10);
 
+  const setField = (key: string) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+    setForm((f) => ({ ...f, [key]: e.target.value }));
+
+  const fieldError = (key: string) =>
+    attempted && errors[key] ? errorBase : fieldBase;
+
+  const validate = (): FormErrors => {
+    const e: FormErrors = {};
+    if (isEmpty(form.carModel)) e.carModel = "Please select a car model.";
+    if (isEmpty(form.location)) e.location = "Please select a location.";
+    if (isEmpty(form.name) || !isValidName(form.name)) e.name = "Enter your full name (at least 2 characters).";
+    if (!isValidMobile(form.mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
+    if (!isValidEmail(form.email)) e.email = "Enter a valid email with @ and a domain (e.g. you@example.com).";
+    if (!isValidPincode(form.pincode)) e.pincode = "Enter a valid 6-digit pincode.";
+    if (isEmpty(form.date)) e.date = "Please select a date.";
+    if (isEmpty(form.time)) e.time = "Please select a time.";
+    return e;
+  };
+
   const availableTimeSlots = useMemo(() => {
-    if (!date || date !== minDate) return timeSlots;
+    if (!form.date || form.date !== minDate) return timeSlots;
     const now = new Date();
     const currentHour = now.getHours() + now.getMinutes() / 60;
     return timeSlots.filter((s) => s.end > currentHour);
-  }, [date, minDate]);
+  }, [form.date, minDate]);
 
-  const effectiveTime = availableTimeSlots.some((s) => s.label === time)
-    ? time
+  const effectiveTime = availableTimeSlots.some((s) => s.label === form.time)
+    ? form.time
     : "";
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
+    setAttempted(true);
+    const errs = validate();
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
+
+    setSubmitting(true);
+    setSubmitError(false);
+    try {
+      await submitLead("test_drive", {
+        car_model: form.carModel,
+        location: form.location,
+        name: form.name.trim(),
+        mobile_number: form.mobile.trim(),
+        email: form.email.trim(),
+        pincode: form.pincode.trim(),
+        address: form.address.trim(),
+        preferred_date: form.date,
+        preferred_time: form.time,
+      });
+      setSubmitted(true);
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -126,54 +187,101 @@ export default function TestDrive() {
                 </button>
               </div>
             ) : (
-              <form onSubmit={onSubmit} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <SelectField
-                  label="Select Car Model"
-                  placeholder="Select Car Model"
-                  options={carModels}
-                />
-                <SelectField
-                  label="Select Location"
-                  placeholder="Select Location"
-                  options={cityOptions}
-                />
+              <form onSubmit={onSubmit} className="grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
+                <label className="block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Select Car Model</span>
+                  <div className="relative">
+                    <select
+                      value={form.carModel}
+                      onChange={setField("carModel")}
+                      className={`${fieldError("carModel")} appearance-none pr-10`}
+                    >
+                      <option value="" disabled className="text-faint">Select Car Model</option>
+                      {carModels.map((o) => (
+                        <option key={o} value={o}>{o}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                  </div>
+                  {attempted && errors.carModel && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.carModel}</p>
+                  )}
+                </label>
+                <label className="block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Select Location</span>
+                  <div className="relative">
+                    <select
+                      value={form.location}
+                      onChange={setField("location")}
+                      className={`${fieldError("location")} appearance-none pr-10`}
+                    >
+                      <option value="" disabled className="text-faint">Select Location</option>
+                      {cityOptions.map((o) => (
+                        <option key={o} value={o}>{o}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                  </div>
+                  {attempted && errors.location && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.location}</p>
+                  )}
+                </label>
 
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Your Name</span>
-                  <input type="text" required placeholder="Your name" className={fieldBase} />
+                  <input
+                    type="text"
+                    value={form.name}
+                    onChange={setField("name")}
+                    placeholder="e.g. John Doe"
+                    className={fieldError("name")}
+                  />
+                  {attempted && errors.name && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.name}</p>
+                  )}
                 </label>
 
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
                   <input
                     type="tel"
-                    required
-                    pattern="[0-9]{10}"
-                    placeholder="Mobile number"
-                    className={fieldBase}
+                    value={form.mobile}
+                    onChange={setField("mobile")}
+                    placeholder="e.g. 9876543210"
+                    className={fieldError("mobile")}
                   />
+                  {attempted && errors.mobile && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.mobile}</p>
+                  )}
                 </label>
 
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Email</span>
                   <input
                     type="email"
-                    required
+                    value={form.email}
+                    onChange={setField("email")}
                     placeholder="you@example.com"
-                    className={fieldBase}
+                    className={fieldError("email")}
                   />
+                  {attempted && errors.email && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.email}</p>
+                  )}
                 </label>
 
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Pincode</span>
                   <input
                     type="text"
-                    required
                     inputMode="numeric"
-                    pattern="[0-9]{6}"
-                    placeholder="6-digit pincode"
-                    className={fieldBase}
+                    value={form.pincode}
+                    onChange={setField("pincode")}
+                    placeholder="e.g. 400001"
+                    className={fieldError("pincode")}
                   />
+                  {attempted && errors.pincode && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.pincode}</p>
+                  )}
                 </label>
 
                 <label className="col-span-full block">
@@ -182,6 +290,8 @@ export default function TestDrive() {
                   </span>
                   <input
                     type="text"
+                    value={form.address}
+                    onChange={setField("address")}
                     placeholder="House no., street, area"
                     className={fieldBase}
                   />
@@ -192,35 +302,55 @@ export default function TestDrive() {
                   <div className="relative">
                     <input
                       type="date"
-                      required
                       min={minDate}
-                      value={date}
-                      onChange={(e) => setDate(e.target.value)}
+                      value={form.date}
+                      onChange={setField("date")}
                       suppressHydrationWarning
-                      className={`${fieldBase} pr-10 ${date ? "" : "text-transparent"}`}
+                      className={`${fieldError("date")} pr-10 ${form.date ? "" : "text-transparent"}`}
                     />
                     <Calendar className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   </div>
+                  {attempted && errors.date && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.date}</p>
+                  )}
                 </label>
 
-                <SelectField
-                  label="Preferred Time"
-                  placeholder={
-                    date && availableTimeSlots.length === 0
-                      ? "No slots left today"
-                      : "Select time"
-                  }
-                  options={availableTimeSlots.map((s) => s.label)}
-                  value={effectiveTime}
-                  onChange={setTime}
-                />
+                <label className="block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Preferred Time</span>
+                  <div className="relative">
+                    <select
+                      value={effectiveTime}
+                      onChange={setField("time")}
+                      className={`${fieldError("time")} appearance-none pr-10`}
+                    >
+                      <option value="" disabled className="text-faint">
+                        {form.date && availableTimeSlots.length === 0
+                          ? "No slots left today"
+                          : "Select time"}
+                      </option>
+                      {availableTimeSlots.map((s) => (
+                        <option key={s.label} value={s.label}>{s.label}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                  </div>
+                  {attempted && errors.time && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.time}</p>
+                  )}
+                </label>
 
                 <button
                   type="submit"
-                  className="col-span-full mt-2 rounded bg-brand py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light"
+                  disabled={submitting}
+                  className="col-span-full mt-2 rounded bg-brand py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Book My Test Drive
+                  {submitting ? "Booking..." : "Book My Test Drive"}
                 </button>
+                {submitError && (
+                  <p className="col-span-full mt-1 text-sm font-medium text-red-600">
+                    Something went wrong. Please try again or call us directly.
+                  </p>
+                )}
                 <p className="col-span-full text-center text-xs text-faint">
                   By submitting, you agree to be contacted by Modi Hyundai about
                   your test drive request. See our{" "}

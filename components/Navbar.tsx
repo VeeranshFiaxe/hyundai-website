@@ -95,7 +95,7 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <ul ref={listRef} className="relative hidden items-center gap-0.5 lg:flex">
-          {/* Sliding active marker — single element that moves between links */}
+          {/* Sliding active marker, single element that moves between links */}
           <span
             aria-hidden="true"
             className="pointer-events-none absolute bottom-0 z-10 h-px rounded-full bg-brand transition-all duration-300 ease-out"

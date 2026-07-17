@@ -6,7 +6,7 @@ import { Calendar, WhatsApp, Phone, ChevronRight, ChevronLeft } from "./icons";
 
 const actions = [
   { label: "Book a\nTest Drive", href: "/book-a-test-drive", Icon: Calendar },
-  { label: "WhatsApp", href: "https://wa.me/919870012345", Icon: WhatsApp },
+  { label: "WhatsApp", href: "https://wa.link/diys8m", Icon: WhatsApp },
   { label: "Call Us", href: `tel:${nav.phone.replace(/\s/g, "")}`, Icon: Phone },
 ];
 

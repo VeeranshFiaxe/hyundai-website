@@ -6,6 +6,7 @@ import JsonLd from "@/components/JsonLd";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
+import WhatsAppWidget from "@/components/WhatsAppWidget";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -85,6 +86,7 @@ export default function RootLayout({
         <JsonLd />
         <Navbar />
         <FloatingActions />
+        <WhatsAppWidget />
         {children}
         <Footer />
       </body>

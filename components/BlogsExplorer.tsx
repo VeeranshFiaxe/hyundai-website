@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type FormEvent } from "react";
+import { useMemo, useRef, useState, type FormEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { blogs, type Blog, blogHeroImage } from "@/lib/data";
@@ -15,6 +15,27 @@ const heroStats = [
 ];
 
 const PAGE_SIZE = 6;
+
+function fuzzyMatch(query: string, target: string): boolean {
+  const q = query.toLowerCase();
+  const t = target.toLowerCase();
+
+  if (t.includes(q)) return true;
+
+  let qi = 0;
+  for (let ti = 0; ti < t.length && qi < q.length; ti++) {
+    if (q[qi] === t[ti]) qi++;
+  }
+  if (qi === q.length) return true;
+
+  const words = t.split(/\s+/);
+  if (words.some((w) => w.startsWith(q))) return true;
+
+  const qWords = q.split(/\s+/);
+  if (qWords.length > 1 && qWords.every((qw) => words.some((w) => w.startsWith(qw)))) return true;
+
+  return false;
+}
 
 /* Local card style for the blogs explorer. Kept separate from the shared
    BlogCard so the home page and article "Related posts" keep their look. */
@@ -63,6 +84,7 @@ export default function BlogsExplorer() {
   const [query, setQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [subscribed, setSubscribed] = useState(false);
+  const articlesRef = useRef<HTMLElement>(null);
 
   // Featured = most recent post (data is ordered newest-first).
   const featured = blogs[0];
@@ -73,9 +95,9 @@ export default function BlogsExplorer() {
       const matchesCat = category === "All" || b.category === category;
       const matchesQuery =
         !q ||
-        b.title.toLowerCase().includes(q) ||
-        b.excerpt.toLowerCase().includes(q) ||
-        b.category.toLowerCase().includes(q);
+        fuzzyMatch(q, b.title) ||
+        fuzzyMatch(q, b.excerpt) ||
+        fuzzyMatch(q, b.category);
       return matchesCat && matchesQuery;
     });
   }, [category, query]);
@@ -89,6 +111,7 @@ export default function BlogsExplorer() {
   const applySearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setVisibleCount(PAGE_SIZE);
+    articlesRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const shown = filtered.slice(0, visibleCount);
@@ -244,7 +267,7 @@ export default function BlogsExplorer() {
       )}
 
       {/* ---------------- GRID ---------------- */}
-      <section className="bg-white pb-4 pt-14">
+      <section ref={articlesRef} className="bg-white pb-4 pt-14">
         <div className="container-px mx-auto max-w-[1180px]">
           <div className="mb-7 flex items-baseline justify-between">
             <h3 className="font-display text-xl font-semibold text-text">
@@ -317,7 +340,7 @@ export default function BlogsExplorer() {
               <div className="w-full sm:w-auto">
                 {subscribed ? (
                   <div className="rounded-md border border-white/20 bg-white/5 px-5 py-3 text-sm font-semibold text-white">
-                    Thanks — you&apos;re subscribed! 🎉
+                    Thanks, you&apos;re subscribed! 🎉
                   </div>
                 ) : (
                   <form onSubmit={handleSubscribe} className="flex gap-2.5">

@@ -3,12 +3,16 @@
 import { useMemo, useState, type FormEvent } from "react";
 import Image from "next/image";
 import { cars, cityOptions, company, locations } from "@/lib/data";
+import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidYear, type FormErrors } from "@/lib/validation";
 import { ArrowRight, Car, Check, ChevronDown, Phone, Shield, Users } from "./icons";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
+
+const errorBase =
+  "w-full rounded border border-red-400 bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-red-500 focus:ring-2 focus:ring-red-400/20";
 
 const promiseLocation =
   locations.find((location) => location.name === "Hyundai H Promise Thane") ??
@@ -26,20 +30,9 @@ const sellReasons = [
   "A dealership representative connects with you after submission",
 ];
 
-const steps = [
-  {
-    title: "Choose your requirement",
-    text: "Start with whether you want to buy or sell a pre-owned car.",
-  },
-  {
-    title: "Fill in your details",
-    text: "Share a few basics so the Modi Hyundai team can prepare before calling.",
-  },
-  {
-    title: "Get a callback",
-    text: "A representative will reach out to understand your exact need and assist further.",
-  },
-];
+/* Hero banner image from the home page hero carousel. Creta campaign shot. */
+const PROMISE_HERO_IMAGE =
+  "https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/home/cretakingknightinnerkv-pc.jpg";
 
 type Mode = "buy" | "sell";
 
@@ -70,6 +63,10 @@ export default function HyundaiPromise() {
   const [buyForm, setBuyForm] = useState(buyInitialState);
   const [sellForm, setSellForm] = useState(sellInitialState);
   const [submittedMode, setSubmittedMode] = useState<Mode | null>(null);
+  const [buyErrors, setBuyErrors] = useState<FormErrors>({});
+  const [sellErrors, setSellErrors] = useState<FormErrors>({});
+  const [buyAttempted, setBuyAttempted] = useState(false);
+  const [sellAttempted, setSellAttempted] = useState(false);
 
   const buyModels = useMemo(
     () => cars.filter((car) => !["Electric", "Taxi"].includes(car.category)).slice(0, 10),
@@ -78,14 +75,47 @@ export default function HyundaiPromise() {
 
   const activeReasons = mode === "buy" ? buyReasons : sellReasons;
 
+  const validateBuy = (): FormErrors => {
+    const e: FormErrors = {};
+    if (isEmpty(buyForm.name) || !isValidName(buyForm.name)) e.name = "Enter your full name (at least 2 characters).";
+    if (!isValidMobile(buyForm.mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
+    if (!isValidEmail(buyForm.email)) e.email = "Enter a valid email with @ and a domain (e.g. you@example.com).";
+    if (isEmpty(buyForm.city)) e.city = "Please select your preferred location.";
+    if (isEmpty(buyForm.model)) e.model = "Please select a car model.";
+    if (isEmpty(buyForm.budget)) e.budget = "Please enter your budget range.";
+    return e;
+  };
+
+  const validateSell = (): FormErrors => {
+    const e: FormErrors = {};
+    if (isEmpty(sellForm.name) || !isValidName(sellForm.name)) e.name = "Enter your full name (at least 2 characters).";
+    if (!isValidMobile(sellForm.mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
+    if (!isValidEmail(sellForm.email)) e.email = "Enter a valid email with @ and a domain (e.g. you@example.com).";
+    if (isEmpty(sellForm.city)) e.city = "Please select your location.";
+    if (isEmpty(sellForm.brand)) e.brand = "Please enter the car brand.";
+    if (isEmpty(sellForm.model)) e.model = "Please enter the car model.";
+    if (!isValidYear(sellForm.year)) e.year = "Enter a valid year (2000-2099).";
+    if (isEmpty(sellForm.kms)) e.kms = "Please enter kilometers driven.";
+    return e;
+  };
+
+  const fieldError = (errors: FormErrors, key: string) =>
+    errors[key] ? errorBase : fieldBase;
+
   const handleBuySubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmittedMode("buy");
+    setBuyAttempted(true);
+    const errs = validateBuy();
+    setBuyErrors(errs);
+    if (Object.keys(errs).length === 0) setSubmittedMode("buy");
   };
 
   const handleSellSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmittedMode("sell");
+    setSellAttempted(true);
+    const errs = validateSell();
+    setSellErrors(errs);
+    if (Object.keys(errs).length === 0) setSubmittedMode("sell");
   };
 
   const resetSubmission = () => {
@@ -108,27 +138,47 @@ export default function HyundaiPromise() {
               className="overflow-hidden rounded-[1.25rem] border border-border bg-bg-2"
             >
               <div className="grid gap-0 lg:grid-cols-[1.15fr_0.85fr]">
-                <div className="relative min-h-[320px]">
+                <div className="relative min-h-[320px] h-full overflow-hidden rounded-2xl">
                   <Image
-                    src={promiseLocation.image}
-                    alt="Modi Hyundai Promise showroom"
+                    src={PROMISE_HERO_IMAGE}
+                    alt="A silver Hyundai from the Promise pre-owned programme"
                     fill
                     sizes="(max-width: 1024px) 100vw, 38vw"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/10" />
-                  <div className="absolute inset-x-0 bottom-0 p-6 text-white sm:p-8">
-                    <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] backdrop-blur">
-                      Hyundai Promise
-                    </span>
-                    <h2 className="mt-4 font-display text-2xl font-bold sm:text-3xl">
-                      A simple pre-owned car journey, handled personally
-                    </h2>
-                    <p className="mt-3 max-w-lg text-sm leading-relaxed text-white/80 sm:text-base">
-                      Whether you are looking to buy your next pre-owned Hyundai or
-                      sell your current car, our Promise team helps you take the
-                      next step with clarity and confidence.
-                    </p>
+                  {/* Fixed readability gradient, darker at the bottom where the
+                      copy sits, fading to clear near the top so the image stays
+                      clean rather than muddy. */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 70%)",
+                    }}
+                  />
+                  {/* Copy block, anchored as one block, 48px padding to match the
+                      right column's cards, shared left edge, fixed gaps. */}
+                  <div className="absolute inset-0 flex h-full flex-col justify-end p-[48px] text-white">
+                    <div className="flex flex-col">
+                      <span className="inline-flex w-fit rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] backdrop-blur">
+                        Hyundai Promise
+                      </span>
+                      <h2
+                        className="font-display text-2xl font-bold sm:text-3xl"
+                        style={{ marginTop: "16px" }}
+                      >
+                        A simple pre-owned car journey, handled personally
+                      </h2>
+                      <p
+                        className="text-sm leading-relaxed text-white/80 sm:text-base"
+                        style={{ marginTop: "20px", maxWidth: "380px" }}
+                      >
+                        Whether you are looking to buy your next pre-owned Hyundai or
+                        sell your current car, our Promise team helps you take the
+                        next step with clarity and confidence.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -221,57 +271,61 @@ export default function HyundaiPromise() {
               </div>
 
               {mode === "buy" ? (
-                <form onSubmit={handleBuySubmit} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <form onSubmit={handleBuySubmit} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Full Name</span>
                     <input
                       type="text"
-                      required
                       value={buyForm.name}
                       onChange={(event) =>
                         setBuyForm((current) => ({ ...current, name: event.target.value }))
                       }
-                      placeholder="Your name"
-                      className={fieldBase}
+                      placeholder="e.g. John Doe"
+                      className={fieldError(buyErrors, "name")}
                     />
+                    {buyAttempted && buyErrors.name && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.name}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
                     <input
                       type="tel"
-                      required
-                      pattern="[0-9]{10}"
                       value={buyForm.mobile}
                       onChange={(event) =>
                         setBuyForm((current) => ({ ...current, mobile: event.target.value }))
                       }
-                      placeholder="10-digit mobile number"
-                      className={fieldBase}
+                      placeholder="e.g. 9876543210"
+                      className={fieldError(buyErrors, "mobile")}
                     />
+                    {buyAttempted && buyErrors.mobile && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.mobile}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Email Address</span>
                     <input
                       type="email"
-                      required
                       value={buyForm.email}
                       onChange={(event) =>
                         setBuyForm((current) => ({ ...current, email: event.target.value }))
                       }
                       placeholder="you@example.com"
-                      className={fieldBase}
+                      className={fieldError(buyErrors, "email")}
                     />
+                    {buyAttempted && buyErrors.email && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.email}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Preferred Location</span>
                     <div className="relative">
                       <select
-                        required
                         value={buyForm.city}
                         onChange={(event) =>
                           setBuyForm((current) => ({ ...current, city: event.target.value }))
                         }
-                        className={`${fieldBase} appearance-none pr-10`}
+                        className={`${fieldError(buyErrors, "city")} appearance-none pr-10`}
                       >
                         <option value="" disabled>
                           Select location
@@ -284,17 +338,19 @@ export default function HyundaiPromise() {
                       </select>
                       <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                     </div>
+                    {buyAttempted && buyErrors.city && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.city}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Interested Model</span>
                     <div className="relative">
                       <select
-                        required
                         value={buyForm.model}
                         onChange={(event) =>
                           setBuyForm((current) => ({ ...current, model: event.target.value }))
                         }
-                        className={`${fieldBase} appearance-none pr-10`}
+                        className={`${fieldError(buyErrors, "model")} appearance-none pr-10`}
                       >
                         <option value="" disabled>
                           Select model
@@ -307,19 +363,24 @@ export default function HyundaiPromise() {
                       </select>
                       <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                     </div>
+                    {buyAttempted && buyErrors.model && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.model}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Budget Range</span>
                     <input
                       type="text"
-                      required
                       value={buyForm.budget}
                       onChange={(event) =>
                         setBuyForm((current) => ({ ...current, budget: event.target.value }))
                       }
-                      placeholder="Eg. Rs. 8-10 lakh"
-                      className={fieldBase}
+                      placeholder="e.g. Rs. 8-10 lakh"
+                      className={fieldError(buyErrors, "budget")}
                     />
+                    {buyAttempted && buyErrors.budget && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.budget}</p>
+                    )}
                   </label>
                   <label className="col-span-full block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">
@@ -344,57 +405,61 @@ export default function HyundaiPromise() {
                   </button>
                 </form>
               ) : (
-                <form onSubmit={handleSellSubmit} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <form onSubmit={handleSellSubmit} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Full Name</span>
                     <input
                       type="text"
-                      required
                       value={sellForm.name}
                       onChange={(event) =>
                         setSellForm((current) => ({ ...current, name: event.target.value }))
                       }
-                      placeholder="Your name"
-                      className={fieldBase}
+                      placeholder="e.g. John Doe"
+                      className={fieldError(sellErrors, "name")}
                     />
+                    {sellAttempted && sellErrors.name && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.name}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
                     <input
                       type="tel"
-                      required
-                      pattern="[0-9]{10}"
                       value={sellForm.mobile}
                       onChange={(event) =>
                         setSellForm((current) => ({ ...current, mobile: event.target.value }))
                       }
-                      placeholder="10-digit mobile number"
-                      className={fieldBase}
+                      placeholder="e.g. 9876543210"
+                      className={fieldError(sellErrors, "mobile")}
                     />
+                    {sellAttempted && sellErrors.mobile && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.mobile}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Email Address</span>
                     <input
                       type="email"
-                      required
                       value={sellForm.email}
                       onChange={(event) =>
                         setSellForm((current) => ({ ...current, email: event.target.value }))
                       }
                       placeholder="you@example.com"
-                      className={fieldBase}
+                      className={fieldError(sellErrors, "email")}
                     />
+                    {sellAttempted && sellErrors.email && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.email}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Location</span>
                     <div className="relative">
                       <select
-                        required
                         value={sellForm.city}
                         onChange={(event) =>
                           setSellForm((current) => ({ ...current, city: event.target.value }))
                         }
-                        className={`${fieldBase} appearance-none pr-10`}
+                        className={`${fieldError(sellErrors, "city")} appearance-none pr-10`}
                       >
                         <option value="" disabled>
                           Select location
@@ -407,60 +472,71 @@ export default function HyundaiPromise() {
                       </select>
                       <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                     </div>
+                    {sellAttempted && sellErrors.city && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.city}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Car Brand</span>
                     <input
                       type="text"
-                      required
                       value={sellForm.brand}
                       onChange={(event) =>
                         setSellForm((current) => ({ ...current, brand: event.target.value }))
                       }
-                      placeholder="Eg. Hyundai"
-                      className={fieldBase}
+                      placeholder="e.g. Hyundai"
+                      className={fieldError(sellErrors, "brand")}
                     />
+                    {sellAttempted && sellErrors.brand && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.brand}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Car Model</span>
                     <input
                       type="text"
-                      required
                       value={sellForm.model}
                       onChange={(event) =>
                         setSellForm((current) => ({ ...current, model: event.target.value }))
                       }
-                      placeholder="Eg. Creta"
-                      className={fieldBase}
+                      placeholder="e.g. Creta"
+                      className={fieldError(sellErrors, "model")}
                     />
+                    {sellAttempted && sellErrors.model && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.model}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Year of Purchase</span>
                     <input
-                      type="number"
-                      required
-                      min="2000"
-                      max="2099"
+                      type="text"
+                      inputMode="numeric"
                       value={sellForm.year}
                       onChange={(event) =>
                         setSellForm((current) => ({ ...current, year: event.target.value }))
                       }
-                      placeholder="Eg. 2021"
-                      className={fieldBase}
+                      placeholder="e.g. 2021"
+                      className={fieldError(sellErrors, "year")}
                     />
+                    {sellAttempted && sellErrors.year && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.year}</p>
+                    )}
                   </label>
                   <label className="block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">Kilometers Driven</span>
                     <input
                       type="text"
-                      required
+                      inputMode="numeric"
                       value={sellForm.kms}
                       onChange={(event) =>
                         setSellForm((current) => ({ ...current, kms: event.target.value }))
                       }
-                      placeholder="Eg. 35,000 km"
-                      className={fieldBase}
+                      placeholder="e.g. 35,000 km"
+                      className={fieldError(sellErrors, "kms")}
                     />
+                    {sellAttempted && sellErrors.kms && (
+                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.kms}</p>
+                    )}
                   </label>
                   <label className="col-span-full block">
                     <span className="mb-1.5 block text-xs font-semibold text-muted">
@@ -486,38 +562,6 @@ export default function HyundaiPromise() {
                 </form>
               )}
             </Reveal>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-bg-2 py-14 lg:py-18">
-        <div className="container-px mx-auto max-w-[1400px]">
-          <Reveal className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand">
-              How It Works
-            </p>
-            <h2 className="mt-2 font-display text-2xl font-bold text-text sm:text-3xl">
-              A quick path from enquiry to conversation
-            </h2>
-          </Reveal>
-
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {steps.map((step, index) => (
-              <Reveal
-                key={step.title}
-                delay={index * 100}
-                variant="scale-up"
-                className="rounded-2xl border border-border bg-white p-6 shadow-[0_4px_24px_0_rgba(0,44,95,0.05)]"
-              >
-                <span className="inline-grid h-10 w-10 place-items-center rounded-full bg-brand text-sm font-bold text-white">
-                  0{index + 1}
-                </span>
-                <h3 className="mt-4 font-display text-lg font-bold text-text">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted">{step.text}</p>
-              </Reveal>
-            ))}
           </div>
         </div>
       </section>
