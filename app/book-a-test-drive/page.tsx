@@ -1,6 +1,6 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import TestDriveWizard from "@/components/TestDriveWizard";
-import Reveal from "@/components/Reveal";
 import { SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
@@ -60,27 +60,11 @@ export default function BookTestDrivePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(testDrivePageSchema).replace(/</g, "\\u003c") }}
       />
       <main style={{ marginTop: "96px" }}>
-        <section className="bg-bg-2 py-10 lg:py-14">
+        <section className="bg-white py-20 lg:py-28">
           <div className="container-px mx-auto max-w-[1400px]">
-            <Reveal className="mx-auto max-w-xl text-center">
-              <p className="text-xs font-semibold uppercase tracking-wider text-brand">
-                Book a Test Drive
-              </p>
-              <h1 className="mt-2 font-display text-3xl font-bold text-text sm:text-4xl">
-                Drive the Hyundai You&apos;re Comparing
-              </h1>
-              <p className="mt-3 text-sm text-muted sm:text-base">
-                Choose your model, a convenient time and a showroom or doorstep
-                location. We&apos;ll confirm the car and help you compare the right
-                variant, without any pressure to buy.
-              </p>
-            </Reveal>
-          </div>
-        </section>
-
-        <section className="bg-white py-10 lg:py-16">
-          <div className="container-px mx-auto max-w-[1400px]">
-            <TestDriveWizard />
+            <Suspense fallback={<div className="mx-auto max-w-3xl rounded-lg border border-border bg-white p-6 shadow sm:p-10 text-center text-muted">Loading...</div>}>
+              <TestDriveWizard />
+            </Suspense>
           </div>
         </section>
       </main>

@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { offers } from "@/lib/data";
-import { iconMap, ArrowRight, type IconName } from "./icons";
+import { iconMap, type IconName } from "./icons";
 import Reveal from "./Reveal";
 
 export default function Offers() {
@@ -20,13 +19,6 @@ export default function Offers() {
               Hyundai models.
             </h2>
           </div>
-          <Link
-            href="/cars"
-            className="group inline-flex shrink-0 items-center gap-2 rounded border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur transition-all hover:bg-white/20"
-          >
-            View All Offers
-            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
         </Reveal>
 
         {/* Offer cards */}
@@ -38,9 +30,9 @@ export default function Offers() {
                 key={offer.title}
                 delay={i * 100}
                 variant="slide-right"
-                className="group flex items-center gap-5 rounded-lg border border-white/15 bg-white/10 p-6 backdrop-blur transition-all hover:-translate-y-1 hover:border-white/30 hover:bg-white/15 hover:shadow-[0_8px_30px_0_rgba(0,0,0,0.15)]"
+                className="offer-card group flex items-center gap-5 rounded-lg border border-white/15 bg-white/10 p-6 backdrop-blur hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/15 hover:shadow-[0_8px_30px_0_rgba(0,0,0,0.15)]"
               >
-                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-white/15 text-white transition-colors group-hover:bg-white/25">
+                <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-white/15 text-white transition-all duration-500 ease-[cubic-bezier(0.25,0.8,0.25,1)] group-hover:bg-white/25">
                   <Icon className="h-6 w-6" />
                 </span>
                 <div>

@@ -56,7 +56,7 @@ export default function ContactUsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactPageSchema).replace(/</g, "\\u003c") }}
       />
       <main style={{ marginTop: "96px" }}>
-        <section className="relative h-[240px] w-full overflow-hidden bg-brand-deep sm:h-[300px]">
+        <section className="relative h-[30vh] min-h-[220px] max-h-[400px] w-full overflow-hidden bg-brand-deep">
           <Image
             src={aboutHeroImage}
             alt="Modi Hyundai showroom"

@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { company, cars } from "@/lib/data";
+
 import Reveal from "./Reveal";
+import BookTestDriveBtn from "./BookTestDriveBtn";
 
 /* ============================================================
    Homepage SEO & AEO content blocks.
@@ -149,12 +150,9 @@ export default function HomeSeoContent() {
               </p>
             </div>
             <div className="mt-7 flex flex-wrap gap-3">
-              <Link
-                href="/book-a-test-drive"
-                className="btn-primary"
-              >
+              <BookTestDriveBtn className="btn-primary">
                 Book a Test Drive
-              </Link>
+              </BookTestDriveBtn>
               <Link href="/about" className="btn-outline">
                 About Modi Hyundai
               </Link>
@@ -258,72 +256,7 @@ export default function HomeSeoContent() {
         </div>
       </section>
 
-      {/* AEO definitional paragraph + popular models */}
-      <section className="bg-bg-2 py-14 lg:py-20">
-        <div className="container-px mx-auto max-w-[1100px]">
-          <Reveal>
-            <h2 className="font-display text-2xl font-bold leading-tight tracking-tight text-text sm:text-3xl">
-              Frequently compared Hyundai models at Modi Hyundai
-            </h2>
-            <div className="mt-5 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
-              <p>
-                The <strong className="text-text">Hyundai Creta</strong> is
-                India&apos;s best-selling mid-size SUV, prized for its panoramic
-                sunroof, Level 2 ADAS and a choice of turbo-petrol, naturally
-                aspirated petrol and diesel engines. The{" "}
-                <strong className="text-text">Hyundai Exter</strong> brings an
-                SUV stance to the compact segment with a factory CNG option,
-                while the <strong className="text-text">Hyundai Venue</strong>{" "}
-                adds turbo-petrol and diesel choices in a city-friendly footprint.
-              </p>
-              <p>
-                Growing families often choose the three-row{" "}
-                <strong className="text-text">Hyundai Alcazar</strong> for its
-                captain-chair or bench second row, while sedan buyers gravitate
-                to the <strong className="text-text">Hyundai Verna</strong> for
-                its large boot and turbo-petrol performance. For electric
-                buyers, the <strong className="text-text">Hyundai IONIQ 5</strong>{" "}
-                and <strong className="text-text">Hyundai Creta Electric</strong>{" "}
-                offer fast charging and Vehicle-to-Load capability.
-              </p>
-            </div>
-          </Reveal>
 
-          <div className="mt-8 flex flex-wrap gap-2">
-            {cars
-              .filter((c) =>
-                ["CRETA", "VENUE", "EXTER", "ALCAZAR", "VERNA", "IONIQ 5", "CRETA ELECTRIC"].includes(
-                  c.name,
-                ),
-              )
-              .map((car) => (
-                <Link
-                  key={car.slug}
-                  href={`/cars/${car.slug}`}
-                  className="rounded-full border border-border bg-white px-4 py-2 text-sm font-medium text-text transition-colors hover:border-brand hover:text-brand"
-                >
-                  Hyundai {car.name.charAt(0) + car.name.slice(1).toLowerCase()}
-                </Link>
-              ))}
-          </div>
-
-          <Reveal>
-            <p className="mt-10 border-t border-border pt-8 text-sm leading-relaxed text-muted">
-              <strong className="text-text">Areas we serve:</strong>{" "}
-              {company.areasServed.join(", ")} and the wider Mumbai Metropolitan
-              Region. Visit any of our showrooms and service centres, or call{" "}
-              <a
-                href={`tel:${company.phone.replace(/\s/g, "")}`}
-                className="font-semibold text-brand underline underline-offset-4 hover:text-brand-light"
-              >
-                {company.phone}
-              </a>{" "}
-              to speak with our sales and service teams. Showrooms are open{" "}
-              {company.hours}.
-            </p>
-          </Reveal>
-        </div>
-      </section>
     </>
   );
 }

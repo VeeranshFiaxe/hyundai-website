@@ -1,4 +1,5 @@
 import type { Car, CarDetail, GalleryImage } from "./data";
+import { sanitize, brochureBySlug } from "./image-manifest";
 
 const passengerCarWarranty =
   "3 years / unlimited km standard Hyundai warranty. Extended warranty and roadside-assistance plans can be selected at delivery; ask Modi Hyundai to confirm current plan terms for your variant.";
@@ -545,7 +546,12 @@ const galleryLabels = [
   "Rear three-quarter",
 ];
 
-const officialAsset = (path: string) => `https://www.hyundai.com${path}`;
+const officialAsset = (path: string) => {
+  const parts = path.split("/");
+  const findACarIdx = parts.indexOf("find-a-car");
+  const modelFolder = findACarIdx >= 0 ? parts[findACarIdx + 1].toLowerCase() : "";
+  return `/cars/gallery/${modelFolder}/${sanitize(path)}`;
+};
 
 /* Curated manufacturer images from each Hyundai India model page. Every URL
    below was fetched and confirmed live (HTTP 200/206, image content-type).
@@ -718,25 +724,8 @@ const modelFeatureGallery: Record<string, GalleryImage[]> = {
   ],
 };
 
-const brochurePathBySlug: Record<string, string> = {
-  exter: "/content/dam/hyundai/in/en/data/brochure/exter.pdf",
-  venue: "/content/dam/hyundai/in/en/data/brochure/venue.pdf",
-  "venue-n-line": "/content/dam/hyundai/in/en/data/brochure/venue-n-line.pdf",
-  creta: "/content/dam/hyundai/in/en/data/brochure/creta.pdf",
-  "creta-n-line": "/content/dam/hyundai/in/en/data/brochure/creta-n-line.pdf",
-  alcazar: "/content/dam/hyundai/in/en/data/brochure/alcazar.pdf",
-  verna: "/content/dam/hyundai/in/en/data/brochure/verna.pdf",
-  aura: "/content/dam/hyundai/in/en/data/brochure/aura.pdf",
-  "grand-i10-nios": "/content/dam/hyundai/in/en/data/brochure/grand-i10-nios.pdf",
-  i20: "/content/dam/hyundai/in/en/data/brochure/i20.pdf",
-  "i20-n-line": "/content/dam/hyundai/in/en/data/brochure/i20-n-line.pdf",
-  "ioniq-5": "/content/dam/hyundai/in/en/data/brochure/ioniq-5.pdf",
-  "creta-electric": "/content/dam/hyundai/in/en/data/brochure/creta-ev.pdf",
-};
-
 export function getCarBrochure(car: Car) {
-  const path = brochurePathBySlug[car.slug];
-  return path ? officialAsset(path) : undefined;
+  return brochureBySlug[car.slug];
 }
 
 /* Genuine Hyundai 360-degree exterior frames. This gallery has independent

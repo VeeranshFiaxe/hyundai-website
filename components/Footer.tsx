@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import BookTestDriveBtn from "./BookTestDriveBtn";
 import { popularCars, nav, company } from "@/lib/data";
 import {
   MapPin,
@@ -20,7 +21,6 @@ const quickLinks = [
   { label: "Hyundai Promise", href: "/hyundai-promise" },
   { label: "Service", href: "/locate-service-centre" },
   { label: "Locate Us", href: "/locate-us" },
-  { label: "Book a Test Drive", href: "/book-a-test-drive" },
   { label: "Blogs", href: "/blogs" },
   { label: "Contact Us", href: "/contact-us" },
 ];
@@ -83,6 +83,11 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <BookTestDriveBtn className="text-sm text-white/60 transition-colors hover:text-white">
+                  Book a Test Drive
+                </BookTestDriveBtn>
+              </li>
             </ul>
           </div>
 
@@ -163,6 +168,22 @@ export default function Footer() {
           <div className="flex gap-6">
             <a href="#" className="transition-colors hover:text-white">Privacy Policy</a>
             <a href="#" className="transition-colors hover:text-white">Terms &amp; Conditions</a>
+          </div>
+        </div>
+      </div>
+
+      {/* Legal strip */}
+      <div className="border-t border-white/5 bg-black/20">
+        <div className="container-px mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-2 py-4 text-center text-[11px] text-white/35 sm:flex-row sm:text-left">
+          <p>
+            The information, prices and offers on this website are for general
+            guidance only and do not constitute an offer. Images shown may differ
+            from actual products. Please contact Modi Hyundai for the latest
+            prices, variant availability and offer terms.
+          </p>
+          <div className="flex shrink-0 gap-5">
+            <a href="#" className="transition-colors hover:text-white/70">Privacy Policy</a>
+            <a href="#" className="transition-colors hover:text-white/70">Terms &amp; Conditions</a>
           </div>
         </div>
       </div>

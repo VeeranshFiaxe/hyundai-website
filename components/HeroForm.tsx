@@ -2,8 +2,9 @@
 
 import { useState, type FormEvent } from "react";
 import { carModels, cityOptions } from "@/lib/data";
-import { isEmpty, isValidMobile, isValidName, type FormErrors } from "@/lib/validation";
-import { Check, ChevronDown, Calendar, ArrowRight, ArrowLeft } from "./icons";
+import { isEmpty, isValidName, type FormErrors } from "@/lib/validation";
+import { Check, ChevronDown, Calendar, ArrowRight, ArrowLeft, Phone } from "./icons";
+import { OtpGate } from "./OtpGate";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-3 py-2.5 text-[13px] text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
@@ -11,7 +12,7 @@ const fieldBase =
 const errorBase =
   "w-full rounded border border-red-400 bg-white px-3 py-2.5 text-[13px] text-text outline-none transition-colors placeholder:text-faint focus:border-red-500 focus:ring-2 focus:ring-red-400/20";
 
-export default function HeroForm() {
+function HeroFormInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: string; requestChangePhone: () => void }) {
   const [submitted, setSubmitted] = useState(false);
   const [step, setStep] = useState(1);
   const [attempted, setAttempted] = useState(false);
@@ -19,7 +20,7 @@ export default function HeroForm() {
   const [step2Errors, setStep2Errors] = useState<FormErrors>({});
 
   const [name, setName] = useState("");
-  const [mobile, setMobile] = useState("");
+  const mobile = verifiedPhone;
   const [model, setModel] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState("");
@@ -33,7 +34,6 @@ export default function HeroForm() {
   const validateStep1 = (): FormErrors => {
     const e: FormErrors = {};
     if (isEmpty(name) || !isValidName(name)) e.name = "Enter your full name.";
-    if (!isValidMobile(mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
     if (isEmpty(model)) e.model = "Please select a car model.";
     return e;
   };
@@ -73,7 +73,6 @@ export default function HeroForm() {
             setSubmitted(false);
             setStep(1);
             setName("");
-            setMobile("");
             setModel("");
           }}
           className="mt-6 rounded border border-border px-4 py-2 text-xs font-semibold text-text transition-colors hover:bg-bg-2"
@@ -111,19 +110,19 @@ export default function HeroForm() {
                 <p className="mt-0.5 text-[11px] font-medium text-red-600">{errors.name}</p>
               )}
             </label>
-            <label className="block">
-              <span className="sr-only">Mobile Number</span>
-              <input
-                type="tel"
-                placeholder="e.g. 9876543210"
-                className={fieldError("mobile")}
-                value={mobile}
-                onChange={e => setMobile(e.target.value)}
-              />
-              {attempted && errors.mobile && (
-                <p className="mt-0.5 text-[11px] font-medium text-red-600">{errors.mobile}</p>
-              )}
-            </label>
+            <div
+              className="flex cursor-pointer items-center justify-between rounded border border-[#dbeafe] bg-[#f0f7ff] px-3 py-2.5"
+              onClick={requestChangePhone}
+              title="Click to change verified phone number"
+            >
+              <div className="flex items-center gap-2">
+                <Phone className="h-3.5 w-3.5 text-brand" />
+                <span className="text-[13px] font-semibold text-brand">+91 {mobile}</span>
+              </div>
+              <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-brand shadow-sm">
+                <Check className="h-2.5 w-2.5" /> Verified
+              </span>
+            </div>
             <label className="block">
               <span className="sr-only">Select Car Model</span>
               <div className="relative">
@@ -227,5 +226,21 @@ export default function HeroForm() {
         </div>
       </form>
     </div>
+  );
+}
+
+export default function HeroForm() {
+  return (
+    <OtpGate
+      title="Book a Test Drive"
+      subtitle="Enter your phone number to get started. We'll verify it before you book."
+    >
+      {(verifiedPhone, requestChangePhone) => (
+        <HeroFormInner
+          verifiedPhone={verifiedPhone}
+          requestChangePhone={requestChangePhone}
+        />
+      )}
+    </OtpGate>
   );
 }

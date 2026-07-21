@@ -1,64 +1,28 @@
 /* ============================================================
    Content model for the Modi Hyundai landing page.
-   Car lineup, images, pricing, engine and transmission specs are
-   sourced directly from the official Hyundai India site
-   (hyundai.com/in/en) so the dealership page matches the parent
-   brand's own data. NAP/location facts come from modihyundai.co.in.
-   Portrait/showroom photos use stock stand-ins where noted.
+   Car lineup, pricing, engine and transmission specs are sourced
+   directly from the official Hyundai India site (hyundai.com/in/en)
+   so the dealership page matches the parent brand's own data.
+   NAP/location facts come from modihyundai.co.in.
+
+   Every image is served locally from /public — see lib/image-manifest.ts
+   for the single source of truth and scripts/fetch-car-images.mjs for
+   how the assets were downloaded from hyundai.com / AeplCDN / Unsplash.
    ============================================================ */
 
-/* Genuine Hyundai India product shot (used for the test-drive interior
-   panel; sourced from a public automotive CDN, not the corporate site). */
-const hy = (path: string, w = 1280, h = 720) =>
-  `https://imgd.aeplcdn.com/${w}x${h}/n/cw/ec/${path}?isig=0&q=80`;
-
-/* Official Hyundai India transparent product cutouts, from hyundai.com/in/en. */
-const official = (path: string) => `https://www.hyundai.com${path}`;
-
-/* Stock stand-ins for people and showroom buildings. */
-const stock = (id: string, w = 800) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+import {
+  banners,
+  cutouts,
+  coloursBySlug,
+  blogImages,
+  avatars,
+  stockHeroes,
+  blogHero,
+  testDriveImage as testDriveImageLocal,
+} from "./image-manifest";
 
 /* Indian numbering (lakh/crore) grouping, e.g. 1090700 -> "10,90,700". */
 export const formatINR = (n: number) => `₹${n.toLocaleString("en-IN")}`;
-
-/* Official hyundai.com transparent product cutouts, 1600x590. */
-const officialShot = {
-  exter: "/content/dam/hyundai/in/en/data/find-a-car/Exter/booking-open/homemodel-exter.png",
-  venue: "/content/dam/hyundai/in/en/data/home/homemodel-venue.png",
-  venueNline: "/content/dam/hyundai/in/en/data/home/homemodel-venue-nline.png",
-  creta: "/content/dam/hyundai/in/en/data/home/homemodel-creta.png",
-  alcazar: "/content/dam/hyundai/in/en/data/home/homemodel-alcazar.png",
-  cretaNline: "/content/dam/hyundai/in/en/data/home/homemodel-creta-nline.png",
-  verna: "/content/dam/hyundai/in/en/data/home/home-model-verna.png",
-  aura: "/content/dam/hyundai/in/en/data/home/homemodel-aura.png",
-  nios: "/content/dam/hyundai/in/en/data/home/homemodel-nios.png",
-  i20: "/content/dam/hyundai/in/en/data/home/homemodel-i20.png",
-  i20Nline: "/content/dam/hyundai/in/en/data/home/homemodel-i20-nline.png",
-  ioniq5: "/content/dam/hyundai/in/en/data/home/homemodel-ioniq5.png",
-  cretaElectric: "/content/dam/hyundai/in/en/data/home/homemodel-creta-electric.png",
-};
-
-/* Full-background photography (not transparent cutouts) for contexts that
-   need a real photo rather than a floating product shot: the test-drive
-   interior panel and blog thumbnails, which render with object-cover and
-   would show through as blank/white behind a transparent PNG. */
-const shot = {
-  cretaInterior: "106815/creta-interior-dashboard.jpeg",
-  creta: "106815/creta-exterior-right-front-three-quarter-2.jpeg",
-  alcazar: "157825/alcazar-facelift-exterior-right-front-three-quarter-22.jpeg",
-  venue: "197163/venue-exterior-right-front-three-quarter-38.png",
-  verna: "204398/verna-exterior-right-front-three-quarter.png",
-  exter: "216807/exter-exterior-right-front-three-quarter.png",
-  exterInterior: "216807/exter-interior-dashboard.jpeg",
-  ioniq5: "110289/ioniq-5-exterior-right-front-three-quarter-96.png",
-};
-
-/* Official hyundai.com cinematic hero banners (1860x540), pulled from the
-   homepage carousel and individual model pages. These already have the
-   marketing headline baked into the photo itself, matching the real
-   site's hero treatment exactly. */
-const banner = (path: string) => official(path);
 
 /* ---- Canonical business identity (NAP), used everywhere + in schema ---- */
 export const SITE_URL =
@@ -107,8 +71,8 @@ export const nav = {
     { label: "Service", href: "/locate-service-centre" },
     { label: "Hyundai Promise", href: "/hyundai-promise" },
     { label: "Locate Us", href: "/locate-us" },
-    { label: "Contact Us", href: "/contact-us" },
     { label: "Blogs", href: "/blogs" },
+    { label: "Contact Us", href: "/contact-us" },
   ],
 };
 
@@ -117,15 +81,13 @@ export const nav = {
    (values, brand portfolio, workforce/sales growth) sourced from
    gautammodigroup.com. Hyundai Motor India brand facts sourced from
    hyundai.com/in/en's own "About Us" / brand-story pages. */
-export const aboutHeroImage = stock("photo-1560179707-f14e90ef3623", 1600);
+export const aboutHeroImage = stockHeroes.about;
 /* "My Hyundai My Memories" customer-campaign banner (verified live on
    hyundai.com). Moved from the home hero slideshow to the /blogs hero,
    where it fits the journal/customer-stories theme. Sits behind a dark
    gradient overlay so the white hero copy stays legible. */
-export const blogHeroImage = official(
-  "/content/dam/hyundai/in/en/data/hyundai-story/campaign/myhyundaimymemories/mymemories-bannerpc1.jpg",
-);
-export const aboutCultureImage = stock("photo-1522071820081-009f0129c71c", 1200);
+export const blogHeroImage = blogHero;
+export const aboutCultureImage = stockHeroes.aboutCulture;
 
 export const groupInfo = {
   name: "Gautam Modi Group",
@@ -224,7 +186,7 @@ export const heroSlides: Slide[] = [
     headline: "Command the road.",
     sub: "Level 2 ADAS, a panoramic sunroof and a presence that speaks before you do.",
     price: "10.91",
-    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/home/cretakingknightinnerkv-pc.jpg"),
+    image: banners.creta,
     alt: "Hyundai Creta, official campaign banner",
   },
   {
@@ -233,7 +195,7 @@ export const heroSlides: Slide[] = [
     headline: "Room for the whole family.",
     sub: "Three spacious rows and boss-mode comfort, built for grand journeys.",
     price: "14.51",
-    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvpc2.jpg"),
+    image: banners.alcazar,
     alt: "The bold new Hyundai Alcazar, official campaign banner",
   },
   {
@@ -242,7 +204,7 @@ export const heroSlides: Slide[] = [
     headline: "The future, arrived.",
     sub: "Hyundai's flagship electric SUV, with futuristic design and a 500km+ range.",
     price: "55.71",
-    image: banner("/content/dam/hyundai/in/en/images/home/banner/ioniq-des-banner.jpg"),
+    image: banners.ioniq5,
     alt: "The Hyundai Ioniq 5 electric SUV, official campaign banner",
   },
   {
@@ -251,7 +213,7 @@ export const heroSlides: Slide[] = [
     headline: "Drive to shine.",
     sub: "Confident city size, an SUV stance and a practical factory CNG choice.",
     price: "5.81",
-    image: banner("/content/dam/hyundai/in/en/images/home/banner/exter-home-newpc-banner.jpg"),
+    image: banners.exter,
     alt: "Hyundai Exter compact SUV, official campaign banner",
   },
   {
@@ -260,7 +222,7 @@ export const heroSlides: Slide[] = [
     headline: "Made for your every day.",
     sub: "Turbo-petrol, diesel and connected technology in a city-friendly SUV.",
     price: "8.00",
-    image: banner("/content/dam/hyundai/in/en/images/home/banner/venue-homepage-des-banner.jpg"),
+    image: banners.venue,
     alt: "Hyundai Venue compact SUV, official campaign banner",
   },
   {
@@ -269,7 +231,7 @@ export const heroSlides: Slide[] = [
     headline: "Futuristic by design.",
     sub: "A spacious sedan with a responsive turbo-petrol option and advanced driver assistance.",
     price: "10.99",
-    image: banner("/content/dam/hyundai/in/en/images/home/banner/verna-homepage-des-banner.jpg"),
+    image: banners.verna,
     alt: "Hyundai Verna sedan, official campaign banner",
   },
   {
@@ -278,7 +240,7 @@ export const heroSlides: Slide[] = [
     headline: "Undisputed. Ultimate. Now electric.",
     sub: "Choose the battery range that fits your week, with V2L and Level 2 ADAS on selected variants.",
     price: "18.03",
-    image: banner("/content/dam/hyundai/in/en/images/home/baas-creta-electricpc.jpg"),
+    image: banners.cretaElectric,
     alt: "Hyundai Creta Electric SUV, official campaign banner",
   },
   {
@@ -287,7 +249,7 @@ export const heroSlides: Slide[] = [
     headline: "Sharper by design.",
     sub: "The Venue, tuned for enthusiasts with a turbo-petrol heart and N Line detailing.",
     price: "10.66",
-    image: banner("/content/dam/hyundai/in/en/images/home/banner/venue-n-line-inner-kv-desk-banner.jpg"),
+    image: banners.venueNline,
     alt: "Hyundai Venue N Line performance SUV, official campaign banner",
   },
   {
@@ -296,7 +258,7 @@ export const heroSlides: Slide[] = [
     headline: "Born in the dark.",
     sub: "Blacked-out Knight Edition styling for a bolder, more confident Venue presence.",
     price: "8.00",
-    image: banner("/content/dam/hyundai/in/en/images/home/banner/home-knight-edition-des-banner.jpg"),
+    image: banners.venueKnight,
     alt: "Hyundai Venue Knight Edition compact SUV, official campaign banner",
   },
   {
@@ -305,7 +267,7 @@ export const heroSlides: Slide[] = [
     headline: "Pocket-rocket energy.",
     sub: "A turbocharged N Line hatchback with sport seats, paddle shifters and red accents.",
     price: "9.27",
-    image: banner("/content/dam/hyundai/in/en/data/find-a-car/i20-n-line/Highlights/pc/i20nlineinnerkv-pc.jpg"),
+    image: banners.i20Nline,
     alt: "Hyundai i20 N Line performance hatchback, official campaign banner",
   },
   {
@@ -314,7 +276,7 @@ export const heroSlides: Slide[] = [
     headline: "Style, dialled up.",
     sub: "A premium hatchback with Bose sound, a digital cluster and segment-leading features.",
     price: "5.99",
-    image: banner("/content/dam/hyundai/in/en/data/find-a-car/i20/i20-des-banner.jpg"),
+    image: banners.i20,
     alt: "Hyundai i20 premium hatchback, official campaign banner",
   },
   {
@@ -323,7 +285,7 @@ export const heroSlides: Slide[] = [
     headline: "City-smart, every day.",
     sub: "Rear AC vents, wireless charging and an available factory CNG option for low running costs.",
     price: "5.59",
-    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Grand-i10-Nios/Highlights/Grandi10niosnew/innerkvnioscng-des.jpg"),
+    image: banners.nios,
     alt: "Hyundai Grand i10 Nios with factory CNG, official campaign banner",
   },
   {
@@ -332,7 +294,7 @@ export const heroSlides: Slide[] = [
     headline: "Confidence, in every commute.",
     sub: "Connected SUV technology and a grown-up stance in a city-friendly footprint.",
     price: "8.00",
-    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Venue/Highlights/pc/venueinnerkv-pc.jpg"),
+    image: banners.venueKv,
     alt: "Hyundai Venue compact SUV, official key visual banner",
   },
   {
@@ -341,7 +303,7 @@ export const heroSlides: Slide[] = [
     headline: "Travel in grand style.",
     sub: "Captain-chair comfort, a panoramic sunroof and ADAS for relaxed long-distance family travel.",
     price: "14.51",
-    image: banner("/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvpc.jpg"),
+    image: banners.alcazarKv,
     alt: "Hyundai Alcazar premium 7-seater SUV, official key visual banner",
   },
   {
@@ -350,7 +312,7 @@ export const heroSlides: Slide[] = [
     headline: "Promise, delivered.",
     sub: "Hyundai-certified pre-owned cars with warranty-backed assurance from Modi Hyundai.",
     price: "",
-    image: banner("/content/dam/hyundai/in/en/data/hyundai-story/hyundai-promise/h-promise-des-banner.jpg"),
+    image: banners.promise,
     alt: "Hyundai Promise certified pre-owned programme, official banner",
   },
   {
@@ -359,7 +321,7 @@ export const heroSlides: Slide[] = [
     headline: "Three decades in India.",
     sub: "Celebrating 30 years of Hyundai in India and 9 million customer journeys.",
     price: "",
-    image: banner("/content/dam/hyundai/in/en/images/hyundai-story/hyundai-motor-india/30-years/30-years-memories-innerkv-pc1.jpg"),
+    image: banners.thirtyYears,
     alt: "30 years of Hyundai Motor India, official anniversary banner",
   },
   {
@@ -368,7 +330,7 @@ export const heroSlides: Slide[] = [
     headline: "Season savings, now on.",
     sub: "Cash discounts, exchange bonuses and corporate benefits on select Hyundai models this season.",
     price: "",
-    image: banner("/content/dam/hyundai/in/en/images/ClicktoBuy/specialoffer/newspecialoffergst-pc.jpg"),
+    image: banners.offers,
     alt: "Hyundai India special seasonal offers, official banner",
   },
 ];
@@ -432,15 +394,21 @@ const slugify = (n: string) => n.toLowerCase().replace(/\s+/g, "-");
    fetched and confirmed live. Hex values are visual approximations of
    the named paint for the swatch dot; the photo itself carries the
    real colour. Frame 0 is the front three-quarter (≈45°) view, used as
-   the main hero image so both the front and side of the vehicle read. */
-const findACar = (model: string, slug: string) =>
-  `https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/${model}/360/${slug}/pc/${slug}_0.png`;
-
+   the main hero image so both the front and side of the vehicle read.
+   Paths come from coloursBySlug in lib/image-manifest.ts (which mirrors
+   the /cars/360/<modelFolder>/<colorSlug>/<colorSlug>_0.png layout). */
 const colours = (
-  model: string,
-  defs: [name: string, hex: string, slug: string][],
-): CarColor[] =>
-  defs.map(([name, hex, slug]) => ({ name, hex, image: findACar(model, slug), colorSlug: slug }));
+  carSlug: string,
+  defs: [name: string, hex: string, colorSlug: string][],
+): CarColor[] => {
+  const map = coloursBySlug[carSlug] ?? {};
+  return defs.map(([name, hex, colorSlug]) => ({
+    name,
+    hex,
+    image: map[colorSlug] ?? coloursBySlug[carSlug]?.[Object.keys(map)[0]] ?? "",
+    colorSlug,
+  }));
+};
 
 /* Full lineup, pricing, engine and transmission specs sourced directly
    from the official hyundai.com/in/en homepage and model pages. Tucson
@@ -461,10 +429,10 @@ export const cars: Car[] = [
     fuel: "Petrol · CNG",
     blurb: "Hyundai's boldest compact SUV, built for the city and beyond.",
     cta: "Explore the Exter",
-    image: official(officialShot.exter),
+    image: cutouts.exter,
     alt: "Hyundai Exter compact SUV, official product shot",
     modelFolder: "Exter",
-    colors: colours("Exter", [
+    colors: colours("exter", [
       ["Titanium Black", "#16181A", "abyss-black"],
       ["Titanium Black Matte", "#101112", "abyss-black-matte"],
       ["Atlas White", "#F2F1EC", "atlas-white"],
@@ -496,10 +464,10 @@ export const cars: Car[] = [
     fuel: "Petrol · Diesel",
     blurb: "A confident compact SUV with genuinely big-car features.",
     cta: "Explore the Venue",
-    image: official(officialShot.venue),
+    image: cutouts.venue,
     alt: "Hyundai Venue compact SUV, official product shot",
     modelFolder: "Venue",
-    colors: colours("Venue", [
+    colors: colours("venue", [
       ["Titanium Black", "#16181A", "abyss-black"],
       ["Titanium Black Knight Matte", "#101112", "black-knight"],
       ["Atlas White", "#F2F1EC", "atlas-white"],
@@ -534,7 +502,7 @@ export const cars: Car[] = [
     fuel: "Petrol",
     blurb: "The Venue, sharpened: a turbo-punchy N Line trim with sportier styling.",
     cta: "Explore the Venue N Line",
-    image: official(officialShot.venueNline),
+    image: cutouts.venueNline,
     alt: "Hyundai Venue N Line compact SUV, official product shot",
     modelFolder: "venue-n-line",
     colors: colours("venue-n-line", [
@@ -569,10 +537,10 @@ export const cars: Car[] = [
     fuel: "Petrol · Diesel",
     blurb: "India's best-selling SUV, now sharper on style and tech.",
     cta: "Explore the Creta",
-    image: official(officialShot.creta),
+    image: cutouts.creta,
     alt: "Hyundai Creta mid-size SUV, official product shot",
     modelFolder: "Creta",
-    colors: colours("Creta", [
+    colors: colours("creta", [
       ["Abyss Black", "#16181A", "abyss-black"],
       ["Atlas White", "#F2F1EC", "atlas-white"],
       ["Atlas White Dual Tone", "#F2F1EC", "altas-white-dual-tone"],
@@ -605,7 +573,7 @@ export const cars: Car[] = [
     fuel: "Petrol",
     blurb: "The Creta's sportiest form yet, with N Line styling and turbo performance.",
     cta: "Explore the Creta N Line",
-    image: official(officialShot.cretaNline),
+    image: cutouts.cretaNline,
     alt: "Hyundai Creta N Line performance SUV, official product shot",
     modelFolder: "creta-n-line",
     colors: colours("creta-n-line", [
@@ -638,10 +606,10 @@ export const cars: Car[] = [
     fuel: "Petrol · Diesel",
     blurb: "Three rows of real space, Hyundai's SUV for growing families.",
     cta: "Explore the Alcazar",
-    image: official(officialShot.alcazar),
+    image: cutouts.alcazar,
     alt: "Hyundai Alcazar 7-seater SUV, official product shot",
     modelFolder: "Alcazar",
-    colors: colours("Alcazar", [
+    colors: colours("alcazar", [
       ["Abyss Black", "#16181A", "abyss-black"],
       ["Titanium Black Matte", "#16181A", "abyss-black-matte"],
       ["Atlas White", "#F2F1EC", "atlas-white"],
@@ -671,10 +639,10 @@ export const cars: Car[] = [
     fuel: "Petrol",
     blurb: "A sedan built for comfort, performance and everyday practicality.",
     cta: "Explore the Verna",
-    image: official(officialShot.verna),
+    image: cutouts.verna,
     alt: "Hyundai Verna sedan, official product shot",
     modelFolder: "Verna",
-    colors: colours("Verna", [
+    colors: colours("verna", [
       ["Abyss Black", "#16181A", "abyss-black"],
       ["Atlas White", "#F2F1EC", "atlas-white"],
       ["Atlas White Dual Tone", "#F2F1EC", "altas-white-dual-tone"],
@@ -705,10 +673,10 @@ export const cars: Car[] = [
     fuel: "Petrol · CNG",
     blurb: "A compact sedan that packs genuine comfort and value into a small footprint.",
     cta: "Explore the Aura",
-    image: official(officialShot.aura),
+    image: cutouts.aura,
     alt: "Hyundai Aura sedan, official product shot",
     modelFolder: "Aura",
-    colors: colours("Aura", [
+    colors: colours("aura", [
       ["Polar White", "#F4F4F2", "polar-white"],
       ["Starry Night", "#1C2331", "starry-night"],
       ["Titan Grey", "#5B5E61", "titan-grey"],
@@ -736,10 +704,10 @@ export const cars: Car[] = [
     fuel: "Petrol · CNG",
     blurb: "A spacious, feature-rich hatchback built for effortless city driving.",
     cta: "Explore the Grand i10 Nios",
-    image: official(officialShot.nios),
+    image: cutouts.nios,
     alt: "Hyundai Grand i10 Nios hatchback, official product shot",
     modelFolder: "Grand-i10-Nios",
-    colors: colours("Grand-i10-Nios", [
+    colors: colours("grand-i10-nios", [
       ["Polar White", "#F4F4F2", "polar-white"],
       ["Fiery Red", "#B33A2E", "fiery-red"],
       ["Titan Grey Matte", "#5B5E61", "titan-grey-matte"],
@@ -768,7 +736,7 @@ export const cars: Car[] = [
     fuel: "Petrol",
     blurb: "A premium hatchback with segment-leading style, tech and safety.",
     cta: "Explore the i20",
-    image: official(officialShot.i20),
+    image: cutouts.i20,
     alt: "Hyundai i20 premium hatchback, official product shot",
     modelFolder: "i20",
     colors: colours("i20", [
@@ -802,7 +770,7 @@ export const cars: Car[] = [
     fuel: "Petrol",
     blurb: "The sporty, turbocharged N Line take on Hyundai's popular hatchback.",
     cta: "Explore the i20 N Line",
-    image: official(officialShot.i20Nline),
+    image: cutouts.i20Nline,
     alt: "Hyundai i20 N Line performance hatchback, official product shot",
     modelFolder: "i20-n-line",
     colors: colours("i20-n-line", [
@@ -835,7 +803,7 @@ export const cars: Car[] = [
     fuel: "Electric",
     blurb: "Hyundai's flagship electric SUV, with futuristic design and a 500km+ range.",
     cta: "Explore the Ioniq 5",
-    image: official(officialShot.ioniq5),
+    image: cutouts.ioniq5,
     alt: "Hyundai Ioniq 5 electric SUV, official product shot",
     modelFolder: "ioniq-5",
     colors: colours("ioniq-5", [
@@ -866,7 +834,7 @@ export const cars: Car[] = [
     fuel: "Electric",
     blurb: "India's favourite SUV, reimagined as a zero-emission electric vehicle.",
     cta: "Explore the Creta Electric",
-    image: official(officialShot.cretaElectric),
+    image: cutouts.cretaElectric,
     alt: "Hyundai Creta Electric SUV, official product shot",
     modelFolder: "creta-electric",
     colors: colours("creta-electric", [
@@ -904,10 +872,10 @@ export const cars: Car[] = [
     fuel: "Petrol · CNG",
     blurb: "Hyundai's purpose-built hatchback for taxi and fleet operators.",
     cta: "Explore the Prime HB",
-    image: official(officialShot.nios),
+    image: cutouts.nios,
     alt: "Hyundai Prime HB taxi hatchback, official product shot",
     modelFolder: "Grand-i10-Nios",
-    colors: colours("Grand-i10-Nios", [
+    colors: colours("prime-hb", [
       ["Polar White", "#F4F4F2", "polar-white"],
       ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
       ["Titan Grey Matte", "#5B5E61", "titan-grey-matte"],
@@ -934,10 +902,10 @@ export const cars: Car[] = [
     fuel: "Petrol · CNG",
     blurb: "Hyundai's purpose-built sedan for taxi and fleet operators.",
     cta: "Explore the Prime SD",
-    image: official(officialShot.aura),
+    image: cutouts.aura,
     alt: "Hyundai Prime SD taxi sedan, official product shot",
     modelFolder: "Aura",
-    colors: colours("Aura", [
+    colors: colours("prime-sd", [
       ["Polar White", "#F4F4F2", "polar-white"],
       ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
       ["Titan Grey", "#5B5E61", "titan-grey"],
@@ -1055,56 +1023,56 @@ export const testimonials: Testimonial[] = [
     role: "Creta owner",
     rating: 5,
     text: "The team walked me through every variant without any pressure. Delivery was on time and the car was spotless.",
-    avatar: stock("photo-1500648767791-00dcc994a43e", 200),
+    avatar: avatars[0],
   },
   {
     name: "Sneha Iyer",
     role: "Venue owner",
     rating: 5,
     text: "Booking to delivery was smooth and completely transparent. The finance desk got me a rate I did not expect.",
-    avatar: stock("photo-1494790108377-be9c29b29330", 200),
+    avatar: avatars[1],
   },
   {
     name: "Amit Verma",
     role: "Alcazar owner",
     rating: 5,
     text: "Service here is genuinely a step above. They explained the work, shared photos and stuck to the estimate.",
-    avatar: stock("photo-1507003211169-0a1dd7228f2d", 200),
+    avatar: avatars[2],
   },
   {
     name: "Priya Nair",
     role: "Exter owner",
     rating: 5,
     text: "As a first-time buyer I had endless questions. They were patient and helped me pick the right car for my budget.",
-    avatar: stock("photo-1438761681033-6461ffad8d80", 200),
+    avatar: avatars[3],
   },
   {
     name: "Karan Malhotra",
     role: "Creta N Line owner, Mumbai",
     rating: 5,
     text: "The Creta N Line handover was flawless. Great attention to detail and no last-minute surprises on the on-road price.",
-    avatar: stock("photo-1506794778202-cad84cf45f1d", 200),
+    avatar: avatars[4],
   },
   {
     name: "Deepa Rao",
     role: "Verna owner, Thane",
     rating: 5,
     text: "Serviced my Verna at the Thane centre. Quick, courteous, and the free pickup and drop saved me a whole day.",
-    avatar: stock("photo-1544005313-94ddf0286df2", 200),
+    avatar: avatars[5],
   },
   {
     name: "Farhan Shaikh",
     role: "Creta owner, Mumbai",
     rating: 5,
     text: "Booked from the Malad showroom. They were upfront about the waiting period and kept me updated the whole way.",
-    avatar: stock("photo-1633332755192-727a05c4013d", 200),
+    avatar: avatars[6],
   },
   {
     name: "Anjali Desai",
     role: "Exter owner, Virar",
     rating: 5,
     text: "Loved how patient they were with a first-time buyer. The finance options were explained clearly, no jargon.",
-    avatar: stock("photo-1580489944761-15a19d654956", 200),
+    avatar: avatars[7],
   },
 ];
 
@@ -1176,7 +1144,7 @@ export const blogs: Blog[] = [
     excerpt:
       "Beyond the red accents and N badges, the Creta N Line gets a sharper drive. Here is what actually changes versus the standard Creta.",
     readingTime: "4 min read",
-    image: hy(shot.creta, 900, 600),
+    image: blogImages["creta-n-line-how-much-sportier"],
     alt: "Hyundai Creta N Line exterior styling",
     content: [
       {
@@ -1210,7 +1178,7 @@ export const blogs: Blog[] = [
     excerpt:
       "Three real rows, captain-chair comfort and a panoramic sunroof make the Alcazar built for long journeys with the whole family.",
     readingTime: "5 min read",
-    image: hy(shot.alcazar, 900, 600),
+    image: blogImages["alcazar-family-road-trip-suv"],
     alt: "Hyundai Alcazar on a family road trip",
     content: [
       {
@@ -1244,7 +1212,7 @@ export const blogs: Blog[] = [
     excerpt:
       "Mumbai monsoons are hard on cars. These five checks keep your Hyundai safe, reliable and corrosion-free through the rains.",
     readingTime: "4 min read",
-    image: hy(shot.venue, 900, 600),
+    image: blogImages["monsoon-car-care-tips"],
     alt: "Hyundai Venue SUV in the monsoon, car-care tips",
     content: [
       {
@@ -1290,7 +1258,7 @@ export const blogs: Blog[] = [
     excerpt:
       "EMI ownership or lease-style usage? We break down the real costs, the trade-offs and which buyer each suits best.",
     readingTime: "6 min read",
-    image: hy(shot.verna, 900, 600),
+    image: blogImages["car-loan-or-lease-2026"],
     alt: "Hyundai Verna sedan parked outdoors",
     content: [
       {
@@ -1330,7 +1298,7 @@ export const blogs: Blog[] = [
     excerpt:
       "Compact-SUV size, factory CNG and segment-first features. We walk through the Exter line-up to help you pick the right variant.",
     readingTime: "5 min read",
-    image: hy(shot.exter, 900, 600),
+    image: blogImages["hyundai-exter-buying-guide"],
     alt: "Hyundai Exter compact SUV, front three-quarter view",
     content: [
       {
@@ -1365,7 +1333,7 @@ export const blogs: Blog[] = [
     excerpt:
       "From setting a real budget to closing the paperwork, here is what first-time car buyers in Mumbai should know.",
     readingTime: "6 min read",
-    image: hy(shot.exterInterior, 900, 600),
+    image: blogImages["first-car-buying-checklist"],
     alt: "Hyundai Exter interior dashboard, first-car buyer guide",
     content: [
       {
@@ -1405,7 +1373,7 @@ export const blogs: Blog[] = [
     excerpt:
       "500km+ range, ultra-fast charging and Vehicle-to-Load tech. Here is what owning Hyundai's flagship electric SUV is actually like.",
     readingTime: "5 min read",
-    image: hy(shot.ioniq5, 900, 600),
+    image: blogImages["ioniq-5-electric-ownership-guide"],
     alt: "Hyundai IONIQ 5 electric SUV, front three-quarter view",
     content: [
       {
@@ -1445,7 +1413,7 @@ export const blogs: Blog[] = [
     excerpt:
       "Understanding your service schedule keeps your Hyundai reliable and protects its resale value. Here is a plain-English guide.",
     readingTime: "5 min read",
-    image: hy(shot.cretaInterior, 900, 600),
+    image: blogImages["hyundai-service-intervals-explained"],
     alt: "Hyundai interior dashboard, service intervals guide",
     content: [
       {
@@ -1623,8 +1591,8 @@ export const popularCars = popularNames
   .map((n) => cars.find((c) => c.name === n))
   .filter((c): c is Car => Boolean(c));
 
-export const testDriveImage = hy(shot.cretaInterior, 1000, 1200);
-export const serviceHeroImage = stock("photo-1486262715619-67b85e0b08d3", 1600);
+export const testDriveImage = testDriveImageLocal;
+export const serviceHeroImage = stockHeroes.service;
 export const carModels = cars.map((c) => c.name);
 export const cityOptions = ["Santacruz", "Thane", "Vasai", "Virar", "Wada"];
 export const serviceCentres = locations.filter((l) => l.type === "Service Centre");

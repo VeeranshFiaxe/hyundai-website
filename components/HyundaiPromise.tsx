@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState, type FormEvent } from "react";
-import Image from "next/image";
 import { cars, cityOptions, company, locations } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidYear, type FormErrors } from "@/lib/validation";
 import { ArrowRight, Car, Check, ChevronDown, Phone, Shield, Users } from "./icons";
@@ -29,10 +28,6 @@ const sellReasons = [
   "Guidance on paperwork, transfer and the next best step",
   "A dealership representative connects with you after submission",
 ];
-
-/* Hero banner image from the home page hero carousel. Creta campaign shot. */
-const PROMISE_HERO_IMAGE =
-  "https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/home/cretakingknightinnerkv-pc.jpg";
 
 type Mode = "buy" | "sell";
 
@@ -138,47 +133,26 @@ export default function HyundaiPromise() {
               className="overflow-hidden rounded-[1.25rem] border border-border bg-bg-2"
             >
               <div className="grid gap-0 lg:grid-cols-[1.15fr_0.85fr]">
-                <div className="relative min-h-[320px] h-full overflow-hidden rounded-2xl">
-                  <Image
-                    src={PROMISE_HERO_IMAGE}
-                    alt="A silver Hyundai from the Promise pre-owned programme"
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 38vw"
-                    className="object-cover"
-                  />
-                  {/* Fixed readability gradient, darker at the bottom where the
-                      copy sits, fading to clear near the top so the image stays
-                      clean rather than muddy. */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 45%, rgba(0,0,0,0) 70%)",
-                    }}
-                  />
-                  {/* Copy block, anchored as one block, 48px padding to match the
-                      right column's cards, shared left edge, fixed gaps. */}
-                  <div className="absolute inset-0 flex h-full flex-col justify-end p-[48px] text-white">
-                    <div className="flex flex-col">
-                      <span className="inline-flex w-fit rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] backdrop-blur">
+                <div className="relative flex min-h-[320px] h-full flex-col justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-brand to-slate-900 p-8 sm:p-12">
+                  {/* Decorative glowing orbs for a modern premium feel */}
+                  <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white opacity-5 blur-[80px]" />
+                  <div className="pointer-events-none absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-blue-400 opacity-10 blur-[100px]" />
+                  
+                  <div className="relative z-10 flex max-w-md flex-col">
+                    <div className="mb-6 flex items-center gap-3">
+                      <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-white backdrop-blur-md shadow-sm">
+                        <span className="h-1.5 w-1.5 rounded-full bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
                         Hyundai Promise
                       </span>
-                      <h2
-                        className="font-display text-2xl font-bold sm:text-3xl"
-                        style={{ marginTop: "16px" }}
-                      >
-                        A simple pre-owned car journey, handled personally
-                      </h2>
-                      <p
-                        className="text-sm leading-relaxed text-white/80 sm:text-base"
-                        style={{ marginTop: "20px", maxWidth: "380px" }}
-                      >
-                        Whether you are looking to buy your next pre-owned Hyundai or
-                        sell your current car, our Promise team helps you take the
-                        next step with clarity and confidence.
-                      </p>
                     </div>
+                    <h2 className="font-display text-3xl font-bold leading-tight text-white sm:text-4xl">
+                      A simple pre-owned car journey, <span className="text-blue-300 text-opacity-90">handled personally.</span>
+                    </h2>
+                    <p className="mt-5 text-sm leading-relaxed text-white/70 sm:text-base">
+                      Whether you are looking to buy your next pre-owned Hyundai or
+                      sell your current car, our Promise team helps you take the
+                      next step with clarity and confidence.
+                    </p>
                   </div>
                 </div>
 

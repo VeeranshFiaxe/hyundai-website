@@ -6,6 +6,7 @@ import Link from "next/link";
 import Logo from "./Logo";
 import { nav } from "@/lib/data";
 import { Phone, Menu, X } from "./icons";
+import { useTestDrive } from "./TestDriveProvider";
 
 // Route part of an href, ignoring any hash (e.g. "/#home" -> "/", "/#blogs" -> "/")
 function routeOf(href: string) {
@@ -16,6 +17,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { openTestDrive } = useTestDrive();
 
   // First matching link wins, so on "/" Home is marked active instead of Blogs.
   const activeHref = nav.links.find((l) => {
@@ -23,6 +25,8 @@ export default function Navbar() {
     if (route === "/") return pathname === "/";
     return pathname === route || pathname.startsWith(route + "/");
   })?.href;
+
+  const isIndividualCarPage = pathname.startsWith("/cars/") && pathname !== "/cars";
 
   // Single sliding underline marker. Measured from the active link's DOM box.
   const listRef = useRef<HTMLUListElement>(null);
@@ -94,7 +98,7 @@ export default function Navbar() {
         <Logo />
 
         {/* Desktop links */}
-        <ul ref={listRef} className="relative hidden items-center gap-0.5 lg:flex">
+        <ul ref={listRef} className="relative hidden items-center lg:flex">
           {/* Sliding active marker, single element that moves between links */}
           <span
             aria-hidden="true"
@@ -113,7 +117,7 @@ export default function Navbar() {
                   ref={(el) => { linkRefs.current[l.href] = el; }}
                   href={l.href}
                   aria-current={active ? "page" : undefined}
-                  className={`relative rounded px-4 py-2 text-sm font-medium transition-colors hover:bg-bg-2 hover:text-brand ${
+                  className={`relative rounded px-2 py-2 text-[13px] font-medium whitespace-nowrap transition-colors hover:bg-bg-2 hover:text-brand xl:px-3 xl:text-sm ${
                     active ? "text-brand" : "text-muted"
                   }`}
                 >
@@ -126,12 +130,14 @@ export default function Navbar() {
 
         {/* Right cluster */}
         <div className="flex items-center gap-2">
-          <Link
-            href="/book-a-test-drive"
-            className="hidden rounded bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-brand-light sm:inline-block"
-          >
-            Book a Test Drive
-          </Link>
+          {!isIndividualCarPage && (
+            <button
+              onClick={() => openTestDrive()}
+              className="hidden rounded bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-brand-light sm:inline-block"
+            >
+              Book a Test Drive
+            </button>
+          )}
           <button
             aria-label="Open menu"
             onClick={() => setOpen(true)}
@@ -193,13 +199,12 @@ export default function Navbar() {
             );
           })}
 
-          <Link
-            href="/book-a-test-drive"
-            onClick={() => setOpen(false)}
+          <button
+            onClick={() => { setOpen(false); openTestDrive(); }}
             className="mt-4 rounded bg-brand px-5 py-3.5 text-center text-sm font-semibold text-white"
           >
             Book a Test Drive
-          </Link>
+          </button>
           <a
             href={`tel:${nav.phone.replace(/\s/g, "")}`}
             className="mt-2 flex items-center justify-center gap-2 rounded border border-border px-5 py-3.5 text-sm font-semibold text-brand"

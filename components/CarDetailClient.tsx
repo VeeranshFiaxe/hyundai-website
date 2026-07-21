@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Car } from "@/lib/data";
 import { company, formatINR } from "@/lib/data";
 import { getCarBrochure, getCarDetail, getCarGallery } from "@/lib/car-details";
 import type { CarDetail } from "@/lib/data";
-import { ArrowRight, Check, ChevronDown, Download } from "./icons";
+import { ArrowRight, Check, ChevronDown, Download, X } from "./icons";
 import Reveal from "./Reveal";
 import Car360Viewer from "./Car360Viewer";
+import TestDriveWizard from "./TestDriveWizard";
 
 type DetailListProps = {
   id: string;
@@ -41,6 +42,26 @@ function DetailList({ id, title, eyebrow, items, tone = "white" }: DetailListPro
 export default function CarDetailClient({ car }: { car: Car }) {
   const gallery = getCarGallery(car);
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [showStickyCTAs, setShowStickyCTAs] = useState(false);
+  const [showTestDrive, setShowTestDrive] = useState(false);
+  // Narrow while the OTP gate is up, wide once verified (car grid needs room).
+  const [tdVerifying, setTdVerifying] = useState(true);
+  const navRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!navRef.current) return;
+      // The nav becomes sticky exactly at top: 60px.
+      // When its top bounding rect is <= 61, we know it's stuck!
+      const rect = navRef.current.getBoundingClientRect();
+      setShowStickyCTAs(rect.top <= 61);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
   const detail = getCarDetail(car);
   const brochureUrl = getCarBrochure(car);
   const displayName = `Hyundai ${car.name.charAt(0)}${car.name.slice(1).toLowerCase()}`;
@@ -177,12 +198,12 @@ export default function CarDetailClient({ car }: { car: Car }) {
 
               {/* CTAs - brochure up near the hero */}
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link href="/book-a-test-drive" className="group inline-flex items-center gap-2 rounded bg-brand px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light">
+                <button onClick={() => setShowTestDrive(true)} className="group inline-flex items-center gap-2 rounded bg-brand px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light">
                   Book a Test Drive <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
+                </button>
                 <Link href="/contact-us" className="inline-flex items-center gap-2 rounded border border-brand px-6 py-3.5 text-sm font-semibold text-brand transition-all hover:bg-brand hover:text-white">
                   Get a Variant Quote
-                </Link>
+              </Link>
                 {brochureUrl && (
                   <a
                     href={brochureUrl}
@@ -200,9 +221,34 @@ export default function CarDetailClient({ car }: { car: Car }) {
         </div>
       </section>
 
-      <nav aria-label="Car detail sections" className="sticky top-[60px] z-20 border-y border-border bg-white/95 backdrop-blur">
-        <div className="container-px mx-auto flex max-w-[1400px] gap-1 overflow-x-auto py-2">
-          {navigation.map(([id, label]) => <a key={id} href={`#${id}`} className="shrink-0 rounded px-3 py-2 text-xs font-semibold text-muted transition-colors hover:bg-bg-2 hover:text-brand">{label}</a>)}
+      <nav ref={navRef} aria-label="Car detail sections" className="sticky top-[60px] z-20 border-y border-border bg-white/95 backdrop-blur transition-all">
+        <div className="container-px mx-auto flex max-w-[1400px] items-center justify-between gap-4 overflow-x-auto py-2 [&::-webkit-scrollbar]:hidden">
+          <div className="flex shrink-0 gap-1">
+            {navigation.map(([id, label]) => <a key={id} href={`#${id}`} className="shrink-0 rounded px-3 py-2 text-xs font-semibold text-muted transition-colors hover:bg-bg-2 hover:text-brand">{label}</a>)}
+          </div>
+            <div
+              className={`flex shrink-0 items-center gap-2 transition-opacity duration-300 ${
+                showStickyCTAs ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <button onClick={() => setShowTestDrive(true)} className="group inline-flex items-center gap-1.5 rounded bg-brand px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-brand-light">
+                Book a Test Drive <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+              </button>
+              <Link href="/contact-us" className="inline-flex items-center gap-1.5 rounded border border-brand px-3 py-1.5 text-xs font-semibold text-brand transition-all hover:bg-brand hover:text-white">
+                Get a Variant Quote
+              </Link>
+              {brochureUrl && (
+                <a
+                  href={brochureUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 rounded border border-border bg-bg-2 px-3 py-1.5 text-xs font-semibold text-text transition-all hover:border-brand hover:text-brand"
+                >
+                  <Download className="h-3 w-3" />
+                  Brochure
+                </a>
+              )}
+            </div>
         </div>
       </nav>
 
@@ -278,13 +324,38 @@ export default function CarDetailClient({ car }: { car: Car }) {
       <section id="variants" className="scroll-mt-28 bg-white py-12 lg:py-16">
         <div className="container-px mx-auto grid max-w-[1400px] gap-5 lg:grid-cols-[1.2fr_0.8fr]">
           <div className="rounded-lg border border-border bg-bg-2 p-6 sm:p-8"><p className="text-xs font-semibold uppercase tracking-wider text-brand">Variants and colours</p><h2 className="mt-2 font-display text-2xl font-bold text-text">Choose the right specification, not just the right price.</h2><ul className="mt-5 space-y-3">{detail.variants.map((variant) => <li key={variant} className="flex gap-2 text-sm leading-relaxed text-text"><Check className="mt-0.5 h-4 w-4 shrink-0 text-brand" />{variant}</li>)}</ul><p className="mt-6 text-xs leading-relaxed text-muted">Available colours: {car.colors.map((item) => item.name).join(", ")}. Paint availability is subject to the selected variant and current stock.</p></div>
-          <aside className="rounded-lg bg-brand p-6 text-white sm:p-8"><p className="text-xs font-semibold uppercase tracking-wider text-white/60">Ownership confidence</p><h2 className="mt-2 font-display text-2xl font-bold">Warranty and next steps</h2><p className="mt-4 text-sm leading-relaxed text-white/75">{detail.warranty}</p><div className="mt-5 flex flex-col items-start gap-3"><a href={detail.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-semibold text-white underline underline-offset-4 hover:text-white/80">View Hyundai&apos;s current model information</a>{brochureUrl && <a href={brochureUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-semibold text-white underline underline-offset-4 hover:text-white/80">Download official brochure (PDF)</a>}</div><div className="mt-7 space-y-3"><Link href="/book-a-test-drive" className="group flex items-center justify-center gap-2 rounded bg-white px-5 py-3 text-sm font-semibold text-brand transition-colors hover:bg-white/90">Book a Test Drive <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></Link><Link href="/locate-service-centre#book-service" className="flex items-center justify-center rounded border border-white/35 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Already own one? Book service</Link></div></aside>
+          <aside className="rounded-lg bg-brand p-6 text-white sm:p-8"><p className="text-xs font-semibold uppercase tracking-wider text-white/60">Ownership confidence</p><h2 className="mt-2 font-display text-2xl font-bold">Warranty and next steps</h2><p className="mt-4 text-sm leading-relaxed text-white/75">{detail.warranty}</p><div className="mt-5 flex flex-col items-start gap-3"><a href={detail.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-semibold text-white underline underline-offset-4 hover:text-white/80">View Hyundai&apos;s current model information</a>{brochureUrl && <a href={brochureUrl} target="_blank" rel="noreferrer" className="inline-flex text-sm font-semibold text-white underline underline-offset-4 hover:text-white/80">Download official brochure (PDF)</a>}</div><div className="mt-7 space-y-3"><button onClick={() => setShowTestDrive(true)} className="group flex items-center justify-center gap-2 rounded bg-white px-5 py-3 text-sm font-semibold text-brand transition-colors hover:bg-white/90">Book a Test Drive <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></button><Link href="/locate-service-centre#book-service" className="flex items-center justify-center rounded border border-white/35 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10">Already own one? Book service</Link></div></aside>
         </div>
       </section>
 
       {/* Model FAQ - AEO-friendly Q&A built from the researched data so
           answer engines can extract price, mileage, seating and power facts. */}
       <CarFaq displayName={displayName} car={car} detail={detail} brochureUrl={brochureUrl} />
+
+      {/* Test drive modal */}
+      {showTestDrive && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/60 pt-[60px] backdrop-blur-sm">
+          <div
+            className={`relative w-full overflow-hidden rounded-2xl bg-white shadow-[0_20px_60px_0_rgba(0,0,0,0.25)] transition-[max-width] duration-300 ease-out ${
+              tdVerifying ? "max-w-md" : "max-w-3xl"
+            }`}
+          >
+            <button
+              onClick={() => setShowTestDrive(false)}
+              className="absolute right-4 top-4 z-10 grid h-9 w-9 place-items-center rounded-full bg-black/10 text-text backdrop-blur transition-all hover:bg-black/20"
+            >
+              <X className="h-5 w-5" />
+            </button>
+            <Suspense fallback={<div className="p-10 text-center text-muted">Loading...</div>}>
+              <TestDriveWizard
+                initialCarSlug={car.slug}
+                onBack={() => setShowTestDrive(false)}
+                onVerificationChange={setTdVerifying}
+              />
+            </Suspense>
+          </div>
+        </div>
+      )}
     </>
   );
 }

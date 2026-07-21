@@ -6,18 +6,13 @@ import s from "./Car360Viewer.module.css";
 
 /* ── constants ──────────────────────────────────────────────────── */
 const FRAME_COUNT = 36;
-const BASE_URL =
-  "https://www.hyundai.com/content/dam/hyundai/in/en/data/find-a-car";
 
 /** Pixels of horizontal drag needed to advance one frame. Lower = faster spin. */
 const PX_PER_FRAME = 7;
 
-/** Milliseconds between auto-rotate steps. */
-const AUTO_ROTATE_MS = 100;
-
 /* ── URL builder ─────────────────────────────────────────────────── */
 function frameUrl(modelFolder: string, colorSlug: string, frame: number) {
-  return `${BASE_URL}/${modelFolder}/360/${colorSlug}/pc/${colorSlug}_${frame}.png`;
+  return `/cars/360/${modelFolder}/${colorSlug}/${colorSlug}_${frame}.png`;
 }
 
 /* ── types ───────────────────────────────────────────────────────── */
@@ -58,25 +53,26 @@ export default function Car360Viewer({
 }: Car360ViewerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
+  // activation
+  const [activated, setActivated] = useState(false);
+
   // colour
   const [colorIndex, setColorIndex] = useState(defaultColorIndex);
   const activeColor = colors[colorIndex];
   const activeSlug = activeColor.colorSlug;
 
   // frame & interaction
-  const frameRef = useRef(6); // start at the front-quarter view
+  const frameRef = useRef(6);
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const dragStartXRef = useRef<number | null>(null);
   const dragStartFrameRef = useRef(6);
-  const hasInteractedRef = useRef(false);
-  const autoTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // loading state
   const [loadedCount, setLoadedCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   // drag hint
-  const [showHint, setShowHint] = useState(true);
+  const [showHint, setShowHint] = useState(false);
 
   /* ── draw a single frame onto the canvas ── */
   const drawFrame = useCallback((frame: number) => {
@@ -87,7 +83,6 @@ export default function Car360Viewer({
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // scale to fit maintaining aspect ratio
     const ar = img.naturalWidth / img.naturalHeight;
     const cw = canvas.width;
     const ch = canvas.height;
@@ -101,7 +96,6 @@ export default function Car360Viewer({
     async (slug: string) => {
       setIsLoading(true);
       setLoadedCount(0);
-      stopAutoRotate();
 
       const images = await preloadFrames(modelFolder, slug, (n) => {
         setLoadedCount(n);
@@ -110,42 +104,26 @@ export default function Car360Viewer({
       imagesRef.current = images;
       setIsLoading(false);
       drawFrame(frameRef.current);
-      if (!hasInteractedRef.current) startAutoRotate();
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [modelFolder, drawFrame],
   );
 
-  /* ── auto-rotate ── */
-  function startAutoRotate() {
-    if (autoTimerRef.current) return;
-    autoTimerRef.current = setInterval(() => {
-      frameRef.current = (frameRef.current + 1) % FRAME_COUNT;
-      drawFrame(frameRef.current);
-    }, AUTO_ROTATE_MS);
-  }
-
-  function stopAutoRotate() {
-    if (autoTimerRef.current) {
-      clearInterval(autoTimerRef.current);
-      autoTimerRef.current = null;
-    }
-  }
+  /* ── activate ── */
+  const handleActivate = () => {
+    setActivated(true);
+    setShowHint(true);
+  };
 
   /* ── mount / colour change ── */
   useEffect(() => {
-    loadColor(activeSlug);
-    return () => stopAutoRotate();
+    if (activated) loadColor(activeSlug);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSlug]);
+  }, [activeSlug, activated]);
 
   /* ── pointer events (drag-to-spin) ── */
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
-    stopAutoRotate();
-    if (!hasInteractedRef.current) {
-      hasInteractedRef.current = true;
-      setShowHint(false);
-    }
+    if (!activated) return;
+    if (showHint) setShowHint(false);
     dragStartXRef.current = e.clientX;
     dragStartFrameRef.current = frameRef.current;
     (e.target as HTMLCanvasElement).setPointerCapture(e.pointerId);
@@ -171,113 +149,140 @@ export default function Car360Viewer({
   /* ── colour swatch click ── */
   const handleColorChange = (idx: number) => {
     if (idx === colorIndex) return;
-    stopAutoRotate();
-    hasInteractedRef.current = false; // allow auto-rotate after colour switch
     setColorIndex(idx);
   };
 
   const progress = Math.round((loadedCount / FRAME_COUNT) * 100);
-  // SVG ring math
   const circumference = 2 * Math.PI * 18;
   const dashOffset = circumference * (1 - progress / 100);
+
+  const previewUrl = frameUrl(modelFolder, activeSlug, 6);
 
   return (
     <div className={s.root}>
       {/* ── canvas stage ── */}
       <div className={s.stage}>
-        <canvas
-          ref={canvasRef}
-          width={900}
-          height={520}
-          className={s.canvas}
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerLeave={handlePointerUp}
-          aria-label={`${activeColor.name}, drag to rotate`}
-          role="img"
-        />
-
-        {/* loading overlay */}
-        {isLoading && (
-          <div className={s.loadingOverlay}>
-            <div className={s.loadingInner}>
-              <svg className={s.spinner} viewBox="0 0 44 44" aria-hidden>
-                <circle
-                  cx="22"
-                  cy="22"
-                  r="18"
-                  fill="none"
-                  strokeWidth="3"
-                  stroke="rgba(255,255,255,0.15)"
-                />
-                <circle
-                  cx="22"
-                  cy="22"
-                  r="18"
-                  fill="none"
-                  strokeWidth="3"
-                  stroke="white"
-                  strokeLinecap="round"
-                  strokeDasharray={circumference}
-                  strokeDashoffset={dashOffset}
-                  className={s.spinnerArc}
-                />
+        {!activated ? (
+          <div className={s.placeholder}>
+            <img
+              src={previewUrl}
+              alt={activeColor.name}
+              className={s.previewImg}
+            />
+            <button
+              type="button"
+              onClick={handleActivate}
+              className={s.activateBtn}
+            >
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
               </svg>
-              <span className={s.pct}>{progress}%</span>
-            </div>
-            <p className={s.loadingLabel}>Loading 360° view…</p>
+              360&deg; View
+            </button>
           </div>
-        )}
+        ) : (
+          <>
+            <canvas
+              ref={canvasRef}
+              width={900}
+              height={520}
+              className={s.canvas}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerLeave={handlePointerUp}
+              aria-label={`${activeColor.name}, drag to rotate`}
+              role="img"
+            />
 
-        {/* drag hint overlay */}
-        {showHint && !isLoading && (
-          <div className={s.hint} aria-hidden>
-            <span className={s.hintIcon}>
-              <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
-                {/* left arrows */}
-                <path
-                  d="M6 19 L14 13 M6 19 L14 25"
-                  stroke="white"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {/* right arrows */}
-                <path
-                  d="M32 19 L24 13 M32 19 L24 25"
-                  stroke="white"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                {/* centre dot */}
-                <circle cx="19" cy="19" r="5" fill="white" opacity="0.9" />
+            {/* loading overlay */}
+            {isLoading && (
+              <div className={s.loadingOverlay}>
+                <div className={s.loadingInner}>
+                  <svg className={s.spinner} viewBox="0 0 44 44" aria-hidden>
+                    <circle
+                      cx="22"
+                      cy="22"
+                      r="18"
+                      fill="none"
+                      strokeWidth="3"
+                      stroke="rgba(255,255,255,0.15)"
+                    />
+                    <circle
+                      cx="22"
+                      cy="22"
+                      r="18"
+                      fill="none"
+                      strokeWidth="3"
+                      stroke="white"
+                      strokeLinecap="round"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={dashOffset}
+                      className={s.spinnerArc}
+                    />
+                  </svg>
+                  <span className={s.pct}>{progress}%</span>
+                </div>
+                <p className={s.loadingLabel}>Loading 360&deg; view&hellip;</p>
+              </div>
+            )}
+
+            {/* drag hint overlay */}
+            {showHint && !isLoading && (
+              <div className={s.hint} aria-hidden>
+                <span className={s.hintIcon}>
+                  <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+                    <path
+                      d="M6 19 L14 13 M6 19 L14 25"
+                      stroke="white"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M32 19 L24 13 M32 19 L24 25"
+                      stroke="white"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <circle cx="19" cy="19" r="5" fill="white" opacity="0.9" />
+                  </svg>
+                </span>
+                <span className={s.hintText}>Drag to spin</span>
+              </div>
+            )}
+
+            {/* colour name badge */}
+            <span className={s.colorBadge}>{activeColor.name}</span>
+
+            {/* 360° badge */}
+            <span className={s.badge360} aria-hidden>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
               </svg>
+              360&deg;
             </span>
-            <span className={s.hintText}>Drag to spin</span>
-          </div>
+          </>
         )}
-
-        {/* colour name badge */}
-        <span className={s.colorBadge}>{activeColor.name}</span>
-
-        {/* 360° badge */}
-        <span className={s.badge360} aria-hidden>
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-          </svg>
-          360°
-        </span>
       </div>
 
       {/* ── colour swatches ── */}

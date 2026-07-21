@@ -3,10 +3,11 @@
 import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import Image from "next/image";
 import { carModels, cityOptions, testDriveImage } from "@/lib/data";
-import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidPincode, type FormErrors } from "@/lib/validation";
+import { isEmpty, isValidEmail, isValidName, isValidPincode, type FormErrors } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
-import { Calendar, Check, ChevronDown } from "./icons";
+import { Calendar, Check, ChevronDown, Phone } from "./icons";
 import Reveal from "./Reveal";
+import { OtpGate } from "./OtpGate";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
@@ -60,7 +61,7 @@ function SelectField({
   );
 }
 
-export default function TestDrive() {
+function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: string; requestChangePhone: () => void }) {
   const [submitted, setSubmitted] = useState(false);
   const [attempted, setAttempted] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -70,13 +71,13 @@ export default function TestDrive() {
     carModel: "",
     location: "",
     name: "",
-    mobile: "",
     email: "",
     pincode: "",
     address: "",
     date: "",
     time: "",
   });
+  const mobile = verifiedPhone;
   const minDate = new Date().toISOString().slice(0, 10);
 
   const setField = (key: string) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
@@ -90,7 +91,6 @@ export default function TestDrive() {
     if (isEmpty(form.carModel)) e.carModel = "Please select a car model.";
     if (isEmpty(form.location)) e.location = "Please select a location.";
     if (isEmpty(form.name) || !isValidName(form.name)) e.name = "Enter your full name (at least 2 characters).";
-    if (!isValidMobile(form.mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
     if (!isValidEmail(form.email)) e.email = "Enter a valid email with @ and a domain (e.g. you@example.com).";
     if (!isValidPincode(form.pincode)) e.pincode = "Enter a valid 6-digit pincode.";
     if (isEmpty(form.date)) e.date = "Please select a date.";
@@ -123,7 +123,7 @@ export default function TestDrive() {
         car_model: form.carModel,
         location: form.location,
         name: form.name.trim(),
-        mobile_number: form.mobile.trim(),
+        mobile_number: mobile,
         email: form.email.trim(),
         pincode: form.pincode.trim(),
         address: form.address.trim(),
@@ -241,19 +241,22 @@ export default function TestDrive() {
                   )}
                 </label>
 
-                <label className="block">
+                <div className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
-                  <input
-                    type="tel"
-                    value={form.mobile}
-                    onChange={setField("mobile")}
-                    placeholder="e.g. 9876543210"
-                    className={fieldError("mobile")}
-                  />
-                  {attempted && errors.mobile && (
-                    <p className="mt-1 text-xs font-medium text-red-600">{errors.mobile}</p>
-                  )}
-                </label>
+                  <div
+                    className="flex cursor-pointer items-center justify-between rounded-xl border border-[#dbeafe] bg-[#f0f7ff] px-4 py-3"
+                    onClick={requestChangePhone}
+                    title="Click to change verified phone number"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-brand" />
+                      <span className="text-sm font-semibold text-brand">+91 {mobile}</span>
+                    </div>
+                    <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-brand shadow-sm">
+                      <Check className="h-3 w-3" /> Verified
+                    </span>
+                  </div>
+                </div>
 
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Email</span>
@@ -365,5 +368,21 @@ export default function TestDrive() {
         </div>
       </div>
     </section>
+  );
+}
+
+export default function TestDrive() {
+  return (
+    <OtpGate
+      title="Verify Your Phone"
+      subtitle="Enter your phone number to unlock the test drive form."
+    >
+      {(verifiedPhone, requestChangePhone) => (
+        <TestDriveInner
+          verifiedPhone={verifiedPhone}
+          requestChangePhone={requestChangePhone}
+        />
+      )}
+    </OtpGate>
   );
 }

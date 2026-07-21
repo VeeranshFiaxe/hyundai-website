@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { cars, formatINR, type CarCategory } from "@/lib/data";
@@ -18,8 +18,23 @@ const categories: ("All" | CarCategory)[] = [
 
 export default function CarsGrid() {
   const [category, setCategory] = useState<"All" | CarCategory>("All");
-  const filtered =
-    category === "All" ? cars : cars.filter((c) => c.category === category);
+  const shuffleVersion = useRef(0);
+
+  const displayed = useMemo(() => {
+    const shouldShuffle = category === "All" || category === "SUV";
+    const source = shouldShuffle ? [...cars] : cars;
+    if (shouldShuffle) {
+      shuffleVersion.current += 1;
+      for (let i = source.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [source[i], source[j]] = [source[j], source[i]];
+      }
+    }
+    return {
+      cars: category === "All" ? source : source.filter((c) => c.category === category),
+      version: shuffleVersion.current,
+    };
+  }, [category]);
 
   return (
     <section className="bg-white py-10 lg:py-14">
@@ -41,11 +56,11 @@ export default function CarsGrid() {
         </Reveal>
 
         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((car, i) => {
+          {displayed.cars.map((car, i) => {
             const displayName =
               "Hyundai " + car.name.charAt(0) + car.name.slice(1).toLowerCase();
             return (
-              <Reveal key={car.slug} delay={(i % 3) * 90} variant="fade-up">
+              <Reveal key={`v${displayed.version}-${car.slug}`} delay={(i % 3) * 90} variant="fade-up">
                 <Link
                   href={`/cars/${car.slug}`}
                   className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-white shadow-[0_2px_12px_0_rgba(0,44,95,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_28px_0_rgba(0,44,95,0.12)]"

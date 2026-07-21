@@ -24,13 +24,13 @@ export default function Hero() {
     <section
       id="home"
       className="relative scroll-mt-24 overflow-hidden bg-brand-deep"
-      style={{ marginTop: "96px" }} /* offset for 2-row nav */
+      style={{ marginTop: "60px" }} /* offset for fixed nav */
     >
       {/* Cinematic banner carousel, matching hyundai.com's own hero
           treatment: the official campaign photography already carries the
           manufacturer headline, so the image is shown clean with only the
           navigation controls overlaid. */}
-      <div className="relative h-[420px] w-full sm:h-[480px] lg:h-[540px] xl:h-[580px]">
+      <div className="relative h-[calc(100vh-60px)] w-full">
         {heroSlides.map((slide, i) => (
           <Image
             key={slide.model + i}

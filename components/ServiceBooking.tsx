@@ -4,8 +4,9 @@ import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import { carModels, serviceCentres } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidMobile, isValidName, type FormErrors } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
-import { Calendar, Check, ChevronDown } from "./icons";
+import { Calendar, Check, ChevronDown, Phone } from "./icons";
 import Reveal from "./Reveal";
+import { OtpGate } from "./OtpGate";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
@@ -63,7 +64,7 @@ function SelectField({
   );
 }
 
-export default function ServiceBooking() {
+function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: string; requestChangePhone: () => void }) {
   const [submitted, setSubmitted] = useState(false);
   const [attempted, setAttempted] = useState(false);
   const [errors, setErrors] = useState<FormErrors>({});
@@ -75,13 +76,17 @@ export default function ServiceBooking() {
     serviceCentre: "",
     serviceType: "",
     name: "",
-    mobile: "",
     email: "",
     regNumber: "",
     date: "",
     time: "",
   });
-  const minDate = new Date().toISOString().slice(0, 10);
+  const mobile = verifiedPhone;
+  const [customCarModel, setCustomCarModel] = useState("");
+  const isOther = form.carModel === "Other";
+  const today = new Date();
+  today.setDate(today.getDate() + 1);
+  const minDate = today.toISOString().slice(0, 10);
 
   const setField = (key: string) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }));
@@ -92,10 +97,10 @@ export default function ServiceBooking() {
   const validate = (): FormErrors => {
     const e: FormErrors = {};
     if (isEmpty(form.carModel)) e.carModel = "Please select a car model.";
+    if (isOther && isEmpty(customCarModel)) e.customCarModel = "Please enter your car model.";
     if (isEmpty(form.serviceCentre)) e.serviceCentre = "Please select a service centre.";
     if (isEmpty(form.serviceType)) e.serviceType = "Please select a type of service.";
     if (isEmpty(form.name) || !isValidName(form.name)) e.name = "Enter your full name (at least 2 characters).";
-    if (!isValidMobile(form.mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
     if (!isValidEmail(form.email)) e.email = "Enter a valid email with @ and a domain (e.g. you@example.com).";
     if (isEmpty(form.date)) e.date = "Please select a date.";
     if (isEmpty(form.time)) e.time = "Please select a time.";
@@ -124,11 +129,11 @@ export default function ServiceBooking() {
     setSubmitError(false);
     try {
       await submitLead("service", {
-        car_model: form.carModel,
+        car_model: isOther ? customCarModel.trim() : form.carModel,
         service_centre: form.serviceCentre,
         service_type: form.serviceType,
         name: form.name.trim(),
-        mobile_number: form.mobile.trim(),
+        mobile_number: mobile,
         email: form.email.trim(),
         registration_number: form.regNumber.trim(),
         preferred_date: form.date,
@@ -144,7 +149,7 @@ export default function ServiceBooking() {
   };
 
   return (
-    <section id="book-service" className="scroll-mt-24 bg-white py-14 lg:py-20">
+    <section id="book-service" className="scroll-mt-24">
       <div className="container-px mx-auto max-w-[1400px]">
         <Reveal className="mx-auto mb-10 max-w-xl text-center">
           <p className="text-xs font-semibold uppercase tracking-wider text-brand">
@@ -185,13 +190,17 @@ export default function ServiceBooking() {
                 <div className="relative">
                   <select
                     value={form.carModel}
-                    onChange={setField("carModel")}
+                    onChange={(e) => {
+                      setField("carModel")(e);
+                      if (e.target.value !== "Other") setCustomCarModel("");
+                    }}
                     className={`${fieldError("carModel")} appearance-none pr-10`}
                   >
                     <option value="" disabled className="text-faint">Select Car Model</option>
                     {carModels.map((o) => (
                       <option key={o} value={o}>{o}</option>
                     ))}
+                    <option value="Other">Other</option>
                   </select>
                   <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                 </div>
@@ -199,6 +208,21 @@ export default function ServiceBooking() {
                   <p className="mt-1 text-xs font-medium text-red-600">{errors.carModel}</p>
                 )}
               </label>
+              {isOther && (
+                <label className="block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Your Car Model</span>
+                  <input
+                    type="text"
+                    value={customCarModel}
+                    onChange={(e) => setCustomCarModel(e.target.value)}
+                    placeholder="e.g. Santro Xing"
+                    className={fieldError("customCarModel")}
+                  />
+                  {attempted && errors.customCarModel && (
+                    <p className="mt-1 text-xs font-medium text-red-600">{errors.customCarModel}</p>
+                  )}
+                </label>
+              )}
               <label className="block">
                 <span className="mb-1.5 block text-xs font-semibold text-muted">Select Service Centre</span>
                 <div className="relative">
@@ -253,19 +277,22 @@ export default function ServiceBooking() {
                 )}
               </label>
 
-              <label className="block">
+              <div className="block">
                 <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
-                <input
-                  type="tel"
-                  value={form.mobile}
-                  onChange={setField("mobile")}
-                  placeholder="e.g. 9876543210"
-                  className={fieldError("mobile")}
-                />
-                {attempted && errors.mobile && (
-                  <p className="mt-1 text-xs font-medium text-red-600">{errors.mobile}</p>
-                )}
-              </label>
+                <div
+                  className="flex cursor-pointer items-center justify-between rounded-xl border border-[#dbeafe] bg-[#f0f7ff] px-4 py-3"
+                  onClick={requestChangePhone}
+                  title="Click to change verified phone number"
+                >
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4 text-brand" />
+                    <span className="text-sm font-semibold text-brand">+91 {mobile}</span>
+                  </div>
+                  <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-brand shadow-sm">
+                    <Check className="h-3 w-3" /> Verified
+                  </span>
+                </div>
+              </div>
 
               <label className="block">
                 <span className="mb-1.5 block text-xs font-semibold text-muted">Email</span>
@@ -324,7 +351,7 @@ export default function ServiceBooking() {
                   >
                     <option value="" disabled className="text-faint">
                       {form.date && availableTimeSlots.length === 0
-                        ? "No slots left today"
+                        ? "No slots available"
                         : "Select time"}
                     </option>
                     {availableTimeSlots.map((s) => (
@@ -373,5 +400,22 @@ export default function ServiceBooking() {
         </Reveal>
       </div>
     </section>
+  );
+}
+
+export default function ServiceBooking() {
+  return (
+    <OtpGate
+      title="Verify Your Phone"
+      subtitle="Enter your mobile number to unlock the service booking form."
+      variant="card"
+    >
+      {(verifiedPhone, requestChangePhone) => (
+        <ServiceBookingInner
+          verifiedPhone={verifiedPhone}
+          requestChangePhone={requestChangePhone}
+        />
+      )}
+    </OtpGate>
   );
 }

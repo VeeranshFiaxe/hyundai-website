@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { blogs, type Blog, blogHeroImage } from "@/lib/data";
 import { ArrowRight, Search } from "./icons";
+import { useTestDrive } from "./TestDriveProvider";
 
 /* NOTE: counts below are illustrative marketing copy for the hero band.
    Replace with real, attributable figures before launch. */
@@ -85,6 +86,7 @@ export default function BlogsExplorer() {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [subscribed, setSubscribed] = useState(false);
   const articlesRef = useRef<HTMLElement>(null);
+  const { openTestDrive } = useTestDrive();
 
   // Featured = most recent post (data is ordered newest-first).
   const featured = blogs[0];
@@ -380,13 +382,13 @@ export default function BlogsExplorer() {
               test drive at a showroom near you.
             </p>
           </div>
-          <Link
-            href="/book-a-test-drive"
+          <button
+            onClick={() => openTestDrive()}
             className="group inline-flex shrink-0 items-center gap-2 rounded bg-white px-6 py-3 text-sm font-semibold text-brand transition-all hover:bg-white/90"
           >
             Book a Test Drive
             <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
+          </button>
         </div>
       </section>
     </>

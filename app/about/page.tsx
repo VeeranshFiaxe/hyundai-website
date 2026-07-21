@@ -105,7 +105,7 @@ export default function AboutPage() {
       />
       <main style={{ marginTop: "96px" }}>
         {/* Hero */}
-        <section className="relative min-h-[430px] w-full overflow-hidden bg-brand-deep sm:min-h-[500px]">
+        <section className="relative min-h-[45vh] w-full overflow-hidden bg-brand-deep sm:min-h-[50vh]">
           <Image
             src={aboutHeroImage}
             alt="Modi Hyundai showroom"
@@ -114,25 +114,19 @@ export default function AboutPage() {
             sizes="100vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-deep/95 via-brand-deep/70 to-black/15" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-deep/80 via-brand-deep/45 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
           <div className="container-px absolute inset-x-0 bottom-12 mx-auto max-w-[1400px] sm:bottom-16">
             <Reveal>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/70">
                 Authorised Hyundai Dealer · Mumbai Region
               </p>
               <h1 className="mt-3 max-w-3xl font-display text-4xl font-bold leading-tight text-white sm:text-5xl lg:text-6xl">
-                More than a dealership. Your Hyundai journey, made personal.
+                Your Hyundai journey, made personal
               </h1>
               <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base lg:text-lg">
-                Modi Hyundai brings together genuine Hyundai cars, transparent
-                guidance and expert after-sales care for customers across Mumbai,
-                Thane, Vasai, Virar and Wada.
+                Authorised Hyundai dealer serving Mumbai, Thane, Vasai, Virar and Wada.
               </p>
-              <div className="mt-7 flex flex-wrap gap-3 text-xs font-semibold text-white sm:text-sm">
-                <span className="rounded-full border border-white/25 bg-white/10 px-4 py-2 backdrop-blur-sm">Customer-first promise</span>
-                <span className="rounded-full border border-white/25 bg-white/10 px-4 py-2 backdrop-blur-sm">Gautam Modi Group</span>
-              </div>
             </Reveal>
           </div>
         </section>

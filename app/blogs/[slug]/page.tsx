@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Reveal from "@/components/Reveal";
 import BlogCard from "@/components/BlogCard";
 import { ArrowRight, ArrowLeft } from "@/components/icons";
+import BookTestDriveBtn from "@/components/BookTestDriveBtn";
 import { blogs, company, SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
@@ -113,8 +114,8 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema).replace(/</g, "\\u003c") }}
       />
       <main style={{ marginTop: "96px" }}>
-        {/* Hero */}
-        <section className="bg-bg-2 py-10 lg:py-14">
+        {/* Hero header — title sits on the light gray (bg-2) half */}
+        <section className="bg-bg-2 pt-10 lg:pt-14 pb-0">
           <div className="container-px mx-auto max-w-3xl">
             <Reveal>
               <nav className="flex items-center gap-1.5 text-xs text-muted" aria-label="Breadcrumb">
@@ -140,10 +141,15 @@ export default async function BlogPostPage({
           </div>
         </section>
 
-        {/* Hero image */}
-        <section className="bg-white">
+        {/* Two-tone image — sits half on light gray, half on white */}
+        <section
+          className="py-10 lg:py-14"
+          style={{
+            background: "linear-gradient(to bottom, var(--color-bg-2) 50%, var(--color-bg) 50%)",
+          }}
+        >
           <div className="container-px mx-auto max-w-4xl">
-            <Reveal className="relative -mt-6 aspect-[16/9] overflow-hidden rounded-xl border border-border bg-bg-2 shadow-[0_4px_24px_rgba(0,44,95,0.08)]">
+            <Reveal className="relative aspect-[16/9] overflow-hidden rounded-xl border border-border shadow-[0_4px_24px_rgba(0,44,95,0.08)]">
               <Image
                 src={post.image}
                 alt={post.alt}
@@ -156,8 +162,8 @@ export default async function BlogPostPage({
           </div>
         </section>
 
-        {/* Article body */}
-        <section className="bg-white py-10 lg:py-14">
+        {/* Article body — sits on white half */}
+        <section className="bg-white pb-10 lg:pb-14">
           <div className="container-px mx-auto max-w-3xl">
             <div className="space-y-8">
               {post.content.map((section, i) => (
@@ -202,13 +208,10 @@ export default async function BlogPostPage({
               service at a Modi Hyundai showroom near you.
             </p>
             <div className="mt-2 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/book-a-test-drive"
-                className="group inline-flex items-center gap-2 rounded bg-brand px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-brand-light"
-              >
+              <BookTestDriveBtn className="group inline-flex items-center gap-2 rounded bg-brand px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-brand-light">
                 Book a Test Drive
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              </Link>
+              </BookTestDriveBtn>
               <Link
                 href="/cars"
                 className="inline-flex items-center gap-2 rounded border border-brand px-6 py-3 text-sm font-semibold text-brand transition-all hover:bg-brand hover:text-white"

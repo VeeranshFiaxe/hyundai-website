@@ -7,6 +7,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import TestDriveProvider from "@/components/TestDriveProvider";
+import VerifiedPhoneProvider from "@/components/VerifiedPhoneProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -83,12 +85,16 @@ export default function RootLayout({
   return (
     <html lang="en-IN" className={`${inter.variable} ${sora.variable}`}>
       <body className="min-h-screen antialiased">
+        <VerifiedPhoneProvider>
+        <TestDriveProvider>
         <JsonLd />
         <Navbar />
         <FloatingActions />
         <WhatsAppWidget />
         {children}
         <Footer />
+        </TestDriveProvider>
+        </VerifiedPhoneProvider>
       </body>
     </html>
   );

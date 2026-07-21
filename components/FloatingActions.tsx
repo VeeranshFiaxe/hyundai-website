@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { nav } from "@/lib/data";
 import { Calendar, WhatsApp, Phone, ChevronRight, ChevronLeft } from "./icons";
+import { useTestDrive } from "./TestDriveProvider";
 
 const actions = [
   { label: "Book a\nTest Drive", href: "/book-a-test-drive", Icon: Calendar },
@@ -12,6 +13,7 @@ const actions = [
 
 export default function FloatingActions() {
   const [isOpen, setIsOpen] = useState(true);
+  const { openTestDrive } = useTestDrive();
 
   return (
     <div
@@ -37,15 +39,21 @@ export default function FloatingActions() {
 
       {/* Action Tiles */}
       <div className="flex flex-col shadow-2xl">
-        {actions.map(({ label, href, Icon }, i) => (
-          <a
-            key={label}
-            href={href}
-            aria-label={label}
-            className={`group flex items-center bg-brand text-white transition-colors hover:bg-brand-light ${
-              i === 0 ? "rounded-tl-lg" : ""
-            } ${i === actions.length - 1 ? "rounded-bl-lg" : ""}`}
-          >
+        {actions.map(({ label, href, Icon }, i) => {
+          const isTestDrive = label.includes("Test Drive");
+          const El = isTestDrive ? "button" : "a";
+          const elProps: Record<string, unknown> = isTestDrive
+            ? { type: "button", onClick: () => openTestDrive() }
+            : { href };
+          return (
+            <El
+              key={label}
+              {...elProps}
+              aria-label={label}
+              className={`group flex items-center bg-brand text-white transition-colors hover:bg-brand-light ${
+                i === 0 ? "rounded-tl-lg" : ""
+              } ${i === actions.length - 1 ? "rounded-bl-lg" : ""}`}
+            >
             {/* Hover label */}
             <span className="pointer-events-none absolute right-[calc(100%+8px)] whitespace-nowrap rounded border border-border bg-white px-3 py-1.5 text-xs font-semibold text-brand opacity-0 shadow-md transition-all group-hover:-translate-x-1 group-hover:opacity-100">
               {label.replace("\n", " ")}
@@ -61,8 +69,9 @@ export default function FloatingActions() {
                 ))}
               </span>
             </span>
-          </a>
-        ))}
+            </El>
+          );
+        })}
       </div>
     </div>
   );

@@ -266,6 +266,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   animation: marquee 40s linear infinite;
 }
 
+.offer-card {
+  transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1),
+    box-shadow 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+    border-color 0.35s cubic-bezier(0.25, 0.8, 0.25, 1),
+    background-color 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -279,4 +287,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     opacity: 1;
     transform: none;
   }
+}
+
+a,
+button,
+[role="button"],
+summary,
+select,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+  cursor: pointer;
 }

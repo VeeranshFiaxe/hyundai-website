@@ -1,0 +1,1584 @@
+
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta charset="utf-8"/>
+<meta name="robots" content=""/>
+<title>Lost | Error - Hyundai Worldwide</title>
+<meta name="keywords"/>
+<meta name="description"/>
+<link rel="icon" href="/etc/designs/hyundai/ww/favicon.ico"/>
+
+
+    
+
+
+
+<link rel="alternate" href="https://www.hyundai.com/worldwide/ko/errors/404" hreflang="ko-KR"/>
+<link rel="alternate" href="https://www.hyundai.com/worldwide/en/errors/404" hreflang="en-US"/>
+<link rel="alternate" href="https://www.hyundai.com/worldwide/en/errors/404" hreflang="x-default"/>
+
+
+
+
+
+
+
+
+
+
+<link rel="canonical" href="https://www.hyundai.com/worldwide/en/errors/404" id="canonical-setting-value"/>
+
+
+
+<meta property="og:site_name" content="HYUNDAI MOTORS" id="og-sitename-value"/>
+<meta property="og:type" content="website" id="og-type-value"/>
+<meta property="og:url" content="https://www.hyundai.com/worldwide/en/errors/404" id="og-url-value"/>
+<meta property="og:title" content="Lost | Error - Hyundai Worldwide" id="og-title-value"/>
+
+
+<meta property="og:image" content="https://www.hyundai.com" id="og-image-value"/>
+
+
+
+<meta name="twitter:card" content="summary_large_image"/>
+
+
+<meta name="twitter:url" content="https://www.hyundai.com/worldwide/en/errors/404" id="twitter-url-value"/>
+<meta name="twitter:title" content="Lost | Error - Hyundai Worldwide" id="twitter-title-value"/>
+
+<meta name="twitter:image" content="https://www.hyundai.com" id="twitter-image-value"/>
+
+
+
+
+<meta itemprop="url" content="https://www.hyundai.com/worldwide/en/errors/404" id="schema-url-value"/>
+<meta itemprop="name" content="Lost | Error - Hyundai Worldwide" id="schema-name-value"/>
+<meta itemprop="description" id="schema-discription-value"/>
+<meta itemprop="keywords" id="schema-keywords-value"/>
+<meta itemprop="image" content="https://www.hyundai.com" id="schema-image-value"/>
+
+
+
+
+
+
+<script src="https://c.evidon.com/dg/dg.js" companyid="6873"></script>
+<script type="text/javascript">
+    if(window.location.hostname === 'www.hyundai.com'){
+        if (window.location.pathname.includes('search')) {
+            document.querySelector("meta[name='robots']").setAttribute("content", "NOINDEX, NOFOLLOW");
+        } else {
+            document.querySelector("meta[name='robots']").setAttribute("content", "NOODP, NOYDIR");
+        }
+    } else {
+        document.querySelector("meta[name='robots']").setAttribute("content", "NOINDEX, NOFOLLOW");
+    }
+</script>
+
+
+
+    
+        <script src="https://assets.adobedtm.com/712ed68a6e28/7b6ea162ec05/launch-8531bc26e523.min.js" async></script>
+    
+    
+
+
+
+
+
+
+    <!-- Facebook Pixel Code -->
+    <script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window,document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '593804601143628');
+            fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" src="https://www.facebook.com/tr?id=593804601143628&ev=PageView&noscript=1"/>
+    </noscript>
+
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5TQSTBW');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    
+    
+    
+
+    
+
+    <!-- End Facebook Pixel Code -->
+    
+
+        <!--CP banner script start-->
+
+<script type="text/javascript">
+    (function (id) {
+        function append(scriptid, url, async) {
+            var d = document, sn = 'script', f = d.getElementsByTagName(sn)[0];
+            if (!f) f = d.head;
+            var s = d.createElement(sn);
+            s.async = async;
+            s.id = scriptid;
+            s.src = url;
+            s.charset = 'utf-8';
+            f.parentNode.insertBefore(s, f);
+        }
+
+        function is2parttld(value) {
+            var tldindicators = ['co', 'com', 'info', 'web', 'info', 'gov', 'edu', 'biz', 'net', 'org'];
+            var countryindicators = ['uk', 'us', 'fr', 'es', 'de', 'at', 'au', 'ae', 'be', 'br', 'ca', 'ch', 'cn', 'co', 'cz', 'dk', 'eg', 'eu', 'fi', 'gb', 'gr', 'hk', 'hr', 'hu', 'ie', 'in', 'jp', 'mx', 'nl', 'no', 'nz', 'pl', 'ro', 'ru', 'se'];
+            return (tldindicators.indexOf(value) !== -1 || countryindicators.indexOf(value) !== -1);
+        }
+
+        function getRootDomain() {
+            var parts = window.location.hostname.split('.');
+            if (parts.length === 2) rootDomain = parts[0];
+            else if (parts.length > 2) {
+                // see if the next to last value is a common tld
+                var part = parts[parts.length - 2];
+                if (is2parttld(part)) {
+                    rootDomain = parts[parts.length - 3]; // go back one more
+                }
+                else {
+                    rootDomain = part;
+                }
+            }
+
+            return rootDomain;
+        }
+
+        window.evidon = {};
+        window.evidon.id = id;
+        window.evidon.test = false;  // set to true for non-production testing.
+        //window.evidon.userid = '';
+
+        var cdn = '//c.evidon.com/', rootDomain = getRootDomain(), noticecdn = cdn + 'sitenotice/';
+        append('evidon-notice', noticecdn + 'evidon-sitenotice-tag.js', false);
+        append('evidon-location', cdn + 'geo/country.js', true);
+        append('evidon-themes', noticecdn + id + '/snthemes.js', true);
+        if (rootDomain) append('evidon-settings', noticecdn + id + '/' + rootDomain + (window.evidon.test ? '/test' : '') + '/settings.js', true);
+
+        window.evidon.priorConsentCallback = function (categories, vendors, cookies) {
+            // add the tags which need to wait for prior consent
+            // here.  This should be all your advertising tags and
+            // probably most of your social and tracking tags.
+            var handlers = {
+                categories: {
+                    'advertiser': 'handleAdvertiser',
+                    'ad exchange': 'handleAdExchange',
+                    'ad network': 'handleAdNetwork',
+                    'ad server': 'handleAdServer',
+                    'ad verification': 'handleAdVerification',
+                    'agency': 'handleAgency',
+                    'analytics provider': 'handleAnalyticsProvider',
+                    'business intelligence': 'handleBusinessIntelligence',
+                    'content management/saas': 'handleContentManagementSaaS',
+                    'creative/ad format technology': 'handleCreativeAdFormatTechnology',
+                    'data aggregator/supplier': 'handleDataAggregatorSupplier',
+                    'data management platform': 'handleDataManagementPlatform',
+                    'demand side platform': 'handleDemandSidePlatform',
+                    'marketing solutions': 'handleMarketingSolutions',
+                    'mobile': 'handleMobile',
+                    'online privacy platform': 'handleOnlinePrivacyPlatform',
+                    'optimizer': 'handleOptimizer',
+                    'other': 'handleOther',
+                    'publisher': 'handlePublisher',
+                    'research provider': 'handleResearchProvider',
+                    'retargeter': 'handleRetargeter',
+                    'social media': 'handleSocialMedia',
+                    'supply side platform': 'handleSupplySidePlatform',
+                    'tag manager': 'handleTagManager',
+                    'video': 'handleVideo',
+                    'website optimization': 'handleWebsiteOptimization',
+                },
+                vendors: {}
+            };
+
+            for (var category in categories) {
+                if (!categories[category]) continue;
+                var handler = window.evidon[handlers.categories[category]];
+                if (typeof handler === 'function') handler();
+            }
+            for (var vendor in vendors) {
+                if (!vendors[vendor]) continue;
+                var handler = window.evidon[handlers.vendors[vendor]];
+                if (typeof handler === 'function') handler();
+            }
+        }
+        /* bottom banner 클로즈 클릭 콜벡 */
+        window.evidon.closeCallback = function () {
+            // this is executed if the user closed a UI element without either Accepting (providing consent)
+            // or Declining (declining to provide consent).
+        }
+        /* bottom banner 쿠키 동의 콜벡 */
+        window.evidon.consentWithdrawnCallback = function () {
+            window.location.reload();
+            // this is exeucted if the user withdraws consent and elects to
+            // no longer allow technologies to run on the site.
+        }
+        /* bottom banner 쿠키 거부 콜벡 */
+        window.evidon.consentDeclinedCallback = function () {
+            // this is executed if the user explicitly declines giving consent by
+            // using a Decline button
+        }
+    })(6873);
+</script>
+
+<!--Cp banner scripr end-->
+    
+
+ 
+
+
+
+<!-- Include author client libraries  -->
+
+
+
+
+
+
+
+
+
+
+
+
+    
+<script src="/etc.clientlibs/clientlibs/granite/jquery.js"></script>
+<script src="/etc.clientlibs/clientlibs/granite/utils.js"></script>
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+<link rel="stylesheet" href="/etc/designs/hyundai/ww/en/clientlibs/publish.css" type="text/css"><link rel="stylesheet" href="/etc/designs/hyundai/ww/en/clientlibs/font.css" type="text/css">
+
+
+
+
+    
+<link rel="stylesheet" href="/etc/designs/hyundai/ww/en/clientlibs/publish.css" type="text/css">
+<link rel="stylesheet" href="/etc/designs/hyundai/ww/en/clientlibs/font.css" type="text/css">
+
+
+
+
+
+
+    
+<link rel="stylesheet" href="/etc/designs/hyundai/ww/en/clientlibs/unpreload.css" type="text/css">
+
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+    
+
+
+
+
+
+
+    
+
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+
+    
+    <script defer src="/etc/designs/hyundai/ww/commonlibs/js/jquery.iframeResizer.min.js"></script>
+    <script type="text/javascript">
+        var langCode = "en_gb";
+        Granite.I18n.setLocale(langCode);       
+
+        function addLoadEvent(func){
+            var oldonload = window.onload;
+            if(typeof window.onload != 'function'){
+                window.onload = func;
+            }else{
+                window.onload = function(){
+                    oldonload();
+                    func();
+                }
+            }
+        }       
+    </script>
+    
+
+        <script type="text/javascript">
+            var digitalData = {
+            	page : {
+            		pageInfo : { pageName : "", }
+            		, attribute : "",
+            	},
+            	event : [{
+            		eventInfo : {eventName : ""}
+            		, attribute : ""
+            	}],
+            	product : [{
+            		productInfo : {productName : ""}
+            		, category : {primaryCategory : ""}
+            		, attribute : ""
+				}]
+            };    
+        
+            
+            digitalData.page.pageInfo.pageName              = "errors:404";
+            digitalData.page.attribute                      = "";
+            digitalData.event[0].eventInfo.eventName        = "";
+            digitalData.event[0].attribute                  = "";
+            digitalData.product[0].productInfo.productName  = "";
+            digitalData.product[0].category.primaryCategory = "";
+            digitalData.product[0].attribute                = "";
+        </script>
+ 
+
+
+
+<script type="application/ld+json">
+	{
+	"@context": "https://schema.org",
+	"@type": "Organization",
+	"name": "Hyundai Motor Company",
+	"url": "https://www.hyundai.com/worldwide/en/errors/404",
+	"logo": "https://www.hyundai.com/etc/designs/hyundai/ww/en/images/common/logo.png"
+	}
+	</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="application/ld+json"> 
+    {
+        "@context"  : "https://schema.org/",
+        "@type"     : "WebSite",
+        "name"      : "Hyundai Worldwide",
+        "url"       : "https://www.hyundai.com/worldwide/en/",
+        "potentialAction" : {
+            "@type"       : "SearchAction",
+            "target"      : "{search_term_string}",
+            "query-input" : "required name=search_term_string"
+        }
+    }
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/etc/designs/hyundai/ww/en/clientlibs/renewalmain/css/gnb.css"/>
+
+   
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+	<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5TQSTBW" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+
+
+    
+
+
+<!-- Header -->
+<!-- <sly data-sly-resource="header" data-sly-unwrap/> -->
+
+
+
+
+<!-- <link rel="stylesheet" type="text/css" href="/etc/designs/hyundai/ww/en/clientlibs/renewalmain/css/gnb.css"> -->
+
+    <div id="skipNavi">
+        <a class="skip" href="#gnbMenu" onclick="var t=document.getElementById('gnbMenu');t.tabIndex=-1;t.focus();return false;">Go to menu</a>
+        <a class="skip" href="#container" onclick="var t=document.getElementById('container');t.tabIndex=-1;t.focus();return false;">Go to content</a>
+    </div>
+    <!-- div > gnb s -->
+    <div class="gnb" data-isauthor="false" id="gnbMenu">
+        <!-- div > gnb >inner s -->
+        <div class="inner">
+            <!-- div > gnb >inner > logo s -->
+            <div class="logo">
+                <span class="ir_hidden">Hyundai World Wide</span>
+                <a class="topLogo" href="/worldwide/en/" id="topLogo">
+                    <!-- 220906 modify -->
+                    <img src="/etc/designs/hyundai/ww/en/images/common/logo.png" width="155" height="22" alt="hyundai" class="logo-default"/><!-- 220927 modify -->
+                    <img src="/content/dam/hyundai/ww/en/images/main/new/common/logo-wh.png" width="155" height="22" alt="hyundai" class="logo-wh"/><!-- 220927 modify -->
+                    <!-- //220906 modify -->
+                </a>
+            </div>
+            <!-- div > gnb >inner > logo e -->
+            <!-- div > gnb >inner > nav s -->
+            <div class="nav">
+                <!-- 221213 modify : GNB 내부 h2 -> p 태그 변경 -->
+                <p class="ir_hidden">Hyundai Worldwide Global Navigation</p>
+                <!-- 220906 add -->
+                <ul class="menu">
+                    
+                        <li class="hasSub">
+                            <a data-track-description="tab^Brand journal" data-track-name="header" onclick="clickGnbMenu('', '_self')" target="_self">
+                                Brand journal
+                            </a>
+                            
+                            
+                                <div class="sub">
+                                    <div class="inner"><!-- 220915 add -->
+                                        <ul class="dep2">
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/brand-journal/mobility-solution" target="_self" data-track-description="tab^Mobility solution" data-track-name="header">Mobility solution</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/brand-journal/sustainable-vision" target="_self" data-track-description="tab^Sustainable vision" data-track-name="header">Sustainable vision</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/brand-journal/lifestyle" target="_self" data-track-description="tab^Lifestyle" data-track-name="header">Lifestyle</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/brand-journal/ioniq" target="_self" data-track-description="tab^IONIQ" data-track-name="header">IONIQ</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/brand-journal/heritage" target="_self" data-track-description="tab^Heritage" data-track-name="header">Heritage</a>
+                                                </li>
+                                            
+                                        </ul>
+                                        <div class="imgArea">
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/brand-journal/mobility-solution/safety-centered-on-humanity" target="_self" data-track-name="main^article" data-track-description="Safety^Safety, at the center of &#34;Progress for Humanity&#34;">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/brand-journal/mobility-solution/230331-safety-centered-on-humanity/thumbnail/safety-centered-on-humanity-gnb.jpg" src="" alt="A black IONIQ 5 with 3 crash dummies inside it crashing into a yellow trailer in an empty warehouse with bright white lights as part of a safety test."/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white">Safety</p><!-- 221226 modify-->
+                                                            <p class="category ">Safety, at the center of &quot;Progress for Humanity&quot;</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/brand-journal/sustainable-vision/earth-day-2023-with-healthy-seas" target="_self" data-track-name="main^article" data-track-description="Green project^Celebrating Earth Day 2023 with Healthy Seas">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/brand-journal/sustainable-vision/230422-earth-day-2023-with-healthy-seas/thumbnail/earth-day-2023-gnb.jpg" src="" alt="Three submerged scuba divers bringing a ghost net up from deep blue waters."/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white">Green project</p><!-- 221226 modify-->
+                                                            <p class="category ">Celebrating Earth Day 2023 with Healthy Seas</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/brand-journal/lifestyle/david-de-rothschild-on-sustainable-activities" target="_self" data-track-name="main^article" data-track-description="Sustainable living^David de Rothschild’s 5 sustainable activities for kids">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/brand-journal/lifestyle/230904-david-rothshield-activities/thumbnail/hyundai-david-sustainable-activities-gnb.jpg" src="" alt="David de Rothschild’s 5 sustainable activities for kids"/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white">Sustainable living</p><!-- 221226 modify-->
+                                                            <p class="category ">David de Rothschild’s 5 sustainable activities for kids</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/brand-journal/ioniq/introducing-ioniq-6" target="_self" data-track-name="main^article" data-track-description="IONIQ lineup^Introducing the IONIQ 6">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/brand-journal/ioniq/100-introducing-ioniq-6/thumbnail/brand-journal-ce-brand-gnb.jpg" src="" alt="Introducing the IONIQ 6"/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white">IONIQ lineup</p><!-- 221226 modify-->
+                                                            <p class="category ">Introducing the IONIQ 6</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/brand-journal/heritage/pony-the-timeless" target="_self" data-track-name="main^article" data-track-description="Heritage story^PONY, the timeless">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/brand-journal/heritage/230828-pony-the-timeless/thumbnail/heritage-pony-gnb.jpg" src="" alt="PONY, the timeless"/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white">Heritage story</p><!-- 221226 modify-->
+                                                            <p class="category ">PONY, the timeless</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                        </div>
+                                        <ul class="hashtag">
+                                            
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Autonomous" data-displayname="Autonomous" data-track-name="hashtag" data-track-description="nav_hashtag^Autonomous"> -->
+                                                    <a data-displayname="Autonomous" data-track-name="hashtag" data-track-description="nav_hashtag^Autonomous" onclick="fn_move_keyword('Autonomous'); return false;">
+                                                        #Autonomous
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=IONIQ 6" data-displayname="IONIQ 6" data-track-name="hashtag" data-track-description="nav_hashtag^IONIQ 6"> -->
+                                                    <a data-displayname="IONIQ 6" data-track-name="hashtag" data-track-description="nav_hashtag^IONIQ 6" onclick="fn_move_keyword('IONIQ 6'); return false;">
+                                                        #IONIQ 6
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=PONY" data-displayname="PONY" data-track-name="hashtag" data-track-description="nav_hashtag^PONY"> -->
+                                                    <a data-displayname="PONY" data-track-name="hashtag" data-track-description="nav_hashtag^PONY" onclick="fn_move_keyword('PONY'); return false;">
+                                                        #PONY
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Metaverse" data-displayname="Metaverse" data-track-name="hashtag" data-track-description="nav_hashtag^Metaverse"> -->
+                                                    <a data-displayname="Metaverse" data-track-name="hashtag" data-track-description="nav_hashtag^Metaverse" onclick="fn_move_keyword('Metaverse'); return false;">
+                                                        #Metaverse
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Robotaxi" data-displayname="Robotaxi" data-track-name="hashtag" data-track-description="nav_hashtag^Robotaxi"> -->
+                                                    <a data-displayname="Robotaxi" data-track-name="hashtag" data-track-description="nav_hashtag^Robotaxi" onclick="fn_move_keyword('Robotaxi'); return false;">
+                                                        #Robotaxi
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Rolling Lab" data-displayname="Rolling Lab" data-track-name="hashtag" data-track-description="nav_hashtag^Rolling Lab"> -->
+                                                    <a data-displayname="Rolling Lab" data-track-name="hashtag" data-track-description="nav_hashtag^Rolling Lab" onclick="fn_move_keyword('Rolling Lab'); return false;">
+                                                        #Rolling Lab
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Goal of the Century 2045" data-displayname="Goal of the Century 2045" data-track-name="hashtag" data-track-description="nav_hashtag^Goal of the Century 2045"> -->
+                                                    <a data-displayname="Goal of the Century 2045" data-track-name="hashtag" data-track-description="nav_hashtag^Goal of the Century 2045" onclick="fn_move_keyword('Goal of the Century 2045'); return false;">
+                                                        #Goal of the Century 2045
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Heritage series" data-displayname="Heritage series" data-track-name="hashtag" data-track-description="nav_hashtag^Heritage series"> -->
+                                                    <a data-displayname="Heritage series" data-track-name="hashtag" data-track-description="nav_hashtag^Heritage series" onclick="fn_move_keyword('Heritage series'); return false;">
+                                                        #Heritage series
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Kulture Stories" data-displayname="Kulture Stories" data-track-name="hashtag" data-track-description="nav_hashtag^Kulture Stories"> -->
+                                                    <a data-displayname="Kulture Stories" data-track-name="hashtag" data-track-description="nav_hashtag^Kulture Stories" onclick="fn_move_keyword('Kulture Stories'); return false;">
+                                                        #Kulture Stories
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=FIFA Women\x27s World Cup™" data-displayname="FIFA Women&#39;s World Cup™" data-track-name="hashtag" data-track-description="nav_hashtag^FIFA Women&#39;s World Cup™"> -->
+                                                    <a data-displayname="FIFA Women&#39;s World Cup™" data-track-name="hashtag" data-track-description="nav_hashtag^FIFA Women&#39;s World Cup™" onclick="fn_move_keyword('FIFA Women\x27s World Cup™'); return false;">
+                                                        #FIFA Women&#39;s World Cup™
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Art + Technology" data-displayname="Art + Technology" data-track-name="hashtag" data-track-description="nav_hashtag^Art + Technology"> -->
+                                                    <a data-displayname="Art + Technology" data-track-name="hashtag" data-track-description="nav_hashtag^Art + Technology" onclick="fn_move_keyword('Art + Technology'); return false;">
+                                                        #Art + Technology
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Concept car" data-displayname="Concept car" data-track-name="hashtag" data-track-description="nav_hashtag^Concept car"> -->
+                                                    <a data-displayname="Concept car" data-track-name="hashtag" data-track-description="nav_hashtag^Concept car" onclick="fn_move_keyword('Concept car'); return false;">
+                                                        #Concept car
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=IONIQ 5" data-displayname="IONIQ 5" data-track-name="hashtag" data-track-description="nav_hashtag^IONIQ 5"> -->
+                                                    <a data-displayname="IONIQ 5" data-track-name="hashtag" data-track-description="nav_hashtag^IONIQ 5" onclick="fn_move_keyword('IONIQ 5'); return false;">
+                                                        #IONIQ 5
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=E\u002DGMP" data-displayname="E-GMP" data-track-name="hashtag" data-track-description="nav_hashtag^E-GMP"> -->
+                                                    <a data-displayname="E-GMP" data-track-name="hashtag" data-track-description="nav_hashtag^E-GMP" onclick="fn_move_keyword('E\u002DGMP'); return false;">
+                                                        #E-GMP
+                                                    </a>
+                                                </li>
+                                                
+                                                <li>
+                                                    <!-- <a href="/content/hyundai/worldwide/en/keyword.html?hashtagkey=Hyundai Continue" data-displayname="Hyundai Continue" data-track-name="hashtag" data-track-description="nav_hashtag^Hyundai Continue"> -->
+                                                    <a data-displayname="Hyundai Continue" data-track-name="hashtag" data-track-description="nav_hashtag^Hyundai Continue" onclick="fn_move_keyword('Hyundai Continue'); return false;">
+                                                        #Hyundai Continue
+                                                    </a>
+                                                </li>
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            
+                        </li>
+                    
+                        <li>
+                            <a data-track-description="tab^Vehicles" data-track-name="header" onclick="clickGnbMenu('\/worldwide\/en\/vehicles', '_self')" target="_self">
+                                Vehicles
+                            </a>
+                            
+                            
+                        </li>
+                    
+                        <li class="hasSub">
+                            <a data-track-description="tab^Company" data-track-name="header" onclick="clickGnbMenu('', '_self')" target="_self">
+                                Company
+                            </a>
+                            
+                            
+                                <div class="sub">
+                                    <div class="inner"><!-- 220915 add -->
+                                        <ul class="dep2">
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/brand-journal/our-brand-vision" target="_self" data-track-description="tab^Philosophy" data-track-name="header">Philosophy</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/company/sustainability" target="_self" data-track-description="tab^Sustainability" data-track-name="header">Sustainability</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/company/newsroom" target="_self" data-track-description="tab^Newsroom" data-track-name="header">Newsroom</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/company/ir" target="_self" data-track-description="tab^IR" data-track-name="header">IR</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/company/hyundai-world-wide" target="_self" data-track-description="tab^Global distributors" data-track-name="header">Global distributors</a>
+                                                </li>
+                                            
+                                                <li>
+                                                    <a href="/worldwide/en/company/contact-us" target="_self" data-track-description="tab^Contact us" data-track-name="header">Contact us</a>
+                                                </li>
+                                            
+                                        </ul>
+                                        <div class="imgArea">
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/brand-journal/our-brand-vision" target="_self" data-track-name="main^article" data-track-description="Brand^Our new vision">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/company/thumbnail/philosophy-new-vision-gnb.jpg" src="" alt="hyundai nexo and electric scooter"/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white">Brand</p><!-- 221226 modify-->
+                                                            <p class="category ">Our new vision</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/company/sustainability/carbon-neutrality-vision" target="_self" data-track-name="main^article" data-track-description="Sustainability^Hyundai Motor Company’s Carbon Neutrality Vision">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/company/thumbnail/sustainability-carbon-neutrality-vision-gnb.jpg" src="" alt="Carbon Neutrality Vision"/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white">Sustainability</p><!-- 221226 modify-->
+                                                            <p class="category ">Hyundai Motor Company’s Carbon Neutrality Vision</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/company/newsroom" target="_self" data-track-name="main^article" data-track-description="Awards^Hyundai Motor Wins Red Dot Design Awards for N Vision 74, ‘Seon’ Infotainment Design System and Hyundai Sans UI Digital Typeface">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/company/thumbnail/newsroom-230822-435x435.jpg" src="" alt="Hyundai Motor Wins Red Dot Design Awards for N Vision 74, ‘Seon’ Infotainment Design System and Hyundai Sans UI Digital Typeface"/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white">Awards</p><!-- 221226 modify-->
+                                                            <p class="category ">Hyundai Motor Wins Red Dot Design Awards for N Vision 74, ‘Seon’ Infotainment Design System and Hyundai Sans UI Digital Typeface</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/company/ir/ir-activities/ir-calendar" target="_self" data-track-name="main^article" data-track-description="IR calendar^NH Corporate Day">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/company/thumbnail/ir-calendar-gnb.jpg" src="" alt="NH Corporate Day"/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white">IR calendar</p><!-- 221226 modify-->
+                                                            <p class="category ">NH Corporate Day</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/company/hyundai-world-wide" target="_self" data-track-name="main^article" data-track-description="^Global distributors">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/company/thumbnail/global-distributor-gnb.jpg" src="" alt="Global Distributors"/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white"></p><!-- 221226 modify-->
+                                                            <p class="category ">Global distributors</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                                <div class="imgThumb">
+                                                    <a href="/worldwide/en/company/contact-us" target="_self" data-track-name="main^article" data-track-description="^Contact us">
+                                                        <!-- 220831 : width, height, data-media-pc, src modify -->
+                                                        <img width="435" height="435" data-media-pc="/content/dam/hyundai/ww/en/images/company/thumbnail/contact-us-gnb.jpg" src="" alt="Contact Us"/>
+                                                        <!-- //220831 : width, height, data-media-pc, src modify -->
+                                                        <div class="tit">
+                                                            <!-- 221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                            <p class="category--theme white"></p><!-- 221226 modify-->
+                                                            <p class="category ">Contact us</p>
+                                                            <!-- //221214 modify : GNB 내부 h2 -> p 태그 변경 (공통 적용)-->
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            
+                                        </div>
+                                        <ul class="hashtag">
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                                
+                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                            
+                        </li>
+                    
+                </ul>
+                <!-- // 220906 add -->
+                <!-- util menu area s-->
+                <ul class="util">
+                    <li class="gnbGlobal">
+                        
+                        <a href="#" class="btnGlobal" data-track-name="header" data-track-description="global"><span class="ir_hidden">Go to Global Distributors page</span></a>
+                        
+                    </li>
+                    <!-- 230203 delete -->
+                    <!--
+                    <li class="gnbChannel">
+                        /* #58514 s - AA 태깅 수정 요청 */
+                        <a href="https://channel.hyundai.com/" class="btnChannel" target="_blank" data-track-name="header" data-track-description="channel">220906 modify : class name
+                            <span class="ir_hidden">Go to channel hyundai page</span>
+                        </a>
+                        /* #58514 e - AA 태깅 수정 요청 */
+                    </li>
+                     -->
+                    <!-- //230203 delete -->
+                    <li class="gnbLang">
+                        
+                        
+                            <!--s: 221118 delete -->
+                            <!-- <a href="#" title="Go to English Website" class="en" data-track-name="header" data-track-description="EN">EN</a> --><!-- 220915 modify : link -->
+                            <!--e: 221118 delete -->
+                            <a href="/worldwide/ko" title="Go to Korean Website" class="kr" data-track-name="header" data-track-description="KO">KR</a>
+                        
+                        
+                        
+                    </li>
+                    <!-- search area s -->
+                    <li class="search">
+                        
+                        <button type="button" class="btnOpenSearch" data-track-name="header" data-track-description="search"><span class="ir_hidden">search</span></button>
+                        
+                        <div class="gnbSearchArea sub">
+                            <div class="inner"><!-- 220915 add -->
+                                <div class="gnbSearch">
+                                    <div class="searchInput">
+                                        <span class="ir_hidden">Search</span>
+                                        <input type="search" class="inputText" placeholder="Search for a feature here"/>
+                                    </div>
+                                    <!-- auto search list s -->
+                                    <div class="gnbautoSearchList">
+                                        <ul class="autoSearch">
+                                            <li class="list"><a class="link" href="#"><mark class="keyword">sonata</mark> 2016</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- auto search list e -->
+                                    <button class="btnSearch" id="btnGNBSearch" search-url="/worldwide/en/search"><span class="ir_hidden">search</span></button>
+                                    <button class="btnReset"><span class="ir_hidden">reset</span></button>
+                                </div>
+                                <!-- Popular search words Area s -->
+                                <div class="gnbTopic">
+                                    <span class="topicTit">Recommended search words</span>
+                                    <div class="topicList">
+                                        <a href="#" data-word="SANTA FE">SANTA FE</a>
+                                    
+                                        <a href="#" data-word="Awards">Awards</a>
+                                    
+                                        <a href="#" data-word="PONY">PONY</a>
+                                    
+                                        <a href="#" data-word="IONIQ 6">IONIQ 6</a>
+                                    
+                                        <a href="#" data-word="IONIQ 5">IONIQ 5</a>
+                                    
+                                        <a href="#" data-word="KONA">KONA</a>
+                                    </div>
+                                </div>
+                                <!-- Popular search words Area e -->
+                                <!-- 220914 delete -->
+                                <!-- <button class="btnGnbClose icon_close_01_bl"><img alt="Close" src="/content/dam/hyundai/ww/en/images/common/static/btn_search_close.png"></button> -->
+                                <!-- //220914 delete -->
+                            </div><!-- //220915 add -->
+                        </div>
+                    </li>
+                    <!-- search area e -->
+                    <!-- mobile menu s -->
+                    <li class="drawerMenu"><button type="button" class="btnDrawerMenu"><span class="ir_hidden">menu</span></button></li>
+                    <!-- mobile menu e -->
+                </ul>
+                <!-- util menu area e-->
+            </div>
+            <!-- div > gnb >inner > nav e -->
+        </div>
+        <!-- div > gnb >inner e -->
+        <div class="gnbDim"></div><!-- 220913 add : GNB Dim 별도 사용 -->
+    </div>
+    <!-- div > gnb e -->
+    <div class="dimmed"></div>
+    
+    <div class="visitCountry_area">
+        <div class="vc_cont_box">
+            <div class="vc_cont">
+                <strong>Visit Hyundai in your country/region </strong>
+                <div class="position">
+                    <a class="gnb_txt_btn btn_mcnt" data-track-description="More countries" data-track-name="main-top-banner" href="/worldwide/en/company/hyundai-world-wide" target="_self">More countries/regions</a></div>
+            </div>
+        </div>
+    </div>
+    
+
+
+<script defer src="/etc/designs/hyundai/ww/en/clientlibs/renewalmain/js/gnb.js"></script>
+
+<script type="text/javascript">
+    var dep1 = null;
+    var dep2 = null;
+    var dep3 = null;
+    var dep4 = null;
+    var dep5 = null;
+    $(document).ready(function(){
+        gnb(dep1,dep2,dep3,dep4,dep5);
+
+        // M-00134  모바일 국가지역 이동 스크립트 s
+        var locationData = fnGetYourLocation();
+        if(locationData){
+            if(locationData.countryCode){
+                var linkUrl = '<a href="' + Header.goToCountry.movePage(locationData.countryCode) + '" class="btn" onClick="_satellite.track(\'gnb\',\''+Granite.I18n.get("Go to your country or region")+'\')">' + Granite.I18n.get("Go to your country or region") + '</a>';
+
+                $(".visitCountry_area .btn_position_area").prepend(linkUrl);
+
+                $("button.btn_country").on("click", function(){ window.location = Header.goToCountry.movePage(locationData.countryCode);  });
+
+             }
+
+            if(locationData.countryCode && locationData.countryName){
+                $(".visitCountry_area .position").prepend('<a href="' + Header.goToCountry.movePage(locationData.countryCode)+'" class="gnb_txt_btn btn_local" target="_self"><span class="pst_icon">Current location</span><span class="pst_txt">' + locationData.cityName+', ' + locationData.countryName + '</span></a>');
+            }
+         }
+     // M-00134  모바일 국가지역 이동 스크립트 e
+        var languageCode = "en";
+        var langCodeArr = langCode.split("_");
+        if(langCodeArr.length > 0){
+            languageCode = langCodeArr[0];
+        }
+        $(".btnGlobal").on("click", function(){ window.location = "/worldwide/"+ languageCode +"/company/hyundai-world-wide";  }); //220914 modify : btnLanguage -> btnGlobal
+
+        // [2021.07.08:전영우] 추천검색어, 연관검색어 추가
+        // satellite 이벤트명은 hardcording.
+        var search_popular_list_count = 6;
+
+        var headPart = document.location.pathname.indexOf('/en') == -1 ? document.location.pathname.substring(0, document.location.pathname.indexOf('/ko') + 3) : document.location.pathname.substring(0, document.location.pathname.indexOf('/en') + 3);
+        var mobileGnbContactUs = headPart + '/company/contact-us';
+        if(document.location.port == '4502') {
+            mobileGnbContactUs = mobileGnbContactUs + '.html';
+        }
+
+        $('#mGnbContactUs').attr('href', mobileGnbContactUs);
+
+        $("#gnbMenu .dep2_a").each( function(){
+            if($(this).text() == "Home" && window.innerWidth > 740) {$(this).hide();}
+        });
+    });
+
+    function clickGnbMenu(link, target) {
+        var isWcMobile = link.indexOf("/worldcup") > 0 && $("body").hasClass("mobile");
+        if(link != '' && !isWcMobile) {
+            if(target == '_blank') {
+                window.open(link);
+            } else {
+                document.location.href = link;
+            }
+
+        }
+    }
+
+    // #58244 - GNB 해시태그 클릭 시 링크 수정 요청
+    var resolvedPath = "";
+    function fn_move_keyword_b(hashTag){
+        var dataIsauthor = $('.gnb').attr('data-isauthor');
+		var hashTag = hashTag.toLowerCase().replace("'" , "").replace(/\s|_/g,"-");
+
+        if(dataIsauthor == "true"){
+        	resolvedPath = "/content/hyundai/worldwide/"+ languageCode +"/keyword."+ hashTag + ".html";
+        } else{
+        	resolvedPath = "/worldwide/"+ languageCode +"/keyword."+ hashTag;
+        }
+    }
+
+    function fn_move_keyword(hashTag){
+    	fn_move_keyword_b(hashTag);
+
+        if( hashTag != "" ){
+            document.location.href = resolvedPath;
+        }
+    }
+
+    // #58947 - 특수문자 포함 검색어를 위한 수정
+   $(".topicList a").on("click", function(){
+
+    	var word = $(this).attr("data-word");
+    	var dataIsauthor = $('.gnb').attr('data-isauthor');
+    	if(dataIsauthor == "true"){
+    		searchResult = "/content/hyundai/worldwide/"+ languageCode +"/search.html";
+        } else{
+        	searchResult = "/worldwide/"+ languageCode +"/search";
+        }
+
+    	document.location.href = searchResult + "?query=" + word + "&_charset=utf-8";
+
+    	var popularWord = "popular " + word;
+    	_satellite.track('search-result', popularWord);
+    });
+
+</script>
+
+    
+<link rel="stylesheet" href="/etc/designs/hyundai/ww/en/clientlibs/brand.publish.css" type="text/css">
+
+
+
+
+
+<div class="contentWrap onlyMain" id="container">
+	
+    <div>
+
+
+  
+    <div class="contTop" data-bg="/content/dam/hyundai/ww/en/images/error/page-not-found-kv-pc.jpg" data-mobile-bg="/content/dam/hyundai/ww/en/images/error/page-not-found-kv-m.jpg">
+        <div class="topArea">
+        
+
+
+        
+
+<span class="sharing hellosk"><a href="#" onclick="gfnOpenLayer('.layerPop.share', event)">Page sharing</a></span>
+        
+<div class="layerPop share">
+    <div class="dim"></div>
+    <div class="layerPopArea w550">
+        <div class="popCont">
+            <strong class="headTit">Share</strong>
+            <ul class="shareList">
+                <li class="btnFacebook"><a href="http://www.facebook.com/sharer/sharer.php" target="_blank" type="facebook" data-track-name="pageshare" data-track-description="Facebook">Facebook</a></li>
+                <li class="btnTwitter"><a href="https://twitter.com/intent/tweet" target="_blank" type="twitter" data-track-name="pageshare" data-track-description="Twitter">Twitter</a></li>
+                
+            </ul>
+       </div>
+       <a href="#" class="btnLayerClose">close</a>
+    </div><!-- layerPopArea : e -->
+</div><!-- //layerPop share -->
+
+        </div>
+        <!-- //.topVisualArea -->
+        <div class="topBgTxtArea">
+            <div class="middle">
+                <div class="titWrap">
+                        <h1 class="ftit"><span style="font-size: 56.0px;">The page you’re looking for can’t be found</span></h1>
+                        <div class="stit">
+                            You may have mistyped the address or the page may have moved.<br />Start again from here.
+                        </div>
+                </div>
+            </div>
+        </div><!-- //.topBgTextArea -->        
+    </div><!-- //.contTop -->
+        
+
+</div>
+	
+
+
+
+
+    
+    
+    <div class="page-not-found">
+
+
+<div class="section">
+<div id="section" class="contWrap notFound">
+	<div class="contBox">
+		<div class="searchWrap">
+			<div class="searchInput">
+				<input class="inputText" type="text" id="keyword" name="keyword" value="" placeholder="Search in the hyundai.com/worldwide" title="Search in the hyundai.com/worldwide"/>
+			</div>
+			<ul class="autoSearchList" style="display: none;">                       
+			</ul>
+			<button id="pageNotFountBtnSearch" class="btnSearch" search-url="/content/hyundai/ww/en/search.html">search</button>
+			
+		</div>
+		<div class="button">
+			<div class="btnWrap">
+				<a href="/worldwide/en" class="btn big" target="_self" title="Home" data-track-name="button" data-track-description="Home">Home</a>
+				<a href="/worldwide/en/vehicles" class="btn big gray" target="_self" title="Find a Car" data-track-name="button" data-track-description="Find a car">Find a car</a>
+			</div>
+		</div>
+		<!-- //170823 -->
+	</div>
+	
+	<div class="siteMap"> 
+		<div class="siteMapWrap only">
+			
+		
+			
+		
+			
+		</div>
+		<div class="button">
+			<a href="/worldwide/en/footer/contact-legal/site-map">see our site map</a>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+	$("#keyword").keydown(function(key){
+		if(key.keyCode == 13){
+			// M-00090
+			// PageNotFound.search.moveSearchResult($("#keyword").val());
+			Header.search.moveSearchResult($("#keyword").val());
+		}
+	});
+});
+
+</script>
+</div>
+</div>
+
+
+
+</div> <!-- [e] contentWrap onlyMain -->
+
+
+
+
+
+    <!-- //191204 : cookie layer popup -->
+    <!-- <div class="btnContentTop noPrint"><button><img src="/content/dam/hyundai/ww/en/images/common/static/btn_top.png" alt="content top"></button></div> -->
+    <footer class="footerWrap">
+        <h2 class="ir_hidden">footer menus</h2>
+        <!-- /* M-00074 관광명소 캠페인 사이트 하드태깅 요청건 시작 */ -->
+        
+        <div class="footerArea">
+            <p class="logo">
+                <a href="/worldwide/en">
+                
+                </a>
+            </p>
+            <div class="footerMenu">
+                <ul class="dep1Wrap">
+                    <li>
+                        <div>Contact &amp; legal
+                            <button class="btnNextShow icon_arr_bottom_01_wh"><span class="ir_hidden">view sub menu list</span>
+                            </button>
+                        </div>
+                        <ul class="dep2Wrap boxToggleShow">
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/contact-legal/legal" target="_self" data-track-name="footer" data-track-description="Legal">Legal</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/contact-legal/privacy-policy" target="_self" data-track-name="footer" data-track-description="Privacy policy">Privacy policy</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/contact-legal/cookies-policy" target="_self" data-track-name="footer" data-track-description="Cookies policy">Cookies policy</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/contact-legal/privacy-policy#california" target="_self" data-track-name="footer" data-track-description="Do not sell my information">Do not sell my information</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/contact-legal/site-map" target="_self" data-track-name="footer" data-track-description="Sitemap">Sitemap</a>
+                                
+                                
+                            </li>
+                        </ul>
+                    </li>
+                    
+                
+                    <li>
+                        <div>Corporate
+                            <button class="btnNextShow icon_arr_bottom_01_wh"><span class="ir_hidden">view sub menu list</span>
+                            </button>
+                        </div>
+                        <ul class="dep2Wrap boxToggleShow">
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/corporate/history/2021-2025" target="_self" data-track-name="footer" data-track-description="History">History</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/corporate/awards" target="_self" data-track-name="footer" data-track-description="Awards">Awards</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/corporate/vehicle-history" target="_self" data-track-name="footer" data-track-description="Vehicle history">Vehicle history</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/corporate/networks/global" target="_self" data-track-name="footer" data-track-description="Networks">Networks</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="/worldwide/en/footer/corporate/affiliates" target="_self" data-track-name="footer" data-track-description="Affiliates">Affiliates</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="http://supplier.hyundai.com/" target="_blank" data-track-name="footer" data-track-description="Supplier">Supplier</a>
+                                
+                                
+                            </li>
+                        </ul>
+                    </li>
+                    
+                
+                    <li>
+                        <div>Hyundai experiences
+                            <button class="btnNextShow icon_arr_bottom_01_wh"><span class="ir_hidden">view sub menu list</span>
+                            </button>
+                        </div>
+                        <ul class="dep2Wrap boxToggleShow">
+                            <li>
+                                
+                                    <a class="dep2_a" href="https://www.hyundai-n.com/" target="_blank" data-track-name="footer" data-track-description="N">N</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="https://motorstudio.hyundai.com/itg/ln/main.do?lang=en" target="_blank" data-track-name="footer" data-track-description="Hyundai Motorstudio">Hyundai Motorstudio</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="https://collection.hyundai.com/index.do?lang=en" target="_blank" data-track-name="footer" data-track-description="Hyundai Collection">Hyundai Collection</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="https://artlab.hyundai.com" target="_blank" data-track-name="footer" data-track-description="Hyundai Artlab">Hyundai Artlab</a>
+                                
+                                
+                            </li>
+                        
+                            <li>
+                                
+                                    <a class="dep2_a" href="https://hyundai-nft.com/" target="_blank" data-track-name="footer" data-track-description="Hyundai NFT">Hyundai NFT</a>
+                                
+                                
+                            </li>
+                        </ul>
+                    </li>
+                    
+                
+                    
+                    <li class="social">
+                        <div>Hyundai social media
+                            <button class="btnNextShow icon_arr_bottom_01_wh"><span class="ir_hidden">view sub menu list</span>
+                            </button>
+                        </div>
+                        <dl class="dep2Wrap boxToggleShow">
+                            <!-- 191213 modify -->
+                            <div class="row">
+                                <div class="col">
+                                    <dt class="titLink">Worldwide
+                                    </dt>
+                                    <div class="boxLink">
+                                        <dd><a href="https://www.facebook.com/Hyundaiworldwide" class="facebook" data-track-name="footer" data-track-description="facebook" target="_blank"><img src="/content/dam/hyundai/ww/en/images/common/static/facebook.png" alt="Facebook"/></a></dd>
+                                    
+                                        <dd><a href="https://www.instagram.com/hyundai/" class="instar" data-track-name="footer" data-track-description="instar" target="_blank"><img src="/content/dam/hyundai/ww/en/images/common/static/instagram.png" alt="Instagram"/></a></dd>
+                                    
+                                        <dd><a href="http://www.youtube.com/user/hyundaiworldwide" class="youtube" data-track-name="footer" data-track-description="youtube" target="_blank"><img src="/content/dam/hyundai/ww/en/images/common/static/youtube.png" alt="Youtube"/></a></dd>
+                                    
+                                        <dd><a href="https://twitter.com/hyundai_global" class="twitter" data-track-name="footer" data-track-description="twitter" target="_blank"><img src="/content/dam/hyundai/ww/en/images/common/static/twitter.png" alt="Twitter"/></a></dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                
+                                
+                            </div>
+                            <!--// 191213 modify -->
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+            <p class="copyright">ⓒ 2023 Hyundai Motor Company</p>
+        </div>
+    </footer>
+    <div class="footerDimBg"></div>
+    
+    <script defer src="/etc/designs/hyundai/ww/commonlibs/component/page/pageshare2.js"></script>
+
+
+ </script-->
+<script>
+$(document).ready(function(){
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+    return "";
+    }
+
+    function checkForAccess(){
+        $(function() {
+            $.ajax({
+                url         : "https://www.youtube.com/player_api",
+                dataType    : "jsonp",
+                timeout     : 5000,
+                success : function () {
+                },
+                error : function (parsedjson) {
+                    if(parsedjson.status == "200"){
+                        //Video will be displayed
+                        $(".movieContent1").css("display","block");
+                        //$(".movieContent").css("display","block");
+                        $(".movieContent1").css("background","#fff");
+                        //$(".movieContent").css("background","#fff");
+                        $(".movieContent1").css("padding","0");
+                        //$(".movieContent").css("padding","0");
+                    }else{
+                        //Video will be blocked
+                        console.log("here");
+                        $(".movieContent1").css("display",      "block");
+                        $(".movieContent").css("display",       "block");
+                        $(".movieContent1").css("background",   "#f6f3f2");
+                        $(".movieContent").css("background",    "#f6f3f2");
+                        $(".movieContent1").css("padding",      "0");
+                        $(".movieContent").css("padding",       "0");
+                        $(".movieContent1").html(Granite.I18n.get("Youtube has been blocked by firewall. Please allow Youtube to watch the video"));
+                        $(".movieContent").html(Granite.I18n.get("Youtube has been blocked by firewall. Please allow Youtube to watch the video"));
+                    }
+                }
+            });
+        });
+    }
+
+
+    setTimeout(function(){
+        //Get the cookie value
+        var cookieConcent   = getCookie("_evidon_consent_cookie");
+        var categories      = window.evidon.notice._getCategoriesReturnObject();
+        var isConsentGiven  = window.evidon.notice.consentIsGiven;
+        //Check for language
+        if( langCode == "en_gb" ){
+            console.log("i am inside 0");
+            //Check for cookie value 
+            if( cookieConcent != null && cookieConcent != undefined && cookieConcent != "" ){
+                console.log("i am inside 1");
+                //This is EN site logic
+                //Check if the cookie  banner is accepted 
+                if( categories.functional ){
+                    console.log("i am inside 2");
+                    //If yes check for youtube access
+                    checkForAccess();
+                }else{
+                    console.log("i am inside 3");
+                    //Display msg for enable cookie in banner
+                    $(".movieContent1").css("display",      "block");
+                    $(".movieContent").css("display",       "block");
+                    $(".movieContent1").css("background",   "#f6f3f2");
+                    $(".movieContent").css("background",    "#f6f3f2");
+                    $(".movieContent1").css("padding",      "0");
+                    $(".movieContent").css("padding",       "0");
+                    $(".movieContent1").html(Granite.I18n.get("Please <a href='#' id='acceptCookie' onclick='event.preventDefault(); window.evidon.notice._showConsentUI();'>accept functional cookies</a> to watch the video"));
+                    $(".movieContent").html(Granite.I18n.get("Please <a href='#' id='acceptCookie' onclick='event.preventDefault(); window.evidon.notice._showConsentUI();'>accept functional cookies</a> to watch the video"));
+                    /* $(".movieContent1").html(Granite.I18n.get("Please <a href='#' onclick='event.preventDefault(); window.evidon.notice._showConsentUI();'>accept publisher cookies</a> to watch the video"));
+                    $(".movieContent").html(Granite.I18n.get("Please <a href='#' onclick='event.preventDefault(); window.evidon.notice._showConsentUI();'>accept publisher cookies</a> to watch the video")); */
+                }
+            }else if( isConsentGiven == true ){
+                //Concent is opt out for CCNA
+                //If yes check for youtube access
+                checkForAccess();
+            }else{
+                console.log("i am inside 4");
+                //Display msg for enable cookie in banner
+                $(".movieContent1").css("display",      "block");
+                $(".movieContent").css("display",       "block");
+                $(".movieContent1").css("background",   "#f6f3f2");
+                $(".movieContent").css("background",    "#f6f3f2");
+                $(".movieContent1").css("padding",      "0");
+                $(".movieContent").css("padding",       "0");
+                $(".movieContent1").html(Granite.I18n.get("Please <a href='#' id='acceptCookie' onclick='event.preventDefault(); window.evidon.notice._showConsentUI();'>accept functional cookies</a> to watch the video"));
+                $(".movieContent").html(Granite.I18n.get("Please <a href='#' id='acceptCookie' onclick='event.preventDefault(); window.evidon.notice._showConsentUI();'>accept functional cookies</a> to watch the video"));
+                /* $(".movieContent1").html(Granite.I18n.get("Please <a href='#' onclick='event.preventDefault(); window.evidon.notice._showConsentUI();'>accept publisher cookies</a> to watch the video"));
+                $(".movieContent").html(Granite.I18n.get("Please <a href='#' onclick='event.preventDefault(); window.evidon.notice._showConsentUI();'>accept publisher cookies</a> to watch the video")); */
+            }
+        }else{
+            console.log("i am inside 5");
+            //This is KO site logic
+            checkForAccess();
+        }
+    }, 3000);
+
+});
+/* [2022.12.23 : 최재영] WW : S - evidon 쿠키 셋팅 팝업 클릭 이벤트 */
+$(document).on('click','#evidon-prefdiag-accept',function(){
+    window.location.reload();
+});
+/* [2022.12.23 : 최재영] WW : E - evidon 쿠키 셋팅 팝업 클릭 이벤트 */
+</script>
+
+
+
+
+<script defer src="/etc/designs/hyundai/ww/commonlibs/js/jquery-ui.min.js"></script>
+<script defer src="/etc/designs/hyundai/ww/commonlibs/js/jquery.ui.touch-punch.min.js"></script>
+<script defer src="/etc/designs/hyundai/ww/commonlibs/js/swiper.min.js"></script>
+<script defer src="/etc/designs/hyundai/ww/commonlibs/js/jquery.form.min.js"></script>
+
+    
+<script type="text/javascript" src="/etc/designs/hyundai/ww/en/clientlibs/publish.js"></script>
+
+
+
+    
+<script type="text/javascript" src="/etc/designs/hyundai/ww/commonlibs.js"></script>
+
+
+<!-- /* Adobe Analytics */ --> 
+
+<!-- Popup Layer Start -->
+<div class="layerPop" id="layerNotice">
+    <div class="notice">
+        <div class="noticeTit"></div>
+        <div class="noticeTxt">
+            
+            <p class="noticeBtn">
+                <a href="javascript:hideLayer();">CLOSE</a>
+            </p>
+        </div>
+        <div class="noticeFoot">
+            <input type="checkbox" id="noticeC"/>
+            <label for="noticeC">Please do not open this pop-up for 24 hours.</label>
+        </div>
+        <a href="javascript:hideLayer();" class="noticeCloseBtn">notice close</a>
+    </div>
+</div>
+<!-- Popup Layer End -->
+
+
+<script defer src="/etc/designs/hyundai/ww/commonlibs/js/jquery.dotdotdot.min.js"></script>
+
+
+
+    
+    <script>
+			/*
+				M-00048
+				IE,Chrome 둘다 ... 처리 하도록 js처리
+				News Room의 Highlights 영역에 적용 <h3 class="subTit">...</h3>
+			*/
+			document.domain = "hyundai.com";
+			$(document).ready(function(){
+				if($("h3.subTit").length > 0){
+					$("h3.subTit").each(function(index){
+						$(this).dotdotdot({
+							wrap : 'word'
+						});
+					});
+				}
+			});
+			</script>
+
+</body>
+</html>
