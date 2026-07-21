@@ -139,55 +139,27 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
   };
 
   return (
-    <section id="test-drive" className="scroll-mt-24 bg-white py-14 lg:py-20 overflow-hidden">
-      <div className="container-px mx-auto max-w-[1400px]">
-        <div className="overflow-hidden rounded-lg border border-border shadow-[0_4px_32px_0_rgba(0,44,95,0.08)] lg:grid lg:grid-cols-[0.9fr_1.1fr]">
-          {/* Visual side */}
-          <Reveal variant="slide-right" className="relative min-h-[280px] overflow-hidden lg:min-h-full">
-            <Image
-              src={testDriveImage}
-              alt="Hyundai Creta interior and dashboard"
-              fill
-              sizes="(max-width: 1024px) 100vw, 45vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent lg:bg-gradient-to-r lg:from-black/70 lg:via-black/30 lg:to-transparent" />
-            <div className="absolute bottom-0 left-0 p-8 lg:p-10">
-              <p className="text-sm font-semibold uppercase tracking-wider text-white/70">
-                Book a Test Drive
-              </p>
-              <h2 className="mt-2 max-w-sm font-display text-2xl font-bold leading-tight text-white sm:text-3xl">
-                Take Your Favourite Hyundai for a Spin
-              </h2>
-              <p className="mt-3 max-w-sm text-sm text-white/70">
-                Pick a date, time and location, and we&apos;ll have the car ready,
-                at our showroom or your home.
-              </p>
-            </div>
-          </Reveal>
-
-          {/* Form side */}
-          <Reveal delay={200} variant="slide-left" className="bg-bg-2 p-8 sm:p-10 lg:p-12">
-            {submitted ? (
-              <div className="flex h-full flex-col items-center justify-center py-10 text-center">
-                <span className="grid h-16 w-16 place-items-center rounded-full bg-brand/10 text-brand">
-                  <Check className="h-8 w-8" />
-                </span>
-                <h3 className="mt-6 font-display text-2xl font-bold text-text">
-                  Booking received!
-                </h3>
-                <p className="mt-2 max-w-sm text-muted">
-                  Thank you. A Modi Hyundai representative will call you shortly to confirm your test drive.
-                </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="mt-6 rounded border border-border px-6 py-3 text-sm font-semibold text-text transition-colors hover:bg-bg-3"
-                >
-                  Book another
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={onSubmit} className="grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
+    <>
+      {submitted ? (
+        <div className="flex h-full flex-col items-center justify-center py-10 text-center">
+          <span className="grid h-16 w-16 place-items-center rounded-full bg-brand/10 text-brand">
+            <Check className="h-8 w-8" />
+          </span>
+          <h3 className="mt-6 font-display text-2xl font-bold text-text">
+            Booking received!
+          </h3>
+          <p className="mt-2 max-w-sm text-muted">
+            Thank you. A Modi Hyundai representative will call you shortly to confirm your test drive.
+          </p>
+          <button
+            onClick={() => setSubmitted(false)}
+            className="mt-6 rounded border border-border px-6 py-3 text-sm font-semibold text-text transition-colors hover:bg-bg-3"
+          >
+            Book another
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={onSubmit} className="grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Select Car Model</span>
                   <div className="relative">
@@ -364,25 +336,56 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
                 </p>
               </form>
             )}
-          </Reveal>
-        </div>
-      </div>
-    </section>
+    </>
   );
 }
 
 export default function TestDrive() {
   return (
-    <OtpGate
-      title="Verify Your Phone"
-      subtitle="Enter your phone number to unlock the test drive form."
-    >
-      {(verifiedPhone, requestChangePhone) => (
-        <TestDriveInner
-          verifiedPhone={verifiedPhone}
-          requestChangePhone={requestChangePhone}
-        />
-      )}
-    </OtpGate>
+    <section id="test-drive" className="scroll-mt-24 bg-white py-14 lg:py-20 overflow-hidden">
+      <div className="container-px mx-auto max-w-[1400px]">
+        <div className="overflow-hidden rounded-lg border border-border shadow-[0_4px_32px_0_rgba(0,44,95,0.08)] lg:grid lg:grid-cols-[0.9fr_1.1fr]">
+          {/* Visual side */}
+          <Reveal variant="slide-right" className="relative min-h-[280px] overflow-hidden lg:min-h-full">
+            <Image
+              src={testDriveImage}
+              alt="Hyundai Creta interior and dashboard"
+              fill
+              sizes="(max-width: 1024px) 100vw, 45vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent lg:bg-gradient-to-r lg:from-black/70 lg:via-black/30 lg:to-transparent" />
+            <div className="absolute bottom-0 left-0 p-8 lg:p-10">
+              <p className="text-sm font-semibold uppercase tracking-wider text-white/70">
+                Book a Test Drive
+              </p>
+              <h2 className="mt-2 max-w-sm font-display text-2xl font-bold leading-tight text-white sm:text-3xl">
+                Take Your Favourite Hyundai for a Spin
+              </h2>
+              <p className="mt-3 max-w-sm text-sm text-white/70">
+                Pick a date, time and location, and we&apos;ll have the car ready,
+                at our showroom or your home.
+              </p>
+            </div>
+          </Reveal>
+
+          {/* Form side */}
+          <Reveal delay={200} variant="slide-left" className="bg-bg-2 p-8 sm:p-10 lg:p-12">
+            <OtpGate
+              title="Verify Your Phone"
+              subtitle="Enter your phone number to unlock the test drive form."
+              variant="bare"
+            >
+              {(verifiedPhone, requestChangePhone) => (
+                <TestDriveInner
+                  verifiedPhone={verifiedPhone}
+                  requestChangePhone={requestChangePhone}
+                />
+              )}
+            </OtpGate>
+          </Reveal>
+        </div>
+      </div>
+    </section>
   );
 }
