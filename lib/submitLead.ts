@@ -1,4 +1,4 @@
-export type FormType = "contact" | "test_drive" | "service";
+export type FormType = "contact" | "test_drive" | "service" | "phone_capture";
 
 export async function submitLead(
   formType: FormType,

@@ -48,7 +48,7 @@ export default function TestDriveProvider({ children }: { children: ReactNode })
               <X className="h-5 w-5" />
             </button>
             <Suspense fallback={<div className="p-10 text-center text-muted">Loading...</div>}>
-              <TestDriveWizard initialCarSlug={carSlug} onBack={close} onVerificationChange={setVerifying} />
+              <TestDriveWizard initialCarSlug={carSlug} onBack={close} onVerificationChange={setVerifying} formSource="test_drive_pop_up" />
             </Suspense>
           </div>
         </div>

@@ -78,7 +78,10 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
     time: "",
   });
   const mobile = verifiedPhone;
-  const minDate = new Date().toISOString().slice(0, 10);
+  // Earliest selectable date is tomorrow — same-day test-drive bookings aren't possible.
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const minDate = tomorrow.toISOString().slice(0, 10);
 
   const setField = (key: string) => (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     setForm((f) => ({ ...f, [key]: e.target.value }));
@@ -375,6 +378,7 @@ export default function TestDrive() {
               title="Verify Your Phone"
               subtitle="Enter your phone number to unlock the test drive form."
               variant="bare"
+              formSource="test_drive_section"
             >
               {(verifiedPhone, requestChangePhone) => (
                 <TestDriveInner

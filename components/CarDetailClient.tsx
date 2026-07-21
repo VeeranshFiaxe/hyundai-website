@@ -351,6 +351,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
                 initialCarSlug={car.slug}
                 onBack={() => setShowTestDrive(false)}
                 onVerificationChange={setTdVerifying}
+                formSource={`test_drive_${car.slug}`}
               />
             </Suspense>
           </div>

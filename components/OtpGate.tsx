@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ArrowLeft, Check, Phone, Shield } from "./icons";
 import { useVerifiedPhone } from "./VerifiedPhoneProvider";
+import { submitLead } from "@/lib/submitLead";
 
 type OtpStep = "phone" | "otp";
 
@@ -25,6 +26,11 @@ interface OtpGateProps {
    * content). Lets the embedding modal resize itself to match the content.
    */
   onVerificationChange?: (verifying: boolean) => void;
+  /**
+   * Label identifying which form/instance this OTP gate serves.
+   * Sent with the phone_capture lead on successful verification.
+   */
+  formSource?: string;
 }
 
 export function OtpGate({
@@ -35,6 +41,7 @@ export function OtpGate({
   variant = "card",
   barePadded = false,
   onVerificationChange,
+  formSource,
 }: OtpGateProps) {
   // Verified state is shared site-wide via VerifiedPhoneProvider so verifying
   // once unlocks every form. Transient entry state (the typed digits, loading,
@@ -123,6 +130,15 @@ export function OtpGate({
         // phone as verified (and persists it across refreshes).
         verify(phone);
         if (onVerified) onVerified(phone);
+
+        // Fire-and-forget phone-capture: send the verified number immediately
+        // so we have it even if the user abandons the rest of the form.
+        if (formSource) {
+          submitLead("phone_capture", {
+            phone_number: phone,
+            form_source: formSource,
+          }).catch(() => {});
+        }
       } else {
         setError("Invalid OTP. For demo, use 0000.");
         setOtp(["", "", "", ""]);

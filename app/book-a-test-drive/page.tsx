@@ -63,7 +63,7 @@ export default function BookTestDrivePage() {
         <section className="bg-white py-20 lg:py-28">
           <div className="container-px mx-auto max-w-[1400px]">
             <Suspense fallback={<div className="mx-auto max-w-3xl rounded-lg border border-border bg-white p-6 shadow sm:p-10 text-center text-muted">Loading...</div>}>
-              <TestDriveWizard />
+              <TestDriveWizard formSource="test_drive_pop_up" />
             </Suspense>
           </div>
         </section>

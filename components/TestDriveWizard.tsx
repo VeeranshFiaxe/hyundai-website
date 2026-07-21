@@ -27,6 +27,8 @@ interface TestDriveWizardProps {
   requestChangePhone?: () => void;
   /** Forwarded to OtpGate so the embedding modal can match the OTP step's narrower width. */
   onVerificationChange?: (verifying: boolean) => void;
+  /** Identifies which entry point launched this wizard. */
+  formSource?: string;
 }
 
 function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requestChangePhone }: TestDriveWizardProps) {
@@ -541,7 +543,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
   );
 }
 
-export default function TestDriveWizard({ initialCarSlug, onBack, onVerificationChange }: Omit<TestDriveWizardProps, "verifiedPhone" | "requestChangePhone">) {
+export default function TestDriveWizard({ initialCarSlug, onBack, onVerificationChange, formSource }: Omit<TestDriveWizardProps, "verifiedPhone" | "requestChangePhone">) {
   return (
     <OtpGate
       title="Verify Your Phone"
@@ -549,6 +551,7 @@ export default function TestDriveWizard({ initialCarSlug, onBack, onVerification
       variant="bare"
       barePadded
       onVerificationChange={onVerificationChange}
+      formSource={formSource}
     >
       {(verifiedPhone, requestChangePhone) => (
         <TestDriveWizardInner
