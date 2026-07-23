@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { company } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidPincode, type FormErrors } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
+import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
 import { Check, Clock, Mail, MapPin, Phone, WhatsApp } from "./icons";
 import Reveal from "./Reveal";
 import { OtpGate } from "./OtpGate";
@@ -63,6 +64,14 @@ function ContactFormInner({ verifiedPhone, requestChangePhone }: { verifiedPhone
         subject: form.subject.trim(),
         message: form.message.trim(),
       });
+      submitSupabaseLead("contact-us", {
+        name: form.name.trim(),
+        mobile_number: mobile,
+        email: form.email.trim(),
+        pincode: form.pincode.trim(),
+        subject: form.subject.trim(),
+        message: form.message.trim(),
+      }).catch((err) => console.error("[ContactUs] Supabase lead insert failed", err));
       setSubmitted(true);
     } catch {
       setSubmitError(true);

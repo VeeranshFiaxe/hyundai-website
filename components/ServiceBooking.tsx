@@ -4,6 +4,7 @@ import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import { carModels, serviceCentres } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidMobile, isValidName, type FormErrors } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
+import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
 import { Calendar, Check, ChevronDown, Phone } from "./icons";
 import Reveal from "./Reveal";
 import { OtpGate } from "./OtpGate";
@@ -138,6 +139,18 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
         preferred_time: form.time,
         pickup_drop: pickupDrop ? "Yes" : "No",
       });
+      submitSupabaseLead("service", {
+        car_model: isOther ? customCarModel.trim() : form.carModel,
+        service_centre: form.serviceCentre,
+        service_type: form.serviceType,
+        name: form.name.trim(),
+        mobile_number: mobile,
+        email: form.email.trim(),
+        registration_number: form.regNumber.trim(),
+        preferred_date: form.date,
+        preferred_time: form.time,
+        pickup_drop: pickupDrop ? "Yes" : "No",
+      }).catch((err) => console.error("[ServiceBooking] Supabase lead insert failed", err));
       setSubmitted(true);
     } catch {
       setSubmitError(true);

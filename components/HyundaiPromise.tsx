@@ -9,6 +9,7 @@ import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { OtpGate } from "./OtpGate";
 import { submitLead } from "@/lib/submitLead";
+import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
@@ -129,6 +130,16 @@ export default function HyundaiPromise() {
         budget_range: buyForm.budget.trim(),
         additional_details: buyForm.notes.trim(),
       });
+      submitSupabaseLead("hyundai-promise", {
+        type: "Buy",
+        full_name: buyForm.name.trim(),
+        mobile_number: verifiedPhoneRef.current,
+        email: buyForm.email.trim(),
+        location: buyForm.city,
+        car_model: buyForm.model,
+        budget_range: buyForm.budget.trim(),
+        additional_details: buyForm.notes.trim(),
+      }).catch((err) => console.error("[HyundaiPromise] Supabase lead insert failed", err));
       setSubmittedMode("buy");
     } catch {
       setSubmitError(true);
@@ -165,6 +176,18 @@ export default function HyundaiPromise() {
         kilometers_driven: sellForm.kms.trim(),
         additional_details: sellForm.notes.trim(),
       });
+      submitSupabaseLead("hyundai-promise", {
+        type: "Sell",
+        full_name: sellForm.name.trim(),
+        mobile_number: verifiedPhoneRef.current,
+        email: sellForm.email.trim(),
+        location: sellForm.city,
+        car_brand: sellForm.brand.trim(),
+        car_model: sellForm.model.trim(),
+        year_of_purchase: sellForm.year.trim(),
+        kilometers_driven: sellForm.kms.trim(),
+        additional_details: sellForm.notes.trim(),
+      }).catch((err) => console.error("[HyundaiPromise] Supabase lead insert failed", err));
       setSubmittedMode("sell");
     } catch {
       setSubmitError(true);

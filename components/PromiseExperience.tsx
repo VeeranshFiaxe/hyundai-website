@@ -7,8 +7,7 @@ import { Calendar, Car, Check, Clipboard, Rupee, Truck } from "./icons";
 
 const journeyIcons = [Clipboard, Calendar, Check, Rupee, Truck, Car];
 
-const PROMISE_VIDEO_URL =
-  "https://clicktobuy.hyundai.co.in/hyundaipromise/assets/images/HYUNDAI%20AIRPORT%2035SEC_1.mp4";
+const PROMISE_YOUTUBE_ID = "Nypilxu3hJI";
 
 const journey = [
   {
@@ -72,15 +71,13 @@ export default function PromiseExperience() {
             variant="scale-up"
             className="mt-10 overflow-hidden rounded-2xl border border-border bg-black shadow-[0_8px_36px_0_rgba(0,44,95,0.12)]"
           >
-            <video
-              controls
-              preload="metadata"
-              playsInline
-              className="aspect-video w-full bg-black"
-              poster={undefined}
-            >
-              <source src={PROMISE_VIDEO_URL} type="video/mp4" />
-            </video>
+            <iframe
+              src={`https://www.youtube.com/embed/${PROMISE_YOUTUBE_ID}`}
+              title="Hyundai Promise"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              className="aspect-video w-full border-0"
+            />
           </Reveal>
         </div>
       </section>
@@ -131,14 +128,12 @@ export default function PromiseExperience() {
               </defs>
               <path
                 d="
-                  M 0,250
-                  C 64,250 64,250 96,250
+                  M 96,250
                   C 168,250 216,110 297.6,110
                   C 379,110 427,250 499.2,250
                   C 571,250 619,110 700.8,110
                   C 782,110 830,250 902.4,250
                   C 984,250 1032,110 1104,110
-                  C 1136,110 1170,110 1200,110
                 "
                 fill="none"
                 stroke="url(#cGrad)"

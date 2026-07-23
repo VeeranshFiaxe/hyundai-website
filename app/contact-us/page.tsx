@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import ContactUs from "@/components/ContactUs";
 import Reveal from "@/components/Reveal";
-import { aboutHeroImage, company, SITE_URL } from "@/lib/data";
+import { company, SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
+
+const contactHeroImage = "/images/contact/modi-hyundai-showroom-thane.png";
 
 const title = "Contact Us | Modi Hyundai";
 const description =
@@ -58,7 +60,7 @@ export default function ContactUsPage() {
       <main style={{ marginTop: "96px" }}>
         <section className="relative h-[30vh] min-h-[220px] max-h-[400px] w-full overflow-hidden bg-brand-deep">
           <Image
-            src={aboutHeroImage}
+            src={contactHeroImage}
             alt="Modi Hyundai showroom"
             fill
             priority

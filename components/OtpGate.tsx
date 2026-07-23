@@ -127,7 +127,26 @@ export function OtpGate({
     }
   };
 
-  const handlePhoneSubmit = (e: React.FormEvent) => {
+  // Calls the real send-otp API. Server-side normalization strips the dial
+  // code's "+" and the space, so we can send the human-readable form as-is.
+  const requestOtp = async (): Promise<{ ok: boolean; error?: string }> => {
+    try {
+      const res = await fetch("/api/send-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone_number: `${selectedCountry.dialCode} ${phone}` }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        return { ok: false, error: data.error || "Failed to send OTP. Please try again." };
+      }
+      return { ok: true };
+    } catch {
+      return { ok: false, error: "Network error. Please try again." };
+    }
+  };
+
+  const handlePhoneSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!consent) {
       setConsentError(true);
@@ -144,48 +163,68 @@ export function OtpGate({
     setError("");
     setConsentError(false);
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setStep("otp");
-      setTimeout(() => otpRefs.current[0]?.focus(), 200);
-    }, 800);
+    const result = await requestOtp();
+    setLoading(false);
+    if (!result.ok) {
+      setError(result.error!);
+      return;
+    }
+    setStep("otp");
+    setTimeout(() => otpRefs.current[0]?.focus(), 200);
   };
 
-  const verifyOtp = (code: string) => {
+  const verifyOtp = async (code: string) => {
     setLoading(true);
     setError("");
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          phone_number: `${selectedCountry.dialCode} ${phone}`,
+          otp: code,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
       setLoading(false);
-      if (code === "0000") {
-        // Commit to the shared provider so every form on the site sees this
-        // phone as verified (and persists it across refreshes).
-        verify(`${selectedCountry.dialCode} ${phone}`);
-        if (onVerified) onVerified(`${selectedCountry.dialCode} ${phone}`);
-
-        // Fire-and-forget phone-capture: send the verified number immediately
-        // so we have it even if the user abandons the rest of the form.
-        if (formSource) {
-          submitLead("phone_capture", {
-            phone_number: `\`${selectedCountry.dialCode} ${phone}`,
-            form_source: formSource,
-          }).catch(() => {});
-        }
-      } else {
-        setError("Invalid OTP. For demo, use 0000.");
+      if (!res.ok || !data.success) {
+        setError(data.error || "Invalid OTP.");
         setOtp(["", "", "", ""]);
         otpRefs.current[0]?.focus();
+        return;
       }
-    }, 600);
+      // Commit to the shared provider so every form on the site sees this
+      // phone as verified (and persists it across refreshes).
+      verify(`${selectedCountry.dialCode} ${phone}`);
+      if (onVerified) onVerified(`${selectedCountry.dialCode} ${phone}`);
+
+      // Fire-and-forget phone-capture: send the verified number immediately
+      // so we have it even if the user abandons the rest of the form.
+      if (formSource) {
+        submitLead("phone_capture", {
+          phone_number: `\`${selectedCountry.dialCode} ${phone}`,
+          form_source: formSource,
+        }).catch(() => {});
+      }
+    } catch {
+      setLoading(false);
+      setError("Network error. Please try again.");
+      setOtp(["", "", "", ""]);
+      otpRefs.current[0]?.focus();
+    }
   };
 
-  const handleResend = () => {
+  const handleResend = async () => {
     setOtp(["", "", "", ""]);
     setError("");
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      otpRefs.current[0]?.focus();
-    }, 800);
+    const result = await requestOtp();
+    setLoading(false);
+    if (!result.ok) {
+      setError(result.error!);
+      return;
+    }
+    otpRefs.current[0]?.focus();
   };
 
   const requestChangePhone = () => {

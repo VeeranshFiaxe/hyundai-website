@@ -5,6 +5,7 @@ import Image from "next/image";
 import { carModels, cityOptions, testDriveImage } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidName, isValidPincode, type FormErrors } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
+import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
 import { Calendar, Check, ChevronDown, Phone } from "./icons";
 import Reveal from "./Reveal";
 import { OtpGate } from "./OtpGate";
@@ -133,6 +134,17 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
         preferred_date: form.date,
         preferred_time: form.time,
       });
+      submitSupabaseLead("test-drive", {
+        car_model: form.carModel,
+        location: form.location,
+        name: form.name.trim(),
+        mobile_number: mobile,
+        email: form.email.trim(),
+        pincode: form.pincode.trim(),
+        address: form.address.trim(),
+        preferred_date: form.date,
+        preferred_time: form.time,
+      }).catch((err) => console.error("[TestDrive] Supabase lead insert failed", err));
       setSubmitted(true);
     } catch {
       setSubmitError(true);

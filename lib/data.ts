@@ -1601,8 +1601,7 @@ export const locations: Location[] = [
     address: "Prime House Main Rd, Sativali Rd, Opp Shailesh Industries Estate, Waliv Phata, Vasai East, Maharashtra 401208",
     phone: "98877 33000",
     image: "/locations/vasai-showroom.webp",
-    mapsUrl:
-      "https://www.google.com/maps/dir/?api=1&destination=Prime%20House%20Main%20Rd%2C%20Sativali%20Rd%2C%20Opp%20Shailesh%20Industries%20Estate%2C%20Waliv%20Phata%2C%20Vasai%20East%2C%20Maharashtra%20401208&travelmode=driving",
+    mapsUrl: "https://maps.app.goo.gl/W7seJ74ksR7L8XqV7",
   },
   {
     name: "Hyundai Virar",

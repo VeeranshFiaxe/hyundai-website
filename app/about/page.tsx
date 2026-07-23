@@ -17,7 +17,7 @@ const title = "About Modi Hyundai | Authorised Hyundai Dealer in Mumbai";
 const description =
   "Meet Modi Hyundai, an authorised Hyundai dealer from the Gautam Modi Group. Explore our customer-first approach to new cars, test drives and service across Mumbai, Thane, Vasai, Virar and Wada.";
 
-const aboutHeroImage = "/images/about/modi-hyundai-showroom-evening.png";
+const aboutHeroImage = "/images/about/modi-hyundai-team.jpg";
 const aboutCultureImage = "/images/about/modi-hyundai-customer-team.png";
 
 export const metadata: Metadata = {
