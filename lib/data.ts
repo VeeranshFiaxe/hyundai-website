@@ -53,11 +53,11 @@ export const company = {
     servicesDone: "550,000+",
   },
   social: {
-    facebook: "https://www.facebook.com/",
-    instagram: "https://www.instagram.com/",
-    twitter: "https://twitter.com/",
-    youtube: "https://www.youtube.com/",
-    linkedin: "https://www.linkedin.com/",
+    facebook: "https://www.facebook.com/ModiHyundaiMumbai/",
+    instagram: "https://www.instagram.com/modihyundaimumbai/",
+    x: "https://x.com/ModiHyundai",
+    youtube: "https://www.youtube.com/channel/UCz2_GnMMUYePExHZZ3UpLdA",
+    linkedin: "https://in.linkedin.com/company/modi-hyundai",
   },
 };
 
@@ -1003,6 +1003,141 @@ export const services = [
     icon: "badge",
     title: "Extended Warranty",
     text: "Extend your protection well beyond the standard three-year cover.",
+  },
+];
+
+/* Detailed service offerings for the /locate-service-centre page.
+   Each entry maps to a footer Service link and gets its own anchored,
+   SEO-rich section. Copy is written in definitional, extractable
+   sentences so answer engines can cite it, and every claim stays within
+   the authorised-dealer positioning already used across the site. */
+export type ServiceOffering = {
+  id: string;
+  icon: string;
+  title: string;
+  heading: string;
+  intro: string;
+  body: string[];
+  points: string[];
+};
+
+export const serviceOfferings: ServiceOffering[] = [
+  {
+    id: "genuine-parts",
+    icon: "shield",
+    title: "Genuine Hyundai Parts",
+    heading: "Only genuine, warranty-backed Hyundai parts",
+    intro:
+      "Every part we fit at a Modi Hyundai service centre is a genuine Hyundai component, sourced directly from Hyundai Motor India and engineered for the exact model we are servicing.",
+    body: [
+      "Genuine Hyundai parts are designed, tested and approved by Hyundai for your specific car, so they fit precisely and perform the way the manufacturer intended. From brake pads and filters to clutch assemblies and body panels, each part carries Hyundai's own warranty backing.",
+      "Aftermarket substitutes often look similar but differ in material grade and tolerances. Over time that gap shows up as faster wear, noisier operation and, in safety-critical parts like brakes, longer stopping distances. Fitting genuine parts is the simplest way to protect your car's reliability, fuel efficiency and resale value.",
+      "When you service with Modi Hyundai, you always get the real part. Our parts counter is open to retail customers across Mumbai, Thane, Vasai, Virar and Wada, so you can buy genuine Hyundai parts and accessories over the counter, whether or not your car is in for service.",
+    ],
+    points: [
+      "Engineered and tested by Hyundai for your exact model",
+      "Manufacturer warranty backing on every genuine part",
+      "Full parts counter for retail buyers and accessories",
+      "Protects performance, fuel efficiency and resale value",
+    ],
+  },
+  {
+    id: "service-packages",
+    icon: "clipboard",
+    title: "Service Packages",
+    heading: "Transparent service packages for every Hyundai",
+    intro:
+      "Our service packages follow Hyundai's manufacturer-recommended maintenance schedule, with clear estimates upfront so you know what is included before any work begins.",
+    body: [
+      "Hyundai's maintenance schedule is based on time or distance, whichever comes first. Our periodic service packages bundle the right oil and filter changes, fluid top-ups, brake inspections and a full multipoint check for each interval, so nothing gets missed as the kilometres build.",
+      "Beyond scheduled maintenance, we offer running repair packages for brakes, batteries, tyres, air-conditioning, clutches and suspension. Each job starts with a clear estimate, and our advisors walk you through what is essential versus what can wait, with no pressure to add work you do not need.",
+      "Ask about our value service and seasonal care packages, which combine common checks into a single, transparent price. These are especially popular before the monsoon and ahead of long highway trips.",
+    ],
+    points: [
+      "Manufacturer-recommended schedules, done right the first time",
+      "Clear, upfront estimates with no hidden charges",
+      "Free multipoint health check on every service",
+      "Seasonal care packages for monsoon and long trips",
+    ],
+  },
+  {
+    id: "roadside-assistance",
+    icon: "road",
+    title: "Roadside Assistance",
+    heading: "24x7 roadside assistance, anywhere you drive",
+    intro:
+      "Every new Hyundai includes 24x7 roadside assistance, and Modi Hyundai helps you use it. Whether it is a flat tyre, a dead battery or a breakdown far from home, help is one call away, any time of day or night.",
+    body: [
+      "Hyundai's roadside assistance programme covers you across India for the kinds of events that stop a journey: flat tyres, dead batteries, lost keys, empty fuel tanks, minor electrical faults and mechanical breakdowns. Depending on the situation, the service includes on-spot minor repairs, a jump-start, a fuel top-up, a tyre change, or towing to the nearest authorised service centre.",
+      "Save your roadside assistance number in your phone before you need it. When you call, keep your vehicle registration number and current location handy so the team can dispatch the right help quickly.",
+      "Need help right now or unsure whether your cover is active? Call Modi Hyundai on 98877 33000 and our team will guide you through the next step.",
+    ],
+    points: [
+      "Round-the-clock cover, every day of the year",
+      "On-spot minor repairs, jump-starts and fuel top-ups",
+      "Towing to the nearest authorised service centre",
+      "Pan-India support for breakdowns far from home",
+    ],
+  },
+  {
+    id: "extended-warranty",
+    icon: "badge",
+    title: "Extended Warranty",
+    heading: "Extend your protection beyond the standard cover",
+    intro:
+      "A new Hyundai comes with the manufacturer's standard warranty, and you can extend that peace of mind with a Hyundai extended warranty, available through Modi Hyundai at the time of purchase or before your original cover ends.",
+    body: [
+      "The extended warranty continues manufacturer-backed protection for your engine, transmission and electrical systems well beyond the standard three-year period. Because it is issued by Hyundai, repairs are carried out at authorised service centres using genuine parts, with no out-of-pocket cost for covered components.",
+      "Buying the extended warranty early costs less than buying it later, and it transfers to a new owner if you sell the car, which can lift its resale value. Our team can confirm the exact coverage terms, durations and pricing for your specific Hyundai model.",
+      "Pairing an extended warranty with Hyundai's roadside assistance gives you complete protection for the long term, factory-backed, transferable and valid across the nationwide service network.",
+    ],
+    points: [
+      "Manufacturer-backed cover for engine, transmission and electrics",
+      "Repairs at authorised centres using genuine parts",
+      "Lower cost when bought early, and transferable on resale",
+      "Pairs with roadside assistance for complete protection",
+    ],
+  },
+];
+
+/* FAQ specific to the service page, used for the accordion and the
+   FAQPage structured data so service queries can be answered directly
+   on this page and cited by answer engines. */
+export const serviceFaqData = [
+  {
+    question: "How do I book a Hyundai service at Modi Hyundai?",
+    answer:
+      "Use the Book a Service form on this page to choose your car model, nearest service centre, type of service and a convenient date and time. Our team will call you to confirm the appointment. You can also book by calling us on 98877 33000.",
+  },
+  {
+    question: "Do you use genuine Hyundai parts for repairs and service?",
+    answer:
+      "Yes. Modi Hyundai is an authorised Hyundai dealership, so every part we fit is a genuine Hyundai component, sourced directly from Hyundai Motor India and carrying the manufacturer's warranty backing. We never use aftermarket substitutes for warranty or paid repairs.",
+  },
+  {
+    question: "Which service packages does Modi Hyundai offer?",
+    answer:
+      "We offer manufacturer-recommended periodic service packages at each time and distance interval, plus running repair packages for brakes, batteries, tyres, air-conditioning, clutches and suspension. Every package starts with a clear, upfront estimate and a free multipoint health check.",
+  },
+  {
+    question: "Is roadside assistance included with my Hyundai?",
+    answer:
+      "Every new Hyundai includes 24x7 roadside assistance covering flat tyres, dead batteries, lost keys, empty fuel tanks and mechanical breakdowns across India. Depending on the event, it covers on-spot minor repairs, a jump-start, a tyre change, a fuel top-up or towing to the nearest authorised service centre.",
+  },
+  {
+    question: "Can I extend the warranty on my Hyundai?",
+    answer:
+      "Yes. You can buy a Hyundai extended warranty through Modi Hyundai at the time of purchase or before your standard warranty ends. It continues manufacturer-backed cover for the engine, transmission and electrical systems, with repairs carried out at authorised service centres using genuine parts.",
+  },
+  {
+    question: "Do you offer free pickup and drop for servicing?",
+    answer:
+      "Yes. Modi Hyundai offers free pickup and drop for servicing across Mumbai, Thane, Vasai, Virar and Wada. Tick the Pick-up and Drop option on the booking form, and we will collect your car and return it to you once the service is complete.",
+  },
+  {
+    question: "Where are the Modi Hyundai service centres located?",
+    answer:
+      "We run authorised service centres across Mumbai, Thane, Vasai, Virar and Wada, including Chunabhatti, Thane, Vasai, Virar and Wada. Each is staffed by factory-trained technicians and listed with its address and phone number in the Locate a Service Centre section on this page.",
   },
 ];
 

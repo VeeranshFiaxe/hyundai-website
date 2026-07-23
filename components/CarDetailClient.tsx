@@ -222,19 +222,19 @@ export default function CarDetailClient({ car }: { car: Car }) {
       </section>
 
       <nav ref={navRef} aria-label="Car detail sections" className="sticky top-[60px] z-20 border-y border-border bg-white/95 backdrop-blur transition-all">
-        <div className="container-px mx-auto flex max-w-[1400px] items-center justify-between gap-4 overflow-x-auto py-2 [&::-webkit-scrollbar]:hidden">
+        <div className="container-px mx-auto flex max-w-[1400px] items-center justify-between gap-4 overflow-x-auto py-2.5 [&::-webkit-scrollbar]:hidden">
           <div className="flex shrink-0 gap-1">
-            {navigation.map(([id, label]) => <a key={id} href={`#${id}`} className="shrink-0 rounded px-3 py-2 text-xs font-semibold text-muted transition-colors hover:bg-bg-2 hover:text-brand">{label}</a>)}
+            {navigation.map(([id, label]) => <a key={id} href={`#${id}`} className="shrink-0 rounded px-3.5 py-2.5 text-sm font-semibold text-muted transition-colors hover:bg-bg-2 hover:text-brand">{label}</a>)}
           </div>
             <div
               className={`flex shrink-0 items-center gap-2 transition-opacity duration-300 ${
                 showStickyCTAs ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
             >
-              <button onClick={() => setShowTestDrive(true)} className="group inline-flex items-center gap-1.5 rounded bg-brand px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-brand-light">
-                Book a Test Drive <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+              <button onClick={() => setShowTestDrive(true)} className="group inline-flex items-center gap-1.5 rounded bg-brand px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-brand-light">
+                Book a Test Drive <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
               </button>
-              <Link href="/contact-us" className="inline-flex items-center gap-1.5 rounded border border-brand px-3 py-1.5 text-xs font-semibold text-brand transition-all hover:bg-brand hover:text-white">
+              <Link href="/contact-us" className="inline-flex items-center gap-1.5 rounded border border-brand px-4 py-2 text-sm font-semibold text-brand transition-all hover:bg-brand hover:text-white">
                 Get a Variant Quote
               </Link>
               {brochureUrl && (
@@ -242,9 +242,9 @@ export default function CarDetailClient({ car }: { car: Car }) {
                   href={brochureUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded border border-border bg-bg-2 px-3 py-1.5 text-xs font-semibold text-text transition-all hover:border-brand hover:text-brand"
+                  className="inline-flex items-center gap-1.5 rounded border border-border bg-bg-2 px-4 py-2 text-sm font-semibold text-text transition-all hover:border-brand hover:text-brand"
                 >
-                  <Download className="h-3 w-3" />
+                  <Download className="h-3.5 w-3.5" />
                   Brochure
                 </a>
               )}

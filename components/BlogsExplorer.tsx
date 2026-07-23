@@ -224,7 +224,10 @@ export default function BlogsExplorer() {
       {featured && category === "All" && !query && (
         <section className="bg-white pt-10">
           <div className="container-px mx-auto max-w-[1180px]">
-            <div className="grid overflow-hidden rounded-xl border border-border shadow-[0_1px_2px_rgba(0,44,95,0.04)] lg:grid-cols-[1.05fr_1fr]">
+            <Link
+              href={`/blogs/${featured.slug}`}
+              className="group grid overflow-hidden rounded-xl border border-border shadow-[0_1px_2px_rgba(0,44,95,0.04)] transition-shadow hover:shadow-[0_8px_28px_0_rgba(0,44,95,0.12)] lg:grid-cols-[1.05fr_1fr]"
+            >
               <div className="relative min-h-[280px] lg:min-h-[340px]">
                 <Image
                   src={featured.image}
@@ -232,7 +235,7 @@ export default function BlogsExplorer() {
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 <span className="absolute left-5 top-5 rounded-full bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-wide text-brand shadow-sm">
                   Featured
@@ -242,7 +245,7 @@ export default function BlogsExplorer() {
                 <span className="inline-flex w-fit items-center rounded-md bg-brand/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-brand">
                   {featured.category}
                 </span>
-                <h2 className="mt-4 font-display text-2xl font-semibold leading-snug text-text">
+                <h2 className="mt-4 font-display text-2xl font-semibold leading-snug text-text transition-colors group-hover:text-brand">
                   {featured.title}
                 </h2>
                 <p className="mt-3 text-sm leading-relaxed text-muted">
@@ -255,15 +258,12 @@ export default function BlogsExplorer() {
                   <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border-strong" />
                   <span>{featured.date}</span>
                 </div>
-                <Link
-                  href={`/blogs/${featured.slug}`}
-                  className="group mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-brand-light transition-colors hover:text-brand"
-                >
+                <span className="group/link mt-6 inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-brand-light transition-colors group-hover:text-brand">
                   Read the full guide
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Link>
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover/link:translate-x-0.5 group-hover:translate-x-0.5" />
+                </span>
               </div>
-            </div>
+            </Link>
           </div>
         </section>
       )}

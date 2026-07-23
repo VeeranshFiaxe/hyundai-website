@@ -1,11 +1,14 @@
 "use client";
 
-import { useMemo, useState, type FormEvent } from "react";
+import { useMemo, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { cars, cityOptions, company, locations } from "@/lib/data";
-import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidYear, type FormErrors } from "@/lib/validation";
+import { isEmpty, isValidEmail, isValidName, isValidYear, type FormErrors } from "@/lib/validation";
 import { ArrowRight, Car, Check, ChevronDown, Phone, Shield, Users } from "./icons";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
+import { OtpGate } from "./OtpGate";
+import { submitLead } from "@/lib/submitLead";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
@@ -62,6 +65,11 @@ export default function HyundaiPromise() {
   const [sellErrors, setSellErrors] = useState<FormErrors>({});
   const [buyAttempted, setBuyAttempted] = useState(false);
   const [sellAttempted, setSellAttempted] = useState(false);
+  const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+  const verifiedPhoneRef = useRef("");
 
   const buyModels = useMemo(
     () => cars.filter((car) => !["Electric", "Taxi"].includes(car.category)).slice(0, 10),
@@ -73,7 +81,6 @@ export default function HyundaiPromise() {
   const validateBuy = (): FormErrors => {
     const e: FormErrors = {};
     if (isEmpty(buyForm.name) || !isValidName(buyForm.name)) e.name = "Enter your full name (at least 2 characters).";
-    if (!isValidMobile(buyForm.mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
     if (!isValidEmail(buyForm.email)) e.email = "Enter a valid email with @ and a domain (e.g. you@example.com).";
     if (isEmpty(buyForm.city)) e.city = "Please select your preferred location.";
     if (isEmpty(buyForm.model)) e.model = "Please select a car model.";
@@ -84,7 +91,6 @@ export default function HyundaiPromise() {
   const validateSell = (): FormErrors => {
     const e: FormErrors = {};
     if (isEmpty(sellForm.name) || !isValidName(sellForm.name)) e.name = "Enter your full name (at least 2 characters).";
-    if (!isValidMobile(sellForm.mobile)) e.mobile = "Enter a valid 10-digit mobile number.";
     if (!isValidEmail(sellForm.email)) e.email = "Enter a valid email with @ and a domain (e.g. you@example.com).";
     if (isEmpty(sellForm.city)) e.city = "Please select your location.";
     if (isEmpty(sellForm.brand)) e.brand = "Please enter the car brand.";
@@ -97,20 +103,74 @@ export default function HyundaiPromise() {
   const fieldError = (errors: FormErrors, key: string) =>
     errors[key] ? errorBase : fieldBase;
 
-  const handleBuySubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleBuySubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setBuyAttempted(true);
+    setSubmitError(false);
+    if (!consent) {
+      setConsentError(true);
+      return;
+    }
+    setBuyForm((current) => ({ ...current, mobile: verifiedPhoneRef.current }));
     const errs = validateBuy();
     setBuyErrors(errs);
-    if (Object.keys(errs).length === 0) setSubmittedMode("buy");
+    setConsentError(false);
+    if (Object.keys(errs).length > 0) return;
+
+    setSubmitting(true);
+    try {
+      await submitLead("hyundai_promise_buy", {
+        type: "Buy",
+        full_name: buyForm.name.trim(),
+        mobile_number: `\`${verifiedPhoneRef.current}`,
+        email: buyForm.email.trim(),
+        location: buyForm.city,
+        car_model: buyForm.model,
+        budget_range: buyForm.budget.trim(),
+        additional_details: buyForm.notes.trim(),
+      });
+      setSubmittedMode("buy");
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const handleSellSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSellSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSellAttempted(true);
+    setSubmitError(false);
+    if (!consent) {
+      setConsentError(true);
+      return;
+    }
+    setSellForm((current) => ({ ...current, mobile: verifiedPhoneRef.current }));
     const errs = validateSell();
     setSellErrors(errs);
-    if (Object.keys(errs).length === 0) setSubmittedMode("sell");
+    setConsentError(false);
+    if (Object.keys(errs).length > 0) return;
+
+    setSubmitting(true);
+    try {
+      await submitLead("hyundai_promise_sell", {
+        type: "Sell",
+        full_name: sellForm.name.trim(),
+        mobile_number: `\`${verifiedPhoneRef.current}`,
+        email: sellForm.email.trim(),
+        location: sellForm.city,
+        car_brand: sellForm.brand.trim(),
+        car_model: sellForm.model.trim(),
+        year_of_purchase: sellForm.year.trim(),
+        kilometers_driven: sellForm.kms.trim(),
+        additional_details: sellForm.notes.trim(),
+      });
+      setSubmittedMode("sell");
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const resetSubmission = () => {
@@ -244,297 +304,393 @@ export default function HyundaiPromise() {
                 </p>
               </div>
 
-              {mode === "buy" ? (
-                <form onSubmit={handleBuySubmit} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Full Name</span>
-                    <input
-                      type="text"
-                      value={buyForm.name}
-                      onChange={(event) =>
-                        setBuyForm((current) => ({ ...current, name: event.target.value }))
-                      }
-                      placeholder="e.g. John Doe"
-                      className={fieldError(buyErrors, "name")}
-                    />
-                    {buyAttempted && buyErrors.name && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.name}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
-                    <input
-                      type="tel"
-                      value={buyForm.mobile}
-                      onChange={(event) =>
-                        setBuyForm((current) => ({ ...current, mobile: event.target.value }))
-                      }
-                      placeholder="e.g. 9876543210"
-                      className={fieldError(buyErrors, "mobile")}
-                    />
-                    {buyAttempted && buyErrors.mobile && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.mobile}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Email Address</span>
-                    <input
-                      type="email"
-                      value={buyForm.email}
-                      onChange={(event) =>
-                        setBuyForm((current) => ({ ...current, email: event.target.value }))
-                      }
-                      placeholder="you@example.com"
-                      className={fieldError(buyErrors, "email")}
-                    />
-                    {buyAttempted && buyErrors.email && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.email}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Preferred Location</span>
-                    <div className="relative">
-                      <select
-                        value={buyForm.city}
-                        onChange={(event) =>
-                          setBuyForm((current) => ({ ...current, city: event.target.value }))
-                        }
-                        className={`${fieldError(buyErrors, "city")} appearance-none pr-10`}
-                      >
-                        <option value="" disabled>
-                          Select location
-                        </option>
-                        {cityOptions.map((city) => (
-                          <option key={city} value={city}>
-                            {city}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
-                    </div>
-                    {buyAttempted && buyErrors.city && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.city}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Interested Model</span>
-                    <div className="relative">
-                      <select
-                        value={buyForm.model}
-                        onChange={(event) =>
-                          setBuyForm((current) => ({ ...current, model: event.target.value }))
-                        }
-                        className={`${fieldError(buyErrors, "model")} appearance-none pr-10`}
-                      >
-                        <option value="" disabled>
-                          Select model
-                        </option>
-                        {buyModels.map((car) => (
-                          <option key={car.slug} value={car.name}>
-                            Hyundai {car.name}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
-                    </div>
-                    {buyAttempted && buyErrors.model && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.model}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Budget Range</span>
-                    <input
-                      type="text"
-                      value={buyForm.budget}
-                      onChange={(event) =>
-                        setBuyForm((current) => ({ ...current, budget: event.target.value }))
-                      }
-                      placeholder="e.g. Rs. 8-10 lakh"
-                      className={fieldError(buyErrors, "budget")}
-                    />
-                    {buyAttempted && buyErrors.budget && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.budget}</p>
-                    )}
-                  </label>
-                  <label className="col-span-full block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">
-                      What are you looking for? <span className="font-normal text-faint">(optional)</span>
-                    </span>
-                    <textarea
-                      rows={4}
-                      value={buyForm.notes}
-                      onChange={(event) =>
-                        setBuyForm((current) => ({ ...current, notes: event.target.value }))
-                      }
-                      placeholder="Preferred fuel type, transmission, family size, exchange plans, or anything else we should know"
-                      className={`${fieldBase} resize-none`}
-                    />
-                  </label>
-                  <button
-                    type="submit"
-                    className="col-span-full mt-2 inline-flex items-center justify-center gap-2 rounded bg-brand px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light"
-                  >
-                    Request a Callback
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                </form>
-              ) : (
-                <form onSubmit={handleSellSubmit} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Full Name</span>
-                    <input
-                      type="text"
-                      value={sellForm.name}
-                      onChange={(event) =>
-                        setSellForm((current) => ({ ...current, name: event.target.value }))
-                      }
-                      placeholder="e.g. John Doe"
-                      className={fieldError(sellErrors, "name")}
-                    />
-                    {sellAttempted && sellErrors.name && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.name}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
-                    <input
-                      type="tel"
-                      value={sellForm.mobile}
-                      onChange={(event) =>
-                        setSellForm((current) => ({ ...current, mobile: event.target.value }))
-                      }
-                      placeholder="e.g. 9876543210"
-                      className={fieldError(sellErrors, "mobile")}
-                    />
-                    {sellAttempted && sellErrors.mobile && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.mobile}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Email Address</span>
-                    <input
-                      type="email"
-                      value={sellForm.email}
-                      onChange={(event) =>
-                        setSellForm((current) => ({ ...current, email: event.target.value }))
-                      }
-                      placeholder="you@example.com"
-                      className={fieldError(sellErrors, "email")}
-                    />
-                    {sellAttempted && sellErrors.email && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.email}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Location</span>
-                    <div className="relative">
-                      <select
-                        value={sellForm.city}
-                        onChange={(event) =>
-                          setSellForm((current) => ({ ...current, city: event.target.value }))
-                        }
-                        className={`${fieldError(sellErrors, "city")} appearance-none pr-10`}
-                      >
-                        <option value="" disabled>
-                          Select location
-                        </option>
-                        {cityOptions.map((city) => (
-                          <option key={city} value={city}>
-                            {city}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
-                    </div>
-                    {sellAttempted && sellErrors.city && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.city}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Car Brand</span>
-                    <input
-                      type="text"
-                      value={sellForm.brand}
-                      onChange={(event) =>
-                        setSellForm((current) => ({ ...current, brand: event.target.value }))
-                      }
-                      placeholder="e.g. Hyundai"
-                      className={fieldError(sellErrors, "brand")}
-                    />
-                    {sellAttempted && sellErrors.brand && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.brand}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Car Model</span>
-                    <input
-                      type="text"
-                      value={sellForm.model}
-                      onChange={(event) =>
-                        setSellForm((current) => ({ ...current, model: event.target.value }))
-                      }
-                      placeholder="e.g. Creta"
-                      className={fieldError(sellErrors, "model")}
-                    />
-                    {sellAttempted && sellErrors.model && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.model}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Year of Purchase</span>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={sellForm.year}
-                      onChange={(event) =>
-                        setSellForm((current) => ({ ...current, year: event.target.value }))
-                      }
-                      placeholder="e.g. 2021"
-                      className={fieldError(sellErrors, "year")}
-                    />
-                    {sellAttempted && sellErrors.year && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.year}</p>
-                    )}
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">Kilometers Driven</span>
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={sellForm.kms}
-                      onChange={(event) =>
-                        setSellForm((current) => ({ ...current, kms: event.target.value }))
-                      }
-                      placeholder="e.g. 35,000 km"
-                      className={fieldError(sellErrors, "kms")}
-                    />
-                    {sellAttempted && sellErrors.kms && (
-                      <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.kms}</p>
-                    )}
-                  </label>
-                  <label className="col-span-full block">
-                    <span className="mb-1.5 block text-xs font-semibold text-muted">
-                      Additional Details <span className="font-normal text-faint">(optional)</span>
-                    </span>
-                    <textarea
-                      rows={4}
-                      value={sellForm.notes}
-                      onChange={(event) =>
-                        setSellForm((current) => ({ ...current, notes: event.target.value }))
-                      }
-                      placeholder="Mention variant, ownership, expected price, condition, or anything else that would help"
-                      className={`${fieldBase} resize-none`}
-                    />
-                  </label>
-                  <button
-                    type="submit"
-                    className="col-span-full mt-2 inline-flex items-center justify-center gap-2 rounded bg-brand px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light"
-                  >
-                    Submit Car Details
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-                </form>
-              )}
+              <OtpGate
+                title="Verify Your Phone"
+                subtitle="Enter your phone number to unlock the form."
+                variant="bare"
+                formSource="hyundai_promise"
+              >
+                {(verifiedPhone, requestChangePhone) => {
+                  verifiedPhoneRef.current = verifiedPhone;
+                  return (
+                    <>
+                      {mode === "buy" ? (
+                        <form onSubmit={handleBuySubmit} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Full Name</span>
+                            <input
+                              type="text"
+                              value={buyForm.name}
+                              onChange={(event) =>
+                                setBuyForm((current) => ({ ...current, name: event.target.value }))
+                              }
+                              placeholder="e.g. John Doe"
+                              className={fieldError(buyErrors, "name")}
+                            />
+                            {buyAttempted && buyErrors.name && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.name}</p>
+                            )}
+                          </label>
+                          <div className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
+                            <div
+                              className="flex cursor-pointer items-center justify-between rounded-xl border border-[#d1fae5] bg-[#ecfdf5] px-4 py-3"
+                              onClick={requestChangePhone}
+                              title="Click to change verified phone number"
+                            >
+                              <div className="flex items-center gap-2">
+                                <Phone className="h-4 w-4 text-[#059669]" />
+                                <span className="text-sm font-semibold text-[#059669]">{verifiedPhone}</span>
+                              </div>
+                              <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-[#059669] shadow-sm">
+                                <Check className="h-3 w-3" /> Verified
+                              </span>
+                            </div>
+                          </div>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Email Address</span>
+                            <input
+                              type="email"
+                              value={buyForm.email}
+                              onChange={(event) =>
+                                setBuyForm((current) => ({ ...current, email: event.target.value }))
+                              }
+                              placeholder="you@example.com"
+                              className={fieldError(buyErrors, "email")}
+                            />
+                            {buyAttempted && buyErrors.email && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.email}</p>
+                            )}
+                          </label>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Preferred Location</span>
+                            <div className="relative">
+                              <select
+                                value={buyForm.city}
+                                onChange={(event) =>
+                                  setBuyForm((current) => ({ ...current, city: event.target.value }))
+                                }
+                                className={`${fieldError(buyErrors, "city")} appearance-none pr-10`}
+                              >
+                                <option value="" disabled>
+                                  Select location
+                                </option>
+                                {cityOptions.map((city) => (
+                                  <option key={city} value={city}>
+                                    {city}
+                                  </option>
+                                ))}
+                              </select>
+                              <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                            </div>
+                            {buyAttempted && buyErrors.city && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.city}</p>
+                            )}
+                          </label>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Interested Model</span>
+                            <div className="relative">
+                              <select
+                                value={buyForm.model}
+                                onChange={(event) =>
+                                  setBuyForm((current) => ({ ...current, model: event.target.value }))
+                                }
+                                className={`${fieldError(buyErrors, "model")} appearance-none pr-10`}
+                              >
+                                <option value="" disabled>
+                                  Select model
+                                </option>
+                                {buyModels.map((car) => (
+                                  <option key={car.slug} value={car.name}>
+                                    Hyundai {car.name}
+                                  </option>
+                                ))}
+                              </select>
+                              <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                            </div>
+                            {buyAttempted && buyErrors.model && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.model}</p>
+                            )}
+                          </label>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Budget Range</span>
+                            <input
+                              type="text"
+                              value={buyForm.budget}
+                              onChange={(event) =>
+                                setBuyForm((current) => ({ ...current, budget: event.target.value }))
+                              }
+                              placeholder="e.g. Rs. 8-10 lakh"
+                              className={fieldError(buyErrors, "budget")}
+                            />
+                            {buyAttempted && buyErrors.budget && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{buyErrors.budget}</p>
+                            )}
+                          </label>
+                          <label className="col-span-full block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">
+                              What are you looking for? <span className="font-normal text-faint">(optional)</span>
+                            </span>
+                            <textarea
+                              rows={4}
+                              value={buyForm.notes}
+                              onChange={(event) =>
+                                setBuyForm((current) => ({ ...current, notes: event.target.value }))
+                              }
+                              placeholder="Preferred fuel type, transmission, family size, exchange plans, or anything else we should know"
+                              className={`${fieldBase} resize-none`}
+                            />
+                          </label>
+                          <label className="col-span-full flex items-start gap-2.5 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={consent}
+                              onChange={(e) => {
+                                setConsent(e.target.checked);
+                                if (e.target.checked) setConsentError(false);
+                              }}
+                              className="mt-0.5 h-4 w-4 shrink-0 rounded border-border accent-brand"
+                            />
+                            <span className="text-xs leading-relaxed text-muted">
+                              I agree to Modi Hyundai&apos;s{" "}
+                              <Link href="/terms" className="font-semibold text-text underline hover:text-brand">T&C</Link> and{" "}
+                              <Link href="/privacy" className="font-semibold text-text underline hover:text-brand">Privacy Policy</Link>.
+                              This consent overrides any DNC/NDNC registrations.
+                            </span>
+                          </label>
+                          {consentError && (
+                            <p className="col-span-full text-sm font-medium text-red-500">
+                              Please check the box to agree to the T&C and Privacy Policy before proceeding.
+                            </p>
+                          )}
+                          {submitError && (
+                            <p className="col-span-full text-sm font-medium text-red-500">
+                              Something went wrong. Please try again.
+                            </p>
+                          )}
+                          <button
+                            type="submit"
+                            disabled={submitting}
+                            className="col-span-full mt-2 inline-flex items-center justify-center gap-2 rounded bg-brand px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            {submitting ? (
+                              <span className="inline-flex items-center gap-2">
+                                <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" />
+                                  <path d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" fill="currentColor" className="opacity-75" />
+                                </svg>
+                                Submitting...
+                              </span>
+                            ) : (
+                              <>
+                                Request a Callback
+                                <ArrowRight className="h-4 w-4" />
+                              </>
+                            )}
+                          </button>
+                        </form>
+                      ) : (
+                        <form onSubmit={handleSellSubmit} className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2" noValidate>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Full Name</span>
+                            <input
+                              type="text"
+                              value={sellForm.name}
+                              onChange={(event) =>
+                                setSellForm((current) => ({ ...current, name: event.target.value }))
+                              }
+                              placeholder="e.g. John Doe"
+                              className={fieldError(sellErrors, "name")}
+                            />
+                            {sellAttempted && sellErrors.name && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.name}</p>
+                            )}
+                          </label>
+                          <div className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
+                            <div
+                              className="flex cursor-pointer items-center justify-between rounded-xl border border-[#d1fae5] bg-[#ecfdf5] px-4 py-3"
+                              onClick={requestChangePhone}
+                              title="Click to change verified phone number"
+                            >
+                              <div className="flex items-center gap-2">
+                                <Phone className="h-4 w-4 text-[#059669]" />
+                                <span className="text-sm font-semibold text-[#059669]">{verifiedPhone}</span>
+                              </div>
+                              <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-[#059669] shadow-sm">
+                                <Check className="h-3 w-3" /> Verified
+                              </span>
+                            </div>
+                          </div>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Email Address</span>
+                            <input
+                              type="email"
+                              value={sellForm.email}
+                              onChange={(event) =>
+                                setSellForm((current) => ({ ...current, email: event.target.value }))
+                              }
+                              placeholder="you@example.com"
+                              className={fieldError(sellErrors, "email")}
+                            />
+                            {sellAttempted && sellErrors.email && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.email}</p>
+                            )}
+                          </label>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Location</span>
+                            <div className="relative">
+                              <select
+                                value={sellForm.city}
+                                onChange={(event) =>
+                                  setSellForm((current) => ({ ...current, city: event.target.value }))
+                                }
+                                className={`${fieldError(sellErrors, "city")} appearance-none pr-10`}
+                              >
+                                <option value="" disabled>
+                                  Select location
+                                </option>
+                                {cityOptions.map((city) => (
+                                  <option key={city} value={city}>
+                                    {city}
+                                  </option>
+                                ))}
+                              </select>
+                              <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
+                            </div>
+                            {sellAttempted && sellErrors.city && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.city}</p>
+                            )}
+                          </label>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Car Brand</span>
+                            <input
+                              type="text"
+                              value={sellForm.brand}
+                              onChange={(event) =>
+                                setSellForm((current) => ({ ...current, brand: event.target.value }))
+                              }
+                              placeholder="e.g. Hyundai"
+                              className={fieldError(sellErrors, "brand")}
+                            />
+                            {sellAttempted && sellErrors.brand && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.brand}</p>
+                            )}
+                          </label>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Car Model</span>
+                            <input
+                              type="text"
+                              value={sellForm.model}
+                              onChange={(event) =>
+                                setSellForm((current) => ({ ...current, model: event.target.value }))
+                              }
+                              placeholder="e.g. Creta"
+                              className={fieldError(sellErrors, "model")}
+                            />
+                            {sellAttempted && sellErrors.model && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.model}</p>
+                            )}
+                          </label>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Year of Purchase</span>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={sellForm.year}
+                              onChange={(event) =>
+                                setSellForm((current) => ({ ...current, year: event.target.value }))
+                              }
+                              placeholder="e.g. 2021"
+                              className={fieldError(sellErrors, "year")}
+                            />
+                            {sellAttempted && sellErrors.year && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.year}</p>
+                            )}
+                          </label>
+                          <label className="block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">Kilometers Driven</span>
+                            <input
+                              type="text"
+                              inputMode="numeric"
+                              value={sellForm.kms}
+                              onChange={(event) =>
+                                setSellForm((current) => ({ ...current, kms: event.target.value }))
+                              }
+                              placeholder="e.g. 35,000 km"
+                              className={fieldError(sellErrors, "kms")}
+                            />
+                            {sellAttempted && sellErrors.kms && (
+                              <p className="mt-1 text-xs font-medium text-red-600">{sellErrors.kms}</p>
+                            )}
+                          </label>
+                          <label className="col-span-full block">
+                            <span className="mb-1.5 block text-xs font-semibold text-muted">
+                              Additional Details <span className="font-normal text-faint">(optional)</span>
+                            </span>
+                            <textarea
+                              rows={4}
+                              value={sellForm.notes}
+                              onChange={(event) =>
+                                setSellForm((current) => ({ ...current, notes: event.target.value }))
+                              }
+                              placeholder="Mention variant, ownership, expected price, condition, or anything else that would help"
+                              className={`${fieldBase} resize-none`}
+                            />
+                          </label>
+                          <label className="col-span-full flex items-start gap-2.5 cursor-pointer">
+                            <input
+                              type="checkbox"
+                              checked={consent}
+                              onChange={(e) => {
+                                setConsent(e.target.checked);
+                                if (e.target.checked) setConsentError(false);
+                              }}
+                              className="mt-0.5 h-4 w-4 shrink-0 rounded border-border accent-brand"
+                            />
+                            <span className="text-xs leading-relaxed text-muted">
+                              I agree to Modi Hyundai&apos;s{" "}
+                              <Link href="/terms" className="font-semibold text-text underline hover:text-brand">T&C</Link> and{" "}
+                              <Link href="/privacy" className="font-semibold text-text underline hover:text-brand">Privacy Policy</Link>.
+                              This consent overrides any DNC/NDNC registrations.
+                            </span>
+                          </label>
+                          {consentError && (
+                            <p className="col-span-full text-sm font-medium text-red-500">
+                              Please check the box to agree to the T&C and Privacy Policy before proceeding.
+                            </p>
+                          )}
+                          {submitError && (
+                            <p className="col-span-full text-sm font-medium text-red-500">
+                              Something went wrong. Please try again.
+                            </p>
+                          )}
+                          <button
+                            type="submit"
+                            disabled={submitting}
+                            className="col-span-full mt-2 inline-flex items-center justify-center gap-2 rounded bg-brand px-6 py-3.5 text-sm font-semibold text-white transition-all hover:bg-brand-light disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            {submitting ? (
+                              <span className="inline-flex items-center gap-2">
+                                <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none">
+                                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" className="opacity-25" />
+                                  <path d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" fill="currentColor" className="opacity-75" />
+                                </svg>
+                                Submitting...
+                              </span>
+                            ) : (
+                              <>
+                                Submit Car Details
+                                <ArrowRight className="h-4 w-4" />
+                              </>
+                            )}
+                          </button>
+                        </form>
+                      )}
+                    </>
+                  );
+                }}
+              </OtpGate>
             </Reveal>
           </div>
         </div>

@@ -126,7 +126,7 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
         car_model: form.carModel,
         location: form.location,
         name: form.name.trim(),
-        mobile_number: mobile,
+        mobile_number: `\`${mobile}`,
         email: form.email.trim(),
         pincode: form.pincode.trim(),
         address: form.address.trim(),
@@ -219,15 +219,15 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
                 <div className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
                   <div
-                    className="flex cursor-pointer items-center justify-between rounded-xl border border-[#dbeafe] bg-[#f0f7ff] px-4 py-3"
+                    className="flex cursor-pointer items-center justify-between rounded-xl border border-[#d1fae5] bg-[#ecfdf5] px-4 py-3"
                     onClick={requestChangePhone}
                     title="Click to change verified phone number"
                   >
                     <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-brand" />
-                      <span className="text-sm font-semibold text-brand">+91 {mobile}</span>
+                      <Phone className="h-4 w-4 text-[#059669]" />
+                      <span className="text-sm font-semibold text-[#059669]">{mobile}</span>
                     </div>
-                    <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-brand shadow-sm">
+                    <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-[#059669] shadow-sm">
                       <Check className="h-3 w-3" /> Verified
                     </span>
                   </div>
@@ -332,7 +332,7 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
                 <p className="col-span-full text-center text-xs text-faint">
                   By submitting, you agree to be contacted by Modi Hyundai about
                   your test drive request. See our{" "}
-                  <a href="#" className="font-medium text-brand hover:underline">
+                  <a href="/privacy" className="font-medium text-brand hover:underline">
                     Privacy Policy
                   </a>
                   .

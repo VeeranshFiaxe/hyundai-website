@@ -2,17 +2,36 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import ServiceBooking from "@/components/ServiceBooking";
 import ServiceCentres from "@/components/ServiceCentres";
+import ServiceContent from "@/components/ServiceContent";
+import Services from "@/components/Services";
+import FAQ from "@/components/FAQ";
 import Reveal from "@/components/Reveal";
-import { serviceHeroImage, serviceCentres, SITE_URL } from "@/lib/data";
+import {
+  serviceHeroImage,
+  serviceCentres,
+  serviceOfferings,
+  serviceFaqData,
+  SITE_URL,
+} from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
-const title = "Locate a Service Centre & Book a Service Appointment | Modi Hyundai";
+const title = "Authorised Hyundai Service, Genuine Parts & Warranty | Modi Hyundai";
 const description =
-  "Book authorised Hyundai service online across Mumbai, Thane, Vasai, Virar and Wada. Choose a convenient centre and slot for maintenance, repairs, genuine parts and pickup/drop support.";
+  "Book authorised Hyundai service online at Modi Hyundai. Genuine Hyundai parts, service packages, 24x7 roadside assistance and extended warranty across Mumbai, Thane, Vasai, Virar and Wada.";
 
 export const metadata: Metadata = {
   title,
   description,
+  keywords: [
+    "Hyundai service Mumbai",
+    "Hyundai service centre",
+    "genuine Hyundai parts",
+    "Hyundai service packages",
+    "Hyundai roadside assistance",
+    "Hyundai extended warranty",
+    "book Hyundai service",
+    "authorised Hyundai service Thane",
+  ],
   alternates: { canonical: "/locate-service-centre" },
   openGraph: {
     type: "website",
@@ -51,6 +70,26 @@ const servicePageSchema = {
         },
       ],
     },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE_URL}/locate-service-centre#faq`,
+      mainEntity: serviceFaqData.map((f) => ({
+        "@type": "Question",
+        name: f.question,
+        acceptedAnswer: { "@type": "Answer", text: f.answer },
+      })),
+    },
+    // Each service offering as an AutoRepair-style service, so the
+    // specific offerings (parts, packages, RSA, warranty) are indexable.
+    ...serviceOfferings.map((o) => ({
+      "@type": "Service",
+      name: o.title,
+      description: o.intro,
+      provider: { "@id": DEALER_ID },
+      areaServed: ["Mumbai", "Thane", "Vasai", "Virar", "Wada"].map(
+        (c) => ({ "@type": "City", name: c }),
+      ),
+    })),
     {
       "@type": "ItemList",
       itemListElement: serviceCentres.map((s, i) => ({
@@ -92,20 +131,37 @@ export default function LocateServiceCentrePage() {
                 Service
               </p>
               <h1 className="mt-2 font-display text-3xl font-bold text-white sm:text-4xl">
-                Locate a Service Centre & Book a Service
+                Authorised Hyundai Service &amp; Genuine Parts
               </h1>
               <p className="mt-3 max-w-xl text-sm text-white/80 sm:text-base">
                 Keep your Hyundai performing at its best with genuine parts,
                 factory-trained technicians, clear estimates and convenient
-                service booking.
+                service booking across Mumbai, Thane, Vasai, Virar and Wada.
               </p>
             </Reveal>
           </div>
         </section>
 
+        {/* Service overview (the "Service That Cares" strip, shared with home) */}
+        <Services />
+
+        {/* Detailed offerings: genuine parts, packages, RSA, warranty */}
+        <ServiceContent />
+
+        {/* Booking form */}
         <section className="bg-white py-20 lg:py-28">
           <ServiceBooking />
         </section>
+
+        {/* Service-specific FAQ */}
+        <FAQ
+          id="service-faq"
+          data={serviceFaqData}
+          title="Hyundai service, answered."
+          subtitle="From genuine parts to roadside assistance, here are quick answers about servicing your Hyundai with Modi Hyundai."
+        />
+
+        {/* Service centre locations */}
         <ServiceCentres />
       </main>
     </>

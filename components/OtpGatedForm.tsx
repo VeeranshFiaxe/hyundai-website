@@ -1,8 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { X, Shield, Check, Phone } from "./icons";
 import { isValidMobile, isValidEmail, isEmpty } from "@/lib/validation";
+import CountryCodeSelector from "./CountryCodeSelector";
+import { allCountries, type Country } from "@/lib/countries";
+
+const defaultCountry = allCountries.find((c) => c.code === "IN")!;
 
 type Step = "phone" | "otp" | "form" | "success";
 
@@ -17,6 +22,9 @@ export function OtpGatedFormBase({ variant = "inline", onClosePopup }: OtpGatedF
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState<Country>(defaultCountry);
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -25,11 +33,20 @@ export function OtpGatedFormBase({ variant = "inline", onClosePopup }: OtpGatedF
   
   const handlePhoneSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!phone || phone.length !== 10 || !/^[6-9]\d{9}$/.test(phone)) {
-      setError("Please enter a valid 10-digit phone number starting with 6-9.");
+    if (!consent) {
+      setConsentError(true);
+      return;
+    }
+    if (!phone || phone.length !== selectedCountry.maxLength) {
+      setError(`Please enter a valid ${selectedCountry.maxLength}-digit phone number.`);
+      return;
+    }
+    if (selectedCountry.code === "IN" && !/^[6-9]\d{9}$/.test(phone)) {
+      setError("Please enter a valid 10-digit Indian phone number starting with 6-9.");
       return;
     }
     setError("");
+    setConsentError(false);
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
@@ -88,7 +105,7 @@ export function OtpGatedFormBase({ variant = "inline", onClosePopup }: OtpGatedF
           </div>
           <h3 className="font-display text-xl font-bold text-text">Verify OTP</h3>
           <p className="mt-2 text-sm text-muted">
-            Code sent to <span className="font-semibold text-text">+91 {phone}</span>
+            Code sent to <span className="font-semibold text-text">{selectedCountry.dialCode} {phone}</span>
           </p>
           <form onSubmit={handleOtpSubmit} className="mt-6 w-full">
             <input
@@ -135,22 +152,44 @@ export function OtpGatedFormBase({ variant = "inline", onClosePopup }: OtpGatedF
         <h3 className="font-display text-xl font-bold text-text">Enter Phone Number</h3>
         <p className="mt-2 text-sm text-muted">We will send you an OTP to verify your number.</p>
         <form onSubmit={handlePhoneSubmit} className="mt-6">
-          <div className="relative flex items-center">
-            <span className="absolute left-4 text-sm font-semibold text-text">+91</span>
+          <div className="relative flex items-center rounded-xl border-2 border-border bg-bg-2 transition-all focus-within:border-brand focus-within:ring-4 focus-within:ring-brand/10">
+            <CountryCodeSelector value={selectedCountry} onChange={setSelectedCountry} />
             <input
               type="tel"
               value={phone}
               onChange={e => setPhone(e.target.value.replace(/\D/g, ''))}
-              maxLength={10}
-              placeholder="9876543210"
-              className="w-full rounded border border-border bg-white py-3 pl-12 pr-4 text-sm text-text outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/10"
+              maxLength={selectedCountry.maxLength}
+              placeholder={selectedCountry.placeholder}
+              className="w-full rounded-r-xl border-0 bg-transparent px-4 py-3.5 text-sm text-text outline-none placeholder:text-faint"
             />
           </div>
           {error && <p className="mt-2 text-sm font-medium text-red-500">{error}</p>}
+          <label className="mt-4 flex items-start gap-2.5 text-left cursor-pointer">
+            <input
+              type="checkbox"
+              checked={consent}
+              onChange={(e) => {
+                setConsent(e.target.checked);
+                if (e.target.checked) setConsentError(false);
+              }}
+              className="mt-0.5 h-4 w-4 shrink-0 rounded border-border accent-brand"
+            />
+            <span className="text-xs leading-relaxed text-muted">
+              I agree to Modi Hyundai&apos;s{" "}
+              <Link href="/terms" className="font-semibold text-text underline hover:text-brand">T&C</Link> and{" "}
+              <Link href="/privacy" className="font-semibold text-text underline hover:text-brand">Privacy Policy</Link>.
+              This consent overrides any DNC/NDNC registrations.
+            </span>
+          </label>
+          {consentError && (
+            <p className="mt-2 text-sm font-medium text-red-500">
+              Please check the box to agree to the T&C and Privacy Policy before proceeding.
+            </p>
+          )}
           <button
             type="submit"
             disabled={loading}
-            className="mt-6 w-full rounded bg-brand py-3 font-semibold text-white transition-colors hover:bg-brand-light disabled:opacity-70"
+            className="mt-4 w-full rounded bg-brand py-3 font-semibold text-white transition-colors hover:bg-brand-light disabled:opacity-70"
           >
             {loading ? "Sending..." : "Send OTP"}
           </button>
@@ -171,18 +210,18 @@ export function OtpGatedFormBase({ variant = "inline", onClosePopup }: OtpGatedF
         <h3 className="font-display text-xl font-bold text-text">Almost Done!</h3>
         <p className="mt-2 text-sm text-muted">Please fill in your details to continue.</p>
         
-        <div className="mt-6 flex items-center justify-between rounded-lg bg-[#f0f7ff] px-4 py-3 border border-[#dbeafe]">
+        <div className="mt-6 flex items-center justify-between rounded-lg bg-[#ecfdf5] px-4 py-3 border border-[#d1fae5]">
           <div className="flex items-center gap-3">
-            <Phone className="h-4 w-4 text-brand" />
-            <span className="text-sm font-semibold text-brand">+91 {phone}</span>
+            <Phone className="h-4 w-4 text-[#059669]" />
+            <span className="text-sm font-semibold text-brand">{selectedCountry.dialCode} {phone}</span>
           </div>
-          <span className="flex items-center gap-1 text-[11px] font-bold text-brand bg-white px-2 py-1 rounded-full shadow-sm">
+          <span className="flex items-center gap-1 text-[11px] font-bold text-[#059669] bg-white px-2 py-1 rounded-full shadow-sm">
             <Check className="h-3 w-3" /> Verified
           </span>
         </div>
         
         <form onSubmit={handleFormSubmit} className="mt-6 space-y-4">
-          <input type="hidden" name="mobile" value={phone} />
+          <input type="hidden" name="mobile" value={`${selectedCountry.dialCode} ${phone}`} />
           <div>
             <label className="mb-1.5 block text-xs font-semibold text-muted">Full Name</label>
             <input
@@ -248,7 +287,7 @@ export function OtpGatedFormBase({ variant = "inline", onClosePopup }: OtpGatedF
             <Check className="h-6 w-6" />
           </span>
           <h3 className="mt-4 font-display text-lg font-bold text-text">Request Submitted!</h3>
-          <p className="mt-2 text-sm text-muted">Thank you, {name}. We will contact you shortly at +91 {phone}.</p>
+          <p className="mt-2 text-sm text-muted">Thank you, {name}. We will contact you shortly at {selectedCountry.dialCode} {phone}.</p>
           <button
             onClick={resetForm}
             className="mt-6 rounded border border-border px-8 py-2.5 text-sm font-semibold text-text transition-colors hover:bg-bg-2"

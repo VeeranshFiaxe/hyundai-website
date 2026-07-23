@@ -29,6 +29,13 @@ interface TestDriveWizardProps {
   onVerificationChange?: (verifying: boolean) => void;
   /** Identifies which entry point launched this wizard. */
   formSource?: string;
+  /**
+   * Local image path forwarded to OtpGate to render the two-panel phone-entry
+   * card (image left, form right) in modal contexts. Omit for inline embeds.
+   */
+  splitImage?: string;
+  /** Alt text for the split image panel. */
+  splitImageAlt?: string;
 }
 
 function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requestChangePhone }: TestDriveWizardProps) {
@@ -36,7 +43,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
   const preSelectedCar = initialCarSlug || searchParams?.get("car");
   const router = useRouter();
 
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(preSelectedCar ? 2 : 1);
   const [submitted, setSubmitted] = useState(false);
   const [attempted, setAttempted] = useState(false);
 
@@ -118,7 +125,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
   const resetAll = () => {
     setSubmitted(false);
     setAttempted(false);
-    setStep(1);
+    setStep(preSelectedCar ? 2 : 1);
     setCarSlug(preSelectedCar || "");
     setCity("");
     setDate("");
@@ -146,6 +153,8 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
         type="button"
         onClick={() => {
           if (step === 1 && preSelectedCar) {
+            if (onBack) { onBack(); } else { router.push(`/cars/${preSelectedCar}`); }
+          } else if (preSelectedCar && step === 2) {
             if (onBack) { onBack(); } else { router.push(`/cars/${preSelectedCar}`); }
           } else {
             goBack();
@@ -186,6 +195,10 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
     };
   }, [submitted]);
 
+  useEffect(() => {
+    setAttempted(false);
+  }, [step]);
+
   return (
     <>
       <div className="mx-auto max-w-3xl bg-white p-6 sm:p-10">
@@ -218,7 +231,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                 </div>
                 {n < steps.length && (
                   <span
-                    className={`mx-1.5 h-0.5 flex-1 rounded transition-colors ${
+                    className={`mx-1.5 mt-[15px] h-0.5 flex-1 self-start rounded transition-colors ${
                       state === "done" ? "bg-brand" : "bg-border"
                     }`}
                   />
@@ -435,15 +448,15 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                 <div className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Mobile Number</span>
                   <div
-                    className="flex cursor-pointer items-center justify-between rounded-xl border border-[#dbeafe] bg-[#f0f7ff] px-4 py-3"
+                    className="flex cursor-pointer items-center justify-between rounded-xl border border-[#d1fae5] bg-[#ecfdf5] px-4 py-3"
                     onClick={requestChangePhone}
                     title="Click to change verified phone number"
                   >
                     <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-brand" />
-                      <span className="text-sm font-semibold text-brand">+91 {mobile}</span>
+                      <Phone className="h-4 w-4 text-[#059669]" />
+                      <span className="text-sm font-semibold text-[#059669]">{mobile}</span>
                     </div>
-                    <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-brand shadow-sm">
+                    <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[11px] font-bold text-[#059669] shadow-sm">
                       <Check className="h-3 w-3" /> Verified
                     </span>
                   </div>
@@ -543,7 +556,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
   );
 }
 
-export default function TestDriveWizard({ initialCarSlug, onBack, onVerificationChange, formSource }: Omit<TestDriveWizardProps, "verifiedPhone" | "requestChangePhone">) {
+export default function TestDriveWizard({ initialCarSlug, onBack, onVerificationChange, formSource, splitImage, splitImageAlt }: Omit<TestDriveWizardProps, "verifiedPhone" | "requestChangePhone">) {
   return (
     <OtpGate
       title="Verify Your Phone"
@@ -552,6 +565,8 @@ export default function TestDriveWizard({ initialCarSlug, onBack, onVerification
       barePadded
       onVerificationChange={onVerificationChange}
       formSource={formSource}
+      splitImage={splitImage}
+      splitImageAlt={splitImageAlt}
     >
       {(verifiedPhone, requestChangePhone) => (
         <TestDriveWizardInner

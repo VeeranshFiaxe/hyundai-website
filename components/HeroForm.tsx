@@ -111,15 +111,15 @@ function HeroFormInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: s
               )}
             </label>
             <div
-              className="flex cursor-pointer items-center justify-between rounded border border-[#dbeafe] bg-[#f0f7ff] px-3 py-2.5"
+              className="flex cursor-pointer items-center justify-between rounded border border-[#d1fae5] bg-[#ecfdf5] px-3 py-2.5"
               onClick={requestChangePhone}
               title="Click to change verified phone number"
             >
               <div className="flex items-center gap-2">
-                <Phone className="h-3.5 w-3.5 text-brand" />
-                <span className="text-[13px] font-semibold text-brand">+91 {mobile}</span>
+                <Phone className="h-3.5 w-3.5 text-[#059669]" />
+                <span className="text-[13px] font-semibold text-brand">{mobile}</span>
               </div>
-              <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-brand shadow-sm">
+              <span className="flex items-center gap-1 rounded-full bg-white px-2 py-0.5 text-[10px] font-bold text-[#059669] shadow-sm">
                 <Check className="h-2.5 w-2.5" /> Verified
               </span>
             </div>

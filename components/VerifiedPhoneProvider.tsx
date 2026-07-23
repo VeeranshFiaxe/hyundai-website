@@ -43,7 +43,7 @@ export default function VerifiedPhoneProvider({ children }: { children: ReactNod
   useEffect(() => {
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored && /^\d{10}$/.test(stored)) {
+      if (stored) {
         setVerifiedPhone(stored);
       }
     } catch {
@@ -58,17 +58,16 @@ export default function VerifiedPhoneProvider({ children }: { children: ReactNod
     const onStorage = (e: StorageEvent) => {
       if (e.key !== STORAGE_KEY) return;
       const next = e.newValue;
-      setVerifiedPhone(next && /^\d{10}$/.test(next) ? next : null);
+      setVerifiedPhone(next || null);
     };
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
   }, []);
 
   const verify = useCallback((phone: string) => {
-    const clean = phone.replace(/\D/g, "").slice(0, 10);
-    setVerifiedPhone(clean);
+    setVerifiedPhone(phone);
     try {
-      window.localStorage.setItem(STORAGE_KEY, clean);
+      window.localStorage.setItem(STORAGE_KEY, phone);
     } catch {
       // Ignore write failures — in-memory fallback still works for this tab.
     }

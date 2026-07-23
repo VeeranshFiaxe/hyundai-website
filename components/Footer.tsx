@@ -9,7 +9,7 @@ import {
   Clock,
   Facebook,
   Instagram,
-  Twitter,
+  XLogo,
   LinkedIn,
   YouTube,
 } from "./icons";
@@ -27,18 +27,18 @@ const quickLinks = [
 
 const serviceLinks = [
   { label: "Book a Service", href: "/locate-service-centre#book-service" },
-  { label: "Service Packages", href: "/locate-service-centre" },
-  { label: "Genuine Parts", href: "/locate-service-centre" },
-  { label: "Roadside Assistance", href: "/locate-service-centre" },
-  { label: "Extended Warranty", href: "/locate-service-centre" },
+  { label: "Service Packages", href: "/locate-service-centre#service-packages" },
+  { label: "Genuine Parts", href: "/locate-service-centre#genuine-parts" },
+  { label: "Roadside Assistance", href: "/locate-service-centre#roadside-assistance" },
+  { label: "Extended Warranty", href: "/locate-service-centre#extended-warranty" },
 ];
 
 const socials = [
-  { Icon: Facebook, label: "Facebook" },
-  { Icon: Instagram, label: "Instagram" },
-  { Icon: Twitter, label: "Twitter" },
-  { Icon: YouTube, label: "YouTube" },
-  { Icon: LinkedIn, label: "LinkedIn" },
+  { Icon: Facebook, label: "Facebook", href: company.social.facebook },
+  { Icon: Instagram, label: "Instagram", href: company.social.instagram },
+  { Icon: XLogo, label: "X", href: company.social.x },
+  { Icon: YouTube, label: "YouTube", href: company.social.youtube },
+  { Icon: LinkedIn, label: "LinkedIn", href: company.social.linkedin },
 ];
 
 export default function Footer() {
@@ -56,10 +56,12 @@ export default function Footer() {
               Vasai, Virar and Wada.
             </p>
             <div className="mt-6 flex gap-2.5">
-              {socials.map(({ Icon, label }) => (
+              {socials.map(({ Icon, label, href }) => (
                 <a
                   key={label}
-                  href="#"
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-label={`Follow Modi Hyundai on ${label}`}
                   className="grid h-9 w-9 place-items-center rounded border border-white/15 text-white/60 transition-all hover:border-white/40 hover:text-white"
                 >
@@ -166,25 +168,21 @@ export default function Footer() {
         <div className="flex flex-col items-center justify-between gap-3 pt-8 text-xs text-white/40 sm:flex-row">
           <p>© {new Date().getFullYear()} Modi Hyundai. All Rights Reserved.</p>
           <div className="flex gap-6">
-            <a href="#" className="transition-colors hover:text-white">Privacy Policy</a>
-            <a href="#" className="transition-colors hover:text-white">Terms &amp; Conditions</a>
+            <Link href="/privacy" className="transition-colors hover:text-white">Privacy Policy</Link>
+            <Link href="/terms" className="transition-colors hover:text-white">Terms &amp; Conditions</Link>
           </div>
         </div>
       </div>
 
       {/* Legal strip */}
       <div className="border-t border-white/5 bg-black/20">
-        <div className="container-px mx-auto flex max-w-[1400px] flex-col items-center justify-between gap-2 py-4 text-center text-[11px] text-white/35 sm:flex-row sm:text-left">
+        <div className="container-px mx-auto max-w-[1400px] py-4 text-center text-[11px] text-white/35 sm:text-left">
           <p>
             The information, prices and offers on this website are for general
             guidance only and do not constitute an offer. Images shown may differ
             from actual products. Please contact Modi Hyundai for the latest
             prices, variant availability and offer terms.
           </p>
-          <div className="flex shrink-0 gap-5">
-            <a href="#" className="transition-colors hover:text-white/70">Privacy Policy</a>
-            <a href="#" className="transition-colors hover:text-white/70">Terms &amp; Conditions</a>
-          </div>
         </div>
       </div>
     </footer>

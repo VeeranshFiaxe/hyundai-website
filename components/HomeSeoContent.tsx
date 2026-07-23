@@ -235,7 +235,7 @@ export default function HomeSeoContent() {
               area.
             </p>
             <div className="mt-6">
-              <Link href="/locate-service-centre" className="btn-primary">
+              <Link href="/locate-service-centre#book-service" className="btn-primary">
                 Book a Service
               </Link>
             </div>

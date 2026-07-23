@@ -18,7 +18,8 @@ export function isValidEmail(email: string): boolean {
 }
 
 export function isValidMobile(mobile: string): boolean {
-  return /^[0-9]{10}$/.test(mobile.trim());
+  const digits = mobile.replace(/\D/g, "");
+  return digits.length >= 7 && digits.length <= 15;
 }
 
 export function isValidPincode(pincode: string): boolean {

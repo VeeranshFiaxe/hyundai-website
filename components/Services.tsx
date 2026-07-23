@@ -20,7 +20,7 @@ export default function Services() {
             </p>
           </div>
           <Link
-            href="/locate-service-centre"
+            href="/locate-service-centre#book-service"
             className="group inline-flex shrink-0 items-center gap-2 rounded border border-brand px-5 py-2.5 text-sm font-semibold text-brand transition-all hover:bg-brand hover:text-white"
           >
             Book a Service Appointment
@@ -34,8 +34,8 @@ export default function Services() {
             const Icon = iconMap[s.icon as IconName];
             return (
               <Reveal key={s.title} delay={i * 110} variant="scale-up">
-                <div className="group flex h-full flex-col items-center gap-3 rounded-lg border border-border bg-white p-6 text-center transition-[transform,box-shadow] duration-700 ease-out will-change-transform hover:-translate-y-1 hover:shadow-[0_8px_30px_0_rgba(0,44,95,0.12)]">
-                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand/10 text-brand transition-colors duration-700">
+                <div className="group flex h-full flex-col items-center gap-3 rounded-lg border border-border bg-white p-6 text-center transition-all duration-700 ease-out hover:-translate-y-1.5 hover:border-brand/30 hover:shadow-[0_14px_40px_-12px_rgba(0,44,95,0.18)]">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand/10 text-brand transition-all duration-700 ease-out group-hover:scale-110 group-hover:bg-brand group-hover:text-white">
                     <Icon className="h-6 w-6" />
                   </span>
                   <h3 className="text-sm font-semibold leading-snug text-text">{s.title}</h3>
