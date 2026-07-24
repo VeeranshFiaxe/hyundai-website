@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
 import MobileActionBar from "@/components/MobileActionBar";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
+import UtmCapture from "@/components/UtmCapture";
 import TestDriveProvider from "@/components/TestDriveProvider";
 import VerifiedPhoneProvider from "@/components/VerifiedPhoneProvider";
 
@@ -88,6 +89,7 @@ export default function RootLayout({
       <body className="min-h-screen pb-[calc(60px+env(safe-area-inset-bottom))] antialiased md:pb-0">
         <VerifiedPhoneProvider>
         <TestDriveProvider>
+        <UtmCapture />
         <JsonLd />
         <Navbar />
         <FloatingActions />

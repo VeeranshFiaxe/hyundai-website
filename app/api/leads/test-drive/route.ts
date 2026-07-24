@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { normalizePhone } from "@/lib/phone";
+import { extractUtmFields } from "@/lib/utmFields";
 
 function nullIfEmpty(value: unknown): string | null {
   return typeof value === "string" && value.trim() !== "" ? value : null;
@@ -61,6 +62,7 @@ export async function POST(request: Request) {
     preferred_time,
     source: typeof source === "string" && source.trim() !== "" ? source : "Website",
     verified: true,
+    ...extractUtmFields(body),
   });
 
   if (error) {

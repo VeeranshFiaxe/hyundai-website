@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { normalizePhone } from "@/lib/phone";
+import { extractUtmFields } from "@/lib/utmFields";
 
 export async function POST(request: Request) {
   let body: Record<string, unknown>;
@@ -38,6 +39,7 @@ export async function POST(request: Request) {
     message,
     source: typeof source === "string" && source.trim() !== "" ? source : "Website",
     verified: true,
+    ...extractUtmFields(body),
   });
 
   if (error) {
