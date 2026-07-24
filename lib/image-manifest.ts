@@ -50,6 +50,58 @@ export const banners: Record<keyof typeof bannerCdnPaths, string> = Object.fromE
   Object.entries(bannerCdnPaths).map(([k, p]) => [k, bannerPath(p)]),
 ) as Record<keyof typeof bannerCdnPaths, string>;
 
+/* Mobile (<=767px) art-directed crops of each hero banner above — pulled
+   from hyundai.com's own <picture><source media="(max-width: 767px)">.
+   Every slide has one; all are natively 580x780 (portrait). */
+const bannerMobileCdnPaths = {
+  creta: "/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/home/cretakingknightinnerkv-mob.jpg",
+  alcazar: "/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvmob2.jpg",
+  ioniq5: "/content/dam/hyundai/in/en/images/home/banner/ioniq-mob-banner.jpg",
+  exter: "/content/dam/hyundai/in/en/images/home/banner/exter_homepage_mob_banner.jpg",
+  venue: "/content/dam/hyundai/in/en/images/home/banner/venue-homepage-mob-banner.jpg",
+  verna: "/content/dam/hyundai/in/en/images/home/banner/verna-homepage-mob-banner.jpg",
+  cretaElectric: "/content/dam/hyundai/in/en/images/home/baas-creta-electricmob.jpg",
+  venueNline: "/content/dam/hyundai/in/en/images/home/banner/venue-n-line-inner-kv-mob-banner.jpg",
+  venueKnight: "/content/dam/hyundai/in/en/images/home/banner/home-knight-edition-mob-banner.jpg",
+  i20Nline: "/content/dam/hyundai/in/en/data/find-a-car/i20-n-line/Highlights/pc/i20nlineinnerkv-mob.jpg",
+  i20: "/content/dam/hyundai/in/en/data/find-a-car/i20/i20-mob-banner.jpg",
+  nios: "/content/dam/hyundai/in/en/data/find-a-car/Grand-i10-Nios/Highlights/Grandi10niosnew/innerkvnioscng-mob.jpg",
+  venueKv: "/content/dam/hyundai/in/en/data/find-a-car/Venue/Highlights/pc/venueinnerkv-mob.jpg",
+  alcazarKv: "/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvmob.jpg",
+  promise: "/content/dam/hyundai/in/en/data/hyundai-story/hyundai-promise/h-promise-mob-banner.jpg",
+  thirtyYears: "/content/dam/hyundai/in/en/images/hyundai-story/hyundai-motor-india/30-years/30-years-memories-innerkv-mob.jpg",
+  offers: "/content/dam/hyundai/in/en/images/ClicktoBuy/specialoffer/newspecialoffergst-mob.jpg",
+} as const;
+
+export const bannersMobile: Record<keyof typeof bannerMobileCdnPaths, string> = Object.fromEntries(
+  Object.entries(bannerMobileCdnPaths).map(([k, p]) => [k, bannerPath(p)]),
+) as Record<keyof typeof bannerMobileCdnPaths, string>;
+
+/* Tablet (768-1023px) art-directed crops. Two slides (exter, i20) have no
+   tablet-specific asset on hyundai.com either — they fall through to the
+   desktop image at that width, matching the source site exactly. */
+const bannerTabletCdnPaths = {
+  creta: "/content/dam/hyundai/in/en/data/find-a-car/Creta/Highlights/home/cretakingknightinnerkv-tab.jpg",
+  alcazar: "/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvtab2.jpg",
+  ioniq5: "/content/dam/hyundai/in/en/images/home/banner/ioniq-tab-banner.jpg",
+  venue: "/content/dam/hyundai/in/en/images/home/banner/venue-homepage-tab-banner.jpg",
+  verna: "/content/dam/hyundai/in/en/images/home/banner/verna-homepage-tab-banner.jpg",
+  cretaElectric: "/content/dam/hyundai/in/en/images/home/baas-creta-electrictab.jpg",
+  venueNline: "/content/dam/hyundai/in/en/images/home/banner/venue-n-line-inner-kv-tab-banner.jpg",
+  venueKnight: "/content/dam/hyundai/in/en/images/home/banner/home-knight-edition-tab-banner.jpg",
+  i20Nline: "/content/dam/hyundai/in/en/data/find-a-car/i20-n-line/Highlights/pc/i20nlineinnerkv-tab.jpg",
+  nios: "/content/dam/hyundai/in/en/data/find-a-car/Grand-i10-Nios/Highlights/Grandi10niosnew/innerkvnioscng-tab.jpg",
+  venueKv: "/content/dam/hyundai/in/en/data/find-a-car/Venue/Highlights/pc/venueinnerkv-tab.jpg",
+  alcazarKv: "/content/dam/hyundai/in/en/data/find-a-car/Alcazar/Highlights/pc/alcazarboldkvtab.jpg",
+  promise: "/content/dam/hyundai/in/en/data/hyundai-story/hyundai-promise/h-promise-tab-banner.jpg",
+  thirtyYears: "/content/dam/hyundai/in/en/images/hyundai-story/hyundai-motor-india/30-years/30-years-memories-innerkv-tab.jpg",
+  offers: "/content/dam/hyundai/in/en/images/ClicktoBuy/specialoffer/newspecialoffergst-tab.jpg",
+} as const;
+
+export const bannersTablet: Partial<Record<keyof typeof bannerCdnPaths, string>> = Object.fromEntries(
+  Object.entries(bannerTabletCdnPaths).map(([k, p]) => [k, bannerPath(p)]),
+);
+
 /* ── Transparent product cutouts (Car.image / officialShot) ────────── */
 const cutoutCdnPaths = {
   exter: "/content/dam/hyundai/in/en/data/find-a-car/Exter/booking-open/homemodel-exter.png",

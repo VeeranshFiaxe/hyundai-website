@@ -12,7 +12,7 @@ export default function WhatsAppWidget() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
-      className="group fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all hover:scale-110 hover:shadow-xl active:scale-95 md:bottom-8 md:right-8"
+      className="group fixed bottom-[calc(76px+env(safe-area-inset-bottom))] right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition-all hover:scale-110 hover:shadow-xl active:scale-95 md:bottom-8 md:right-8"
     >
       <WhatsApp className="h-7 w-7" />
       <span className="absolute -left-44 bottom-1/2 hidden translate-y-1/2 whitespace-nowrap rounded-md bg-white px-3 py-2 text-xs font-semibold text-text shadow-lg group-hover:block md:-left-52">

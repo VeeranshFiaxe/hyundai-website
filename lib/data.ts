@@ -12,6 +12,8 @@
 
 import {
   banners,
+  bannersMobile,
+  bannersTablet,
   cutouts,
   coloursBySlug,
   blogImages,
@@ -176,6 +178,10 @@ export type Slide = {
   sub: string;
   price: string;
   image: string;
+  /** Art-directed crop for portrait phones (<=767px), matching hyundai.com's own breakpoint. */
+  imageMobile: string;
+  /** Art-directed crop for tablets (768-1023px). Falls back to `image` when hyundai.com has none either. */
+  imageTablet?: string;
   alt: string;
 };
 
@@ -187,6 +193,8 @@ export const heroSlides: Slide[] = [
     sub: "Level 2 ADAS, a panoramic sunroof and a presence that speaks before you do.",
     price: "10.91",
     image: banners.creta,
+    imageMobile: bannersMobile.creta,
+    imageTablet: bannersTablet.creta,
     alt: "Hyundai Creta, official campaign banner",
   },
   {
@@ -196,6 +204,8 @@ export const heroSlides: Slide[] = [
     sub: "Three spacious rows and boss-mode comfort, built for grand journeys.",
     price: "14.51",
     image: banners.alcazar,
+    imageMobile: bannersMobile.alcazar,
+    imageTablet: bannersTablet.alcazar,
     alt: "The bold new Hyundai Alcazar, official campaign banner",
   },
   {
@@ -205,6 +215,8 @@ export const heroSlides: Slide[] = [
     sub: "Hyundai's flagship electric SUV, with futuristic design and a 500km+ range.",
     price: "55.71",
     image: banners.ioniq5,
+    imageMobile: bannersMobile.ioniq5,
+    imageTablet: bannersTablet.ioniq5,
     alt: "The Hyundai Ioniq 5 electric SUV, official campaign banner",
   },
   {
@@ -214,6 +226,7 @@ export const heroSlides: Slide[] = [
     sub: "Confident city size, an SUV stance and a practical factory CNG choice.",
     price: "5.81",
     image: banners.exter,
+    imageMobile: bannersMobile.exter,
     alt: "Hyundai Exter compact SUV, official campaign banner",
   },
   {
@@ -223,6 +236,8 @@ export const heroSlides: Slide[] = [
     sub: "Turbo-petrol, diesel and connected technology in a city-friendly SUV.",
     price: "8.00",
     image: banners.venue,
+    imageMobile: bannersMobile.venue,
+    imageTablet: bannersTablet.venue,
     alt: "Hyundai Venue compact SUV, official campaign banner",
   },
   {
@@ -232,6 +247,8 @@ export const heroSlides: Slide[] = [
     sub: "A spacious sedan with a responsive turbo-petrol option and advanced driver assistance.",
     price: "10.99",
     image: banners.verna,
+    imageMobile: bannersMobile.verna,
+    imageTablet: bannersTablet.verna,
     alt: "Hyundai Verna sedan, official campaign banner",
   },
   {
@@ -241,6 +258,8 @@ export const heroSlides: Slide[] = [
     sub: "Choose the battery range that fits your week, with V2L and Level 2 ADAS on selected variants.",
     price: "18.03",
     image: banners.cretaElectric,
+    imageMobile: bannersMobile.cretaElectric,
+    imageTablet: bannersTablet.cretaElectric,
     alt: "Hyundai Creta Electric SUV, official campaign banner",
   },
   {
@@ -250,6 +269,8 @@ export const heroSlides: Slide[] = [
     sub: "The Venue, tuned for enthusiasts with a turbo-petrol heart and N Line detailing.",
     price: "10.66",
     image: banners.venueNline,
+    imageMobile: bannersMobile.venueNline,
+    imageTablet: bannersTablet.venueNline,
     alt: "Hyundai Venue N Line performance SUV, official campaign banner",
   },
   {
@@ -259,6 +280,8 @@ export const heroSlides: Slide[] = [
     sub: "Blacked-out Knight Edition styling for a bolder, more confident Venue presence.",
     price: "8.00",
     image: banners.venueKnight,
+    imageMobile: bannersMobile.venueKnight,
+    imageTablet: bannersTablet.venueKnight,
     alt: "Hyundai Venue Knight Edition compact SUV, official campaign banner",
   },
   {
@@ -268,6 +291,8 @@ export const heroSlides: Slide[] = [
     sub: "A turbocharged N Line hatchback with sport seats, paddle shifters and red accents.",
     price: "9.27",
     image: banners.i20Nline,
+    imageMobile: bannersMobile.i20Nline,
+    imageTablet: bannersTablet.i20Nline,
     alt: "Hyundai i20 N Line performance hatchback, official campaign banner",
   },
   {
@@ -277,6 +302,7 @@ export const heroSlides: Slide[] = [
     sub: "A premium hatchback with Bose sound, a digital cluster and segment-leading features.",
     price: "5.99",
     image: banners.i20,
+    imageMobile: bannersMobile.i20,
     alt: "Hyundai i20 premium hatchback, official campaign banner",
   },
   {
@@ -286,6 +312,8 @@ export const heroSlides: Slide[] = [
     sub: "Rear AC vents, wireless charging and an available factory CNG option for low running costs.",
     price: "5.59",
     image: banners.nios,
+    imageMobile: bannersMobile.nios,
+    imageTablet: bannersTablet.nios,
     alt: "Hyundai Grand i10 Nios with factory CNG, official campaign banner",
   },
   {
@@ -295,6 +323,8 @@ export const heroSlides: Slide[] = [
     sub: "Connected SUV technology and a grown-up stance in a city-friendly footprint.",
     price: "8.00",
     image: banners.venueKv,
+    imageMobile: bannersMobile.venueKv,
+    imageTablet: bannersTablet.venueKv,
     alt: "Hyundai Venue compact SUV, official key visual banner",
   },
   {
@@ -304,6 +334,8 @@ export const heroSlides: Slide[] = [
     sub: "Captain-chair comfort, a panoramic sunroof and ADAS for relaxed long-distance family travel.",
     price: "14.51",
     image: banners.alcazarKv,
+    imageMobile: bannersMobile.alcazarKv,
+    imageTablet: bannersTablet.alcazarKv,
     alt: "Hyundai Alcazar premium 7-seater SUV, official key visual banner",
   },
   {
@@ -313,6 +345,8 @@ export const heroSlides: Slide[] = [
     sub: "Hyundai-certified pre-owned cars with warranty-backed assurance from Modi Hyundai.",
     price: "",
     image: banners.promise,
+    imageMobile: bannersMobile.promise,
+    imageTablet: bannersTablet.promise,
     alt: "Hyundai Promise certified pre-owned programme, official banner",
   },
   {
@@ -322,6 +356,8 @@ export const heroSlides: Slide[] = [
     sub: "Celebrating 30 years of Hyundai in India and 9 million customer journeys.",
     price: "",
     image: banners.thirtyYears,
+    imageMobile: bannersMobile.thirtyYears,
+    imageTablet: bannersTablet.thirtyYears,
     alt: "30 years of Hyundai Motor India, official anniversary banner",
   },
   {
@@ -331,6 +367,8 @@ export const heroSlides: Slide[] = [
     sub: "Cash discounts, exchange bonuses and corporate benefits on select Hyundai models this season.",
     price: "",
     image: banners.offers,
+    imageMobile: bannersMobile.offers,
+    imageTablet: bannersTablet.offers,
     alt: "Hyundai India special seasonal offers, official banner",
   },
 ];

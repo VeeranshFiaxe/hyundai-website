@@ -6,6 +6,7 @@ import JsonLd from "@/components/JsonLd";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FloatingActions from "@/components/FloatingActions";
+import MobileActionBar from "@/components/MobileActionBar";
 import WhatsAppWidget from "@/components/WhatsAppWidget";
 import TestDriveProvider from "@/components/TestDriveProvider";
 import VerifiedPhoneProvider from "@/components/VerifiedPhoneProvider";
@@ -84,12 +85,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-IN" className={`${inter.variable} ${sora.variable}`}>
-      <body className="min-h-screen antialiased">
+      <body className="min-h-screen pb-[calc(60px+env(safe-area-inset-bottom))] antialiased md:pb-0">
         <VerifiedPhoneProvider>
         <TestDriveProvider>
         <JsonLd />
         <Navbar />
         <FloatingActions />
+        <MobileActionBar />
         <WhatsAppWidget />
         {children}
         <Footer />
