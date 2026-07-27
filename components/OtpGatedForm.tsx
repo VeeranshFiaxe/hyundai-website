@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { X, Shield, Check, Phone } from "./icons";
 import { isValidMobile, isValidEmail, isEmpty } from "@/lib/validation";
@@ -25,6 +25,22 @@ export function OtpGatedFormBase({ variant = "inline", onClosePopup }: OtpGatedF
   const [consent, setConsent] = useState(false);
   const [consentError, setConsentError] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<Country>(defaultCountry);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(() => {
+    return () => {
+      for (const timer of timersRef.current) clearTimeout(timer);
+      timersRef.current = [];
+    };
+  }, []);
+
+  const schedule = (callback: () => void, delay: number) => {
+    const timer = setTimeout(() => {
+      timersRef.current = timersRef.current.filter((item) => item !== timer);
+      callback();
+    }, delay);
+    timersRef.current.push(timer);
+  };
   
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -48,7 +64,7 @@ export function OtpGatedFormBase({ variant = "inline", onClosePopup }: OtpGatedF
     setError("");
     setConsentError(false);
     setLoading(true);
-    setTimeout(() => {
+    schedule(() => {
       setLoading(false);
       setStep("otp");
     }, 1200);
@@ -62,7 +78,7 @@ export function OtpGatedFormBase({ variant = "inline", onClosePopup }: OtpGatedF
     }
     setError("");
     setLoading(true);
-    setTimeout(() => {
+    schedule(() => {
       setLoading(false);
       if (otp === "0000") {
         setStep("form");

@@ -27,21 +27,47 @@ function preloadFrames(
   modelFolder: string,
   colorSlug: string,
   onProgress: (loaded: number) => void,
+  signal: AbortSignal,
 ): Promise<HTMLImageElement[]> {
   return new Promise((resolve) => {
     const images: HTMLImageElement[] = new Array(FRAME_COUNT);
     let loaded = 0;
+    let settled = false;
+
+    const cleanup = () => {
+      signal.removeEventListener("abort", cancel);
+    };
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      resolve(images);
+    };
+    const cancel = () => {
+      for (const image of images) {
+        if (!image) continue;
+        image.onload = null;
+        image.onerror = null;
+        image.src = "";
+      }
+      finish();
+    };
+
+    signal.addEventListener("abort", cancel, { once: true });
 
     for (let i = 0; i < FRAME_COUNT; i++) {
       const img = new window.Image();
       img.src = frameUrl(modelFolder, colorSlug, i);
       img.onload = img.onerror = () => {
+        if (signal.aborted || settled) return;
         loaded++;
         onProgress(loaded);
-        if (loaded === FRAME_COUNT) resolve(images);
+        if (loaded === FRAME_COUNT) finish();
       };
       images[i] = img;
     }
+
+    if (signal.aborted) cancel();
   });
 }
 
@@ -74,6 +100,15 @@ export default function Car360Viewer({
   // drag hint
   const [showHint, setShowHint] = useState(false);
 
+  const releaseImages = useCallback(() => {
+    for (const image of imagesRef.current) {
+      image.onload = null;
+      image.onerror = null;
+      image.src = "";
+    }
+    imagesRef.current = [];
+  }, []);
+
   /* ── draw a single frame onto the canvas ── */
   const drawFrame = useCallback((frame: number) => {
     const canvas = canvasRef.current;
@@ -93,14 +128,15 @@ export default function Car360Viewer({
 
   /* ── load frames for a given colour slug ── */
   const loadColor = useCallback(
-    async (slug: string) => {
+    async (slug: string, signal: AbortSignal) => {
       setIsLoading(true);
       setLoadedCount(0);
 
       const images = await preloadFrames(modelFolder, slug, (n) => {
         setLoadedCount(n);
-      });
+      }, signal);
 
+      if (signal.aborted) return;
       imagesRef.current = images;
       setIsLoading(false);
       drawFrame(frameRef.current);
@@ -116,9 +152,15 @@ export default function Car360Viewer({
 
   /* ── mount / colour change ── */
   useEffect(() => {
-    if (activated) loadColor(activeSlug);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeSlug, activated]);
+    if (!activated) return;
+    const controller = new AbortController();
+    releaseImages();
+    void loadColor(activeSlug, controller.signal);
+    return () => {
+      controller.abort();
+      releaseImages();
+    };
+  }, [activeSlug, activated, loadColor, releaseImages]);
 
   /* ── pointer events (drag-to-spin) ── */
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -169,6 +211,8 @@ export default function Car360Viewer({
               alt={activeColor.name}
               title={`Hyundai ${activeColor.name} 360° view`}
               className={s.previewImg}
+              loading="lazy"
+              decoding="async"
             />
             <button
               type="button"

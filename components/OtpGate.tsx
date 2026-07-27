@@ -80,6 +80,22 @@ export function OtpGate({
 
   const otpRefs = useRef<(HTMLInputElement | null)[]>([null, null, null, null]);
   const otpContainerRef = useRef<HTMLDivElement>(null);
+  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  useEffect(() => {
+    return () => {
+      for (const timer of timersRef.current) clearTimeout(timer);
+      timersRef.current = [];
+    };
+  }, []);
+
+  const schedule = (callback: () => void, delay: number) => {
+    const timer = setTimeout(() => {
+      timersRef.current = timersRef.current.filter((item) => item !== timer);
+      callback();
+    }, delay);
+    timersRef.current.push(timer);
+  };
 
   const handleOtpChange = (index: number, value: string) => {
     if (!/^\d*$/.test(value)) return;
@@ -93,7 +109,7 @@ export function OtpGate({
     }
 
     if (next.every((d) => d !== "")) {
-      setTimeout(() => verifyOtp(next.join("")), 150);
+      schedule(() => verifyOtp(next.join("")), 150);
     }
   };
 
@@ -124,7 +140,7 @@ export function OtpGate({
     otpRefs.current[focusIdx]?.focus();
 
     if (next.every((d) => d !== "")) {
-      setTimeout(() => verifyOtp(next.join("")), 150);
+      schedule(() => verifyOtp(next.join("")), 150);
     }
   };
 
@@ -171,7 +187,7 @@ export function OtpGate({
       return;
     }
     setStep("otp");
-    setTimeout(() => otpRefs.current[0]?.focus(), 200);
+    schedule(() => otpRefs.current[0]?.focus(), 200);
   };
 
   const verifyOtp = async (code: string) => {

@@ -47,6 +47,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
   // Narrow while the OTP gate is up, wide once verified (car grid needs room).
   const [tdVerifying, setTdVerifying] = useState(true);
   const navRef = useRef<HTMLElement>(null);
+  const galleryScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,6 +62,14 @@ export default function CarDetailClient({ car }: { car: Car }) {
     handleScroll(); // Initial check
 
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (galleryScrollTimeoutRef.current) {
+        clearTimeout(galleryScrollTimeoutRef.current);
+      }
+    };
   }, []);
   const detail = getCarDetail(car);
   const brochureUrl = getCarBrochure(car);
@@ -109,8 +118,12 @@ export default function CarDetailClient({ car }: { car: Car }) {
                       type="button"
                       onClick={() => {
                         setGalleryIndex(index);
-                        setTimeout(() => {
+                        if (galleryScrollTimeoutRef.current) {
+                          clearTimeout(galleryScrollTimeoutRef.current);
+                        }
+                        galleryScrollTimeoutRef.current = setTimeout(() => {
                           document.getElementById("gallery")?.scrollIntoView({ behavior: "smooth" });
+                          galleryScrollTimeoutRef.current = null;
                         }, 100);
                       }}
                       aria-pressed={index === galleryIndex}
