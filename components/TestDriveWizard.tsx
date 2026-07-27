@@ -561,19 +561,20 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
             <h3 className="mt-6 font-display text-2xl font-bold text-text">
               Thanks for your interest!
             </h3>
-            <p className="mt-2 text-muted">
-              We thank you, {name}, for showing interest in test driving the{" "}
+            <p className="mt-5 text-muted leading-relaxed">
+              Thank you for your interest in test driving the{" "}
               {selectedCar ? `Hyundai ${selectedCar.name}` : "Hyundai"}. Our
-              representative will contact you at {mobile} shortly.
+              representative will contact you shortly on{" "}
+              <span className="whitespace-nowrap font-semibold text-text">{mobile}</span>.
             </p>
-            <p className="mt-2 text-muted">
-              Note: this is not a confirmed test drive booking. We will check
-              vehicle availability for {date} ({time}) at {city} and confirm
-              with you.
+            <p className="mt-4 text-muted leading-relaxed">
+              Note: This is not a confirmed test drive. We will check vehicle
+              availability and confirm with you.
             </p>
-            <p className="mt-2 text-muted">
-              We appreciate your time and patience. For any further details,
-              you may contact us at {nav.phone}.
+            <p className="mt-4 text-muted leading-relaxed">
+              We appreciate your time and patience. For further details, call
+              us on{" "}
+              <span className="whitespace-nowrap font-semibold text-text">{nav.phone}</span>.
             </p>
             <button
               onClick={resetAll}
