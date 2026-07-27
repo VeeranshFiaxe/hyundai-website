@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { cars, cityOptions, locations, nav } from "@/lib/data";
@@ -67,13 +67,6 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
   const showroomsInCity = locations.filter(
     (l) => l.type === "Showroom" && (city ? l.city === city : true),
   );
-
-  const availableTimeSlots = useMemo(() => {
-    if (!date || date !== minDate) return timeSlots;
-    const now = new Date();
-    const currentHour = now.getHours() + now.getMinutes() / 60;
-    return timeSlots.filter((s) => s.end > currentHour);
-  }, [date, minDate]);
 
   const canProceed = () => {
     if (step === 1) return Boolean(carSlug);
@@ -288,7 +281,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                         <button
                           type="button"
                           key={car.slug}
-                          onClick={() => setCarSlug(car.slug)}
+                          onClick={() => { setCarSlug(car.slug); setStep(2); }}
                           className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 text-center transition-all ${
                             carSlug === car.slug
                               ? "border-brand bg-brand/5"
@@ -298,6 +291,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                           <Image
                             src={car.image}
                             alt={car.alt}
+                            title={car.alt}
                             width={140}
                             height={60}
                             className="h-10 w-full object-contain"
@@ -308,8 +302,6 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                     </div>
                   </div>
 
-                  {renderNavButtons()}
-
                   <div className="mt-8 border-t border-border pt-8">
                     <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-muted">More options</p>
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -317,7 +309,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                         <button
                           type="button"
                           key={car.slug}
-                          onClick={() => setCarSlug(car.slug)}
+                          onClick={() => { setCarSlug(car.slug); setStep(2); }}
                           className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 text-center transition-all ${
                             carSlug === car.slug
                               ? "border-brand bg-brand/5"
@@ -327,6 +319,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                           <Image
                             src={car.image}
                             alt={car.alt}
+                            title={car.alt}
                             width={140}
                             height={60}
                             className="h-10 w-full object-contain"
@@ -343,7 +336,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                     <button
                       type="button"
                       key={car.slug}
-                      onClick={() => setCarSlug(car.slug)}
+                      onClick={() => { setCarSlug(car.slug); setStep(2); }}
                       className={`flex flex-col items-center gap-2 rounded-lg border-2 p-4 text-center transition-all ${
                         carSlug === car.slug
                           ? "border-brand bg-brand/5"
@@ -353,6 +346,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                       <Image
                         src={car.image}
                         alt={car.alt}
+                        title={car.alt}
                         width={140}
                         height={60}
                         className="h-10 w-full object-contain"
@@ -362,7 +356,6 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                   ))}
                 </div>
               )}
-
               {stepMessage && (
                 <p className="mt-3 text-sm font-medium text-red-600">{stepMessage}</p>
               )}
@@ -420,11 +413,9 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                       className={`${fieldBase} appearance-none pr-10 disabled:cursor-not-allowed disabled:opacity-60`}
                     >
                       <option value="" disabled>
-                        {date && availableTimeSlots.length === 0
-                          ? "No slots available"
-                          : "Select time"}
+                        Select time
                       </option>
-                      {availableTimeSlots.map((s) => (
+                      {timeSlots.map((s) => (
                         <option key={s.label} value={s.label}>
                           {s.label}
                         </option>
@@ -541,7 +532,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
           )}
 
           {/* Nav buttons */}
-          {!(step === 1 && preSelectedCar) && renderNavButtons()}
+          {step !== 1 && renderNavButtons()}
         </form>
       </div>
 

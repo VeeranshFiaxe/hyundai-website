@@ -4,7 +4,7 @@ import PromiseExperience from "@/components/PromiseExperience";
 import { SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
-const title = "Hyundai Promise | Buy or Sell a Pre-Owned Car";
+const title = "Hyundai Promise — Buy or Sell Pre-Owned Cars";
 const description =
   "Explore Hyundai Promise at Modi Hyundai. Enquire to buy a pre-owned car or sell your current one, and our dealership team will reach out to assist you.";
 
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/hyundai-promise" },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     title,

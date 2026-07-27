@@ -11,6 +11,7 @@ import WhatsAppWidget from "@/components/WhatsAppWidget";
 import UtmCapture from "@/components/UtmCapture";
 import TestDriveProvider from "@/components/TestDriveProvider";
 import VerifiedPhoneProvider from "@/components/VerifiedPhoneProvider";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -25,9 +26,9 @@ const sora = Sora({
   display: "swap",
 });
 
-const title = "New Hyundai Cars, Test Drives & Authorised Service in Mumbai | Modi Hyundai";
+const title = "New Hyundai Cars, Test Drives & Service in Mumbai | Modi Hyundai";
 const description =
-  "Compare new Hyundai cars, variants, colours and prices at Modi Hyundai. Book a test drive, request a transparent quote or schedule authorised Hyundai service across Mumbai, Thane, Vasai, Virar and Wada.";
+  "Compare new Hyundai cars with prices, book a test drive, and schedule authorised service at Modi Hyundai showrooms across Mumbai, Thane, Vasai, Virar and Wada.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -87,6 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en-IN" className={`${inter.variable} ${sora.variable}`}>
       <body className="min-h-screen pb-[calc(60px+env(safe-area-inset-bottom))] antialiased md:pb-0">
+        <ScrollToTop />
         <VerifiedPhoneProvider>
         <TestDriveProvider>
         <UtmCapture />

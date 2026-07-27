@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import Image from "next/image";
 import { carModels, cityOptions, testDriveImage } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidName, isValidPincode, type FormErrors } from "@/lib/validation";
@@ -79,7 +79,6 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
     time: "",
   });
   const mobile = verifiedPhone;
-  // Earliest selectable date is tomorrow — same-day test-drive bookings aren't possible.
   const tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);
   const minDate = tomorrow.toISOString().slice(0, 10);
@@ -102,14 +101,7 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
     return e;
   };
 
-  const availableTimeSlots = useMemo(() => {
-    if (!form.date || form.date !== minDate) return timeSlots;
-    const now = new Date();
-    const currentHour = now.getHours() + now.getMinutes() / 60;
-    return timeSlots.filter((s) => s.end > currentHour);
-  }, [form.date, minDate]);
-
-  const effectiveTime = availableTimeSlots.some((s) => s.label === form.time)
+  const effectiveTime = timeSlots.some((s) => s.label === form.time)
     ? form.time
     : "";
 
@@ -320,11 +312,9 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
                       className={`${fieldError("time")} appearance-none pr-10`}
                     >
                       <option value="" disabled className="text-faint">
-                        {form.date && availableTimeSlots.length === 0
-                          ? "No slots left today"
-                          : "Select time"}
+                        Select time
                       </option>
-                      {availableTimeSlots.map((s) => (
+                      {timeSlots.map((s) => (
                         <option key={s.label} value={s.label}>{s.label}</option>
                       ))}
                     </select>
@@ -371,6 +361,7 @@ export default function TestDrive() {
             <Image
               src={testDriveImage}
               alt="Hyundai Creta interior and dashboard"
+              title="Hyundai Creta interior and dashboard"
               fill
               sizes="(max-width: 1024px) 100vw, 45vw"
               className="object-cover"

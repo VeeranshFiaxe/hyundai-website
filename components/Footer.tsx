@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "./Logo";
+import ScrollTopLink from "./ScrollTopLink";
 import BookTestDriveBtn from "./BookTestDriveBtn";
 import { popularCars, nav, company } from "@/lib/data";
 import {
@@ -15,7 +16,7 @@ import {
 } from "./icons";
 
 const quickLinks = [
-  { label: "Home", href: "/#home" },
+  { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Cars", href: "/cars" },
   { label: "Hyundai Promise", href: "/hyundai-promise" },
@@ -77,12 +78,12 @@ export default function Footer() {
             <ul className="mt-4 space-y-3">
               {quickLinks.map((l) => (
                 <li key={l.label}>
-                  <Link
+                  <ScrollTopLink
                     href={l.href}
                     className="text-sm text-white/60 transition-colors hover:text-white"
                   >
                     {l.label}
-                  </Link>
+                  </ScrollTopLink>
                 </li>
               ))}
               <li>

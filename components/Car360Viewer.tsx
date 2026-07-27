@@ -167,6 +167,7 @@ export default function Car360Viewer({
             <img
               src={previewUrl}
               alt={activeColor.name}
+              title={`Hyundai ${activeColor.name} 360° view`}
               className={s.previewImg}
             />
             <button

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, type ChangeEvent, type FormEvent } from "react";
+import { useState, type ChangeEvent, type FormEvent } from "react";
 import { carModels, serviceCentres } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidMobile, isValidName, type FormErrors } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
@@ -106,14 +106,7 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
     return e;
   };
 
-  const availableTimeSlots = useMemo(() => {
-    if (!form.date || form.date !== minDate) return timeSlots;
-    const now = new Date();
-    const currentHour = now.getHours() + now.getMinutes() / 60;
-    return timeSlots.filter((s) => s.end > currentHour);
-  }, [form.date, minDate]);
-
-  const effectiveTime = availableTimeSlots.some((s) => s.label === form.time)
+  const effectiveTime = timeSlots.some((s) => s.label === form.time)
     ? form.time
     : "";
 
@@ -351,12 +344,10 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
                 onChange={setField("time")}
                 className={`${fieldError("time")} appearance-none pr-10`}
               >
-                <option value="" disabled className="text-faint">
-                  {form.date && availableTimeSlots.length === 0
-                    ? "No slots available"
-                    : "Select time"}
-                </option>
-                {availableTimeSlots.map((s) => (
+                  <option value="" disabled className="text-faint">
+                    Select time
+                  </option>
+                  {timeSlots.map((s) => (
                   <option key={s.label} value={s.label}>{s.label}</option>
                 ))}
               </select>

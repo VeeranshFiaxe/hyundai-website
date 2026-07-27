@@ -4,7 +4,7 @@ import TestDriveWizard from "@/components/TestDriveWizard";
 import { SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
-const title = "Book a Hyundai Test Drive in Mumbai | Modi Hyundai";
+const title = "Book a Hyundai Test Drive in Mumbai";
 const description =
   "Book a no-obligation Hyundai test drive in Mumbai, Thane, Vasai, Virar or Wada. Choose your model, preferred time and showroom or doorstep location online.";
 
@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/book-a-test-drive" },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     title,

@@ -30,6 +30,7 @@ export async function generateMetadata({
     title: post.title,
     description: post.excerpt,
     alternates: { canonical: `/blogs/${post.slug}` },
+    robots: { index: true, follow: true },
     openGraph: {
       type: "article",
       title: post.title,
@@ -153,6 +154,7 @@ export default async function BlogPostPage({
               <Image
                 src={post.image}
                 alt={post.alt}
+                title={post.alt}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 768px"

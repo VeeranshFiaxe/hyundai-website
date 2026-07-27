@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { company, SITE_URL } from "@/lib/data";
 import BackButton from "@/components/BackButton";
 
-const title = "Terms & Conditions | Modi Hyundai";
+const title = "Terms & Conditions";
 const description =
   "Read the Terms and Conditions for using the Modi Hyundai website, booking test drives, and availing services at our dealerships across Mumbai.";
 

@@ -67,7 +67,7 @@ export const nav = {
   phone: company.phone,
   location: "Mumbai",
   links: [
-    { label: "Home", href: "/#home" },
+    { label: "Home", href: "/" },
     { label: "About Us", href: "/about" },
     { label: "Find A Car", href: "/cars" },
     { label: "Service", href: "/locate-service-centre" },

@@ -7,14 +7,15 @@ import { DEALER_ID } from "@/lib/schema";
 
 const contactHeroImage = "/images/contact/modi-hyundai-showroom-thane.png";
 
-const title = "Contact Us | Modi Hyundai";
+const title = "Contact Us";
 const description =
-  "Get in touch with Modi Hyundai. Call, WhatsApp, email us, or send a message to our team.";
+  "Contact Modi Hyundai for new car enquiries, test drives, service bookings and genuine parts. Call, WhatsApp, email or visit our showrooms across Mumbai and Thane.";
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/contact-us" },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     title,
@@ -62,6 +63,7 @@ export default function ContactUsPage() {
           <Image
             src={contactHeroImage}
             alt="Modi Hyundai showroom"
+            title="Modi Hyundai showroom"
             fill
             priority
             sizes="100vw"

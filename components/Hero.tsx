@@ -1,7 +1,7 @@
 "use client";
 
 import { getImageProps } from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { heroSlides } from "@/lib/data";
 import { ChevronLeft, ChevronRight } from "./icons";
 
@@ -58,7 +58,7 @@ function SlideImage({
       <source media={MOBILE_QUERY} srcSet={mobileImg.srcSet} />
       {/* Plain <img>, not next/image's <Image>: art-directed <picture> requires
           the raw element per Next.js's documented Art Direction pattern. */}
-      <img {...desktopImg} alt={slide.alt} className="h-full w-full object-cover" />
+      <img {...desktopImg} alt={slide.alt} title={slide.alt} className="h-full w-full object-cover" />
     </picture>
   );
 }
@@ -69,6 +69,21 @@ export default function Hero() {
   const go = useCallback(
     (dir: number) => setIndex((i) => (i + dir + count) % count),
     [count],
+  );
+  const touchStartX = useRef(0);
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      const diff = touchStartX.current - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        go(diff > 0 ? 1 : -1);
+      }
+    },
+    [go],
   );
 
   useEffect(() => {

@@ -50,6 +50,7 @@ function ExplorerCard({ post }: { post: Blog }) {
         <Image
           src={post.image}
           alt={post.alt}
+          title={post.alt}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -130,6 +131,7 @@ export default function BlogsExplorer() {
         <Image
           src={blogHeroImage}
           alt="Hyundai blog journal"
+          title="Hyundai blog journal"
           fill
           priority
           sizes="100vw"
@@ -232,6 +234,7 @@ export default function BlogsExplorer() {
                 <Image
                   src={featured.image}
                   alt={featured.alt}
+                  title={featured.alt}
                   fill
                   priority
                   sizes="(max-width: 1024px) 100vw, 50vw"

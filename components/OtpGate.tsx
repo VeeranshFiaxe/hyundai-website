@@ -454,6 +454,7 @@ export function OtpGate({
               <Image
                 src={splitImage!}
                 alt={splitImageAlt}
+                title={splitImageAlt}
                 fill
                 sizes="(max-width: 640px) 0px, 320px"
                 className="object-cover"

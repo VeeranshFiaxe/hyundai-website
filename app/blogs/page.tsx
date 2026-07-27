@@ -3,9 +3,9 @@ import { blogs, SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 import BlogsExplorer from "@/components/BlogsExplorer";
 
-const title = "Hyundai Car Blog | Tips, Model Guides & Ownership Advice | Modi Hyundai";
+const title = "Hyundai Car Blog: Tips, Guides & Ownership Advice";
 const description =
-  "Read the Modi Hyundai blog for Hyundai model buying guides, car-care and service tips, finance advice and electric-vehicle ownership stories for drivers across Mumbai.";
+  "Read the Modi Hyundai blog for Hyundai buying guides, car-care tips, finance advice and EV ownership stories for drivers across Mumbai.";
 
 export const metadata: Metadata = {
   title,
@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     "car loan vs lease India",
   ],
   alternates: { canonical: "/blogs" },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     title,

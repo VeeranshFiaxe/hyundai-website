@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { ArrowRight } from "@/components/icons";
@@ -6,7 +7,7 @@ import { cars, SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 import CarsGrid from "@/components/CarsGrid";
 
-const title = "New Hyundai Cars, Prices, Variants & Specifications | Modi Hyundai";
+const title = "New Hyundai Cars: Prices, Specs & Variants";
 const description =
   "Browse the full Hyundai lineup at Modi Hyundai: SUVs, sedans, hatchbacks and electric vehicles, with on-road prices, specs and colours for every model.";
 
@@ -14,6 +15,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/cars" },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     title,
@@ -84,7 +86,9 @@ export default function CarsPage() {
           </div>
         </section>
 
-        <CarsGrid />
+        <Suspense>
+          <CarsGrid />
+        </Suspense>
 
         <section className="bg-brand py-12 lg:py-16">
           <div className="container-px mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">

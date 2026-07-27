@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo, useRef } from "react";
+import { useMemo, useRef } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { cars, formatINR, type CarCategory } from "@/lib/data";
@@ -17,8 +18,21 @@ const categories: ("All" | CarCategory)[] = [
 ];
 
 export default function CarsGrid() {
-  const [category, setCategory] = useState<"All" | CarCategory>("All");
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const category = (searchParams.get("category") as "All" | CarCategory) || "All";
   const shuffleVersion = useRef(0);
+
+  const handleCategory = (cat: "All" | CarCategory) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (cat === "All") {
+      params.delete("category");
+    } else {
+      params.set("category", cat);
+    }
+    const qs = params.toString();
+    router.replace(`/cars${qs ? `?${qs}` : ""}`, { scroll: false });
+  };
 
   const displayed = useMemo(() => {
     const shouldShuffle = category === "All" || category === "SUV";
@@ -43,7 +57,7 @@ export default function CarsGrid() {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setCategory(cat)}
+              onClick={() => handleCategory(cat)}
               className={`shrink-0 rounded border-b-2 px-3 py-2 text-sm font-semibold transition-colors sm:px-4 ${
                 category === cat
                   ? "border-brand text-brand"
@@ -69,6 +83,7 @@ export default function CarsGrid() {
                     <Image
                       src={car.image}
                       alt={car.alt}
+                      title={car.alt}
                       width={400}
                       height={150}
                       className="h-auto w-full object-contain drop-shadow-lg transition-transform duration-500 group-hover:scale-105"

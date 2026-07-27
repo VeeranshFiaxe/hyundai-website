@@ -25,13 +25,14 @@ export async function generateMetadata({
 
   const displayName =
     "Hyundai " + car.name.charAt(0) + car.name.slice(1).toLowerCase();
-  const title = `${displayName}: Price, Specs, Colours & Test Drive | Modi Hyundai`;
+  const title = `${displayName}: Price & Test Drive`;
   const description = `${detail.overview} Starting at ${formatINR(car.priceINR)}* ex-showroom. Compare variants, colours, features and specifications, then book a Hyundai test drive with Modi Hyundai.`;
 
   return {
     title,
     description,
     alternates: { canonical: `/cars/${car.slug}` },
+    robots: { index: true, follow: true },
     openGraph: {
       type: "website",
       title,
@@ -93,7 +94,7 @@ export default async function CarDetailPage({
         "@type": "BreadcrumbList",
         itemListElement: [
           { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-          { "@type": "ListItem", position: 2, name: "Cars", item: `${SITE_URL}/#cars` },
+          { "@type": "ListItem", position: 2, name: "Cars", item: `${SITE_URL}/cars` },
           {
             "@type": "ListItem",
             position: 3,

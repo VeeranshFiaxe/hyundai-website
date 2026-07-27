@@ -15,9 +15,9 @@ import {
 } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
-const title = "Authorised Hyundai Service, Genuine Parts & Warranty | Modi Hyundai";
+const title = "Authorised Hyundai Service & Genuine Parts";
 const description =
-  "Book authorised Hyundai service online at Modi Hyundai. Genuine Hyundai parts, service packages, 24x7 roadside assistance and extended warranty across Mumbai, Thane, Vasai, Virar and Wada.";
+  "Book authorised Hyundai service at Modi Hyundai with genuine parts, service packages, 24x7 roadside assistance and extended warranty across Mumbai and Thane.";
 
 export const metadata: Metadata = {
   title,
@@ -33,6 +33,7 @@ export const metadata: Metadata = {
     "authorised Hyundai service Thane",
   ],
   alternates: { canonical: "/locate-service-centre" },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     title,
@@ -119,6 +120,7 @@ export default function LocateServiceCentrePage() {
           <Image
             src={serviceHeroImage}
             alt="Hyundai service centre bay"
+            title="Hyundai service centre bay"
             fill
             priority
             sizes="100vw"

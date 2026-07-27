@@ -3,7 +3,7 @@ import LocateUs from "@/components/LocateUs";
 import { SITE_URL } from "@/lib/data";
 import { DEALER_ID } from "@/lib/schema";
 
-const title = "Locate Us | Modi Hyundai Showrooms & Service Centres";
+const title = "Locate Us — Showrooms & Service Centres";
 const description =
   "Find Modi Hyundai showrooms and service centres across Mumbai, Thane, Vasai, Virar and Wada. View each branch on the map and open Google Maps directions.";
 
@@ -11,6 +11,7 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/locate-us" },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     title,

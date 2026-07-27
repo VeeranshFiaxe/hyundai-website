@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { company, SITE_URL } from "@/lib/data";
 import BackButton from "@/components/BackButton";
 
-const title = "Privacy Policy | Modi Hyundai";
+const title = "Privacy Policy";
 const description =
   "Learn how Modi Hyundai collects, uses and protects your personal information when you visit our website, book a test drive or schedule a service appointment.";
 

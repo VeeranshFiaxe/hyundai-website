@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
+import ScrollTopLink from "./ScrollTopLink";
 import Logo from "./Logo";
 import { nav } from "@/lib/data";
 import { Phone, Menu, X } from "./icons";
@@ -113,7 +113,7 @@ export default function Navbar() {
             const active = l.href === activeHref;
             return (
               <li key={l.href}>
-                <Link
+                <ScrollTopLink
                   ref={(el) => { linkRefs.current[l.href] = el; }}
                   href={l.href}
                   aria-current={active ? "page" : undefined}
@@ -122,7 +122,7 @@ export default function Navbar() {
                   }`}
                 >
                   {l.label}
-                </Link>
+                </ScrollTopLink>
               </li>
             );
           })}
@@ -178,7 +178,7 @@ export default function Navbar() {
           {nav.links.map((l) => {
             const active = l.href === activeHref;
             return (
-              <Link
+              <ScrollTopLink
                 key={l.href}
                 href={l.href}
                 aria-current={active ? "page" : undefined}
@@ -195,7 +195,7 @@ export default function Navbar() {
                     active ? "scale-y-100" : "scale-y-0"
                   }`}
                 />
-              </Link>
+              </ScrollTopLink>
             );
           })}
 

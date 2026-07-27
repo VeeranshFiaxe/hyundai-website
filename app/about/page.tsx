@@ -15,7 +15,7 @@ import { DEALER_ID } from "@/lib/schema";
 
 const title = "About Modi Hyundai | Authorised Hyundai Dealer in Mumbai";
 const description =
-  "Meet Modi Hyundai, an authorised Hyundai dealer from the Gautam Modi Group. Explore our customer-first approach to new cars, test drives and service across Mumbai, Thane, Vasai, Virar and Wada.";
+  "Modi Hyundai is an authorised dealer from the Gautam Modi Group, offering new cars, test drives and service across Mumbai, Thane, Vasai, Virar and Wada.";
 
 const aboutHeroImage = "/images/about/modi-hyundai-team.jpg";
 const aboutCultureImage = "/images/about/modi-hyundai-customer-team.png";
@@ -32,6 +32,7 @@ export const metadata: Metadata = {
     "Gautam Modi Group",
   ],
   alternates: { canonical: "/about" },
+  robots: { index: true, follow: true },
   openGraph: {
     type: "website",
     title,
@@ -109,6 +110,7 @@ export default function AboutPage() {
           <Image
             src={aboutHeroImage}
             alt="Modi Hyundai showroom"
+            title="Modi Hyundai showroom"
             fill
             priority
             sizes="100vw"
@@ -167,6 +169,7 @@ export default function AboutPage() {
               <Image
                 src={aboutCultureImage}
                 alt="Modi Hyundai team welcoming customers at a showroom"
+                title="Modi Hyundai team welcoming customers at a showroom"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
                 className="object-cover"
