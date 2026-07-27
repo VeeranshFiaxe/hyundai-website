@@ -55,6 +55,19 @@ function ContactFormInner({ verifiedPhone, requestChangePhone }: { verifiedPhone
 
     setSubmitting(true);
     setSubmitError(false);
+
+    // Fired independently so a Google Sheets failure never blocks Supabase
+    // (and vice versa) — previously Supabase was only attempted after the
+    // Sheets call succeeded, so any Sheets error silently took both down.
+    submitSupabaseLead("contact-us", {
+      name: form.name.trim(),
+      mobile_number: mobile,
+      email: form.email.trim(),
+      pincode: form.pincode.trim(),
+      subject: form.subject.trim(),
+      message: form.message.trim(),
+    }).catch((err) => console.error("[ContactUs] Supabase lead insert failed", err));
+
     try {
       await submitLead("contact", {
         name: form.name.trim(),
@@ -64,16 +77,9 @@ function ContactFormInner({ verifiedPhone, requestChangePhone }: { verifiedPhone
         subject: form.subject.trim(),
         message: form.message.trim(),
       });
-      submitSupabaseLead("contact-us", {
-        name: form.name.trim(),
-        mobile_number: mobile,
-        email: form.email.trim(),
-        pincode: form.pincode.trim(),
-        subject: form.subject.trim(),
-        message: form.message.trim(),
-      }).catch((err) => console.error("[ContactUs] Supabase lead insert failed", err));
       setSubmitted(true);
-    } catch {
+    } catch (err) {
+      console.error("[ContactUs] Sheets lead submission failed", err);
       setSubmitError(true);
     } finally {
       setSubmitting(false);

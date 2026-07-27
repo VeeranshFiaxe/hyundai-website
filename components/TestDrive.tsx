@@ -122,6 +122,22 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
 
     setSubmitting(true);
     setSubmitError(false);
+
+    // Fired independently so a Google Sheets failure never blocks Supabase
+    // (and vice versa) — previously Supabase was only attempted after the
+    // Sheets call succeeded, so any Sheets error silently took both down.
+    submitSupabaseLead("test-drive", {
+      car_model: form.carModel,
+      location: form.location,
+      name: form.name.trim(),
+      mobile_number: mobile,
+      email: form.email.trim(),
+      pincode: form.pincode.trim(),
+      address: form.address.trim(),
+      preferred_date: form.date,
+      preferred_time: form.time,
+    }).catch((err) => console.error("[TestDrive] Supabase lead insert failed", err));
+
     try {
       await submitLead("test_drive", {
         car_model: form.carModel,
@@ -134,19 +150,9 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
         preferred_date: form.date,
         preferred_time: form.time,
       });
-      submitSupabaseLead("test-drive", {
-        car_model: form.carModel,
-        location: form.location,
-        name: form.name.trim(),
-        mobile_number: mobile,
-        email: form.email.trim(),
-        pincode: form.pincode.trim(),
-        address: form.address.trim(),
-        preferred_date: form.date,
-        preferred_time: form.time,
-      }).catch((err) => console.error("[TestDrive] Supabase lead insert failed", err));
       setSubmitted(true);
-    } catch {
+    } catch (err) {
+      console.error("[TestDrive] Sheets lead submission failed", err);
       setSubmitError(true);
     } finally {
       setSubmitting(false);

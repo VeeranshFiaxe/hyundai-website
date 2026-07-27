@@ -119,6 +119,21 @@ export default function HyundaiPromise() {
     if (Object.keys(errs).length > 0) return;
 
     setSubmitting(true);
+
+    // Fired independently so a Google Sheets failure never blocks Supabase
+    // (and vice versa) — previously Supabase was only attempted after the
+    // Sheets call succeeded, so any Sheets error silently took both down.
+    submitSupabaseLead("hyundai-promise", {
+      type: "Buy",
+      full_name: buyForm.name.trim(),
+      mobile_number: verifiedPhoneRef.current,
+      email: buyForm.email.trim(),
+      location: buyForm.city,
+      car_model: buyForm.model,
+      budget_range: buyForm.budget.trim(),
+      additional_details: buyForm.notes.trim(),
+    }).catch((err) => console.error("[HyundaiPromise] Supabase lead insert failed", err));
+
     try {
       await submitLead("hyundai_promise_buy", {
         type: "Buy",
@@ -130,18 +145,9 @@ export default function HyundaiPromise() {
         budget_range: buyForm.budget.trim(),
         additional_details: buyForm.notes.trim(),
       });
-      submitSupabaseLead("hyundai-promise", {
-        type: "Buy",
-        full_name: buyForm.name.trim(),
-        mobile_number: verifiedPhoneRef.current,
-        email: buyForm.email.trim(),
-        location: buyForm.city,
-        car_model: buyForm.model,
-        budget_range: buyForm.budget.trim(),
-        additional_details: buyForm.notes.trim(),
-      }).catch((err) => console.error("[HyundaiPromise] Supabase lead insert failed", err));
       setSubmittedMode("buy");
-    } catch {
+    } catch (err) {
+      console.error("[HyundaiPromise] Sheets lead submission failed (buy)", err);
       setSubmitError(true);
     } finally {
       setSubmitting(false);
@@ -163,6 +169,23 @@ export default function HyundaiPromise() {
     if (Object.keys(errs).length > 0) return;
 
     setSubmitting(true);
+
+    // Fired independently so a Google Sheets failure never blocks Supabase
+    // (and vice versa) — previously Supabase was only attempted after the
+    // Sheets call succeeded, so any Sheets error silently took both down.
+    submitSupabaseLead("hyundai-promise", {
+      type: "Sell",
+      full_name: sellForm.name.trim(),
+      mobile_number: verifiedPhoneRef.current,
+      email: sellForm.email.trim(),
+      location: sellForm.city,
+      car_brand: sellForm.brand.trim(),
+      car_model: sellForm.model.trim(),
+      year_of_purchase: sellForm.year.trim(),
+      kilometers_driven: sellForm.kms.trim(),
+      additional_details: sellForm.notes.trim(),
+    }).catch((err) => console.error("[HyundaiPromise] Supabase lead insert failed", err));
+
     try {
       await submitLead("hyundai_promise_sell", {
         type: "Sell",
@@ -176,20 +199,9 @@ export default function HyundaiPromise() {
         kilometers_driven: sellForm.kms.trim(),
         additional_details: sellForm.notes.trim(),
       });
-      submitSupabaseLead("hyundai-promise", {
-        type: "Sell",
-        full_name: sellForm.name.trim(),
-        mobile_number: verifiedPhoneRef.current,
-        email: sellForm.email.trim(),
-        location: sellForm.city,
-        car_brand: sellForm.brand.trim(),
-        car_model: sellForm.model.trim(),
-        year_of_purchase: sellForm.year.trim(),
-        kilometers_driven: sellForm.kms.trim(),
-        additional_details: sellForm.notes.trim(),
-      }).catch((err) => console.error("[HyundaiPromise] Supabase lead insert failed", err));
       setSubmittedMode("sell");
-    } catch {
+    } catch (err) {
+      console.error("[HyundaiPromise] Sheets lead submission failed (sell)", err);
       setSubmitError(true);
     } finally {
       setSubmitting(false);

@@ -126,6 +126,23 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
 
     setSubmitting(true);
     setSubmitError(false);
+
+    // Fired independently so a Google Sheets failure never blocks Supabase
+    // (and vice versa) — previously Supabase was only attempted after the
+    // Sheets call succeeded, so any Sheets error silently took both down.
+    submitSupabaseLead("service", {
+      car_model: isOther ? customCarModel.trim() : form.carModel,
+      service_centre: form.serviceCentre,
+      service_type: form.serviceType,
+      name: form.name.trim(),
+      mobile_number: mobile,
+      email: form.email.trim(),
+      registration_number: form.regNumber.trim(),
+      preferred_date: form.date,
+      preferred_time: form.time,
+      pickup_drop: pickupDrop ? "Yes" : "No",
+    }).catch((err) => console.error("[ServiceBooking] Supabase lead insert failed", err));
+
     try {
       await submitLead("service", {
         car_model: isOther ? customCarModel.trim() : form.carModel,
@@ -139,20 +156,9 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
         preferred_time: form.time,
         pickup_drop: pickupDrop ? "Yes" : "No",
       });
-      submitSupabaseLead("service", {
-        car_model: isOther ? customCarModel.trim() : form.carModel,
-        service_centre: form.serviceCentre,
-        service_type: form.serviceType,
-        name: form.name.trim(),
-        mobile_number: mobile,
-        email: form.email.trim(),
-        registration_number: form.regNumber.trim(),
-        preferred_date: form.date,
-        preferred_time: form.time,
-        pickup_drop: pickupDrop ? "Yes" : "No",
-      }).catch((err) => console.error("[ServiceBooking] Supabase lead insert failed", err));
       setSubmitted(true);
-    } catch {
+    } catch (err) {
+      console.error("[ServiceBooking] Sheets lead submission failed", err);
       setSubmitError(true);
     } finally {
       setSubmitting(false);

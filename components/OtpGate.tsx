@@ -204,7 +204,7 @@ export function OtpGate({
         submitLead("phone_capture", {
           phone_number: `\`${selectedCountry.dialCode} ${phone}`,
           form_source: formSource,
-        }).catch(() => {});
+        }).catch((err) => console.error("[OtpGate] phone_capture submission failed", err));
       }
     } catch {
       setLoading(false);

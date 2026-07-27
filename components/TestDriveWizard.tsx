@@ -3,8 +3,10 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { cars, cityOptions, locations } from "@/lib/data";
+import { cars, cityOptions, locations, nav } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidPincode } from "@/lib/validation";
+import { submitLead } from "@/lib/submitLead";
+import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
 import { Calendar, Check, ChevronDown, ChevronRight, X, Phone } from "./icons";
 import Reveal from "./Reveal";
 import { OtpGate } from "./OtpGate";
@@ -46,6 +48,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
   const [step, setStep] = useState(preSelectedCar ? 2 : 1);
   const [submitted, setSubmitted] = useState(false);
   const [attempted, setAttempted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const [carSlug, setCarSlug] = useState(preSelectedCar || "");
   const [city, setCity] = useState("");
@@ -113,12 +116,41 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
     setStep((s) => Math.max(1, s - 1));
   };
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!canProceed()) {
       setAttempted(true);
       return;
     }
+
+    setSubmitting(true);
+
+    const leadFields = {
+      car_model: carSlug,
+      location: city,
+      name,
+      email,
+      pincode,
+      address,
+      preferred_date: date,
+      preferred_time: time,
+    };
+
+    // Fired in parallel so a Google Sheets failure never blocks Supabase
+    // (and vice versa), matching the pattern used in the other forms.
+    const [sheetsResult, supabaseResult] = await Promise.allSettled([
+      submitLead("test_drive", { ...leadFields, mobile_number: `\`${mobile}` }),
+      submitSupabaseLead("test-drive", { ...leadFields, mobile_number: mobile }),
+    ]);
+
+    if (sheetsResult.status === "rejected") {
+      console.error("[TestDriveWizard] Sheets lead submission failed", sheetsResult.reason);
+    }
+    if (supabaseResult.status === "rejected") {
+      console.error("[TestDriveWizard] Supabase lead insert failed", supabaseResult.reason);
+    }
+
+    setSubmitting(false);
     setSubmitted(true);
   };
 
@@ -179,9 +211,10 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
       ) : (
         <button
           type="submit"
-          className="rounded bg-brand px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-brand-light"
+          disabled={submitting}
+          className="rounded bg-brand px-8 py-3 text-sm font-semibold text-white transition-all hover:bg-brand-light disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Confirm Booking
+          {submitting ? "Confirming..." : "Confirm Booking"}
         </button>
       )}
     </div>
@@ -535,13 +568,21 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
               <Check className="h-8 w-8" />
             </span>
             <h3 className="mt-6 font-display text-2xl font-bold text-text">
-              Test drive booked!
+              Thanks for your interest!
             </h3>
             <p className="mt-2 text-muted">
-              Thank you, {name}. A Modi Hyundai representative will call you at{" "}
-              {mobile} shortly to confirm your{" "}
-              {selectedCar ? `Hyundai ${selectedCar.name}` : ""} test drive on{" "}
-              {date} ({time}) at {city}.
+              We thank you, {name}, for showing interest in test driving the{" "}
+              {selectedCar ? `Hyundai ${selectedCar.name}` : "Hyundai"}. Our
+              representative will contact you at {mobile} shortly.
+            </p>
+            <p className="mt-2 text-muted">
+              Note: this is not a confirmed test drive booking. We will check
+              vehicle availability for {date} ({time}) at {city} and confirm
+              with you.
+            </p>
+            <p className="mt-2 text-muted">
+              We appreciate your time and patience. For any further details,
+              you may contact us at {nav.phone}.
             </p>
             <button
               onClick={resetAll}
