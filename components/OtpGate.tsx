@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ArrowLeft, Check, Phone, Shield } from "./icons";
 import { useVerifiedPhone } from "./VerifiedPhoneProvider";
 import { submitLead } from "@/lib/submitLead";
+import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
 import CountryCodeSelector from "./CountryCodeSelector";
 import { allCountries, type Country } from "@/lib/countries";
 
@@ -201,10 +202,15 @@ export function OtpGate({
       // Fire-and-forget phone-capture: send the verified number immediately
       // so we have it even if the user abandons the rest of the form.
       if (formSource) {
+        const phoneNumber = `${selectedCountry.dialCode} ${phone}`;
         submitLead("phone_capture", {
-          phone_number: `\`${selectedCountry.dialCode} ${phone}`,
+          phone_number: `\`${phoneNumber}`,
           form_source: formSource,
         }).catch((err) => console.error("[OtpGate] phone_capture submission failed", err));
+        submitSupabaseLead("numbers-only", {
+          phone_number: phoneNumber,
+          form_source: formSource,
+        }).catch((err) => console.error("[OtpGate] numbers-only submission failed", err));
       }
     } catch {
       setLoading(false);

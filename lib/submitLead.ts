@@ -13,7 +13,7 @@ export async function submitLead(
 
   // phone_capture fires before the user has finished the real form; the
   // UTM data belongs on the final lead submission only.
-  const utmData = formType === "phone_capture" ? {} : getStoredUtmParams();
+  const utmData = getStoredUtmParams();
 
   const body: Record<string, string | undefined> = { form_type: formType, ...formData, ...utmData };
 
