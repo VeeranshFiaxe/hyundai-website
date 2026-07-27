@@ -9,12 +9,15 @@ export default function TrustStrip() {
         <div className="grid grid-cols-2 divide-x divide-border md:grid-cols-3 lg:grid-cols-5">
           {trust.map((item, i) => {
             const Icon = iconMap[item.icon as IconName];
+            const isLastOdd = trust.length % 2 === 1 && i === trust.length - 1;
             return (
               <Reveal
                 key={item.title}
                 delay={i * 100}
                 variant="scale-up"
-                className="flex flex-col items-center gap-2 px-4 py-7 text-center transition-colors hover:bg-bg-2"
+                className={`flex flex-col items-center gap-2 px-4 py-7 text-center transition-colors hover:bg-bg-2 ${
+                  isLastOdd ? "col-span-2 md:col-span-1" : ""
+                }`}
               >
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
                   <Icon className="h-5 w-5" />

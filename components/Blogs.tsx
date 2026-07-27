@@ -26,10 +26,15 @@ export default function Blogs() {
           </Link>
         </Reveal>
 
-        {/* 4-column equal grid */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Horizontal scroll on mobile (keeps vertical space in check, matches
+            the reviews carousel); 4-column equal grid from sm up. */}
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:grid sm:snap-none sm:grid-cols-2 sm:gap-5 sm:overflow-visible sm:pb-0 lg:grid-cols-4 [&::-webkit-scrollbar]:hidden">
           {latest.map((post, i) => (
-            <Reveal key={post.slug} delay={i * 70}>
+            <Reveal
+              key={post.slug}
+              delay={i * 70}
+              className="w-[78vw] shrink-0 snap-start sm:w-auto sm:shrink"
+            >
               {/* Render as div: the article semantics live inside BlogCard. */}
               <BlogCard post={post} as="div" />
             </Reveal>

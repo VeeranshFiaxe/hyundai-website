@@ -32,9 +32,15 @@ export default function Services() {
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
           {services.map((s, i) => {
             const Icon = iconMap[s.icon as IconName];
+            const isLastOdd = services.length % 2 === 1 && i === services.length - 1;
             return (
-              <Reveal key={s.title} delay={i * 110} variant="scale-up">
-                <div className="group flex h-full flex-col items-center gap-3 rounded-lg border border-border bg-white p-6 text-center transition-all duration-700 ease-out hover:-translate-y-1.5 hover:border-brand/30 hover:shadow-[0_14px_40px_-12px_rgba(0,44,95,0.18)]">
+              <Reveal
+                key={s.title}
+                delay={i * 110}
+                variant="scale-up"
+                className={isLastOdd ? "col-span-2 sm:col-span-1" : ""}
+              >
+                <div className="group mx-auto flex h-full max-w-xs flex-col items-center gap-3 rounded-lg border border-border bg-white p-6 text-center transition-all duration-700 ease-out hover:-translate-y-1.5 hover:border-brand/30 hover:shadow-[0_14px_40px_-12px_rgba(0,44,95,0.18)]">
                   <span className="flex h-14 w-14 items-center justify-center rounded-full bg-brand/10 text-brand transition-all duration-700 ease-out group-hover:scale-110 group-hover:bg-brand group-hover:text-white">
                     <Icon className="h-6 w-6" />
                   </span>

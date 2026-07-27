@@ -76,6 +76,8 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -83,6 +85,7 @@ body {
   color: var(--text);
   font-family: var(--font-sans), system-ui, sans-serif;
   overflow-x: hidden;
+  width: 100%;
 }
 
 ::selection {

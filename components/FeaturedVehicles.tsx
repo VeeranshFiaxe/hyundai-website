@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { cars, formatINR, type CarCategory } from "@/lib/data";
 import { ChevronLeft, ChevronRight } from "./icons";
 import Reveal from "./Reveal";
@@ -57,6 +57,22 @@ export default function FeaturedVehicles() {
     setIndex((i) => (i + dir + len) % len);
   };
 
+  const touchStartX = useRef(0);
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      const diff = touchStartX.current - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        go(diff > 0 ? 1 : -1);
+      }
+    },
+    [go],
+  );
+
   // Step distance and scale/opacity falloff are proportional to the stage's
   // own measured width, so the "coverflow" spacing stays consistent across
   // breakpoints without a hardcoded pixel value.
@@ -100,6 +116,8 @@ export default function FeaturedVehicles() {
         <div
           ref={stageRef}
           className="relative mt-4 h-[300px] select-none sm:h-[360px] lg:h-[400px]"
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
         >
           <button
             aria-label="Previous car"

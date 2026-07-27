@@ -127,6 +127,8 @@ export default function Hero() {
           uncropped-or-safely-cropped box instead of slicing into text. */}
       <div
         className="relative w-full [--hero-min-aspect:0.7436] h-[min(calc(100dvh_-_60px),calc(100vw_/_var(--hero-min-aspect)))] md:[--hero-min-aspect:1.78] lg:[--hero-min-aspect:2.2]"
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         {heroSlides.map((slide, i) => (
           <SlideImage
