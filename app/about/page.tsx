@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: `${SITE_URL}/about`,
-    images: [{ url: aboutHeroImage, width: 1792, height: 1024, alt: "Modi Hyundai showroom experience" }],
+    images: [{ url: aboutHeroImage, width: 1200, height: 900, alt: "Modi Hyundai showroom experience" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -109,8 +109,8 @@ export default function AboutPage() {
         <section className="relative min-h-[45vh] w-full overflow-hidden bg-brand-deep sm:min-h-[50vh]">
           <Image
             src={aboutHeroImage}
-            alt="Modi Hyundai showroom"
-            title="Modi Hyundai showroom"
+            alt="The Modi Hyundai team"
+            title="The Modi Hyundai team"
             fill
             priority
             sizes="100vw"
@@ -168,11 +168,11 @@ export default function AboutPage() {
             >
               <Image
                 src={aboutCultureImage}
-                alt="Modi Hyundai team welcoming customers at a showroom"
-                title="Modi Hyundai team welcoming customers at a showroom"
+                alt="Modi Hyundai team with a customer"
+                title="Modi Hyundai customer team"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
-                className="object-cover"
+                className="object-cover object-[50%_30%]"
               />
             </Reveal>
           </div>
