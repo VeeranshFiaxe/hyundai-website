@@ -108,6 +108,7 @@ export default function Locations() {
                   title={`Modi Hyundai ${loc.name} ${loc.type} in ${loc.city}`}
                   fill
                   sizes="260px"
+                  style={loc.imagePosition ? { objectPosition: loc.imagePosition } : undefined}
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />

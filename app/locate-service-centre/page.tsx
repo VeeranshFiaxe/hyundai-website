@@ -144,16 +144,16 @@ export default function LocateServiceCentrePage() {
           </div>
         </section>
 
+        {/* Booking form */}
+        <section className="bg-white py-20 lg:py-28">
+          <ServiceBooking />
+        </section>
+
         {/* Service overview (the "Service That Cares" strip, shared with home) */}
         <Services />
 
         {/* Detailed offerings: genuine parts, packages, RSA, warranty */}
         <ServiceContent />
-
-        {/* Booking form */}
-        <section className="bg-white py-20 lg:py-28">
-          <ServiceBooking />
-        </section>
 
         {/* Service-specific FAQ */}
         <FAQ

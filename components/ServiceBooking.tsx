@@ -101,6 +101,7 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
     if (isEmpty(form.serviceType)) e.serviceType = "Please select a type of service.";
     if (isEmpty(form.name) || !isValidName(form.name)) e.name = "Enter your full name (at least 2 characters).";
     if (!isValidEmail(form.email)) e.email = "Enter a valid email with @ and a domain (e.g. you@example.com).";
+    if (isEmpty(form.regNumber)) e.regNumber = "Please enter your registration number.";
     if (isEmpty(form.date)) e.date = "Please select a date.";
     if (isEmpty(form.time)) e.time = "Please select a time.";
     return e;
@@ -305,8 +306,7 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
 
           <label className="block">
             <span className="mb-1.5 block text-xs font-semibold text-muted">
-              Registration Number{" "}
-              <span className="font-normal text-faint">(optional)</span>
+              Registration Number
             </span>
             <input
               type="text"
@@ -314,8 +314,11 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
               value={form.regNumber}
               onChange={setField("regNumber")}
               placeholder="e.g. MH04AB1234"
-              className={fieldBase}
+              className={fieldError("regNumber")}
             />
+            {attempted && errors.regNumber && (
+              <p className="mt-1 text-xs font-medium text-red-600">{errors.regNumber}</p>
+            )}
           </label>
 
           <label className="block">

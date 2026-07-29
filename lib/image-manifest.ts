@@ -373,7 +373,7 @@ export const testDriveImage = testDrivePath(blogShotCdnRels.cretaInterior);
 /* Promise hero is the exact same Creta campaign file as banners.creta,
    so reuse it rather than duplicate the bytes. */
 export const promiseHero = banners.creta;
-export const blogHero = "/campaigns/blog-hero.jpg";
+export const blogHero = "/campaigns/blogs-page-hero.avif";
 
 /* ── Stock photography (Unsplash) ──────────────────────────────────── */
 export const stockHeroes = {

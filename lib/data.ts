@@ -101,7 +101,7 @@ export const groupInfo = {
   brands: ["Hyundai", "Audi", "Mahindra", "Kia", "MG"],
   ventures: [
     { name: "Krishiv Insurance", text: "Insurance solutions for vehicle owners." },
-    { name: "ThinkKarz", text: "The group's premium pre-owned vehicle brand." },
+    { name: "Thinkarz", text: "The group's premium pre-owned vehicle brand." },
   ],
   values: [
     {
@@ -1627,6 +1627,8 @@ export type Location = {
   address: string;
   phone: string;
   image: string;
+  /** Optional CSS object-position override, for reused photos that need a different crop. */
+  imagePosition?: string;
   mapsUrl: string;
 };
 
@@ -1733,14 +1735,16 @@ export const locations: Location[] = [
   },
   /* No verifiable branch photo found online for these two outlets after
      checking the dealer site, Justdial, Sulekha, CarDekho, Mappls and
-     Carz4Sale - placed last rather than shown with a placeholder image. */
+     Carz4Sale - reuse another branch's photo (with a different crop) instead
+     of the blank Hyundai logo placeholder. */
   {
     name: "Hyundai Santacruz",
     type: "Showroom",
     city: "Santacruz",
     address: "Vikas Centre, G/02, Next to Santacruz Bus Depot, S.V. Road, Santacruz West, Mumbai, Maharashtra 400054",
     phone: "98877 33000",
-    image: "/locations/santacruz-showroom.webp",
+    image: "/locations/thane-showroom.webp",
+    imagePosition: "center 30%",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Vikas%20Centre%2C%20G%2F02%2C%20Next%20to%20Santacruz%20Bus%20Depot%2C%20S.V.%20Road%2C%20Santacruz%20West%2C%20Mumbai%2C%20Maharashtra%20400054&travelmode=driving",
   },
@@ -1750,7 +1754,8 @@ export const locations: Location[] = [
     city: "Wada",
     address: "Hyundai Service Centre Wada",
     phone: "98877 33000",
-    image: "/locations/wada-service.webp",
+    image: "/locations/thane-service.webp",
+    imagePosition: "center 70%",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Hyundai%20Service%20Centre%20Wada&travelmode=driving",
   },

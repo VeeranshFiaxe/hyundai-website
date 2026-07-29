@@ -30,6 +30,7 @@ export default function ServiceCentres() {
                     title={`Modi Hyundai ${loc.name} in ${loc.city}`}
                     fill
                     sizes="(max-width: 640px) 100vw, 33vw"
+                    style={loc.imagePosition ? { objectPosition: loc.imagePosition } : undefined}
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
