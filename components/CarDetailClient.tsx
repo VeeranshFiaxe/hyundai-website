@@ -46,20 +46,39 @@ export default function CarDetailClient({ car }: { car: Car }) {
   const [showTestDrive, setShowTestDrive] = useState(false);
   // Narrow while the OTP gate is up, wide once verified (car grid needs room).
   const [tdVerifying, setTdVerifying] = useState(true);
+  const [isSticky, setIsSticky] = useState(false);
+  const [navHeight, setNavHeight] = useState(0);
   const navRef = useRef<HTMLElement>(null);
+  const navTopRef = useRef(0);
+  const isStickyRef = useRef(false);
   const galleryScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const measure = () => {
+      if (navRef.current) {
+        setNavHeight(navRef.current.offsetHeight);
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
       if (!navRef.current) return;
-      // The nav becomes sticky exactly at top: 60px.
-      // When its top bounding rect is <= 61, we know it's stuck!
-      const rect = navRef.current.getBoundingClientRect();
-      setShowStickyCTAs(rect.top <= 61);
+      if (!isStickyRef.current) {
+        const rect = navRef.current.getBoundingClientRect();
+        navTopRef.current = rect.top + window.scrollY;
+      }
+      const stuck = window.scrollY + 60 >= navTopRef.current;
+      isStickyRef.current = stuck;
+      setShowStickyCTAs(stuck);
+      setIsSticky(stuck);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -236,36 +255,44 @@ export default function CarDetailClient({ car }: { car: Car }) {
         </div>
       </section>
 
-      <nav ref={navRef} aria-label="Car detail sections" className="sticky top-[60px] z-20 border-y border-border bg-white/95 backdrop-blur transition-all">
-        <div className="container-px mx-auto flex max-w-[1400px] items-center justify-between gap-4 overflow-x-auto py-2.5 [&::-webkit-scrollbar]:hidden">
-          <div className="flex shrink-0 gap-1">
-            {navigation.map(([id, label]) => <a key={id} href={`#${id}`} className="shrink-0 rounded px-3.5 py-2.5 text-sm font-semibold text-muted transition-colors hover:bg-bg-2 hover:text-brand">{label}</a>)}
-          </div>
-            <div
-              className={`flex shrink-0 items-center gap-2 transition-opacity duration-300 ${
-                showStickyCTAs ? "opacity-100" : "opacity-0 pointer-events-none"
-              }`}
-            >
-              <button onClick={() => setShowTestDrive(true)} className="group inline-flex items-center gap-1.5 rounded bg-brand px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-brand-light">
-                Book a Test Drive <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-              </button>
-              <Link href="/contact-us" className="inline-flex items-center gap-1.5 rounded border border-brand px-4 py-2 text-sm font-semibold text-brand transition-all hover:bg-brand hover:text-white">
-                Get a Variant Quote
-              </Link>
-              {brochureUrl && (
-                <a
-                  href={brochureUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded border border-border bg-bg-2 px-4 py-2 text-sm font-semibold text-text transition-all hover:border-brand hover:text-brand"
-                >
-                  <Download className="h-3.5 w-3.5" />
-                  Brochure
-                </a>
-              )}
+      <div style={isSticky ? { height: `${navHeight}px` } : undefined}>
+        <nav
+          ref={navRef}
+          aria-label="Car detail sections"
+          className={`z-20 border-y border-border bg-white/95 backdrop-blur transition-all ${
+            isSticky ? "fixed top-[60px] inset-x-0" : ""
+          }`}
+        >
+          <div className="container-px mx-auto flex max-w-[1400px] items-center justify-between gap-4 overflow-x-auto py-2.5 [&::-webkit-scrollbar]:hidden">
+            <div className="flex shrink-0 gap-1">
+              {navigation.map(([id, label]) => <a key={id} href={`#${id}`} className="shrink-0 rounded px-3.5 py-2.5 text-sm font-semibold text-muted transition-colors hover:bg-bg-2 hover:text-brand">{label}</a>)}
             </div>
-        </div>
-      </nav>
+              <div
+                className={`flex shrink-0 items-center gap-2 transition-opacity duration-300 ${
+                  showStickyCTAs ? "opacity-100" : "opacity-0 pointer-events-none"
+                }`}
+              >
+                <button onClick={() => setShowTestDrive(true)} className="group inline-flex items-center gap-1.5 rounded bg-brand px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-brand-light">
+                  Book a Test Drive <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                </button>
+                <Link href="/contact-us" className="inline-flex items-center gap-1.5 rounded border border-brand px-4 py-2 text-sm font-semibold text-brand transition-all hover:bg-brand hover:text-white">
+                  Get a Variant Quote
+                </Link>
+                {brochureUrl && (
+                  <a
+                    href={brochureUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded border border-border bg-bg-2 px-4 py-2 text-sm font-semibold text-text transition-all hover:border-brand hover:text-brand"
+                  >
+                    <Download className="h-3.5 w-3.5" />
+                    Brochure
+                  </a>
+                )}
+              </div>
+          </div>
+        </nav>
+      </div>
 
       <section id="overview" className="scroll-mt-28 bg-bg-2 py-12 lg:py-16">
         <div className="container-px mx-auto grid max-w-[1400px] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
@@ -410,7 +437,7 @@ function CarFaq({
     },
     {
       q: `Where can I test drive the ${displayName}?`,
-      a: `Book a test drive online or call Modi Hyundai on 98877 33000. We have showrooms and service centres across ${company.areasServed.join(", ")}.${brochureUrl ? " You can also download the official brochure above." : ""}`,
+      a: `Book a test drive online or call Modi Hyundai on 78747 47443. We have showrooms and service centres across ${company.areasServed.join(", ")}.${brochureUrl ? " You can also download the official brochure above." : ""}`,
     },
   ];
 

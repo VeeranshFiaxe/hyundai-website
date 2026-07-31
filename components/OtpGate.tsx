@@ -77,17 +77,44 @@ export function OtpGate({
   const [consentError, setConsentError] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<Country>(defaultCountry);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [resendTimer, setResendTimer] = useState(30);
 
   const otpRefs = useRef<(HTMLInputElement | null)[]>([null, null, null, null]);
   const otpContainerRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const resendIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     return () => {
       for (const timer of timersRef.current) clearTimeout(timer);
       timersRef.current = [];
+      if (resendIntervalRef.current) clearInterval(resendIntervalRef.current);
     };
   }, []);
+
+  const startResendTimer = () => {
+    setResendTimer(30);
+    if (resendIntervalRef.current) clearInterval(resendIntervalRef.current);
+    resendIntervalRef.current = setInterval(() => {
+      setResendTimer((prev) => {
+        if (prev <= 1) {
+          if (resendIntervalRef.current) {
+            clearInterval(resendIntervalRef.current);
+            resendIntervalRef.current = null;
+          }
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const clearResendTimer = () => {
+    if (resendIntervalRef.current) {
+      clearInterval(resendIntervalRef.current);
+      resendIntervalRef.current = null;
+    }
+  };
 
   const schedule = (callback: () => void, delay: number) => {
     const timer = setTimeout(() => {
@@ -187,6 +214,7 @@ export function OtpGate({
       return;
     }
     setStep("otp");
+    startResendTimer();
     schedule(() => otpRefs.current[0]?.focus(), 200);
   };
 
@@ -246,6 +274,7 @@ export function OtpGate({
       setError(result.error!);
       return;
     }
+    startResendTimer();
     otpRefs.current[0]?.focus();
   };
 
@@ -255,9 +284,8 @@ export function OtpGate({
 
   const confirmChangePhone = () => {
     setShowConfirm(false);
-    // Clear the shared verification so every form reverts to the phone step:
-    // "reverify and change" applies universally.
     clear();
+    clearResendTimer();
     setStep("phone");
     setOtp(["", "", "", ""]);
     setError("");
@@ -372,6 +400,7 @@ export function OtpGate({
               setStep("phone");
               setOtp(["", "", "", ""]);
               setError("");
+              clearResendTimer();
             }}
             className="absolute left-6 top-6 grid h-9 w-9 place-items-center rounded-xl text-muted transition-all hover:bg-bg-2 hover:text-text sm:left-10 sm:top-10"
           >
@@ -444,9 +473,10 @@ export function OtpGate({
               <button
                 type="button"
                 onClick={handleResend}
-                className="font-medium text-brand transition-colors hover:text-brand-light"
+                disabled={resendTimer > 0}
+                className="font-medium text-brand transition-colors hover:text-brand-light disabled:cursor-not-allowed disabled:text-muted"
               >
-                Resend OTP
+                {resendTimer > 0 ? `Resend OTP in ${resendTimer}s` : "Resend OTP"}
               </button>
               <span className="text-border">|</span>
               <button
@@ -455,6 +485,7 @@ export function OtpGate({
                   setStep("phone");
                   setOtp(["", "", "", ""]);
                   setError("");
+                  clearResendTimer();
                 }}
                 className="font-medium text-muted transition-colors hover:text-text"
               >

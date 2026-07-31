@@ -33,8 +33,8 @@ export const SITE_URL =
 export const company = {
   name: "Modi Hyundai",
   tagline: "Customer First",
-  phone: "98877 33000",
-  phoneE164: "+919887733000",
+  phone: "78747 47443",
+  phoneE164: "+917874747443",
   // NOTE: verify before launch - not published on the source site.
   email: "contact@modihyundai.co.in",
   primaryAddress: {
@@ -1108,7 +1108,7 @@ export const serviceOfferings: ServiceOffering[] = [
     body: [
       "Hyundai's roadside assistance programme covers you across India for the kinds of events that stop a journey: flat tyres, dead batteries, lost keys, empty fuel tanks, minor electrical faults and mechanical breakdowns. Depending on the situation, the service includes on-spot minor repairs, a jump-start, a fuel top-up, a tyre change, or towing to the nearest authorised service centre.",
       "Save your roadside assistance number in your phone before you need it. When you call, keep your vehicle registration number and current location handy so the team can dispatch the right help quickly.",
-      "Need help right now or unsure whether your cover is active? Call Modi Hyundai on 98877 33000 and our team will guide you through the next step.",
+      "Need help right now or unsure whether your cover is active? Call Modi Hyundai on 78747 47443 and our team will guide you through the next step.",
     ],
     points: [
       "Round-the-clock cover, every day of the year",
@@ -1145,7 +1145,7 @@ export const serviceFaqData = [
   {
     question: "How do I book a Hyundai service at Modi Hyundai?",
     answer:
-      "Use the Book a Service form on this page to choose your car model, nearest service centre, type of service and a convenient date and time. Our team will call you to confirm the appointment. You can also book by calling us on 98877 33000.",
+      "Use the Book a Service form on this page to choose your car model, nearest service centre, type of service and a convenient date and time. Our team will call you to confirm the appointment. You can also book by calling us on 78747 47443.",
   },
   {
     question: "Do you use genuine Hyundai parts for repairs and service?",
@@ -1237,7 +1237,7 @@ export const testimonials: Testimonial[] = [
     name: "Farhan Shaikh",
     role: "Creta owner, Mumbai",
     rating: 5,
-    text: "Booked from the Malad showroom. They were upfront about the waiting period and kept me updated the whole way.",
+    text: "Booked from the Santacruz showroom. They were upfront about the waiting period and kept me updated the whole way.",
     avatar: avatars[6],
   },
   {
@@ -1253,7 +1253,7 @@ export const faqData = [
   {
     question: "How do I book a test drive at Modi Hyundai?",
     answer:
-      "You can book a test drive online using the form on this page, or by calling us on 98877 33000. Once you share your details, our team will confirm your preferred date, time and location, at our showroom or your home.",
+      "You can book a test drive online using the form on this page, or by calling us on 78747 47443. Once you share your details, our team will confirm your preferred date, time and location, at our showroom or your home.",
   },
   {
     question: "Do you offer car finance and exchange?",
@@ -1639,7 +1639,7 @@ export const locations: Location[] = [
     type: "Showroom",
     city: "Vasai",
     address: "Prime House Main Rd, Sativali Rd, Opp Shailesh Industries Estate, Waliv Phata, Vasai East, Maharashtra 401208",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/vasai-showroom.webp",
     mapsUrl: "https://maps.app.goo.gl/W7seJ74ksR7L8XqV7",
   },
@@ -1648,7 +1648,7 @@ export const locations: Location[] = [
     type: "Showroom",
     city: "Virar",
     address: "HDL Residency Park, Shop 1/2 E Wing, Global City, Opp Yazoo Park, Virar West, Mumbai, Maharashtra 401305",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/virar-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=HDL%20Residency%20Park%2C%20Shop%201%2F2%20E%20Wing%2C%20Global%20City%2C%20Opp%20Yazoo%20Park%2C%20Virar%20West%2C%20Mumbai%2C%20Maharashtra%20401305&travelmode=driving",
@@ -1658,7 +1658,7 @@ export const locations: Location[] = [
     type: "Showroom",
     city: "Thane",
     address: "Modi House 1 Eastern Express Highway opp LIC Bldg., Naupada, Louis Wadi, Thane West, Maharashtra 400602",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/thane-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Modi%20House%201%20Eastern%20Express%20Highway%20opp%20LIC%20Bldg.%2C%20Naupada%2C%20Louis%20Wadi%2C%20Thane%20West%2C%20Maharashtra%20400602&travelmode=driving",
@@ -1668,7 +1668,7 @@ export const locations: Location[] = [
     type: "Showroom",
     city: "Thane",
     address: "Wadekar Compound, Modi Hyundai H Promise Showroom, near Viddyapith Bus Stop, Service Rd, Thane West - 400601",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/h-promise-thane-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Wadekar%20Compound%2C%20Modi%20Hyundai%20H%20Promise%20Showroom%2C%20near%20Viddyapith%20Bus%20Stop%2C%20Service%20Rd%2C%20Thane%20West%20400601&travelmode=driving",
@@ -1678,7 +1678,7 @@ export const locations: Location[] = [
     type: "Showroom",
     city: "Wada",
     address: "HDL Residency Park , Shop No. 1/2, E Wing Global City , Opp Yazoo Park Virar, Virar West, Maharashtra 401305",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/wada-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=HDL%20Residency%20Park%2C%20Shop%20No.%201%2F2%2C%20E%20Wing%20Global%20City%2C%20Opp%20Yazoo%20Park%20Virar%2C%20Virar%20West%2C%20Maharashtra%20401305&travelmode=driving",
@@ -1688,7 +1688,7 @@ export const locations: Location[] = [
     type: "Service Centre",
     city: "Mumbai",
     address: "Jogani Industrial Estate, VN Purav Marg, Panchsheel Nagar, Chunabhatti, Sion, Mumbai, Maharashtra 400022",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/chunabhatti-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Jogani%20Industrial%20Estate%2C%20VN%20Purav%20Marg%2C%20Panchsheel%20Nagar%2C%20Chunabhatti%2C%20Sion%2C%20Mumbai%2C%20Maharashtra%20400022&travelmode=driving",
@@ -1698,7 +1698,7 @@ export const locations: Location[] = [
     type: "Service Centre",
     city: "Thane",
     address: "Navjeevan Compound, 2, Pokhran Rd, opp. Oswal Park, Subhash Nagar, Majiwada, Thane, Maharashtra 400601",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/thane-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Navjeevan%20Compound%2C%202%2C%20Pokhran%20Rd%2C%20opp.%20Oswal%20Park%2C%20Subhash%20Nagar%2C%20Majiwada%2C%20Thane%2C%20Maharashtra%20400601&travelmode=driving",
@@ -1708,7 +1708,7 @@ export const locations: Location[] = [
     type: "Service Centre",
     city: "Vasai",
     address: "Gala No 8, Richa Industrial Estate, Sativali Rd, Waliv Phata, Golani Naka, Vasai East, Maharashtra 401208",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/vasai-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Gala%20No%208%2C%20Richa%20Industrial%20Estate%2C%20Sativali%20Rd%2C%20Waliv%20Phata%2C%20Golani%20Naka%2C%20Vasai%20East%2C%20Maharashtra%20401208&travelmode=driving",
@@ -1718,7 +1718,7 @@ export const locations: Location[] = [
     type: "Service Centre",
     city: "Virar",
     address: "Sanjog Industrial Estate, Gala no 18,19, near Ran Pada Ground, Virar West, Virar, Maharashtra 401303",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/virar-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Sanjog%20Industrial%20Estate%2C%20Gala%20no%2018%2C19%2C%20near%20Ran%20Pada%20Ground%2C%20Virar%20West%2C%20Virar%2C%20Maharashtra%20401303&travelmode=driving",
@@ -1728,7 +1728,7 @@ export const locations: Location[] = [
     type: "Service Centre",
     city: "Thane",
     address: "ICEM Engineering Compound Mohanji, Road, opposite Valencia Park, Raghunath Nagar, Sunderji, Thane, Maharashtra 400604",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/thane-raghunath-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=ICEM%20Engineering%20Compound%20Mohanji%20Road%2C%20opposite%20Valencia%20Park%2C%20Raghunath%20Nagar%2C%20Sunderji%2C%20Thane%2C%20Maharashtra%20400604&travelmode=driving",
@@ -1742,7 +1742,7 @@ export const locations: Location[] = [
     type: "Showroom",
     city: "Santacruz",
     address: "Vikas Centre, G/02, Next to Santacruz Bus Depot, S.V. Road, Santacruz West, Mumbai, Maharashtra 400054",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/thane-showroom.webp",
     imagePosition: "center 30%",
     mapsUrl:
@@ -1753,7 +1753,7 @@ export const locations: Location[] = [
     type: "Service Centre",
     city: "Wada",
     address: "Hyundai Service Centre Wada",
-    phone: "98877 33000",
+    phone: "78747 47443",
     image: "/locations/thane-service.webp",
     imagePosition: "center 70%",
     mapsUrl:

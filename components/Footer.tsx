@@ -135,8 +135,9 @@ export default function Footer() {
               <li className="flex gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-white/40" />
                 <span>
-                  Modi Hyundai, New Link Road, Malad West, Mumbai, Maharashtra
-                  400064
+                  Modi Hyundai, Modi House 1, Eastern Express Hwy, opp. LIC
+                  Bldg., Naupada, Bhakti Mandir, Louis Wadi, Thane West,
+                  Thane, Maharashtra 400602
                 </span>
               </li>
               <li className="flex gap-3">

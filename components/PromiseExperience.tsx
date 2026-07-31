@@ -7,7 +7,8 @@ import { Calendar, Car, Check, Clipboard, Rupee, Truck } from "./icons";
 
 const journeyIcons = [Clipboard, Calendar, Check, Rupee, Truck, Car];
 
-const PROMISE_YOUTUBE_ID = "Nypilxu3hJI";
+const PROMISE_VIDEO_URL =
+  "https://player.mediadelivery.net/play/690099/f79fda98-1b47-4b61-ad3a-7105751df075";
 
 const journey = [
   {
@@ -72,9 +73,9 @@ export default function PromiseExperience() {
             className="mt-10 overflow-hidden rounded-2xl border border-border bg-black shadow-[0_8px_36px_0_rgba(0,44,95,0.12)]"
           >
             <iframe
-              src={`https://www.youtube.com/embed/${PROMISE_YOUTUBE_ID}`}
+              src={PROMISE_VIDEO_URL}
               title="Hyundai Promise"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
               className="aspect-video w-full border-0"
             />

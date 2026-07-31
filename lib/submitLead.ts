@@ -6,21 +6,19 @@ export async function submitLead(
   formType: FormType,
   formData: Record<string, string>,
 ): Promise<void> {
-  const endpoint = process.env.NEXT_PUBLIC_SHEET_ENDPOINT;
-  if (!endpoint) {
-    throw new Error("NEXT_PUBLIC_SHEET_ENDPOINT is not configured.");
-  }
-
   // phone_capture fires before the user has finished the real form; the
   // UTM data belongs on the final lead submission only.
   const utmData = getStoredUtmParams();
 
   const body: Record<string, string | undefined> = { form_type: formType, ...formData, ...utmData };
 
-  await fetch(endpoint, {
+  const res = await fetch("/api/leads/sheets", {
     method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "text/plain" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
+
+  if (!res.ok) {
+    throw new Error("Failed to submit lead to Sheets.");
+  }
 }

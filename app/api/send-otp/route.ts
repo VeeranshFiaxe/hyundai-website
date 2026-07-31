@@ -3,8 +3,9 @@ import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 import { normalizePhone } from "@/lib/phone";
 import { sendOtpWhatsApp } from "@/lib/whatsapp";
 
-const RESEND_COOLDOWN_MS = 60 * 1000;
+const RESEND_COOLDOWN_MS = 30 * 1000;
 const OTP_TTL_MS = 5 * 60 * 1000;
+const MAX_OTPS_PER_DAY = 3;
 
 export async function POST(request: Request) {
   // DIAGNOSTIC: confirm the four env vars this route depends on are actually
@@ -76,6 +77,39 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: "Failed to check OTP rate limit." },
         { status: 500 },
+      );
+    }
+
+    const todayStart = new Date();
+    todayStart.setUTCHours(0, 0, 0, 0);
+
+    let dailyCount = 0;
+    try {
+      const { count, error: countError } = await supabaseAdmin
+        .from("phone_otps")
+        .select("*", { count: "exact", head: true })
+        .eq("phone_number", normalizedPhone)
+        .gte("created_at", todayStart.toISOString());
+      if (countError) {
+        console.error("[send-otp] Supabase count error (daily limit)", countError);
+        return NextResponse.json(
+          { error: "Failed to check daily OTP limit." },
+          { status: 500 },
+        );
+      }
+      dailyCount = count ?? 0;
+    } catch (err) {
+      console.error("[send-otp] Supabase count threw (daily limit)", err);
+      return NextResponse.json(
+        { error: "Failed to check daily OTP limit." },
+        { status: 500 },
+      );
+    }
+
+    if (dailyCount >= MAX_OTPS_PER_DAY) {
+      return NextResponse.json(
+        { error: "You have reached the maximum number of OTP requests for today. Please try again tomorrow." },
+        { status: 429 },
       );
     }
 
