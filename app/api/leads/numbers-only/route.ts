@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { withPostgres } from "@/lib/postgres";
 import { normalizePhone } from "@/lib/phone";
 import { extractUtmFields } from "@/lib/utmFields";
 
@@ -21,16 +21,36 @@ export async function POST(request: Request) {
   }
 
   const normalizedPhone = normalizePhone(phone_number);
+  const utm = extractUtmFields(body);
 
-  const supabaseAdmin = getSupabaseAdmin();
-  const { error } = await supabaseAdmin.from("numbers_only").insert({
-    phone_number: normalizedPhone,
-    form_source,
-    ...extractUtmFields(body),
-  });
-
-  if (error) {
-    console.error("[leads/numbers-only] Supabase insert error", error);
+  try {
+    await withPostgres((client) =>
+      client.query(
+        `insert into public.numbers_only (
+          phone_number, form_source,
+          utm_source, utm_medium, utm_campaign, utm_id, utm_term, utm_content, gclid, fbclid
+        ) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+        [
+          normalizedPhone,
+          form_source,
+          utm.utm_source,
+          utm.utm_medium,
+          utm.utm_campaign,
+          utm.utm_id,
+          utm.utm_term,
+          utm.utm_content,
+          utm.gclid,
+          utm.fbclid,
+        ],
+      ),
+    );
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        message: "Failed to insert numbers-only lead",
+        error: error instanceof Error ? error.message : String(error),
+      }),
+    );
     return NextResponse.json({ error: "Failed to save phone number." }, { status: 500 });
   }
 

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { withPostgres } from "@/lib/postgres";
 import { normalizePhone } from "@/lib/phone";
 import { extractUtmFields } from "@/lib/utmFields";
 
@@ -50,26 +50,50 @@ export async function POST(request: Request) {
   }
 
   const normalizedPhone = normalizePhone(mobile_number);
+  const utm = extractUtmFields(body);
 
-  const supabaseAdmin = getSupabaseAdmin();
-  const { error } = await supabaseAdmin.from("service_leads").insert({
-    car_model,
-    service_centre,
-    service_type,
-    name,
-    mobile_number: normalizedPhone,
-    email,
-    registration_number: nullIfEmpty(registration_number),
-    preferred_date,
-    preferred_time,
-    pickup_drop,
-    source: typeof source === "string" && source.trim() !== "" ? source : "Website",
-    verified: true,
-    ...extractUtmFields(body),
-  });
-
-  if (error) {
-    console.error("[leads/service] Supabase insert error", error);
+  try {
+    await withPostgres((client) =>
+      client.query(
+        `insert into public.service_leads (
+          car_model, service_centre, service_type, name, mobile_number, email,
+          registration_number, preferred_date, preferred_time, pickup_drop, source, verified,
+          utm_source, utm_medium, utm_campaign, utm_id, utm_term, utm_content, gclid, fbclid
+        ) values (
+          $1, $2, $3, $4, $5, $6,
+          $7, $8, $9, $10, $11, true,
+          $12, $13, $14, $15, $16, $17, $18, $19
+        )`,
+        [
+          car_model,
+          service_centre,
+          service_type,
+          name,
+          normalizedPhone,
+          email,
+          nullIfEmpty(registration_number),
+          preferred_date,
+          preferred_time,
+          pickup_drop,
+          typeof source === "string" && source.trim() !== "" ? source : "Website",
+          utm.utm_source,
+          utm.utm_medium,
+          utm.utm_campaign,
+          utm.utm_id,
+          utm.utm_term,
+          utm.utm_content,
+          utm.gclid,
+          utm.fbclid,
+        ],
+      ),
+    );
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        message: "Failed to insert service lead",
+        error: error instanceof Error ? error.message : String(error),
+      }),
+    );
     return NextResponse.json({ error: "Failed to save lead." }, { status: 500 });
   }
 

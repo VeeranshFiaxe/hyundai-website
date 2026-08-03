@@ -6,7 +6,7 @@ import Image from "next/image";
 import { ArrowLeft, Check, Phone, Shield } from "./icons";
 import { useVerifiedPhone } from "./VerifiedPhoneProvider";
 import { submitLead } from "@/lib/submitLead";
-import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
+import { submitDatabaseLead } from "@/lib/submitDatabaseLead";
 import CountryCodeSelector from "./CountryCodeSelector";
 import { allCountries, type Country } from "@/lib/countries";
 
@@ -251,7 +251,7 @@ export function OtpGate({
           phone_number: `\`${phoneNumber}`,
           form_source: formSource,
         }).catch((err) => console.error("[OtpGate] phone_capture submission failed", err));
-        submitSupabaseLead("numbers-only", {
+        submitDatabaseLead("numbers-only", {
           phone_number: phoneNumber,
           form_source: formSource,
         }).catch((err) => console.error("[OtpGate] numbers-only submission failed", err));

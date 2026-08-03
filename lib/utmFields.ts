@@ -12,7 +12,7 @@ const UTM_FIELDS = [
 export type UtmColumns = Record<(typeof UTM_FIELDS)[number], string | null>;
 
 /** Pulls the 8 UTM/click-id fields out of an inbound lead POST body for
- * insertion into a Supabase leads table. Missing/non-string values become
+ * insertion into a leads table. Missing/non-string values become
  * null rather than being omitted, so every leads table gets the same
  * column shape regardless of which UTM params (if any) were present. */
 export function extractUtmFields(body: Record<string, unknown>): UtmColumns {

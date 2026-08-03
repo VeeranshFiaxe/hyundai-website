@@ -6,7 +6,7 @@ import Image from "next/image";
 import { cars, cityOptions, locations, nav } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidPincode } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
-import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
+import { submitDatabaseLead } from "@/lib/submitDatabaseLead";
 import { Calendar, Check, ChevronDown, ChevronRight, X, Phone } from "./icons";
 import Reveal from "./Reveal";
 import { OtpGate } from "./OtpGate";
@@ -129,18 +129,18 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
       preferred_time: time,
     };
 
-    // Fired in parallel so a Google Sheets failure never blocks Supabase
+    // Fired in parallel so a Google Sheets failure never blocks PostgreSQL
     // (and vice versa), matching the pattern used in the other forms.
-    const [sheetsResult, supabaseResult] = await Promise.allSettled([
+    const [sheetsResult, databaseResult] = await Promise.allSettled([
       submitLead("test_drive", { ...leadFields, mobile_number: `\`${mobile}` }),
-      submitSupabaseLead("test-drive", { ...leadFields, mobile_number: mobile }),
+      submitDatabaseLead("test-drive", { ...leadFields, mobile_number: mobile }),
     ]);
 
     if (sheetsResult.status === "rejected") {
       console.error("[TestDriveWizard] Sheets lead submission failed", sheetsResult.reason);
     }
-    if (supabaseResult.status === "rejected") {
-      console.error("[TestDriveWizard] Supabase lead insert failed", supabaseResult.reason);
+    if (databaseResult.status === "rejected") {
+      console.error("[TestDriveWizard] PostgreSQL lead insert failed", databaseResult.reason);
     }
 
     setSubmitting(false);

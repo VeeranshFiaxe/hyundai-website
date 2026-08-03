@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { company } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidMobile, isValidName, isValidPincode, type FormErrors } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
-import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
+import { submitDatabaseLead } from "@/lib/submitDatabaseLead";
 import { Check, Clock, Mail, MapPin, Phone, WhatsApp } from "./icons";
 import Reveal from "./Reveal";
 import { OtpGate } from "./OtpGate";
@@ -56,17 +56,17 @@ function ContactFormInner({ verifiedPhone, requestChangePhone }: { verifiedPhone
     setSubmitting(true);
     setSubmitError(false);
 
-    // Fired independently so a Google Sheets failure never blocks Supabase
-    // (and vice versa) — previously Supabase was only attempted after the
+    // Fired independently so a Google Sheets failure never blocks PostgreSQL
+    // (and vice versa) — previously the database was only attempted after the
     // Sheets call succeeded, so any Sheets error silently took both down.
-    submitSupabaseLead("contact-us", {
+    submitDatabaseLead("contact-us", {
       name: form.name.trim(),
       mobile_number: mobile,
       email: form.email.trim(),
       pincode: form.pincode.trim(),
       subject: form.subject.trim(),
       message: form.message.trim(),
-    }).catch((err) => console.error("[ContactUs] Supabase lead insert failed", err));
+    }).catch((err) => console.error("[ContactUs] PostgreSQL lead insert failed", err));
 
     try {
       await submitLead("contact", {

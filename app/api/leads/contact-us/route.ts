@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { withPostgres } from "@/lib/postgres";
 import { normalizePhone } from "@/lib/phone";
 import { extractUtmFields } from "@/lib/utmFields";
 
@@ -28,22 +28,44 @@ export async function POST(request: Request) {
   }
 
   const normalizedPhone = normalizePhone(mobile_number);
+  const utm = extractUtmFields(body);
 
-  const supabaseAdmin = getSupabaseAdmin();
-  const { error } = await supabaseAdmin.from("contact_us_leads").insert({
-    name,
-    mobile_number: normalizedPhone,
-    email,
-    pincode,
-    subject,
-    message,
-    source: typeof source === "string" && source.trim() !== "" ? source : "Website",
-    verified: true,
-    ...extractUtmFields(body),
-  });
-
-  if (error) {
-    console.error("[leads/contact-us] Supabase insert error", error);
+  try {
+    await withPostgres((client) =>
+      client.query(
+        `insert into public.contact_us_leads (
+          name, mobile_number, email, pincode, subject, message, source, verified,
+          utm_source, utm_medium, utm_campaign, utm_id, utm_term, utm_content, gclid, fbclid
+        ) values (
+          $1, $2, $3, $4, $5, $6, $7, true,
+          $8, $9, $10, $11, $12, $13, $14, $15
+        )`,
+        [
+          name,
+          normalizedPhone,
+          email,
+          pincode,
+          subject,
+          message,
+          typeof source === "string" && source.trim() !== "" ? source : "Website",
+          utm.utm_source,
+          utm.utm_medium,
+          utm.utm_campaign,
+          utm.utm_id,
+          utm.utm_term,
+          utm.utm_content,
+          utm.gclid,
+          utm.fbclid,
+        ],
+      ),
+    );
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        message: "Failed to insert contact-us lead",
+        error: error instanceof Error ? error.message : String(error),
+      }),
+    );
     return NextResponse.json({ error: "Failed to save lead." }, { status: 500 });
   }
 

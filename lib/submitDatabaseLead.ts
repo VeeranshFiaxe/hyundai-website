@@ -1,10 +1,8 @@
 import { getStoredUtmParams } from "@/utils/captureUtm";
 
-// Posts lead data to one of the /api/leads/* routes, which insert into the
-// matching Supabase table server-side (service_role key never reaches the
-// client). Fire-and-forget from the caller's perspective: failures are
-// logged but never block the existing Google Sheets submission.
-export async function submitSupabaseLead(
+// Posts lead data to a server-side API route. Database credentials and the
+// Hyperdrive connection stay inside the Worker and never reach the browser.
+export async function submitDatabaseLead(
   endpoint: string,
   payload: Record<string, unknown>,
 ): Promise<void> {
@@ -17,6 +15,6 @@ export async function submitSupabaseLead(
   });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
-    throw new Error(data.error || `Supabase lead insert failed (${res.status})`);
+    throw new Error(data.error || `Database lead insert failed (${res.status})`);
   }
 }

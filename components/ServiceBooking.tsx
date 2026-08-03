@@ -4,7 +4,7 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 import { carModels, serviceCentres } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidMobile, isValidName, type FormErrors } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
-import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
+import { submitDatabaseLead } from "@/lib/submitDatabaseLead";
 import { Calendar, Check, ChevronDown, Phone } from "./icons";
 import Reveal from "./Reveal";
 import { OtpGate } from "./OtpGate";
@@ -121,10 +121,10 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
     setSubmitting(true);
     setSubmitError(false);
 
-    // Fired independently so a Google Sheets failure never blocks Supabase
-    // (and vice versa) — previously Supabase was only attempted after the
+    // Fired independently so a Google Sheets failure never blocks PostgreSQL
+    // (and vice versa) — previously the database was only attempted after the
     // Sheets call succeeded, so any Sheets error silently took both down.
-    submitSupabaseLead("service", {
+    submitDatabaseLead("service", {
       car_model: isOther ? customCarModel.trim() : form.carModel,
       service_centre: form.serviceCentre,
       service_type: form.serviceType,
@@ -135,7 +135,7 @@ function ServiceBookingInner({ verifiedPhone, requestChangePhone }: { verifiedPh
       preferred_date: form.date,
       preferred_time: form.time,
       pickup_drop: pickupDrop ? "Yes" : "No",
-    }).catch((err) => console.error("[ServiceBooking] Supabase lead insert failed", err));
+    }).catch((err) => console.error("[ServiceBooking] PostgreSQL lead insert failed", err));
 
     try {
       await submitLead("service", {

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { carModels, cityOptions, testDriveImage } from "@/lib/data";
 import { isEmpty, isValidEmail, isValidName, isValidPincode, type FormErrors } from "@/lib/validation";
 import { submitLead } from "@/lib/submitLead";
-import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
+import { submitDatabaseLead } from "@/lib/submitDatabaseLead";
 import { Calendar, Check, ChevronDown, Phone } from "./icons";
 import Reveal from "./Reveal";
 import { OtpGate } from "./OtpGate";
@@ -115,10 +115,10 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
     setSubmitting(true);
     setSubmitError(false);
 
-    // Fired independently so a Google Sheets failure never blocks Supabase
-    // (and vice versa) — previously Supabase was only attempted after the
+    // Fired independently so a Google Sheets failure never blocks PostgreSQL
+    // (and vice versa) — previously the database was only attempted after the
     // Sheets call succeeded, so any Sheets error silently took both down.
-    submitSupabaseLead("test-drive", {
+    submitDatabaseLead("test-drive", {
       car_model: form.carModel,
       location: form.location,
       name: form.name.trim(),
@@ -128,7 +128,7 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
       address: form.address.trim(),
       preferred_date: form.date,
       preferred_time: form.time,
-    }).catch((err) => console.error("[TestDrive] Supabase lead insert failed", err));
+    }).catch((err) => console.error("[TestDrive] PostgreSQL lead insert failed", err));
 
     try {
       await submitLead("test_drive", {

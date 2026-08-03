@@ -4,6 +4,15 @@
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-08-03",
   "compatibility_flags": ["nodejs_compat"],
+  "hyperdrive": [
+    {
+      "binding": "HYPERDRIVE",
+      "id": "0a9f044a2e30461aa392e991f5736556",
+      // Local-only fallback for next dev/build; override with
+      // CLOUDFLARE_HYPERDRIVE_LOCAL_CONNECTION_STRING_HYPERDRIVE when needed.
+      "localConnectionString": "postgresql://postgres:postgres@127.0.0.1:5432/postgres"
+    }
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

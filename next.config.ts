@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
     remotePatterns: [],
     qualities: [75, 80],
   },
+  outputFileTracingIncludes: {
+    "/*": ["./node_modules/pg-cloudflare/dist/**/*"],
+  },
   allowedDevOrigins: ["192.168.137.1"],
 };
 

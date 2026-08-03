@@ -9,7 +9,7 @@ import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { OtpGate } from "./OtpGate";
 import { submitLead } from "@/lib/submitLead";
-import { submitSupabaseLead } from "@/lib/submitSupabaseLead";
+import { submitDatabaseLead } from "@/lib/submitDatabaseLead";
 
 const fieldBase =
   "w-full rounded border border-border bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-brand focus:ring-2 focus:ring-brand/10";
@@ -120,10 +120,10 @@ export default function HyundaiPromise() {
 
     setSubmitting(true);
 
-    // Fired independently so a Google Sheets failure never blocks Supabase
-    // (and vice versa) — previously Supabase was only attempted after the
+    // Fired independently so a Google Sheets failure never blocks PostgreSQL
+    // (and vice versa) — previously the database was only attempted after the
     // Sheets call succeeded, so any Sheets error silently took both down.
-    submitSupabaseLead("hyundai-promise", {
+    submitDatabaseLead("hyundai-promise", {
       type: "Buy",
       full_name: buyForm.name.trim(),
       mobile_number: verifiedPhoneRef.current,
@@ -132,7 +132,7 @@ export default function HyundaiPromise() {
       car_model: buyForm.model,
       budget_range: buyForm.budget.trim(),
       additional_details: buyForm.notes.trim(),
-    }).catch((err) => console.error("[HyundaiPromise] Supabase lead insert failed", err));
+    }).catch((err) => console.error("[HyundaiPromise] PostgreSQL lead insert failed", err));
 
     try {
       await submitLead("hyundai_promise_buy", {
@@ -170,10 +170,10 @@ export default function HyundaiPromise() {
 
     setSubmitting(true);
 
-    // Fired independently so a Google Sheets failure never blocks Supabase
-    // (and vice versa) — previously Supabase was only attempted after the
+    // Fired independently so a Google Sheets failure never blocks PostgreSQL
+    // (and vice versa) — previously the database was only attempted after the
     // Sheets call succeeded, so any Sheets error silently took both down.
-    submitSupabaseLead("hyundai-promise", {
+    submitDatabaseLead("hyundai-promise", {
       type: "Sell",
       full_name: sellForm.name.trim(),
       mobile_number: verifiedPhoneRef.current,
@@ -184,7 +184,7 @@ export default function HyundaiPromise() {
       year_of_purchase: sellForm.year.trim(),
       kilometers_driven: sellForm.kms.trim(),
       additional_details: sellForm.notes.trim(),
-    }).catch((err) => console.error("[HyundaiPromise] Supabase lead insert failed", err));
+    }).catch((err) => console.error("[HyundaiPromise] PostgreSQL lead insert failed", err));
 
     try {
       await submitLead("hyundai_promise_sell", {

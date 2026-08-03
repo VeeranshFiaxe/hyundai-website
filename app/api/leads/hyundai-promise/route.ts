@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
+import { withPostgres } from "@/lib/postgres";
 import { normalizePhone } from "@/lib/phone";
 import { extractUtmFields } from "@/lib/utmFields";
 
@@ -64,27 +64,51 @@ export async function POST(request: Request) {
   }
 
   const normalizedPhone = normalizePhone(mobile_number);
+  const utm = extractUtmFields(body);
 
-  const supabaseAdmin = getSupabaseAdmin();
-  const { error } = await supabaseAdmin.from("hyundai_promise_leads").insert({
-    type,
-    full_name,
-    mobile_number: normalizedPhone,
-    email,
-    location,
-    car_brand: nullIfEmpty(car_brand),
-    car_model,
-    year_of_purchase: parseLenientInt(year_of_purchase),
-    kilometers_driven: parseLenientInt(kilometers_driven),
-    budget_range: parseStrictNumber(budget_range),
-    additional_details: nullIfEmpty(additional_details),
-    source: typeof source === "string" && source.trim() !== "" ? source : "Website",
-    verified: true,
-    ...extractUtmFields(body),
-  });
-
-  if (error) {
-    console.error("[leads/hyundai-promise] Supabase insert error", error);
+  try {
+    await withPostgres((client) =>
+      client.query(
+        `insert into public.hyundai_promise_leads (
+          type, full_name, mobile_number, email, location, car_brand, car_model,
+          year_of_purchase, kilometers_driven, budget_range, additional_details, source, verified,
+          utm_source, utm_medium, utm_campaign, utm_id, utm_term, utm_content, gclid, fbclid
+        ) values (
+          $1, $2, $3, $4, $5, $6, $7,
+          $8, $9, $10, $11, $12, true,
+          $13, $14, $15, $16, $17, $18, $19, $20
+        )`,
+        [
+          type,
+          full_name,
+          normalizedPhone,
+          email,
+          location,
+          nullIfEmpty(car_brand),
+          car_model,
+          parseLenientInt(year_of_purchase),
+          parseLenientInt(kilometers_driven),
+          parseStrictNumber(budget_range),
+          nullIfEmpty(additional_details),
+          typeof source === "string" && source.trim() !== "" ? source : "Website",
+          utm.utm_source,
+          utm.utm_medium,
+          utm.utm_campaign,
+          utm.utm_id,
+          utm.utm_term,
+          utm.utm_content,
+          utm.gclid,
+          utm.fbclid,
+        ],
+      ),
+    );
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        message: "Failed to insert Hyundai Promise lead",
+        error: error instanceof Error ? error.message : String(error),
+      }),
+    );
     return NextResponse.json({ error: "Failed to save lead." }, { status: 500 });
   }
 
