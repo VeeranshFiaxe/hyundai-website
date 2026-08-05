@@ -52,6 +52,9 @@ export default function Footer() {
           <div className="col-span-2 lg:col-span-1">
             <Logo dark />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
+              Krishiv Motors Pvt. Ltd.
+            </p>
+            <p className="mt-1 max-w-xs text-sm leading-relaxed text-white/60">
               Modi Hyundai is an authorised Hyundai dealership offering new car
               sales, servicing and genuine Hyundai parts across Mumbai, Thane,
               Vasai, Virar and Wada.
@@ -184,6 +187,10 @@ export default function Footer() {
             guidance only and do not constitute an offer. Images shown may differ
             from actual products. Please contact Modi Hyundai for the latest
             prices, variant availability and offer terms.
+          </p>
+          <p className="mt-1.5">
+            Hyundai and all Hyundai model names are trademarks of Hyundai Motor
+            Company and are used under licence by Hyundai Motor India Ltd.
           </p>
         </div>
       </div>
