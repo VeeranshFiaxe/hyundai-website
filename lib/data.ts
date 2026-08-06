@@ -36,7 +36,7 @@ export const company = {
   phone: "78747 47443",
   phoneE164: "+917874747443",
   // NOTE: verify before launch - not published on the source site.
-  email: "contact@modihyundai.co.in",
+  email: "marketing@modihyundai.com",
   primaryAddress: {
     street: "New Link Road, Malad West",
     locality: "Mumbai",
@@ -45,8 +45,8 @@ export const company = {
     country: "IN",
   },
   // NOTE: confirm exact opening hours with the dealership before launch.
-  hours: "Mon to Sun, 9:00 AM to 8:00 PM",
-  hoursSpec: { days: "Mo-Su", opens: "09:00", closes: "20:00" },
+  hours: "Mon to Sun, 9:30 AM to 8:00 PM",
+  hoursSpec: { days: "Mo-Su", opens: "09:30", closes: "20:00" },
   areasServed: ["Mumbai", "Thane", "Vasai", "Virar", "Wada"],
   stats: {
     carsSold: "250,000+",

@@ -118,7 +118,11 @@ export const Network = (p: IconProps) => (
 
 export const Rupee = (p: IconProps) => (
   <svg {...base} {...p}>
-    <path d="M6 3h12M6 8h12M6 13c8 0 8 8 0 8h-1M6 13h6M9 13c4 0 4-5 0-5" />
+    <path d="M6 3h12" />
+    <path d="M6 8h12" />
+    <path d="m6 13 8.5 8" />
+    <path d="M6 13h3" />
+    <path d="M9 13c6.667 0 6.667-10 0-10" />
   </svg>
 );
 

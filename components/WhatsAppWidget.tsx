@@ -3,7 +3,7 @@
 import { WhatsApp } from "./icons";
 
 const WHATSAPP_URL =
-  "https://wa.me/919892929363?text=Hi%2C%20I%20wanted%20to%20book%20a%20test%20drive";
+  "https://wa.me/918655463859?text=Hi%2C%20I%20need%20assistance%20regarding%20Modi%20Hyundai";
 
 export default function WhatsAppWidget() {
   return (

@@ -7,7 +7,11 @@ import { useTestDrive } from "./TestDriveProvider";
 
 const actions = [
   { label: "Book a\nTest Drive", href: "/book-a-test-drive", Icon: Calendar },
-  { label: "WhatsApp", href: "https://wa.link/diys8m", Icon: WhatsApp },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/918655463859?text=Hi%2C%20I%20need%20assistance%20regarding%20Modi%20Hyundai",
+    Icon: WhatsApp,
+  },
   { label: "Call Us", href: `tel:${nav.phone.replace(/\s/g, "")}`, Icon: Phone },
 ];
 
