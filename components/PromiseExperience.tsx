@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
-import { Calendar, Car, Check, Clipboard, Rupee, Truck } from "./icons";
+import { Calendar, Car, Check, Clipboard, Play, Rupee, Truck } from "./icons";
 
 const journeyIcons = [Clipboard, Calendar, Check, Rupee, Truck, Car];
 
@@ -39,6 +39,7 @@ const journey = [
 
 export default function PromiseExperience() {
   const [curveDrawn, setCurveDrawn] = useState(false);
+  const [playing, setPlaying] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -70,15 +71,28 @@ export default function PromiseExperience() {
 
           <Reveal
             variant="scale-up"
-            className="mt-10 overflow-hidden rounded-2xl border border-border bg-black shadow-[0_8px_36px_0_rgba(0,44,95,0.12)]"
+            className="relative mt-10 aspect-video overflow-hidden rounded-2xl border border-border bg-black shadow-[0_8px_36px_0_rgba(0,44,95,0.12)]"
           >
-            <iframe
-              src={PROMISE_VIDEO_URL}
-              title="Hyundai Promise"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-              className="aspect-video w-full border-0"
-            />
+            {playing ? (
+              <iframe
+                src={`${PROMISE_VIDEO_URL}?autoplay=true`}
+                title="Hyundai Promise"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 h-full w-full border-0"
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => setPlaying(true)}
+                aria-label="Play video"
+                className="group absolute inset-0 flex h-full w-full items-center justify-center"
+              >
+                <span className="grid h-16 w-16 place-items-center rounded-full bg-white/90 text-brand transition-transform group-hover:scale-105 sm:h-20 sm:w-20">
+                  <Play className="ml-1 h-7 w-7 sm:h-8 sm:w-8" />
+                </span>
+              </button>
+            )}
           </Reveal>
         </div>
       </section>

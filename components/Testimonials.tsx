@@ -1,9 +1,8 @@
 "use client";
 
-import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { testimonials } from "@/lib/data";
-import { Star, ChevronLeft, ChevronRight } from "./icons";
+import { Star, ChevronLeft, ChevronRight, UserCircle } from "./icons";
 import Reveal from "./Reveal";
 
 export default function Testimonials() {
@@ -118,14 +117,9 @@ export default function Testimonials() {
                 &ldquo;{t.text}&rdquo;
               </blockquote>
               <figcaption className="mt-5 flex items-center gap-4 border-t border-border pt-5">
-                <Image
-                  src={t.avatar}
-                  alt={t.name}
-                  title={t.name}
-                  width={44}
-                  height={44}
-                  className="h-11 w-11 rounded-full object-cover"
-                />
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-bg-3 text-muted">
+                  <UserCircle className="h-7 w-7" />
+                </span>
                 <div>
                   <p className="text-sm font-semibold text-text">{t.name}</p>
                   <p className="text-xs text-muted">{t.role}</p>

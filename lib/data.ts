@@ -73,7 +73,6 @@ export const nav = {
     { label: "Service", href: "/locate-service-centre" },
     { label: "Hyundai Promise", href: "/hyundai-promise" },
     { label: "Locate Us", href: "/locate-us" },
-    { label: "Blogs", href: "/blogs" },
     { label: "Contact Us", href: "/contact-us" },
   ],
 };

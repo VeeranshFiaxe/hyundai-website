@@ -107,6 +107,20 @@ export const Users = (p: IconProps) => (
   </svg>
 );
 
+export const UserCircle = (p: IconProps) => (
+  <svg {...base} {...p}>
+    <circle cx="12" cy="12" r="10" />
+    <circle cx="12" cy="10" r="3" />
+    <path d="M6.2 19a6 6 0 0 1 11.6 0" />
+  </svg>
+);
+
+export const Play = (p: IconProps) => (
+  <svg {...base} fill="currentColor" stroke="none" {...p}>
+    <path d="M7 4.5v15l13-7.5-13-7.5z" />
+  </svg>
+);
+
 export const Network = (p: IconProps) => (
   <svg {...base} {...p}>
     <rect x="9" y="2" width="6" height="6" rx="1" />

@@ -147,20 +147,6 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
     setSubmitted(true);
   };
 
-  const resetAll = () => {
-    setSubmitted(false);
-    setAttempted(false);
-    setStep(preSelectedCar ? 2 : 1);
-    setCarSlug(preSelectedCar || "");
-    setCity("");
-    setDate("");
-    setTime("");
-    setName("");
-    setEmail("");
-    setPincode("");
-    setAddress("");
-  };
-
   // Close the wizard and return to wherever the user was before it opened.
   // In modal contexts onBack is provided; on the standalone page we use history.
   const closeWizard = () => {
@@ -577,10 +563,10 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
               <span className="whitespace-nowrap font-semibold text-text">{nav.phone}</span>.
             </p>
             <button
-              onClick={resetAll}
+              onClick={closeWizard}
               className="mt-6 rounded-xl border border-border px-6 py-3 text-sm font-semibold text-text transition-colors hover:bg-bg-3"
             >
-              Book another test drive
+              Continue
             </button>
           </div>
         </div>
