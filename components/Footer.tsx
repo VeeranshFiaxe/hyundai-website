@@ -52,7 +52,7 @@ export default function Footer() {
           <div className="col-span-2 lg:col-span-1">
             <Logo dark />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
-              Krishiv Motors Pvt. Ltd.
+              S C Auto Agencies Pvt Ltd
             </p>
             <p className="mt-1 max-w-xs text-sm leading-relaxed text-white/60">
               Modi Hyundai is an authorised Hyundai dealership offering new car
