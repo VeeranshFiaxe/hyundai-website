@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Car } from "@/lib/data";
-import { company, formatINR } from "@/lib/data";
+import { carDisplayName, company, formatINR } from "@/lib/data";
 import { getCarBrochure, getCarDetail, getCarGallery } from "@/lib/car-details";
 import type { CarDetail } from "@/lib/data";
 import { ArrowRight, Check, ChevronDown, Download, X } from "./icons";
@@ -92,7 +92,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
   }, []);
   const detail = getCarDetail(car);
   const brochureUrl = getCarBrochure(car);
-  const displayName = `Hyundai ${car.name.charAt(0)}${car.name.slice(1).toLowerCase()}`;
+  const displayName = `Hyundai ${carDisplayName(car.name)}`;
   const transmissions = car.transmission.split(",").map((t) => t.trim());
   const engines = car.engine.split(",").map((t) => t.trim());
   const navigation = [

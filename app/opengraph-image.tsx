@@ -66,8 +66,8 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", gap: 40, color: "#dce8f8", fontSize: 24 }}>
-          <span>250,000+ cars sold</span>
-          <span>98% customer satisfaction</span>
+          <span>Trusted Hyundai dealer</span>
+          <span>High customer satisfaction</span>
           <span>Creta · Venue · Alcazar</span>
         </div>
       </div>

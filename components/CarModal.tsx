@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Car } from "@/lib/data";
-import { formatINR } from "@/lib/data";
+import { carDisplayName, formatINR } from "@/lib/data";
 import { Check, X } from "./icons";
 import { useTestDrive } from "./TestDriveProvider";
 
@@ -26,8 +26,7 @@ export default function CarModal({
     };
   }, [onClose]);
 
-  const displayName =
-    "Hyundai " + car.name.charAt(0) + car.name.slice(1).toLowerCase();
+  const displayName = "Hyundai " + carDisplayName(car.name);
 
   return (
     <div

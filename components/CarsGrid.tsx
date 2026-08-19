@@ -4,7 +4,7 @@ import { useMemo, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { cars, formatINR, type CarCategory } from "@/lib/data";
+import { cars, carDisplayName, formatINR, type CarCategory } from "@/lib/data";
 import { ArrowRight } from "./icons";
 import Reveal from "./Reveal";
 
@@ -71,8 +71,7 @@ export default function CarsGrid() {
 
         <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {displayed.cars.map((car, i) => {
-            const displayName =
-              "Hyundai " + car.name.charAt(0) + car.name.slice(1).toLowerCase();
+            const displayName = "Hyundai " + carDisplayName(car.name);
             return (
               <Reveal key={`v${displayed.version}-${car.slug}`} delay={(i % 3) * 90} variant="fade-up">
                 <Link

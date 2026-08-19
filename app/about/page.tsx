@@ -5,7 +5,6 @@ import Reveal from "@/components/Reveal";
 import FAQ from "@/components/FAQ";
 import { ArrowRight, Check } from "@/components/icons";
 import {
-  company,
   groupInfo,
   hyundaiIndiaFacts,
   aboutFaqData,
@@ -85,13 +84,6 @@ const aboutPageSchema = {
   ],
 };
 
-const stats = [
-  { value: company.stats.carsSold, label: "New Cars Sold" },
-  { value: company.stats.usedCarsSold, label: "Used Cars Sold" },
-  { value: company.stats.servicesDone, label: "Services Completed" },
-  { value: company.stats.satisfaction, label: "Customer Satisfaction" },
-];
-
 function joinWithAnd(items: string[]) {
   if (items.length <= 1) return items.join("");
   return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
@@ -149,9 +141,8 @@ export default function AboutPage() {
                   operated by the {groupInfo.name}. From selecting a new Hyundai
                   to booking a test drive and maintaining it for years, our teams
                   make every step clear and comfortable. We serve Mumbai, Thane,
-                  Vasai, Virar and Wada, and have sold over{" "}
-                  {company.stats.carsSold} new cars with a{" "}
-                  {company.stats.satisfaction} customer satisfaction score.
+                  Vasai, Virar and Wada, backed by a strong track record of
+                  new car sales and customer satisfaction.
                 </p>
                 <p>
                   The {groupInfo.name} represents {joinWithAnd(groupInfo.brands)}{" "}
@@ -175,27 +166,6 @@ export default function AboutPage() {
                 className="object-cover object-[50%_30%]"
               />
             </Reveal>
-          </div>
-        </section>
-
-        {/* Stats strip */}
-        <section className="bg-bg-2 py-12">
-          <div className="container-px mx-auto grid max-w-[1400px] grid-cols-2 gap-6 sm:grid-cols-4">
-            {stats.map((s, i) => (
-              <Reveal
-                key={s.label}
-                delay={i * 90}
-                variant="scale-up"
-                className="rounded-xl bg-white px-4 py-5 text-center shadow-[0_4px_24px_rgba(0,44,95,0.06)]"
-              >
-                <p className="font-display text-2xl font-bold text-brand sm:text-3xl">
-                  {s.value}
-                </p>
-                <p className="mt-1 text-xs font-medium text-muted sm:text-sm">
-                  {s.label}
-                </p>
-              </Reveal>
-            ))}
           </div>
         </section>
 

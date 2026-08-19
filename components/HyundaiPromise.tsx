@@ -340,7 +340,7 @@ export default function HyundaiPromise() {
               </div>
 
               <OtpGate
-                title="Verify Your Phone"
+                title={mode === "buy" ? "Verify to Explore Inventory" : "Verify to Sell Your Car"}
                 subtitle="Enter your phone number to unlock the form."
                 variant="bare"
                 formSource="hyundai_promise"

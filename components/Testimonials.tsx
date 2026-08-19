@@ -74,8 +74,8 @@ export default function Testimonials() {
               What Our Customers Say
             </h2>
             <p className="mt-3 text-sm text-muted">
-              <span className="font-semibold text-text">98% customer satisfaction</span>{" "}
-              across 250,000+ Hyundai cars sold and 550,000+ services completed.
+              Real experiences from Hyundai owners across Mumbai, Thane, Vasai,
+              Virar and Wada.
             </p>
           </div>
           <div className="flex gap-2">

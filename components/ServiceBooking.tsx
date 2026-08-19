@@ -415,7 +415,7 @@ export default function ServiceBooking() {
         </Reveal>
 
         <OtpGate
-          title="Verify Your Phone"
+          title="Verify to Book a Service"
           subtitle="Enter your mobile number to unlock the service booking form."
           variant="card"
           formSource="service"

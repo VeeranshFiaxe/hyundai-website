@@ -45,21 +45,15 @@ export const company = {
     country: "IN",
   },
   // NOTE: confirm exact opening hours with the dealership before launch.
-  hours: "Mon to Sun, 9:30 AM to 8:00 PM",
-  hoursSpec: { days: "Mo-Su", opens: "09:30", closes: "20:00" },
+  hours: "Mon to Sun, 9:30 AM to 7:30 PM",
+  hoursSpec: { days: "Mo-Su", opens: "09:30", closes: "19:30" },
   areasServed: ["Mumbai", "Thane", "Vasai", "Virar", "Wada"],
-  stats: {
-    carsSold: "250,000+",
-    usedCarsSold: "200,000+",
-    satisfaction: "98%",
-    servicesDone: "550,000+",
-  },
   social: {
-    facebook: "https://www.facebook.com/ModiHyundaiMumbai/",
-    instagram: "https://www.instagram.com/modihyundaimumbai/",
+    facebook: "https://www.facebook.com/ModiHyundaiDealership",
+    instagram: "https://www.instagram.com/modi_hyundai_",
     x: "https://x.com/ModiHyundai",
     youtube: "https://www.youtube.com/channel/UCz2_GnMMUYePExHZZ3UpLdA",
-    linkedin: "https://in.linkedin.com/company/modi-hyundai",
+    linkedin: "https://www.linkedin.com/company/modi-hyundai/",
   },
 };
 
@@ -156,7 +150,7 @@ export const aboutFaqData = [
   {
     question: "How many cars has Modi Hyundai sold?",
     answer:
-      "Modi Hyundai has sold over 250,000 new cars and 200,000 used cars, and completed more than 550,000 vehicle services, with a 98% customer satisfaction score.",
+      "Modi Hyundai has sold a large number of new and used cars and completed thousands of vehicle services, with a strong customer satisfaction track record.",
   },
   {
     question: "Which cities does Modi Hyundai serve?",
@@ -371,6 +365,13 @@ export const heroSlides: Slide[] = [
     alt: "Hyundai India special seasonal offers, official banner",
   },
 ];
+
+export function carDisplayName(name: string) {
+  return name
+    .split(" ")
+    .map((word) => word.charAt(0) + word.slice(1).toLowerCase())
+    .join(" ");
+}
 
 export type CarCategory = "SUV" | "Sedan" | "Hatchback" | "Electric" | "Taxi";
 
@@ -967,8 +968,8 @@ export const trust = [
   },
   {
     icon: "users",
-    title: "250,000+ Cars Sold",
-    text: "One of Mumbai's most trusted Hyundai dealers, with 98% customer satisfaction.",
+    title: "Thousands of Cars Sold",
+    text: "One of Mumbai's most trusted Hyundai dealers, known for high customer satisfaction.",
   },
   {
     icon: "network",
@@ -1186,65 +1187,117 @@ export type Testimonial = {
   avatar: string;
 };
 
-/* NOTE: demo reviews with stock avatars. Replace with real, attributable
-   customer reviews before launch; do not build AggregateRating schema
-   from these placeholder figures. */
+/* Real customer reviews, sourced from the Modi Hyundai Google Business
+   Profile listings supplied by the dealership (collected Aug 2026), lightly
+   copy-edited for punctuation and grammar only. Names and substance are
+   unchanged, and each entry is attributed to the branch its review sits on.
+   Revisit periodically to keep these current; do not build AggregateRating
+   schema from this hand-picked set. */
 export const testimonials: Testimonial[] = [
   {
-    name: "Rahul Mehta",
-    role: "Creta owner",
+    name: "Sunny Shah",
+    role: "Thane showroom customer",
     rating: 5,
-    text: "The team walked me through every variant without any pressure. Delivery was on time and the car was spotless.",
+    text: "I had an absolutely fantastic experience at Modi Hyundai Thane Showroom. The staff was incredibly helpful and knowledgeable, guiding me through all the options. Everything was smooth and efficient. Highly recommend.",
     avatar: avatars[0],
   },
   {
-    name: "Sneha Iyer",
-    role: "Venue owner",
+    name: "Sanndeep Shandilyaa",
+    role: "Thane showroom customer",
     rating: 5,
-    text: "Booking to delivery was smooth and completely transparent. The finance desk got me a rate I did not expect.",
+    text: "We took delivery of our brand new car and the service was excellent right from enquiry to final delivery. Each and every person was helpful. We are delighted to be associated with Hyundai for the third time.",
     avatar: avatars[1],
   },
   {
-    name: "Amit Verma",
-    role: "Alcazar owner",
+    name: "Surya Verma",
+    role: "Santacruz showroom customer",
     rating: 5,
-    text: "Service here is genuinely a step above. They explained the work, shared photos and stuck to the estimate.",
+    text: "It was a great experience at Modi Hyundai. Mr. Ankit handled everything from the initial discussion right through to delivery. He is really good and explained everything from scratch. We called him many times and he answered every question with patience.",
     avatar: avatars[2],
   },
   {
-    name: "Priya Nair",
-    role: "Exter owner",
+    name: "Samir Naik",
+    role: "Vasai showroom customer",
     rating: 5,
-    text: "As a first-time buyer I had endless questions. They were patient and helped me pick the right car for my budget.",
+    text: "I would like to sincerely appreciate the entire team at the Vasai East branch for making my car buying experience smooth and memorable. Mr. Krupesh Patil gave excellent guidance, Mr. Yogesh made the finance process hassle free, and Mr. Abhi made sure every detail was taken care of before delivery.",
     avatar: avatars[3],
   },
   {
-    name: "Karan Malhotra",
-    role: "Creta N Line owner, Mumbai",
+    name: "Jannat Shaikh",
+    role: "Vasai showroom customer",
     rating: 5,
-    text: "The Creta N Line handover was flawless. Great attention to detail and no last-minute surprises on the on-road price.",
+    text: "We had a fantastic experience purchasing our new car, thanks largely to Aparna. She attended to us with incredible professionalism and genuine care, and answered all our questions without any pressure. The delivery process was seamless and impressively organised.",
     avatar: avatars[4],
   },
   {
-    name: "Deepa Rao",
-    role: "Verna owner, Thane",
+    name: "Nelson Anthony",
+    role: "Virar showroom customer",
     rating: 5,
-    text: "Serviced my Verna at the Thane centre. Quick, courteous, and the free pickup and drop saved me a whole day.",
+    text: "Modi Hyundai Virar West offers exceptional customer service, with attentive staff ensuring every need is met promptly and professionally. The delivery process was seamless, on time, and included a thorough handover that made the experience truly memorable.",
     avatar: avatars[5],
   },
   {
-    name: "Farhan Shaikh",
-    role: "Creta owner, Mumbai",
+    name: "Mithun Parghi",
+    role: "Virar showroom customer",
     rating: 5,
-    text: "Booked from the Santacruz showroom. They were upfront about the waiting period and kept me updated the whole way.",
+    text: "I want to express my sincere appreciation for the exceptional service my family and I received. As this was our first car purchase we were looking for guidance and support, and the team delivered above and beyond. Sales Manager Mr. Aakash Horabe handled the entire transaction with professionalism and clarity.",
     avatar: avatars[6],
   },
   {
-    name: "Anjali Desai",
-    role: "Exter owner, Virar",
+    name: "Rajesh Sanghavi",
+    role: "H Promise Thane showroom customer",
     rating: 5,
-    text: "Loved how patient they were with a first-time buyer. The finance options were explained clearly, no jargon.",
+    text: "The deal was done very smoothly and transparently, right up to delivery and the transfer process. Mr. Hiten Pal from Modi Hyundai Thane completed the whole process with complete transparency. When they handed over the car it looked like I was buying a brand new one.",
     avatar: avatars[7],
+  },
+  {
+    name: "Jyotirmay Patil",
+    role: "Wada sales and service customer",
+    rating: 5,
+    text: "Excellent service given, and the showroom ambience was too good. Pratik Bhoir gave the best delivery experience across the whole purchase.",
+    avatar: avatars[0],
+  },
+  {
+    name: "Umesh Bhanushali",
+    role: "Wada sales and service customer",
+    rating: 5,
+    text: "It was a great experience with Modi Hyundai Wada right through to delivery, and the service from Nehal was good. Thanks.",
+    avatar: avatars[1],
+  },
+  {
+    name: "Homiar Bharucha",
+    role: "Chunabhatti service centre customer",
+    rating: 5,
+    text: "I just completed the first free service for my new car and I could not be happier with the experience from start to finish. At the reception, Mrs. Sidda Palekar was incredibly welcoming and guided me perfectly, which was a huge help.",
+    avatar: avatars[2],
+  },
+  {
+    name: "Ranjan Gaikwad",
+    role: "Thane service centre customer",
+    rating: 5,
+    text: "Had an absolutely fantastic experience with Bharat Chaudhary. From start to finish the customer service was top notch. They were professional, highly knowledgeable and extremely efficient, and my vehicle was ready exactly when promised.",
+    avatar: avatars[3],
+  },
+  {
+    name: "Mayuresh Walanju",
+    role: "Thane Raghunath Nagar service centre customer",
+    rating: 5,
+    text: "Initially I was hesitant to visit this service centre since it was new to me, but I had the same awesome experience as at the old branch on Pokhran Road. Mr. Mitesh was so cooperative, did all the work very well and guided me throughout.",
+    avatar: avatars[4],
+  },
+  {
+    name: "Aashish Jaiswal",
+    role: "Vasai service centre customer",
+    rating: 5,
+    text: "I had a very good experience at the Hyundai service centre. The staff was professional, polite, and explained all the service work clearly. The vehicle was delivered on time and the quality of work was satisfactory. Special thanks to the service advisor for regular updates and excellent customer support.",
+    avatar: avatars[5],
+  },
+  {
+    name: "Shriyash K.",
+    role: "Virar service centre customer",
+    rating: 5,
+    text: "I visited for a number plate fitting and Mrs. Suvarna helped me a lot with the coordination. Milind Powar and Ankit did a fantastic job fitting the new plate on my car. Thank you all, very good service.",
+    avatar: avatars[6],
   },
 ];
 
@@ -1278,11 +1331,6 @@ export const faqData = [
     question: "Which areas does Modi Hyundai serve?",
     answer:
       "We have Hyundai showrooms and service centres across Mumbai, Thane, Vasai, Virar and Wada, so sales and service are always close by.",
-  },
-  {
-    question: "What documents do I need to buy a car from Modi Hyundai?",
-    answer:
-      "You will typically need photo ID, address proof, passport-size photographs and PAN details. Our team will guide you through the exact paperwork for cash or finance purchases.",
   },
 ];
 
@@ -1640,17 +1688,28 @@ export const locations: Location[] = [
     address: "Prime House Main Rd, Sativali Rd, Opp Shailesh Industries Estate, Waliv Phata, Vasai East, Maharashtra 401208",
     phone: "78747 47443",
     image: "/locations/vasai-showroom.webp",
-    mapsUrl: "https://maps.app.goo.gl/W7seJ74ksR7L8XqV7",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Prime%20House%20Main%20Rd%2C%20Sativali%20Rd%2C%20Opp%20Shailesh%20Industries%20Estate%2C%20Waliv%20Phata%2C%20Vasai%20East%2C%20Maharashtra%20401208&travelmode=driving",
   },
   {
     name: "Hyundai Virar",
     type: "Showroom",
     city: "Virar",
-    address: "HDL Residency Park, Shop 1/2 E Wing, Global City, Opp Yazoo Park, Virar West, Mumbai, Maharashtra 401305",
+    address: "Gala Number 1, 2, 3 & 4, Hirubai Residency, Opposite Punjab National Bank, Near Fly Over Bridge, Virar West, Palghar, Maharashtra 401303",
     phone: "78747 47443",
     image: "/locations/virar-showroom.webp",
     mapsUrl:
-      "https://www.google.com/maps/dir/?api=1&destination=HDL%20Residency%20Park%2C%20Shop%201%2F2%20E%20Wing%2C%20Global%20City%2C%20Opp%20Yazoo%20Park%2C%20Virar%20West%2C%20Mumbai%2C%20Maharashtra%20401305&travelmode=driving",
+      "https://www.google.com/maps/dir/?api=1&destination=Gala%20Number%201%2C%202%2C%203%20%26%204%2C%20Hirubai%20Residency%2C%20Opposite%20Punjab%20National%20Bank%2C%20Near%20Fly%20Over%20Bridge%2C%20Virar%20West%2C%20Palghar%2C%20Maharashtra%20401303&travelmode=driving",
+  },
+  {
+    name: "Hyundai H Promise Vasai",
+    type: "Showroom",
+    city: "Vasai",
+    address: "Unit No. 01, 02 and 03, Lotus Premises Plaza, Survey No. 35, Hissa No. 6, Village Gokhivare, Taluka Vasai, Palghar, Vasai, Maharashtra 401208",
+    phone: "78747 47443",
+    image: "/locations/vasai-showroom.webp",
+    mapsUrl:
+      "https://www.google.com/maps/dir/?api=1&destination=Unit%20No.%2001%2C%2002%20and%2003%2C%20Lotus%20Premises%20Plaza%2C%20Survey%20No.%2035%2C%20Hissa%20No.%206%2C%20Village%20Gokhivare%2C%20Taluka%20Vasai%2C%20Palghar%2C%20Vasai%2C%20Maharashtra%20401208&travelmode=driving",
   },
   {
     name: "Hyundai Thane",
@@ -1670,7 +1729,7 @@ export const locations: Location[] = [
     phone: "78747 47443",
     image: "/locations/h-promise-thane-showroom.webp",
     mapsUrl:
-      "https://www.google.com/maps/dir/?api=1&destination=Wadekar%20Compound%2C%20Modi%20Hyundai%20H%20Promise%20Showroom%2C%20near%20Viddyapith%20Bus%20Stop%2C%20Service%20Rd%2C%20Thane%20West%20400601&travelmode=driving",
+      "https://www.google.com/maps/dir/?api=1&destination=Wadekar%20Compound%2C%20Modi%20Hyundai%20H%20Promise%20Showroom%2C%20near%20Viddyapith%20Bus%20Stop%2C%20Service%20Rd%2C%20Thane%20West%20-%20400601&travelmode=driving",
   },
   {
     name: "Hyundai Wada",
@@ -1680,7 +1739,7 @@ export const locations: Location[] = [
     phone: "78747 47443",
     image: "/locations/wada-showroom.webp",
     mapsUrl:
-      "https://www.google.com/maps/dir/?api=1&destination=HDL%20Residency%20Park%2C%20Shop%20No.%201%2F2%2C%20E%20Wing%20Global%20City%2C%20Opp%20Yazoo%20Park%20Virar%2C%20Virar%20West%2C%20Maharashtra%20401305&travelmode=driving",
+      "https://www.google.com/maps/dir/?api=1&destination=HDL%20Residency%20Park%20%2C%20Shop%20No.%201%2F2%2C%20E%20Wing%20Global%20City%20%2C%20Opp%20Yazoo%20Park%20Virar%2C%20Virar%20West%2C%20Maharashtra%20401305&travelmode=driving",
   },
   {
     name: "Hyundai Service Centre Chunabhatti",
@@ -1730,7 +1789,7 @@ export const locations: Location[] = [
     phone: "78747 47443",
     image: "/locations/thane-raghunath-service.webp",
     mapsUrl:
-      "https://www.google.com/maps/dir/?api=1&destination=ICEM%20Engineering%20Compound%20Mohanji%20Road%2C%20opposite%20Valencia%20Park%2C%20Raghunath%20Nagar%2C%20Sunderji%2C%20Thane%2C%20Maharashtra%20400604&travelmode=driving",
+      "https://www.google.com/maps/dir/?api=1&destination=ICEM%20Engineering%20Compound%20Mohanji%2C%20Road%2C%20opposite%20Valencia%20Park%2C%20Raghunath%20Nagar%2C%20Sunderji%2C%20Thane%2C%20Maharashtra%20400604&travelmode=driving",
   },
   /* No verifiable branch photo found online for these two outlets after
      checking the dealer site, Justdial, Sulekha, CarDekho, Mappls and
@@ -1762,7 +1821,7 @@ export const locations: Location[] = [
 
 /* Curated subset for the footer's "Popular Cars" column, so it doesn't
    list all 14 models. */
-const popularNames = ["CRETA", "VENUE", "EXTER", "ALCAZAR", "VERNA", "I20"];
+const popularNames = ["CRETA", "VENUE", "EXTER", "ALCAZAR", "VERNA", "I20", "CRETA ELECTRIC", "IONIQ 5"];
 export const popularCars = popularNames
   .map((n) => cars.find((c) => c.name === n))
   .filter((c): c is Car => Boolean(c));

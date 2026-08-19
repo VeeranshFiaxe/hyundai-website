@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { cars, formatINR, type CarCategory } from "@/lib/data";
+import { cars, carDisplayName, formatINR, type CarCategory } from "@/lib/data";
 import { ChevronLeft, ChevronRight } from "./icons";
 import Reveal from "./Reveal";
 
@@ -223,7 +223,7 @@ export default function FeaturedVehicles() {
             href={`/cars/${active.slug}`}
             className="group mx-auto inline-flex items-center gap-1 text-xl font-bold text-brand transition-colors hover:text-brand-light sm:text-2xl"
           >
-            Hyundai {active.name.charAt(0) + active.name.slice(1).toLowerCase()}
+            Hyundai {carDisplayName(active.name)}
             <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
           </Link>
 

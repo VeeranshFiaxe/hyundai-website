@@ -127,8 +127,8 @@ export default function HomeSeoContent() {
 
       {/* Why buy from an authorised dealer */}
       <section className="bg-white py-14 lg:py-20">
-        <div className="container-px mx-auto grid max-w-[1400px] gap-10 lg:grid-cols-2 lg:items-center">
-          <Reveal variant="slide-right">
+        <div className="container-px mx-auto max-w-[1400px]">
+          <Reveal className="max-w-3xl">
             <span className="eyebrow mb-3 block">Why Modi Hyundai</span>
             <h2 className="font-display text-2xl font-bold leading-tight tracking-tight text-text sm:text-3xl lg:text-[2.25rem]">
               Your authorised Hyundai dealer across the Mumbai and Thane region
@@ -142,11 +142,9 @@ export default function HomeSeoContent() {
                 warranty and nationwide service network.
               </p>
               <p>
-                With over 250,000 new cars and 200,000 pre-owned cars delivered,
-                more than 550,000 services completed and a 98% customer
-                satisfaction score, our team brings decades of combined Hyundai
-                experience to every test drive, finance plan and service
-                booking.
+                Our experienced team brings decades of combined Hyundai
+                expertise to every test drive, finance plan and service
+                booking, backed by a track record our customers trust.
               </p>
             </div>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -157,29 +155,6 @@ export default function HomeSeoContent() {
                 About Modi Hyundai
               </Link>
             </div>
-          </Reveal>
-
-          <Reveal delay={120} variant="slide-left">
-            <dl className="grid grid-cols-2 gap-4">
-              {[
-                ["250,000+", "New cars delivered"],
-                ["200,000+", "Pre-owned cars sold"],
-                ["550,000+", "Services completed"],
-                ["98%", "Customer satisfaction"],
-              ].map(([stat, label]) => (
-                <div
-                  key={label}
-                  className="rounded-lg border border-border bg-bg-2 p-6 text-center"
-                >
-                  <dt className="font-display text-3xl font-bold text-brand sm:text-4xl">
-                    {stat}
-                  </dt>
-                  <dd className="mt-1 text-xs font-medium text-muted sm:text-sm">
-                    {label}
-                  </dd>
-                </div>
-              ))}
-            </dl>
           </Reveal>
         </div>
       </section>

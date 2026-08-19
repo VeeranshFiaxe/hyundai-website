@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import CarDetailClient from "@/components/CarDetailClient";
-import { cars, formatINR, SITE_URL } from "@/lib/data";
+import { cars, carDisplayName, formatINR, SITE_URL } from "@/lib/data";
 import { getCarDetail, getCarGallery } from "@/lib/car-details";
 import { DEALER_ID } from "@/lib/schema";
 
@@ -23,8 +23,7 @@ export async function generateMetadata({
   if (!car) return {};
   const detail = getCarDetail(car);
 
-  const displayName =
-    "Hyundai " + car.name.charAt(0) + car.name.slice(1).toLowerCase();
+  const displayName = "Hyundai " + carDisplayName(car.name);
   const title = `${displayName}: Price & Test Drive`;
   const description = `${detail.overview} Starting at ${formatINR(car.priceINR)}* ex-showroom. Compare variants, colours, features and specifications, then book a Hyundai test drive with Modi Hyundai.`;
 
@@ -57,8 +56,7 @@ export default async function CarDetailPage({
   const car = getCar(slug);
   if (!car) notFound();
 
-  const displayName =
-    "Hyundai " + car.name.charAt(0) + car.name.slice(1).toLowerCase();
+  const displayName = "Hyundai " + carDisplayName(car.name);
   const detail = getCarDetail(car);
   const gallery = getCarGallery(car);
 
