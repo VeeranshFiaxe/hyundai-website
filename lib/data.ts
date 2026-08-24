@@ -16,6 +16,7 @@ import {
   bannersTablet,
   cutouts,
   coloursBySlug,
+  primeCutouts,
   blogImages,
   avatars,
   stockHeroes,
@@ -51,8 +52,6 @@ export const company = {
   social: {
     facebook: "https://www.facebook.com/ModiHyundaiDealership",
     instagram: "https://www.instagram.com/modi_hyundai_",
-    x: "https://x.com/ModiHyundai",
-    youtube: "https://www.youtube.com/channel/UCz2_GnMMUYePExHZZ3UpLdA",
     linkedin: "https://www.linkedin.com/company/modi-hyundai/",
   },
 };
@@ -398,6 +397,9 @@ export type Car = {
   colors: CarColor[];
   /** CDN folder name for the 360° frame sequence, e.g. "Venue" or "creta-n-line" */
   modelFolder: string;
+  /** Set for models with no turntable frame set (Prime HB/SD) - the detail
+      page shows a static hero instead of the 360° viewer. */
+  no360?: boolean;
 };
 
 export type DetailSpec = { label: string; value: string };
@@ -453,7 +455,8 @@ const colours = (
    has been discontinued in India (its price page 404s on hyundai.com as
    of this build) even though it is still listed on modihyundai.co.in;
    removed here to keep the lineup accurate. Prime HB/SD are Hyundai's
-   commercial taxi variants of the Nios/Aura, images reused accordingly. */
+   commercial taxi variants and use their own dealer-supplied photography
+   (they are sold in Polar White only, and have no 360° frame set). */
 export const cars: Car[] = [
   {
     name: "EXTER",
@@ -910,14 +913,13 @@ export const cars: Car[] = [
     fuel: "Petrol · CNG",
     blurb: "Hyundai's purpose-built hatchback for taxi and fleet operators.",
     cta: "Explore the Prime HB",
-    image: cutouts.nios,
+    image: primeCutouts.primeHb,
     alt: "Hyundai Prime HB taxi hatchback, official product shot",
     modelFolder: "Grand-i10-Nios",
-    colors: colours("prime-hb", [
-      ["Polar White", "#F4F4F2", "polar-white"],
-      ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
-      ["Titan Grey Matte", "#5B5E61", "titan-grey-matte"],
-    ]),
+    no360: true,
+    colors: [
+      { name: "Polar White", hex: "#F4F4F2", image: primeCutouts.primeHb, colorSlug: "polar-white" },
+    ],
     seating: "5",
     mileage: "Up to 25.4 km/kg (CNG)",
     bootSpace: "260 litres",
@@ -940,14 +942,13 @@ export const cars: Car[] = [
     fuel: "Petrol · CNG",
     blurb: "Hyundai's purpose-built sedan for taxi and fleet operators.",
     cta: "Explore the Prime SD",
-    image: cutouts.aura,
+    image: primeCutouts.primeSd,
     alt: "Hyundai Prime SD taxi sedan, official product shot",
     modelFolder: "Aura",
-    colors: colours("prime-sd", [
-      ["Polar White", "#F4F4F2", "polar-white"],
-      ["Typhoon Silver", "#9DA0A2", "typhoon-silver"],
-      ["Titan Grey", "#5B5E61", "titan-grey"],
-    ]),
+    no360: true,
+    colors: [
+      { name: "Polar White", hex: "#F4F4F2", image: primeCutouts.primeSd, colorSlug: "polar-white" },
+    ],
     seating: "5",
     mileage: "Up to 26.4 km/kg (CNG)",
     bootSpace: "402 litres",
@@ -1289,7 +1290,7 @@ export const testimonials: Testimonial[] = [
     name: "Aashish Jaiswal",
     role: "Vasai service centre customer",
     rating: 5,
-    text: "I had a very good experience at the Hyundai service centre. The staff was professional, polite, and explained all the service work clearly. The vehicle was delivered on time and the quality of work was satisfactory. Special thanks to the service advisor for regular updates and excellent customer support.",
+    text: "I had a very good experience at the Modi Hyundai service centre. The staff was professional, polite, and explained all the service work clearly. The vehicle was delivered on time and the quality of work was satisfactory. Special thanks to the service advisor for regular updates and excellent customer support.",
     avatar: avatars[5],
   },
   {
@@ -1330,7 +1331,7 @@ export const faqData = [
   {
     question: "Which areas does Modi Hyundai serve?",
     answer:
-      "We have Hyundai showrooms and service centres across Mumbai, Thane, Vasai, Virar and Wada, so sales and service are always close by.",
+      "We have Modi Hyundai showrooms and service centres across Mumbai, Thane, Vasai, Virar and Wada, so sales and service are always close by.",
   },
 ];
 
@@ -1682,7 +1683,7 @@ export type Location = {
 /* Real Modi Hyundai outlets (source: modihyundai.co.in). */
 export const locations: Location[] = [
   {
-    name: "Hyundai Vasai",
+    name: "Modi Hyundai Vasai",
     type: "Showroom",
     city: "Vasai",
     address: "Prime House Main Rd, Sativali Rd, Opp Shailesh Industries Estate, Waliv Phata, Vasai East, Maharashtra 401208",
@@ -1692,7 +1693,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Prime%20House%20Main%20Rd%2C%20Sativali%20Rd%2C%20Opp%20Shailesh%20Industries%20Estate%2C%20Waliv%20Phata%2C%20Vasai%20East%2C%20Maharashtra%20401208&travelmode=driving",
   },
   {
-    name: "Hyundai Virar",
+    name: "Modi Hyundai Virar",
     type: "Showroom",
     city: "Virar",
     address: "Gala Number 1, 2, 3 & 4, Hirubai Residency, Opposite Punjab National Bank, Near Fly Over Bridge, Virar West, Palghar, Maharashtra 401303",
@@ -1702,7 +1703,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Gala%20Number%201%2C%202%2C%203%20%26%204%2C%20Hirubai%20Residency%2C%20Opposite%20Punjab%20National%20Bank%2C%20Near%20Fly%20Over%20Bridge%2C%20Virar%20West%2C%20Palghar%2C%20Maharashtra%20401303&travelmode=driving",
   },
   {
-    name: "Hyundai H Promise Vasai",
+    name: "Modi Hyundai H Promise Vasai",
     type: "Showroom",
     city: "Vasai",
     address: "Unit No. 01, 02 and 03, Lotus Premises Plaza, Survey No. 35, Hissa No. 6, Village Gokhivare, Taluka Vasai, Palghar, Vasai, Maharashtra 401208",
@@ -1712,7 +1713,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Unit%20No.%2001%2C%2002%20and%2003%2C%20Lotus%20Premises%20Plaza%2C%20Survey%20No.%2035%2C%20Hissa%20No.%206%2C%20Village%20Gokhivare%2C%20Taluka%20Vasai%2C%20Palghar%2C%20Vasai%2C%20Maharashtra%20401208&travelmode=driving",
   },
   {
-    name: "Hyundai Thane",
+    name: "Modi Hyundai Thane",
     type: "Showroom",
     city: "Thane",
     address: "Modi House 1 Eastern Express Highway opp LIC Bldg., Naupada, Louis Wadi, Thane West, Maharashtra 400602",
@@ -1722,7 +1723,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Modi%20House%201%20Eastern%20Express%20Highway%20opp%20LIC%20Bldg.%2C%20Naupada%2C%20Louis%20Wadi%2C%20Thane%20West%2C%20Maharashtra%20400602&travelmode=driving",
   },
   {
-    name: "Hyundai H Promise Thane",
+    name: "Modi Hyundai H Promise Thane",
     type: "Showroom",
     city: "Thane",
     address: "Wadekar Compound, Modi Hyundai H Promise Showroom, near Viddyapith Bus Stop, Service Rd, Thane West - 400601",
@@ -1732,7 +1733,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Wadekar%20Compound%2C%20Modi%20Hyundai%20H%20Promise%20Showroom%2C%20near%20Viddyapith%20Bus%20Stop%2C%20Service%20Rd%2C%20Thane%20West%20-%20400601&travelmode=driving",
   },
   {
-    name: "Hyundai Wada",
+    name: "Modi Hyundai Wada",
     type: "Showroom",
     city: "Wada",
     address: "HDL Residency Park , Shop No. 1/2, E Wing Global City , Opp Yazoo Park Virar, Virar West, Maharashtra 401305",
@@ -1742,7 +1743,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=HDL%20Residency%20Park%20%2C%20Shop%20No.%201%2F2%2C%20E%20Wing%20Global%20City%20%2C%20Opp%20Yazoo%20Park%20Virar%2C%20Virar%20West%2C%20Maharashtra%20401305&travelmode=driving",
   },
   {
-    name: "Hyundai Service Centre Chunabhatti",
+    name: "Modi Hyundai Service Centre Chunabhatti",
     type: "Service Centre",
     city: "Mumbai",
     address: "Jogani Industrial Estate, VN Purav Marg, Panchsheel Nagar, Chunabhatti, Sion, Mumbai, Maharashtra 400022",
@@ -1752,7 +1753,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Jogani%20Industrial%20Estate%2C%20VN%20Purav%20Marg%2C%20Panchsheel%20Nagar%2C%20Chunabhatti%2C%20Sion%2C%20Mumbai%2C%20Maharashtra%20400022&travelmode=driving",
   },
   {
-    name: "Hyundai Service Centre Thane",
+    name: "Modi Hyundai Service Centre Thane",
     type: "Service Centre",
     city: "Thane",
     address: "Navjeevan Compound, 2, Pokhran Rd, opp. Oswal Park, Subhash Nagar, Majiwada, Thane, Maharashtra 400601",
@@ -1762,7 +1763,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Navjeevan%20Compound%2C%202%2C%20Pokhran%20Rd%2C%20opp.%20Oswal%20Park%2C%20Subhash%20Nagar%2C%20Majiwada%2C%20Thane%2C%20Maharashtra%20400601&travelmode=driving",
   },
   {
-    name: "Hyundai Service Centre Vasai",
+    name: "Modi Hyundai Service Centre Vasai",
     type: "Service Centre",
     city: "Vasai",
     address: "Gala No 8, Richa Industrial Estate, Sativali Rd, Waliv Phata, Golani Naka, Vasai East, Maharashtra 401208",
@@ -1772,7 +1773,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Gala%20No%208%2C%20Richa%20Industrial%20Estate%2C%20Sativali%20Rd%2C%20Waliv%20Phata%2C%20Golani%20Naka%2C%20Vasai%20East%2C%20Maharashtra%20401208&travelmode=driving",
   },
   {
-    name: "Hyundai Service Centre Virar",
+    name: "Modi Hyundai Service Centre Virar",
     type: "Service Centre",
     city: "Virar",
     address: "Sanjog Industrial Estate, Gala no 18,19, near Ran Pada Ground, Virar West, Virar, Maharashtra 401303",
@@ -1782,7 +1783,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Sanjog%20Industrial%20Estate%2C%20Gala%20no%2018%2C19%2C%20near%20Ran%20Pada%20Ground%2C%20Virar%20West%2C%20Virar%2C%20Maharashtra%20401303&travelmode=driving",
   },
   {
-    name: "Hyundai Service Centre Thane (Raghunath Nagar)",
+    name: "Modi Hyundai Service Centre Thane (Raghunath Nagar)",
     type: "Service Centre",
     city: "Thane",
     address: "ICEM Engineering Compound Mohanji, Road, opposite Valencia Park, Raghunath Nagar, Sunderji, Thane, Maharashtra 400604",
@@ -1796,7 +1797,7 @@ export const locations: Location[] = [
      Carz4Sale - reuse another branch's photo (with a different crop) instead
      of the blank Hyundai logo placeholder. */
   {
-    name: "Hyundai Santacruz",
+    name: "Modi Hyundai Santacruz",
     type: "Showroom",
     city: "Santacruz",
     address: "Vikas Centre, G/02, Next to Santacruz Bus Depot, S.V. Road, Santacruz West, Mumbai, Maharashtra 400054",
@@ -1807,7 +1808,7 @@ export const locations: Location[] = [
       "https://www.google.com/maps/dir/?api=1&destination=Vikas%20Centre%2C%20G%2F02%2C%20Next%20to%20Santacruz%20Bus%20Depot%2C%20S.V.%20Road%2C%20Santacruz%20West%2C%20Mumbai%2C%20Maharashtra%20400054&travelmode=driving",
   },
   {
-    name: "Hyundai Service Centre Wada",
+    name: "Modi Hyundai Service Centre Wada",
     type: "Service Centre",
     city: "Wada",
     address: "Hyundai Service Centre Wada",

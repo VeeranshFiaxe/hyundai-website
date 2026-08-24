@@ -74,7 +74,6 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
     name: "",
     email: "",
     pincode: "",
-    address: "",
     date: "",
     time: "",
   });
@@ -125,7 +124,6 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
       mobile_number: mobile,
       email: form.email.trim(),
       pincode: form.pincode.trim(),
-      address: form.address.trim(),
       preferred_date: form.date,
       preferred_time: form.time,
     }).catch((err) => console.error("[TestDrive] PostgreSQL lead insert failed", err));
@@ -138,7 +136,6 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
         mobile_number: `\`${mobile}`,
         email: form.email.trim(),
         pincode: form.pincode.trim(),
-        address: form.address.trim(),
         preferred_date: form.date,
         preferred_time: form.time,
       });
@@ -272,19 +269,6 @@ function TestDriveInner({ verifiedPhone, requestChangePhone }: { verifiedPhone: 
                   )}
                 </label>
 
-                <label className="col-span-full block">
-                  <span className="mb-1.5 block text-xs font-semibold text-muted">
-                    Address <span className="font-normal text-faint">(optional)</span>
-                  </span>
-                  <input
-                    type="text"
-                    value={form.address}
-                    onChange={setField("address")}
-                    placeholder="House no., street, area"
-                    className={fieldBase}
-                  />
-                </label>
-
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Preferred Date</span>
                   <div className="relative">
@@ -375,8 +359,8 @@ export default function TestDrive() {
                 Take Your Favourite Hyundai for a Spin
               </h2>
               <p className="mt-3 max-w-sm text-sm text-white/70">
-                Pick a date, time and location, and we&apos;ll have the car ready,
-                at our showroom or your home.
+                Pick a date, time and showroom, and we&apos;ll have the car
+                ready for you.
               </p>
             </div>
           </Reveal>

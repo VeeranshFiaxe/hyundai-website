@@ -10,9 +10,7 @@ import {
   Clock,
   Facebook,
   Instagram,
-  XLogo,
   LinkedIn,
-  YouTube,
 } from "./icons";
 
 const quickLinks = [
@@ -36,8 +34,6 @@ const serviceLinks = [
 const socials = [
   { Icon: Facebook, label: "Facebook", href: company.social.facebook },
   { Icon: Instagram, label: "Instagram", href: company.social.instagram },
-  { Icon: XLogo, label: "X", href: company.social.x },
-  { Icon: YouTube, label: "YouTube", href: company.social.youtube },
   { Icon: LinkedIn, label: "LinkedIn", href: company.social.linkedin },
 ];
 

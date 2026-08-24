@@ -119,8 +119,8 @@ export default function LocateServiceCentrePage() {
         <section className="relative h-[35vh] min-h-[250px] max-h-[450px] w-full overflow-hidden bg-brand-deep">
           <Image
             src={serviceHeroImage}
-            alt="Hyundai service centre bay"
-            title="Hyundai service centre bay"
+            alt="Modi Hyundai service centre bay"
+            title="Modi Hyundai service centre bay"
             fill
             priority
             sizes="100vw"

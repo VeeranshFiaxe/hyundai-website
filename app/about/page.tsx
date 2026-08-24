@@ -3,10 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import FAQ from "@/components/FAQ";
-import { ArrowRight, Check } from "@/components/icons";
+import { ArrowRight } from "@/components/icons";
 import {
   groupInfo,
-  hyundaiIndiaFacts,
   aboutFaqData,
   SITE_URL,
 } from "@/lib/data";
@@ -148,7 +147,7 @@ export default function AboutPage() {
                   The {groupInfo.name} represents {joinWithAnd(groupInfo.brands)}{" "}
                   across multiple automotive businesses, alongside{" "}
                   {joinWithAnd(groupInfo.ventures.map((v) => v.name))}.{" "}
-                  {groupInfo.founded} {groupInfo.growth}
+                  {groupInfo.founded}
                 </p>
               </div>
             </Reveal>
@@ -209,47 +208,6 @@ export default function AboutPage() {
                   <p className="mt-2 text-xs leading-relaxed text-muted">
                     {v.text}
                   </p>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Hyundai Motor India credibility */}
-        <section className="bg-brand-deep py-14 text-white lg:py-20">
-          <div className="container-px mx-auto max-w-[1400px]">
-            <Reveal className="mx-auto max-w-2xl text-center">
-              <p className="text-xs font-semibold uppercase tracking-wider text-white/60">
-                Backed By
-              </p>
-              <h2 className="mt-2 font-display text-2xl font-bold sm:text-3xl">
-                Hyundai Motor India: &ldquo;{hyundaiIndiaFacts.tagline}&rdquo;
-              </h2>
-              <p className="mt-3 text-sm text-white/70 sm:text-base">
-                Founded in {hyundaiIndiaFacts.founded}, Hyundai Motor India is
-                the country&apos;s leading automobile manufacturer, with{" "}
-                {hyundaiIndiaFacts.network} {hyundaiIndiaFacts.milestone}
-              </p>
-            </Reveal>
-            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {hyundaiIndiaFacts.csr.map((c, i) => (
-                <Reveal
-                  key={c.title}
-                  delay={i * 100}
-                  variant="fade-up"
-                  className="rounded-lg border border-white/15 bg-white/5 p-6"
-                >
-                  <div className="flex items-start gap-3">
-                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-white" />
-                    <div>
-                      <h3 className="text-sm font-semibold text-white">
-                        {c.title}
-                      </h3>
-                      <p className="mt-1 text-xs leading-relaxed text-white/70">
-                        {c.text}
-                      </p>
-                    </div>
-                  </div>
                 </Reveal>
               ))}
             </div>

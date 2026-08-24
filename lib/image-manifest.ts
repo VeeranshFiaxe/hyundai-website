@@ -123,6 +123,21 @@ export const cutouts: Record<keyof typeof cutoutCdnPaths, string> = Object.fromE
   Object.entries(cutoutCdnPaths).map(([k, p]) => [k, cutoutPath(p)]),
 ) as Record<keyof typeof cutoutCdnPaths, string>;
 
+/* ── Prime HB / SD (commercial taxi variants) ────────────────────────
+   Dealer-supplied photography, not Hyundai CDN assets. The "- Edited"
+   PNGs are background-removed cutouts, used for both the card cover and
+   the detail hero so the Prime models sit on the same light card panel as
+   every other cutout. primeCovers keeps the original flat-white JPEGs. */
+export const primeCutouts = {
+  primeHb: "/cars/cutouts/prime-hb.png",
+  primeSd: "/cars/cutouts/prime-sd.png",
+} as const;
+
+export const primeCovers = {
+  primeHb: "/cars/prime-hb-cover.jpg",
+  primeSd: "/cars/prime-sd-cover.jpg",
+} as const;
+
 /* ── Per-model feature gallery (modelFeatureGallery in car-details.ts) ─
    Source URL → sanitised local filename. Order matches the original
    array exactly so labels and alts in car-details.ts still line up. */
@@ -320,9 +335,8 @@ const coloursByModel: Record<string, [folder: string, slugs: string[]][]> = {
   "i20-n-line": [["i20-n-line", ["abyss-black", "polar-white", "polar-white-dual-tone", "blue-black-dual-tone", "titan-grey", "starry-night"]]],
   "ioniq-5": [["ioniq-5", ["midnight-black-pearl", "optic-white", "titan-grey", "gravity-gold-matte"]]],
   "creta-electric": [["creta-electric", ["abyss-black", "atlas-white", "altas-white-dual-tone", "titan-grey", "fiery-red", "knight-black-matte", "ocean-blue", "ocean-blue-matte", "ocean-blue-dual-tone", "robust-emerald-matte", "starry-night"]]],
-  // Prime HB / SD reuse the Nios / Aura colour sets respectively.
-  "prime-hb": [["Grand-i10-Nios", ["polar-white", "typhoon-silver", "titan-grey-matte"]]],
-  "prime-sd": [["Aura", ["polar-white", "typhoon-silver", "titan-grey"]]],
+  /* Prime HB / SD are not in the Hyundai 360 turntable set at all - they
+     use dealer-supplied cutouts (primeCutouts) instead, so no entry here. */
 };
 
 /** Frame 0 of a colour's turntable — used as the car-card / hero image. */

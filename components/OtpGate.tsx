@@ -522,7 +522,7 @@ export function OtpGate({
                 </h4>
                 <p className="mt-2 text-sm leading-relaxed text-white/75">
                   Authorised Hyundai dealer. Factory-trained team, transparent
-                  pricing and a test drive at our showroom or your home.
+                  pricing and a test drive at your nearest Modi Hyundai showroom.
                 </p>
                 <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-white/80">
                   <span className="inline-flex items-center gap-1.5"><Check className="h-3.5 w-3.5" /> Trusted Hyundai dealer</span>

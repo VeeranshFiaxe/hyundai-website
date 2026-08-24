@@ -20,6 +20,9 @@ interface Car360ViewerProps {
   modelFolder: string;
   colors: CarColor[];
   defaultColorIndex?: number;
+  /** No turntable frame set exists for this model (Prime HB/SD) - show the
+      static colour shot and drop the 360° affordances entirely. */
+  no360?: boolean;
 }
 
 /* ── helpers ─────────────────────────────────────────────────────── */
@@ -76,6 +79,7 @@ export default function Car360Viewer({
   modelFolder,
   colors,
   defaultColorIndex = 0,
+  no360 = false,
 }: Car360ViewerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -152,7 +156,7 @@ export default function Car360Viewer({
 
   /* ── mount / colour change ── */
   useEffect(() => {
-    if (!activated) return;
+    if (!activated || no360) return;
     const controller = new AbortController();
     releaseImages();
     void loadColor(activeSlug, controller.signal);
@@ -160,7 +164,7 @@ export default function Car360Viewer({
       controller.abort();
       releaseImages();
     };
-  }, [activeSlug, activated, loadColor, releaseImages]);
+  }, [activeSlug, activated, no360, loadColor, releaseImages]);
 
   /* ── pointer events (drag-to-spin) ── */
   const handlePointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
@@ -198,41 +202,49 @@ export default function Car360Viewer({
   const circumference = 2 * Math.PI * 18;
   const dashOffset = circumference * (1 - progress / 100);
 
-  const previewUrl = frameUrl(modelFolder, activeSlug, 6);
+  const previewUrl = no360
+    ? activeColor.image
+    : frameUrl(modelFolder, activeSlug, 6);
 
   return (
     <div className={s.root}>
       {/* ── canvas stage ── */}
       <div className={s.stage}>
-        {!activated ? (
+        {!activated || no360 ? (
           <div className={s.placeholder}>
             <img
               src={previewUrl}
               alt={activeColor.name}
-              title={`Hyundai ${activeColor.name} 360° view`}
+              title={
+                no360
+                  ? activeColor.name
+                  : `Hyundai ${activeColor.name} 360° view`
+              }
               className={s.previewImg}
               loading="lazy"
               decoding="async"
             />
-            <button
-              type="button"
-              onClick={handleActivate}
-              className={s.activateBtn}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+            {!no360 && (
+              <button
+                type="button"
+                onClick={handleActivate}
+                className={s.activateBtn}
               >
-                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
-              </svg>
-              360&deg; View
-            </button>
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                </svg>
+                360&deg; View
+              </button>
+            )}
           </div>
         ) : (
           <>
@@ -335,9 +347,13 @@ export default function Car360Viewer({
         <div className={s.swatchesHeader}>
           <p className={s.swatchesLabel}>
             Colours&nbsp;&middot;&nbsp;
-            <span className={s.swatchesCount}>{colors.length} options</span>
+            <span className={s.swatchesCount}>
+              {colors.length} {colors.length === 1 ? "option" : "options"}
+            </span>
           </p>
-          <p className={s.swatchesHint}>Tap to change paint</p>
+          {colors.length > 1 && (
+            <p className={s.swatchesHint}>Tap to change paint</p>
+          )}
         </div>
         <div className={s.swatches}>
           {colors.map((c, i) => (

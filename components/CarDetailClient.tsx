@@ -118,11 +118,12 @@ export default function CarDetailClient({ car }: { car: Car }) {
           </nav>
 
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12">
-            {/* LEFT: 360° spin viewer */}
+            {/* LEFT: 360° spin viewer (static hero for no360 models) */}
             <Reveal variant="slide-right">
               <Car360Viewer
                 modelFolder={car.modelFolder}
                 colors={car.colors}
+                no360={car.no360}
               />
 
               {/* Inline thumbnail gallery - first 8 images + a view-all tile in a 3x3 grid */}
@@ -318,7 +319,7 @@ export default function CarDetailClient({ car }: { car: Car }) {
         <div className="container-px mx-auto max-w-[1400px]">
           <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
             <div><p className="text-xs font-semibold uppercase tracking-wider text-brand">Official image gallery</p><h2 className="mt-2 font-display text-2xl font-bold text-text sm:text-3xl">{displayName} photos: exterior, interior &amp; features</h2></div>
-            <p className="max-w-md text-sm text-muted">Browse {gallery.length} official {displayName} images: 360-degree exterior angles, dashboard, seats, steering wheel, boot space, engine and feature close-ups. This gallery is separate from the colour selector above.</p>
+            <p className="max-w-md text-sm text-muted">{car.no360 ? `Browse ${gallery.length} official ${displayName} ${gallery.length === 1 ? "image" : "images"}. This gallery is separate from the colour selector above.` : `Browse ${gallery.length} official ${displayName} images: 360-degree exterior angles, dashboard, seats, steering wheel, boot space, engine and feature close-ups. This gallery is separate from the colour selector above.`}</p>
           </div>
           <div className="mt-7 grid gap-4 lg:grid-cols-[1.6fr_0.9fr]">
             <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden rounded-lg bg-bg-2 p-6 sm:min-h-[440px]">

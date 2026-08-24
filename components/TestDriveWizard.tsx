@@ -58,7 +58,6 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
   const mobile = verifiedPhone;
   const [email, setEmail] = useState("");
   const [pincode, setPincode] = useState("");
-  const [address, setAddress] = useState("");
 
   const today = new Date();
   today.setDate(today.getDate() + 1);
@@ -124,7 +123,6 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
       name,
       email,
       pincode,
-      address,
       preferred_date: date,
       preferred_time: time,
     };
@@ -500,18 +498,6 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                   {fieldErrors.pincode && (
                     <p className="mt-1.5 text-xs font-medium text-red-600">{fieldErrors.pincode}</p>
                   )}
-                </label>
-                <label className="col-span-full block">
-                  <span className="mb-1.5 block text-xs font-semibold text-muted">
-                    Address <span className="font-normal text-faint">(optional)</span>
-                  </span>
-                  <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="House no., street, area"
-                    className={fieldBase}
-                  />
                 </label>
               </div>
             </Reveal>
