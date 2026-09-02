@@ -40,7 +40,7 @@ export default function Locations() {
             </h2>
             <p className="mt-2 text-sm text-white/70">
               {items.length} {tab === "Showroom" ? "showrooms" : "service centres"} across
-              Mumbai, Thane, Vasai, Virar, and Wada.
+              Thane, Santacruz, Vasai, Virar, Wada, and Chunabhatti.
             </p>
           </div>
           <div className="flex shrink-0 items-center gap-3">

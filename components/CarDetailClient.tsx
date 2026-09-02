@@ -418,7 +418,7 @@ function CarFaq({
   const faqs = [
     {
       q: `What is the price of the ${displayName} in Mumbai?`,
-      a: `The ${displayName} starts at ${formatINR(car.priceINR)}* (ex-showroom). On-road pricing depends on the chosen variant, colour, insurance, accessories and RTO charges. Request a quotation from Modi Hyundai for an exact, all-inclusive figure for Mumbai, Thane, Vasai, Virar or Wada.`,
+      a: `The ${displayName} starts at ${formatINR(car.priceINR)}* (ex-showroom). On-road pricing depends on the chosen variant, colour, insurance, accessories and RTO charges. Request a quotation from Modi Hyundai for an exact, all-inclusive figure for Thane, Santacruz, Vasai, Virar, Wada or Chunabhatti.`,
     },
     {
       q: `How many variants does the ${displayName} offer?`,

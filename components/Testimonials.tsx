@@ -74,8 +74,8 @@ export default function Testimonials() {
               What Our Customers Say
             </h2>
             <p className="mt-3 text-sm text-muted">
-              Real experiences from Hyundai owners across Mumbai, Thane, Vasai,
-              Virar and Wada.
+              Real experiences from Hyundai owners across Thane, Santacruz,
+              Vasai, Virar, Wada and Chunabhatti.
             </p>
           </div>
           <div className="flex gap-2">

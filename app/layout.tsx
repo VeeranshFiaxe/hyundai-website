@@ -28,7 +28,7 @@ const sora = Sora({
 
 const title = "New Hyundai Cars, Test Drives & Service in Mumbai | Modi Hyundai";
 const description =
-  "Compare new Hyundai cars with prices, book a test drive, and schedule authorised service at Modi Hyundai showrooms across Mumbai, Thane, Vasai, Virar and Wada.";
+  "Compare new Hyundai cars with prices, book a test drive, and schedule authorised service at Modi Hyundai showrooms across Thane, Santacruz, Vasai, Virar, Wada and Chunabhatti.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

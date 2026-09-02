@@ -15,7 +15,7 @@ export default function ServiceCentres() {
           </h2>
           <p className="mt-2 text-sm text-white/70">
             {serviceCentres.length} authorised Modi Hyundai service centres across
-            Mumbai, Thane, Vasai, Virar, and Wada.
+            Thane, Santacruz, Vasai, Virar, Wada, and Chunabhatti.
           </p>
         </Reveal>
 

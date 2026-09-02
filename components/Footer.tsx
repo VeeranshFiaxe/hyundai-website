@@ -47,12 +47,9 @@ export default function Footer() {
           <div className="col-span-2 lg:col-span-1">
             <Logo dark />
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
-              S C Auto Agencies Pvt Ltd
-            </p>
-            <p className="mt-1 max-w-xs text-sm leading-relaxed text-white/60">
               Modi Hyundai is an authorised Hyundai dealership offering new car
-              sales, servicing and genuine Hyundai parts across Mumbai, Thane,
-              Vasai, Virar and Wada.
+              sales, servicing and genuine Hyundai parts across Thane,
+              Santacruz, Vasai, Virar, Wada and Chunabhatti.
             </p>
             <div className="mt-6 flex gap-2.5">
               {socials.map(({ Icon, label, href }) => (

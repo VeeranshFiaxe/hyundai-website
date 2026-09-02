@@ -18,7 +18,7 @@ const errorBase =
   "w-full rounded border border-red-400 bg-white px-4 py-3 text-sm text-text outline-none transition-colors placeholder:text-faint focus:border-red-500 focus:ring-2 focus:ring-red-400/20";
 
 const promiseLocation =
-  locations.find((location) => location.name === "Hyundai H Promise Thane") ??
+  locations.find((location) => location.name === "Modi Hyundai H Promise Thane") ??
   locations[0];
 
 const buyReasons = [

@@ -69,9 +69,9 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
 
   const canProceed = () => {
     if (step === 1) return Boolean(carSlug);
-    if (step === 2) return Boolean(city && date && time);
+    if (step === 2) return Boolean(city && isValidPincode(pincode) && date && time);
     if (step === 3)
-      return Boolean(isValidName(name) && mobile && isValidEmail(email) && isValidPincode(pincode));
+      return Boolean(isValidName(name) && mobile && isValidEmail(email));
     return true;
   };
 
@@ -81,7 +81,7 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
     email:
       attempted && step === 3 && !isValidEmail(email) ? "Enter a valid email with @ and a domain (e.g. you@example.com)." : "",
     pincode:
-      attempted && step === 3 && !isValidPincode(pincode) ? "Enter a valid 6-digit pincode." : "",
+      attempted && step === 2 && !isValidPincode(pincode) ? "Enter a valid 6-digit pincode." : "",
   };
 
   const stepMessage =
@@ -89,11 +89,13 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
       ? "Please select a car to continue."
       : attempted && step === 2 && !city
         ? "Please select a location to continue."
-        : attempted && step === 2 && city && !date
-          ? "Please choose a preferred date."
-          : attempted && step === 2 && city && date && !time
-            ? "Please choose a preferred time slot."
-            : "";
+        : attempted && step === 2 && city && !isValidPincode(pincode)
+          ? "Please enter a valid 6-digit pincode."
+          : attempted && step === 2 && city && isValidPincode(pincode) && !date
+            ? "Please choose a preferred date."
+            : attempted && step === 2 && city && isValidPincode(pincode) && date && !time
+              ? "Please choose a preferred time slot."
+              : "";
 
   const goNext = () => {
     if (canProceed()) {
@@ -370,6 +372,22 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                     <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-faint" />
                   </div>
                 </label>
+                <label className="col-span-full block">
+                  <span className="mb-1.5 block text-xs font-semibold text-muted">Pincode</span>
+                  <input
+                    type="text"
+                    required
+                    inputMode="numeric"
+                    pattern="[0-9]{6}"
+                    value={pincode}
+                    onChange={(e) => setPincode(e.target.value)}
+                    placeholder="e.g. 400001"
+                    className={`${fieldBase} ${fieldErrors.pincode ? "border-red-400 focus:border-red-400" : ""}`}
+                  />
+                  {fieldErrors.pincode && (
+                    <p className="mt-1.5 text-xs font-medium text-red-600">{fieldErrors.pincode}</p>
+                  )}
+                </label>
                 <label className="block">
                   <span className="mb-1.5 block text-xs font-semibold text-muted">Preferred Date</span>
                   <div className="relative">
@@ -481,22 +499,6 @@ function TestDriveWizardInner({ initialCarSlug, onBack, verifiedPhone = "", requ
                   />
                   {fieldErrors.email && (
                     <p className="mt-1.5 text-xs font-medium text-red-600">{fieldErrors.email}</p>
-                  )}
-                </label>
-                <label className="block">
-                  <span className="mb-1.5 block text-xs font-semibold text-muted">Pincode</span>
-                  <input
-                    type="text"
-                    required
-                    inputMode="numeric"
-                    pattern="[0-9]{6}"
-                    value={pincode}
-                    onChange={(e) => setPincode(e.target.value)}
-                    placeholder="e.g. 400001"
-                    className={`${fieldBase} ${fieldErrors.pincode ? "border-red-400 focus:border-red-400" : ""}`}
-                  />
-                  {fieldErrors.pincode && (
-                    <p className="mt-1.5 text-xs font-medium text-red-600">{fieldErrors.pincode}</p>
                   )}
                 </label>
               </div>

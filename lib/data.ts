@@ -1678,6 +1678,8 @@ export type Location = {
   /** Optional CSS object-position override, for reused photos that need a different crop. */
   imagePosition?: string;
   mapsUrl: string;
+  /** Google Business Profile listing, opened by the "Get Details" button. */
+  gmbUrl: string;
 };
 
 /* Real Modi Hyundai outlets (source: modihyundai.co.in). */
@@ -1691,6 +1693,8 @@ export const locations: Location[] = [
     image: "/locations/vasai-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Prime%20House%20Main%20Rd%2C%20Sativali%20Rd%2C%20Opp%20Shailesh%20Industries%20Estate%2C%20Waliv%20Phata%2C%20Vasai%20East%2C%20Maharashtra%20401208&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+Vasai+Showroom&stick=H4sIAAAAAAAA_-NgU1I1qDBOSjVPTEtJMjY2tTRKM7e0MqgwMzA3SzFKNTdMtjQwTkoyW8Qq7ZufkqngUVmal5KYqRCWWAwkgzPyy4vy83MBh5R65kcAAAA&hl=en",
   },
   {
     name: "Modi Hyundai Virar",
@@ -1701,6 +1705,7 @@ export const locations: Location[] = [
     image: "/locations/virar-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Gala%20Number%201%2C%202%2C%203%20%26%204%2C%20Hirubai%20Residency%2C%20Opposite%20Punjab%20National%20Bank%2C%20Near%20Fly%20Over%20Bridge%2C%20Virar%20West%2C%20Palghar%2C%20Maharashtra%20401303&travelmode=driving",
+    gmbUrl: "https://share.google/YjzkJJXZFq0z1m9gq",
   },
   {
     name: "Modi Hyundai H Promise Vasai",
@@ -1711,6 +1716,8 @@ export const locations: Location[] = [
     image: "/locations/vasai-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Unit%20No.%2001%2C%2002%20and%2003%2C%20Lotus%20Premises%20Plaza%2C%20Survey%20No.%2035%2C%20Hissa%20No.%206%2C%20Village%20Gokhivare%2C%20Taluka%20Vasai%2C%20Palghar%2C%20Vasai%2C%20Maharashtra%20401208&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+H+Promise+Vasai+Showroom&hl=en",
   },
   {
     name: "Modi Hyundai Thane",
@@ -1721,6 +1728,8 @@ export const locations: Location[] = [
     image: "/locations/thane-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Modi%20House%201%20Eastern%20Express%20Highway%20opp%20LIC%20Bldg.%2C%20Naupada%2C%20Louis%20Wadi%2C%20Thane%20West%2C%20Maharashtra%20400602&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+Thane+Showroom&stick=H4sIAAAAAAAA_-NgU1I1qDBOSjVPsjRMtkxMSkkyMrS0MqhIMUkzTUs2MjMwNEszMDC2XMQq7ZufkqngUVmal5KYqRCSkZiXqhCckV9elJ-fCwC3Qb15RwAAAA&hl=en",
   },
   {
     name: "Modi Hyundai H Promise Thane",
@@ -1731,6 +1740,8 @@ export const locations: Location[] = [
     image: "/locations/h-promise-thane-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Wadekar%20Compound%2C%20Modi%20Hyundai%20H%20Promise%20Showroom%2C%20near%20Viddyapith%20Bus%20Stop%2C%20Service%20Rd%2C%20Thane%20West%20-%20400601&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+H+Promise+-+Thane+Showroom&stick=H4sIAAAAAAAA_-NgU1IxqDBOSjVPsjQ0SLQwNEy0TDO1MqhITjZKTDJKNTExMTM1STVfxKrum5-SqeBRWZqXkgikFQKK8nMzi1MVdBVCMhLzUhWCM_LLi_LzcwGO0J2YUgAAAA&hl=en",
   },
   {
     name: "Modi Hyundai Wada",
@@ -1741,6 +1752,7 @@ export const locations: Location[] = [
     image: "/locations/wada-showroom.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=HDL%20Residency%20Park%20%2C%20Shop%20No.%201%2F2%2C%20E%20Wing%20Global%20City%20%2C%20Opp%20Yazoo%20Park%20Virar%2C%20Virar%20West%2C%20Maharashtra%20401305&travelmode=driving",
+    gmbUrl: "https://share.google/9OF7DTzKJ5kGckDuU",
   },
   {
     name: "Modi Hyundai Service Centre Chunabhatti",
@@ -1751,6 +1763,8 @@ export const locations: Location[] = [
     image: "/locations/chunabhatti-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Jogani%20Industrial%20Estate%2C%20VN%20Purav%20Marg%2C%20Panchsheel%20Nagar%2C%20Chunabhatti%2C%20Sion%2C%20Mumbai%2C%20Maharashtra%20400022&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+Service+Centre+Chunabhatti&stick=H4sIAAAAAAAA_-NgU1I1qDBOSjVPtkhKMzZJNTOyNLG0AgklGRoYmJglpaVYGiUbGy9iVffNT8lU8KgszUtJzFQITi0qy0xOVXBOzSspAlIZpXmJSRmJJSWZAGLetBxTAAAA&hl=en",
   },
   {
     name: "Modi Hyundai Service Centre Thane",
@@ -1761,6 +1775,8 @@ export const locations: Location[] = [
     image: "/locations/thane-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Navjeevan%20Compound%2C%202%2C%20Pokhran%20Rd%2C%20opp.%20Oswal%20Park%2C%20Subhash%20Nagar%2C%20Majiwada%2C%20Thane%2C%20Maharashtra%20400601&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+Service+Centre+Thane&stick=H4sIAAAAAAAA_-NgU1I1qDBOSjVPsjQxTk2ysLRMNja1MqhIMze0NDc1S00yTEoxS0wyW8Sq6JufkqngUVmal5KYqRCcWlSWmZyq4JyaV1KUqhCSkZiXCgBk__X8TQAAAA&hl=en",
   },
   {
     name: "Modi Hyundai Service Centre Vasai",
@@ -1771,6 +1787,8 @@ export const locations: Location[] = [
     image: "/locations/vasai-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Gala%20No%208%2C%20Richa%20Industrial%20Estate%2C%20Sativali%20Rd%2C%20Waliv%20Phata%2C%20Golani%20Naka%2C%20Vasai%20East%2C%20Maharashtra%20401208&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+Service+Centre+Vasai&stick=H4sIAAAAAAAA_-NgU1I1qDBOSjVPTDM2Sk42sDBOsjC0MqhIS0o2tTA3S0sxNzdNSjNOXsSq6JufkqngUVmal5KYqRCcWlSWmZyq4JyaV1KUqhCWWJyYCQB1PA-1TQAAAA&hl=en",
   },
   {
     name: "Modi Hyundai Service Centre Virar",
@@ -1781,6 +1799,8 @@ export const locations: Location[] = [
     image: "/locations/virar-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Sanjog%20Industrial%20Estate%2C%20Gala%20no%2018%2C19%2C%20near%20Ran%20Pada%20Ground%2C%20Virar%20West%2C%20Virar%2C%20Maharashtra%20401303&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+Service+Centre+Virar&stick=H4sIAAAAAAAA_-NgU1I1qDBOSjVPTDRKNU5NTjG3SLO0MqgwszRKTU1ONTA2MzYzM01KXsSq6JufkqngUVmal5KYqRCcWlSWmZyq4JyaV1KUqhCWWZRYBACmZD7BTQAAAA&hl=en",
   },
   {
     name: "Modi Hyundai Service Centre Thane (Raghunath Nagar)",
@@ -1791,6 +1811,8 @@ export const locations: Location[] = [
     image: "/locations/thane-raghunath-service.webp",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=ICEM%20Engineering%20Compound%20Mohanji%2C%20Road%2C%20opposite%20Valencia%20Park%2C%20Raghunath%20Nagar%2C%20Sunderji%2C%20Thane%2C%20Maharashtra%20400604&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+Service+Centre+Thane+Raghunath+Nagar&stick=H4sIAAAAAAAA_-NgU1I1qDBOSjVPskxNtTA2NDA0TjG3MqgwSzVNNUuxTDVOTktJMza1XMRq6JufkqngUVmal5KYqRCcWlSWmZyq4JyaV1KUqhCSkZiXqhCUmJ5RmpdYkqHgl5ieWAQA_cdmZF0AAAA&hl=en",
   },
   /* No verifiable branch photo found online for these two outlets after
      checking the dealer site, Justdial, Sulekha, CarDekho, Mappls and
@@ -1806,6 +1828,8 @@ export const locations: Location[] = [
     imagePosition: "center 30%",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Vikas%20Centre%2C%20G%2F02%2C%20Next%20to%20Santacruz%20Bus%20Depot%2C%20S.V.%20Road%2C%20Santacruz%20West%2C%20Mumbai%2C%20Maharashtra%20400054&travelmode=driving",
+    gmbUrl:
+      "https://www.google.com/search?q=Modi+Hyundai+Santacruz+Showroom&stick=H4sIAAAAAAAA_-NgU1I1qDBOSjVPtjQwT0k1TjFMNDe1MqgwMzVPTbQwMTIwMDJOSjExW8Qq75ufkqngUVmal5KYqRCcmFeSmFxUWqUQnJFfXpSfnwsAJJRcEEsAAAA&hl=en",
   },
   {
     name: "Modi Hyundai Service Centre Wada",
@@ -1817,6 +1841,7 @@ export const locations: Location[] = [
     imagePosition: "center 70%",
     mapsUrl:
       "https://www.google.com/maps/dir/?api=1&destination=Hyundai%20Service%20Centre%20Wada&travelmode=driving",
+    gmbUrl: "https://share.google/9OF7DTzKJ5kGckDuU",
   },
 ];
 

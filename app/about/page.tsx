@@ -13,7 +13,7 @@ import { DEALER_ID } from "@/lib/schema";
 
 const title = "About Modi Hyundai | Authorised Hyundai Dealer in Mumbai";
 const description =
-  "Modi Hyundai is an authorised dealer from the Gautam Modi Group, offering new cars, test drives and service across Mumbai, Thane, Vasai, Virar and Wada.";
+  "Modi Hyundai is an authorised dealer from the Gautam Modi Group, offering new cars, test drives and service across Thane, Santacruz, Vasai, Virar, Wada and Chunabhatti.";
 
 const aboutHeroImage = "/images/about/modi-hyundai-team.jpg";
 const aboutCultureImage = "/images/about/modi-hyundai-customer-team.png";
@@ -83,11 +83,6 @@ const aboutPageSchema = {
   ],
 };
 
-function joinWithAnd(items: string[]) {
-  if (items.length <= 1) return items.join("");
-  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
-}
-
 export default function AboutPage() {
   return (
     <>
@@ -118,7 +113,7 @@ export default function AboutPage() {
                 Your Hyundai journey, made personal
               </h1>
               <p className="mt-5 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base lg:text-lg">
-                Authorised Hyundai dealer serving Mumbai, Thane, Vasai, Virar and Wada.
+                Authorised Hyundai dealer serving Thane, Santacruz, Vasai, Virar, Wada and Chunabhatti.
               </p>
             </Reveal>
           </div>
@@ -139,15 +134,9 @@ export default function AboutPage() {
                   Modi Hyundai is an authorised Hyundai dealership owned and
                   operated by the {groupInfo.name}. From selecting a new Hyundai
                   to booking a test drive and maintaining it for years, our teams
-                  make every step clear and comfortable. We serve Mumbai, Thane,
-                  Vasai, Virar and Wada, backed by a strong track record of
+                  make every step clear and comfortable. We serve Thane,
+                  Santacruz, Vasai, Virar, Wada and Chunabhatti, backed by a strong track record of
                   new car sales and customer satisfaction.
-                </p>
-                <p>
-                  The {groupInfo.name} represents {joinWithAnd(groupInfo.brands)}{" "}
-                  across multiple automotive businesses, alongside{" "}
-                  {joinWithAnd(groupInfo.ventures.map((v) => v.name))}.{" "}
-                  {groupInfo.founded}
                 </p>
               </div>
             </Reveal>
@@ -177,7 +166,7 @@ export default function AboutPage() {
             <Reveal delay={100} className="text-sm leading-relaxed text-white/75 sm:text-base">
               Whether you are buying your first car, upgrading your family SUV or arranging routine service, our showroom and service teams provide practical help close to home. Visit Modi Hyundai across the Mumbai region for new Hyundai cars, test drives, genuine parts and expert service support.
               <div className="mt-5 flex flex-wrap gap-2">
-                {["Mumbai", "Thane", "Vasai", "Virar", "Wada"].map((area) => (
+                {["Thane", "Santacruz", "Vasai", "Virar", "Wada", "Chunabhatti"].map((area) => (
                   <span key={area} className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold text-white/90">{area}</span>
                 ))}
               </div>

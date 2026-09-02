@@ -87,7 +87,7 @@ const servicePageSchema = {
       name: o.title,
       description: o.intro,
       provider: { "@id": DEALER_ID },
-      areaServed: ["Mumbai", "Thane", "Vasai", "Virar", "Wada"].map(
+      areaServed: ["Thane", "Santacruz", "Vasai", "Virar", "Wada", "Chunabhatti"].map(
         (c) => ({ "@type": "City", name: c }),
       ),
     })),
@@ -138,7 +138,7 @@ export default function LocateServiceCentrePage() {
               <p className="mt-3 max-w-xl text-sm text-white/80 sm:text-base">
                 Keep your Hyundai performing at its best with genuine parts,
                 factory-trained technicians, clear estimates and convenient
-                service booking across Mumbai, Thane, Vasai, Virar and Wada.
+                service booking across Thane, Santacruz, Vasai, Virar, Wada and Chunabhatti.
               </p>
             </Reveal>
           </div>

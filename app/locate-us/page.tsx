@@ -5,7 +5,7 @@ import { DEALER_ID } from "@/lib/schema";
 
 const title = "Locate Us — Showrooms & Service Centres";
 const description =
-  "Find Modi Hyundai showrooms and service centres across Mumbai, Thane, Vasai, Virar and Wada. View each branch on the map and open Google Maps directions.";
+  "Find Modi Hyundai showrooms and service centres across Thane, Santacruz, Vasai, Virar, Wada and Chunabhatti. View each branch on the map and open Google Maps directions.";
 
 export const metadata: Metadata = {
   title,

@@ -13,6 +13,23 @@ const tabs: { label: string; type: Location["type"] }[] = [
 const mapEmbedSrc = (address: string) =>
   `https://www.google.com/maps?q=${encodeURIComponent(address)}&output=embed`;
 
+const addressKey = (address: string) => address.replace(/\s+/g, " ").trim().toLowerCase();
+
+/* A single site can be both a showroom and a service centre (Virar, today). Such
+   a branch is listed once per type so it shows up under either tab, but its card
+   carries every tag that site holds - not just the tab you arrived from. */
+const typesByAddress = locations.reduce((map, location) => {
+  const key = addressKey(location.address);
+  const found = map.get(key) ?? [];
+  if (!found.includes(location.type)) found.push(location.type);
+  return map.set(key, found);
+}, new Map<string, Location["type"][]>());
+
+const tagsFor = (location: Location) =>
+  tabs
+    .map((tab) => tab.type)
+    .filter((type) => (typesByAddress.get(addressKey(location.address)) ?? [location.type]).includes(type));
+
 export default function LocateUs() {
   const [activeType, setActiveType] = useState<Location["type"]>("Showroom");
   const filteredLocations = useMemo(
@@ -39,8 +56,8 @@ export default function LocateUs() {
           </h2>
           <p className="mt-3 text-sm text-muted sm:text-base">
             Browse our showrooms and service centres across the Mumbai region,
-            preview the branch on the map, and open turn-by-turn directions in
-            Google Maps.
+            preview the branch on the map, and get directions or full branch
+            details in one tap.
           </p>
         </Reveal>
 
@@ -111,13 +128,18 @@ export default function LocateUs() {
                           {location.name}
                         </h4>
                       </div>
-                      <span
-                        className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${
-                          active ? "bg-white/12 text-white/85" : "bg-bg-2 text-muted"
-                        }`}
-                      >
-                        {location.type}
-                      </span>
+                      <div className="flex shrink-0 flex-col items-end gap-1.5">
+                        {tagsFor(location).map((type) => (
+                          <span
+                            key={type}
+                            className={`whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase leading-4 tracking-wide ${
+                              active ? "bg-white/12 text-white/85" : "bg-bg-2 text-muted"
+                            }`}
+                          >
+                            {type}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                     <p className={`mt-3 flex items-start gap-2 text-sm ${active ? "text-white/82" : "text-muted"}`}>
                       <MapPin className={`mt-0.5 h-4 w-4 shrink-0 ${active ? "text-white/70" : "text-faint"}`} />
@@ -138,14 +160,18 @@ export default function LocateUs() {
             variant="slide-left"
             className="overflow-hidden rounded-[1.5rem] border border-border bg-white shadow-[0_10px_40px_0_rgba(0,44,95,0.08)]"
           >
-            <div className="relative h-[320px] border-b border-border bg-bg-2 sm:h-[420px]">
+            <div className="relative h-[320px] overflow-hidden border-b border-border bg-bg-2 sm:h-[420px]">
+              {/* Google's embed paints its own "Open in Maps" pill in the top-left
+                  corner, and it can't be styled from here - so the frame is drawn
+                  taller than the box and pulled up, cropping that strip away.
+                  Directions and listing links live on the buttons below instead. */}
               <iframe
                 key={selectedLocation.name}
                 src={mapEmbedSrc(selectedLocation.address)}
                 title={`Map for ${selectedLocation.name}`}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 h-full w-full border-0"
+                className="absolute inset-x-0 top-[-52px] h-[calc(100%+52px)] w-full border-0"
               />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/55 to-transparent" />
             </div>
@@ -160,20 +186,31 @@ export default function LocateUs() {
                     {selectedLocation.name}
                   </h3>
                   <p className="mt-2 max-w-2xl text-sm text-muted">
-                    {selectedLocation.type} in {selectedLocation.city}. Use the
-                    map preview here or jump straight into Google Maps for live
-                    navigation.
+                    {tagsFor(selectedLocation).join(" & ")} in {selectedLocation.city}. Get
+                    turn-by-turn directions, or open the branch listing for
+                    photos, hours and reviews.
                   </p>
                 </div>
-                <a
-                  href={selectedLocation.mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-light"
-                >
-                  Get Directions
-                  <ArrowRight className="h-4 w-4" />
-                </a>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href={selectedLocation.mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-light"
+                  >
+                    Get Directions
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <a
+                    href={selectedLocation.gmbUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-brand px-5 py-3 text-sm font-semibold text-brand transition-colors hover:bg-brand hover:text-white"
+                  >
+                    Get Details
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
               </div>
 
               <div className="grid gap-4 sm:grid-cols-2">

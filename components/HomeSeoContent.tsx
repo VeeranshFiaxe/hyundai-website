@@ -55,7 +55,7 @@ const buyingSteps = [
   {
     step: "02",
     title: "Book a test drive",
-    text: "Pick a date and your nearest Modi Hyundai outlet across Mumbai, Thane, Vasai, Virar or Wada, or request a home test drive at no obligation.",
+    text: "Pick a date and your nearest Modi Hyundai outlet across Thane, Santacruz, Vasai, Virar, Wada or Chunabhatti, or request a home test drive at no obligation.",
   },
   {
     step: "03",
@@ -136,7 +136,7 @@ export default function HomeSeoContent() {
             <div className="mt-5 space-y-4 text-sm leading-relaxed text-muted sm:text-base">
               <p>
                 Modi Hyundai is an authorised Hyundai Motor India dealership
-                serving Mumbai, Thane, Vasai, Virar and Wada. Every new car,
+                serving Thane, Santacruz, Vasai, Virar, Wada and Chunabhatti. Every new car,
                 genuine part and accessory we supply is sourced directly from
                 Hyundai, so your purchase is backed by the full manufacturer
                 warranty and nationwide service network.
