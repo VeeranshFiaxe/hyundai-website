@@ -53,14 +53,14 @@ deployments can drop the table deliberately rather than have it vanish.
 ## How OTP verification works
 
 Codes are never stored — not in the database, not in memory, not anywhere.
-`send-otp` generates a code, sends it over WhatsApp, and sets an httpOnly
+`send-otp` generates a code, sends it over SMS, and sets an httpOnly
 cookie holding an HMAC of (phone + code + expiry). `verify-otp` re-derives that
 HMAC from whatever the user types: the right code reproduces the signature, a
 wrong one cannot, and the cookie cannot be forged without `OTP_SECRET`. The
 challenge is single-use and expires after five minutes.
 
 This means the OTP flow has no database dependency and works on any host as
-soon as the WhatsApp variables are set.
+soon as the SMS_API_KEY is set.
 
 Check the connection and schema at any time via `GET /api/health/database`,
 which returns `{"status":"ok"}` when the app can reach Postgres.

@@ -9,7 +9,7 @@ import {
   OTP_TTL_MS,
 } from "@/lib/otp";
 import { normalizePhone } from "@/lib/phone";
-import { sendOtpWhatsApp } from "@/lib/whatsapp";
+import { sendOtpSms } from "@/lib/sms";
 
 const secureCookies = process.env.NODE_ENV === "production";
 
@@ -54,30 +54,30 @@ export async function POST(request: Request) {
   // Send first, then hand out the challenge, so a delivery failure simply
   // leaves the previous state untouched — there is nothing to roll back.
   try {
-    const whatsappResult = await sendOtpWhatsApp(normalizedPhone, otp);
+    const smsResult = await sendOtpSms(normalizedPhone, otp);
     console.log(
       JSON.stringify({
-        message: "WhatsApp OTP delivery completed",
-        ok: whatsappResult.ok,
-        status: whatsappResult.status,
+        message: "SMS OTP delivery completed",
+        ok: smsResult.ok,
+        status: smsResult.status,
       }),
     );
 
-    if (!whatsappResult.ok) {
+    if (!smsResult.ok) {
       return NextResponse.json(
-        { error: "Failed to send OTP via WhatsApp." },
+        { error: "Failed to send OTP via SMS." },
         { status: 502 },
       );
     }
   } catch (error) {
     console.error(
       JSON.stringify({
-        message: "WhatsApp OTP delivery failed",
+        message: "SMS OTP delivery failed",
         error: error instanceof Error ? error.message : String(error),
       }),
     );
     return NextResponse.json(
-      { error: "Failed to send OTP via WhatsApp." },
+      { error: "Failed to send OTP via SMS." },
       { status: 502 },
     );
   }
